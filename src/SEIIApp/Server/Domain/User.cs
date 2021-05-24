@@ -1,12 +1,12 @@
 ﻿using System;
-using Test.Shared;
+using SEIIApp.Shared;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace Test.Server.Domain
+namespace SEIIApp.Server.Domain
 {
     public class User
     {

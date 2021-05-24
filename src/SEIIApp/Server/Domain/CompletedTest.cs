@@ -4,7 +4,7 @@ using System.Linq;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 
-namespace Test.Server.Domain
+namespace SEIIApp.Server.Domain
 {
     public class CompletedTest
     {

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Test.Server.Domain
+namespace SEIIApp.Server.Domain
 {
     public class Answer
     {

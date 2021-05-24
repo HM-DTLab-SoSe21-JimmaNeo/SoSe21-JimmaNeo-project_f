@@ -5,7 +5,7 @@ using SEIIApp.Shared;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Test.Server.DataAccess
+namespace SEIIApp.Server.DataAccess
 {
     public class TestDataInitialiser
     {
