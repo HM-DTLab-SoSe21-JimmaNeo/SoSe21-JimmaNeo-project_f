@@ -10,6 +10,8 @@ namespace SEIIApp.Shared
 {
     public class UserDTO
     {
+        public int UserId { get; }
+
         [Required]
         [StringLength(20, MinimumLength = 3)]
         public string Name { get; set; }
