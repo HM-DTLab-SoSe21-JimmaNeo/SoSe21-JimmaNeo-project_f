@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Test.Server.Domain;
-using Test.Shared;
+using SEIIApp.Server.Domain;
+using SEIIApp.Shared;
 using System.Linq;
 using System.Threading.Tasks;
 
