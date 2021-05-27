@@ -4,6 +4,7 @@ using System.Linq;
 using SEIIApp.Server.Domain;
 using System.Threading.Tasks;
 using SEIIApp.Server.DataAccess;
+using AutoMapper;
 
 namespace SEIIApp.Server.Services
 {
@@ -11,9 +12,12 @@ namespace SEIIApp.Server.Services
     {
         private DatabaseContext DatabaseContext { get; set; }
 
-        public UserService(DatabaseContext db)
+        private IMapper Mapper { get; set; }
+
+        public UserService(DatabaseContext db, IMapper mapper)
         {
             this.DatabaseContext = db;
+            this.Mapper = mapper;
         }
 
         private IQueryable<User> GetQueryableForUser()

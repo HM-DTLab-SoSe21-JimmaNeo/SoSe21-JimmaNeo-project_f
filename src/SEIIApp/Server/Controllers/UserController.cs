@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using SEIIApp.Server.Services;
 using SEIIApp.Shared;
 using SEIIApp.Server.Domain;
+using AutoMapper;
 
 namespace SEIIApp.Server.Controllers
 {
@@ -16,9 +17,12 @@ namespace SEIIApp.Server.Controllers
     {
         private UserService UserService { get; set; }
 
-        public UserController(UserService userService)
+        private IMapper Mapper { get; set; }
+
+        public UserController(UserService userService, IMapper mapper)
         {
             this.UserService = userService;
+            this.Mapper = mapper;
         }
 
         [HttpGet("LoginUser")]
@@ -32,10 +36,8 @@ namespace SEIIApp.Server.Controllers
             if (user == null) return NotFound();
             if (!user.Pw.Equals(pw)) return BadRequest();
 
-            UserDTO result = new UserDTO();
-            result.Name = user.Name;
-            result.Role = user.Role;
-            return Ok(result);
+            var mappedResult = Mapper.Map<UserDTO>(user);
+            return Ok(mappedResult);
         }
 
         [HttpGet("ShowUsers")]
@@ -43,16 +45,8 @@ namespace SEIIApp.Server.Controllers
         public ActionResult<UserDTO[]> ShowUsers()
         {
             var allUser = UserService.GetAllUser();
-            UserDTO[] result = new UserDTO[allUser.Length];
-
-            for (int i = 0; i < result.Length; i++)
-            {
-                UserDTO r = new UserDTO();
-                r.Name = allUser[i].Name;
-                r.Role = allUser[i].Role;
-                result[i] = r;
-            }
-            return Ok(result);
+            var mappedResult = Mapper.Map<UserDTO[]>(allUser);
+            return Ok(mappedResult);
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -60,16 +54,12 @@ namespace SEIIApp.Server.Controllers
         [HttpPut("RegisterStudent")]
         public ActionResult<UserDTO> RegisterStudent([FromBody] LoginInformationDTO ri)
         {
-
             var userInList = UserService.GetUserWithName(ri.User.Name);
             if (userInList != null) return BadRequest();
 
-            User newUser = new();
-            newUser.Name = ri.User.Name;
-            newUser.Pw = ri.Pw;
-            newUser.Role = ri.User.Role;
-
-            return Ok(UserService.AddUser(newUser));
+            var mappedUser = Mapper.Map<User>(ri.User);
+                   
+            return Ok(UserService.AddUser(mappedUser));
         }
 
 

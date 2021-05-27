@@ -47,6 +47,7 @@ namespace SEIIApp.Server {
 
             // Mapper 
             // TODO hinzufügen
+            services.AddAutoMapper(typeof(Domain.DomainMapper));
 
             // Database Services
             services.AddScoped<Services.UserService>();
