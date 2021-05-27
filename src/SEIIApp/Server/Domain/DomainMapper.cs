@@ -25,12 +25,10 @@ namespace SEIIApp.Server.Domain
             CreateMap<LectureContent, LectureContentDTO>();
             CreateMap<LectureContentDTO, LectureContent>();
 
-            // 1 Test oder mehrere Tests moeglich
             // Lecture
-            CreateMap<Lecture, LectureDTO>()
-                .ForMember(lectureDto => lectureDto.Test, opts => opts.MapFrom(obj => obj.Test));
-            CreateMap<LectureDTO, Lecture>()
-                .ForMember(lecture => lecture.Test, opts => opts.MapFrom(obj => obj.Test.ToList())); 
+            CreateMap<Lecture, LectureDTO>();
+            CreateMap<LectureDTO, Lecture>(); 
+
             CreateMap<Lecture, LectureBaseDTO>()
                 .ForMember(lectureBaseDto => lectureBaseDto.Author, opts => opts.MapFrom(obj => obj.CreatedBy));
             CreateMap<LectureBaseDTO, Lecture>()
