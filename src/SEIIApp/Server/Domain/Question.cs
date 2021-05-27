@@ -14,5 +14,7 @@ namespace SEIIApp.Server.Domain
         public string QuestionText { get; set; }
 
         public List<Answer> Answers { get; set; }
+
+        public string Explanation { get; set; }
     }
 }

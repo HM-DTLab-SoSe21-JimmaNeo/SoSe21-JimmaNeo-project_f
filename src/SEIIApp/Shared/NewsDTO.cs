@@ -17,8 +17,6 @@ namespace SEIIApp.Shared
 
         public string Content { get; set; }
 
-        public UserDTO Author { get; set; }
-
         public DateTime Date { get; set; }
 
     }
