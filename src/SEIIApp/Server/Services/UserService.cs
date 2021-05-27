@@ -12,12 +12,12 @@ namespace SEIIApp.Server.Services
     {
         private DatabaseContext DatabaseContext { get; set; }
 
-        private IMapper Mapper { get; set; }
+        //private IMapper Mapper { get; set; }
 
-        public UserService(DatabaseContext db, IMapper mapper)
+        public UserService(DatabaseContext db) //, IMapper mapper
         {
             this.DatabaseContext = db;
-            this.Mapper = mapper;
+            //this.Mapper = mapper;
         }
 
         private IQueryable<User> GetQueryableForUser()

@@ -29,7 +29,7 @@ namespace SEIIApp.Shared
 
         public List<LectureContentDTO> Content { get; set; }
 
-        public List<TestBaseDTO> Test { get; set; }
+        public TestBaseDTO Test { get; set; }
     }
 
 
