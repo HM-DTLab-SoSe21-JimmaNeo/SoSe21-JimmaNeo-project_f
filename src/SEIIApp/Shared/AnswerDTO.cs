@@ -10,7 +10,7 @@ namespace SEIIApp.Shared
     public class AnswerDTO
     {
         [Required]
-        public string Answer { get; set; }
+        public string AnswerText { get; set; }
 
         public bool IsCorret { get; set; }
     }

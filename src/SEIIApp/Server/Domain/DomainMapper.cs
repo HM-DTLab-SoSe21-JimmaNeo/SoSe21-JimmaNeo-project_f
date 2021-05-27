@@ -14,10 +14,8 @@ namespace SEIIApp.Server.Domain
         {
 
             // Answer
-            CreateMap<Answer, AnswerDTO>()
-                .ForMember(answerDto => answerDto.Answer, opts => opts.MapFrom(obj => obj.AnswerText));
-            CreateMap<AnswerDTO, Answer>()
-                .ForMember(answer => answer.AnswerText, opts => opts.MapFrom(obj => obj.Answer));
+            CreateMap<Answer, AnswerDTO>();
+            CreateMap<AnswerDTO, Answer>();
 
             // FurtherLink
             CreateMap<FurtherLink, FurtherLinkDTO>();
@@ -27,7 +25,7 @@ namespace SEIIApp.Server.Domain
             CreateMap<LectureContent, LectureContentDTO>();
             CreateMap<LectureContentDTO, LectureContent>();
 
-            // hier ist irgendwas mit "Test" komisch, bitte anschauen
+            // 1 Test oder mehrere Tests moeglich
             // Lecture
             CreateMap<Lecture, LectureDTO>()
                 .ForMember(lectureDto => lectureDto.Test, opts => opts.MapFrom(obj => obj.Test));
@@ -41,20 +39,19 @@ namespace SEIIApp.Server.Domain
             // News
             CreateMap<News , NewsDTO>();
             CreateMap<NewsDTO, News>();
-            // Wo soll der Author aus NewsDTO hin?
 
             // Question
             CreateMap<Question, QuestionDTO>();
             CreateMap<QuestionDTO, Question>();
-            // wo soll die Explanation aus QuestionDTO hin?
 
             // SubjectArea
             CreateMap<SubjectArea, SubjectAreaDTO>()
                 .ForMember(subjectAreaDto => subjectAreaDto.Lectures, opts => opts.MapFrom(obj => obj.Lectures.ToList()));
             CreateMap<SubjectAreaDTO, SubjectArea>()
                 .ForMember(subjectAreaObj => subjectAreaObj.Lectures, opts => opts.MapFrom(obj => obj.Lectures.ToList()));
-            // ich hoffe es kommen keine Probleme auf, wenn auf die BaseDTO und nicht auf die Haupt DTO gematched wird? 
-            // evtl in DTO-Klasse anpassen
+            // Prof. Kofler fragen:
+            // 1. Probleme wenn nur auf BaseDTO gematched wird?
+            // 2. Kann in DTOs mit List anstatt Array gearbeitet werden?
 
             // TestContent
             CreateMap<TestContent, TestContentDTO>();
@@ -67,20 +64,11 @@ namespace SEIIApp.Server.Domain
             CreateMap<Test, TestBaseDTO>()
                 .ForMember(testBaseDto => testBaseDto.Author, opts => opts.MapFrom(obj => obj.CreatedBy));
             CreateMap<TestBaseDTO, Test>()
-                .ForMember(test => test.CreatedBy, opts => opts.MapFrom(obj => obj.Author));
+                .ForMember(testObj => testObj.CreatedBy, opts => opts.MapFrom(obj => obj.Author));
 
             // User
             CreateMap<User, UserDTO>();
             CreateMap<UserDTO, User>();
-            // muss hier Rolle angefuehrt werden?
-
-            // LoginInformation TODO keine Ahnung ...
-            CreateMap<LoginInformationDTO, User>()
-                .ForMember(user => user.Pw, opts => opts.MapFrom(obj => obj.Pw));
-
-           
-
-            
 
         }
 
