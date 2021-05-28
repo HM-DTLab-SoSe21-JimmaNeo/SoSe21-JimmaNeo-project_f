@@ -51,12 +51,13 @@ namespace SEIIApp.Server {
             // Database Services
             services.AddScoped<Services.UserService>();
             services.AddScoped<Services.TestService>();
+            services.AddScoped<Services.NewsService>();
 
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, Services.UserService userService, Services.TestService testService) {
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, Services.UserService userService, Services.TestService testService, Services.NewsService newsService) {
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
                 app.UseWebAssemblyDebugging();
@@ -88,7 +89,7 @@ namespace SEIIApp.Server {
             });
 
 #if DEBUG
-            TestDataInitialiser.InitalizeTestData(userService, testService);
+            TestDataInitialiser.InitalizeTestData(userService, testService, newsService);
 #endif
         }
     }
