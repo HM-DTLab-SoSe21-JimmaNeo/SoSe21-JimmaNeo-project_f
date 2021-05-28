@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using SEIIApp.Shared;
 using System;
 using System.Collections.Generic;
