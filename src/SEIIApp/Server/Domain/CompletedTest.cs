@@ -9,13 +9,13 @@ namespace SEIIApp.Server.Domain
     public class CompletedTest
     {
         [Key]
-        public int CtId;
+        public int CtId { get; set; }
 
-        public Test SolvedTest;
+        public Test SolvedTest { get; set; }
 
-        public User Student;
+        public User Student { get; set; }
 
-        public int ReachedPoints;
+        public int ReachedPoints { get; set; }
 
     }
 }

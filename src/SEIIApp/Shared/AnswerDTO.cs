@@ -12,6 +12,6 @@ namespace SEIIApp.Shared
         [Required]
         public string AnswerText { get; set; }
 
-        public bool IsCorret { get; set; }
+        public bool IsCorrect { get; set; }
     }
 }

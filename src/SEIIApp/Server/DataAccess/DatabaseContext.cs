@@ -27,7 +27,7 @@ namespace SEIIApp.Server.DataAccess
 
         public DbSet<Domain.Test> Tests { get; set; }
 
-        //public DbSet<Domain.CompletedTest> CompletedTests { get; set; }
+        public DbSet<Domain.CompletedTest> CompletedTests { get; set; }
 
         public DbSet<Domain.News> News{ get; set; }
 
