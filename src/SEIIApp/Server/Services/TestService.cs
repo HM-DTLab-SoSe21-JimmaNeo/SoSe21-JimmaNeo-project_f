@@ -15,10 +15,13 @@ namespace SEIIApp.Server.Services
 
         private IMapper Mapper { get; set; }
 
-        public TestService(DatabaseContext db, IMapper mapper)
+        private UserService UserService { get; set; }
+
+        public TestService(DatabaseContext db, IMapper mapper, UserService userService)
         {
             this.DatabaseContext = db;
             this.Mapper = mapper;
+            this.UserService = userService;
         }
 
         private IQueryable<Test> GetQueryableForTest()
@@ -27,7 +30,7 @@ namespace SEIIApp.Server.Services
                 .Include(test => test.Questions).ThenInclude(questions => questions.Answers)
                 .Include(test => test.TestContent)
                 .Include(test => test.FurtherLinks)
-                .Include(test => test.CreatedBy);
+                .Include(test => test.Author);
         }
 
         public Test[] GetAllTests()
@@ -42,15 +45,28 @@ namespace SEIIApp.Server.Services
 
         public Test AddTest(Test test)
         {
+            User user = UserService.GetUserWithId(test.Author.UserId);
+
+            if (user == null) return null;
+
+            test.Author = user;
+
             DatabaseContext.Tests.Add(test);
             DatabaseContext.SaveChanges();
             return test;
         }
 
         public Test UpdateTest(Test test)
-        {
+        {          
             var exsistingTest = GetTestWithId(test.TestId);
-            Mapper.Map(test, exsistingTest);
+            test.Author = exsistingTest.Author;
+            Mapper.Map(test, exsistingTest); // TODO Diese Zeile hat keine Auswirkung 
+
+            exsistingTest.Topic = test.Topic;
+            exsistingTest.Description = test.Description;
+            exsistingTest.Questions = test.Questions;
+            exsistingTest.FurtherLinks = test.FurtherLinks;
+            exsistingTest.TestContent = test.TestContent;
 
             DatabaseContext.Tests.Update(exsistingTest);
             DatabaseContext.SaveChanges();

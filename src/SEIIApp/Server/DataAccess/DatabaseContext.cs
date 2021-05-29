@@ -18,6 +18,7 @@ namespace SEIIApp.Server.DataAccess
 
         }
 
+        public DbSet<Domain.CompletedTest> CompletedTests { get; set; }
 
         public DbSet<Domain.User> User { get; set; }
 
@@ -26,8 +27,6 @@ namespace SEIIApp.Server.DataAccess
         public DbSet<Domain.Lecture> Lectures { get; set; }
 
         public DbSet<Domain.Test> Tests { get; set; }
-
-        public DbSet<Domain.CompletedTest> CompletedTests { get; set; }
 
         public DbSet<Domain.News> News{ get; set; }
 

@@ -17,7 +17,7 @@ namespace SEIIApp.Server.Domain
 
         public DateTime DateOfCreation { get; set; }
 
-        public User CreatedBy { get; set; }
+        public User Author { get; set; }
 
         public List<TestContent> TestContent { get; set; }
 

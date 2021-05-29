@@ -11,7 +11,7 @@ namespace SEIIApp.Shared
     {
         [Required]
         [StringLength(250)]
-        public string Question { get; set; }
+        public string QuestionText { get; set; }
 
         public List<AnswerDTO> Answers { get; set; }
 

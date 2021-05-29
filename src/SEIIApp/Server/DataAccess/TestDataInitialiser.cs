@@ -9,10 +9,11 @@ namespace SEIIApp.Server.DataAccess
 {
     public class TestDataInitialiser
     {
-        public static void InitalizeTestData(Services.UserService userService, Services.TestService testService, Services.NewsService newsService)
+        public static void InitalizeTestData(Services.UserService userService, Services.TestService testService, Services.NewsService newsService, Services.CompletedTestService completedTestService)
         {
             AddUser(userService);
             AddTests(testService, userService);
+            AddCompletedTest(testService, userService, completedTestService);
             AddNews(newsService);
         }
 
@@ -46,8 +47,31 @@ namespace SEIIApp.Server.DataAccess
 
         private static void AddNews(Services.NewsService newsService)
         {
-            News news = new() { Topic = "Este News", Content = "Dies ist die erste News auf diesem System", DateOfCreation = DateTime.Now };
+            News news = new() { Topic = "Este News", Content = "Dies ist die erste News auf diesem System", DateOfCreation = DateTime.UtcNow.Date };
             newsService.AddNews(news);
+        }
+
+        private static void AddCompletedTest(Services.TestService testService, Services.UserService userService, Services.CompletedTestService completedTestService)
+        {
+            Random random = new Random();
+            User user = userService.GetUserWithId(7);
+            for (int i = 1; i < 6; i++)
+            {
+                Test solved = testService.GetTestWithId(i);
+                CompletedTest completedTest = new() { Student = user, SolvedTest = solved, ReachedPoints = random.Next( 0, 10)};
+
+                completedTestService.AddCompletedTest(completedTest);
+            }
+        }
+
+
+        private static User GenerateUser(int id, Role role)
+        {
+            User u = new User();
+            u.Name = $"user{id}";
+            u.Pw = $"pw{id}";
+            u.Role = role;
+            return u;
         }
 
         public static Test GenerateTest(Services.UserService userService)
@@ -55,14 +79,15 @@ namespace SEIIApp.Server.DataAccess
             var test = new Test();
             test.Questions = new List<Question>();
 
-            test.CreatedBy = userService.GetUserWithId(3);
-            test.DateOfCreation = DateTime.Now;
+            test.Author = userService.GetUserWithId(4);
+            test.DateOfCreation = DateTime.UtcNow.Date;
             
             for (int i = 0; i < 3; i++)
             {
                 var question = new Question();
                 question.QuestionText = $"Question {i}";
                 question.Answers = new List<Answer>();
+                question.Explanation = $"Die Antwort für Frage {i} ist ...";
 
                 for (int c = 0; c < 5; c++)
                 {
@@ -81,13 +106,6 @@ namespace SEIIApp.Server.DataAccess
             return test;
         }
 
-        private static User GenerateUser(int id, Role role)
-        {
-            User u = new User();
-            u.Name = $"user{id}";
-            u.Pw = $"pw{id}";
-            u.Role = role;
-            return u;
-        }
+        
     }
 }
