@@ -1,0 +1,60 @@
+﻿<h3>Question</h3>
+@{
+    if (QuestionDto != null)
+    {
+        <EditForm Model="QuestionDto">
+            <DataAnnotationsValidator />
+
+            <label>Question Text</label>
+            <InputText @bind-Value="QuestionDto.Question" />
+            <ValidationSummary />
+
+            @foreach (var a in QuestionDto.Answers)
+            {
+                <AnswerDefComponent AnswerDto="a"></AnswerDefComponent>
+                <button class="btn btn-light btn-sm" @onclick="() => RemoveAnswer(a)">Remove Answer</button>
+            }
+
+            <button class="btn btn-light btn-sm my-3" @onclick="AddAnswer">Add Answer</button>
+
+        </EditForm>
+    }
+    else
+    {
+        <label>Loading Question Definition ...</label>
+    }
+}
+
+@code {
+
+    [Parameter]
+    public QuestionDTO QuestionDto { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        base.OnParametersSet();
+
+        InitiQuestionDefintionDto();
+    }
+
+    private void InitiQuestionDefintionDto()
+    {
+        if (QuestionDto.Answers == null)
+            QuestionDto.Answers = new List<AnswerDTO>();
+
+    }
+
+    private void AddAnswer()
+    {
+        QuestionDto.Answers.Add(new AnswerDTO());
+    }
+
+    private void RemoveAnswer(AnswerDTO answer)
+    {
+        QuestionDto.Answers.Remove(answer);
+    }
+
+
+}
+
+

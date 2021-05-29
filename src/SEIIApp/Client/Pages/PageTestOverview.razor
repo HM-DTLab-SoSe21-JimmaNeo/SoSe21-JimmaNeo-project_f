@@ -1,0 +1,151 @@
+﻿@page "/content"
+@inject Services.TestsDefinitionBackendAccessService TestDefinitionService
+@inject NavigationManager NavigationManager
+
+<div class="container">
+
+    <h2 class="text-center">Your Content</h2>
+    <div class="col text-center">
+
+        <div class="px-5">
+            <EditForm Model="@searchValue">
+                <div class="searchcostum input-group pt-2">
+
+
+                    @if (isFiltered == false)
+                    {
+                        <div class="px-auto">
+                            <InputText type="search" class="form-control rounded" placeholder="Search by name"
+                                       aria-label="Name of the Content" aria-describedby="search-addon" @bind-Value="@searchValue" />
+
+
+                        </div>
+                        <button class="btn btn-outline-primary btn-sm" @onclick="FilterContentByName">Search</button>
+
+                    }
+                    else
+                    {
+                        <div class="text-center pb-2">
+                            <button class="btn btn-outline-primary" @onclick="DeleteFilter">Return</button>
+                        </div>
+                    }
+
+                </div>
+            </EditForm>
+
+            @if (isFiltered == false)
+            {
+                <div class="text-center py-2">
+                    <button class="btn btn-outline-success" @onclick="AddQuiz">Add</button>
+                </div>}
+        </div>
+    </div>
+
+    @{ if (Tests?.Length > 0)
+
+        {
+            <ul class="list-group list-group-flush">
+
+                @foreach (var content in Tests)
+                {
+                    <li class="text-center list-group-item">
+                        @(content.Topic) <button class="btn btn-outline-dark btn-sm" @onclick="() => EditQuiz((TestDTO)content)">Edit</button>
+                        <button class="btn btn-outline-danger btn-sm" @onclick="() => DeleteContent(content.TestID)">Delete</button>
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <h5 class="text-center">Loading ...  or no content found.</h5>
+        }
+    }
+</div>
+
+@code {
+
+    public string searchValue = "";
+
+    public bool isFiltered { get; set; }
+
+    public TestBaseDTO[] Tests { get; set; }
+
+    private TestBaseDTO[] copyOfTest { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await base.OnParametersSetAsync();
+        Tests = await TestDefinitionService.GetTestOverview();
+    }
+
+    private void EditQuiz(TestDTO test)
+    {
+        NavigationManager.NavigateTo("/contentedit/" + test.TestID);
+    }
+
+    private void AddQuiz()
+    {
+        NavigationManager.NavigateTo("/contentedit/0");
+    }
+
+    private async Task DeleteContent(int contentId)
+    {
+        for (int i = 0; i < Tests.Length; i++)
+        {
+            if (contentId == Tests[i].TestID)
+            {
+                if (isFiltered == true)
+                {
+
+                    int indexOfTheDeletedContent = Array.FindIndex(copyOfTest, item => item == Tests[i]);
+                    Tests = Tests.Where((source, index) => index != i).ToArray();
+                    copyOfTest = copyOfTest.Where((source, index) => index != indexOfTheDeletedContent).ToArray();
+                }
+                else
+                {
+
+                    Tests = Tests.Where((source, index) => index != i).ToArray();
+                }
+            }
+        }
+        await TestDefinitionService.DeleteTest(contentId);
+
+
+    }
+
+    private void FilterContentByName()
+    {
+        if (Tests != null && searchValue != null)
+        {
+
+            isFiltered = true;
+            copyOfTest = new TestDTO[Tests.Length];
+
+            for (int i = 0; i < Tests.Length; i++)
+            {
+                copyOfTest[i] = Tests[i];
+            }
+
+            for (int i = 0; i < copyOfTest.Length; i++)
+            {
+                if (searchValue != copyOfTest[i].Topic)
+                {
+                    int indexOfTheNotSearchedValues = Array.FindIndex(Tests, item => item == copyOfTest[i]);
+                    Tests = Tests.Where((source, index) => index != indexOfTheNotSearchedValues).ToArray();
+                }
+            }
+        }
+    }
+
+    private void DeleteFilter()
+    {
+        Tests = new TestDTO[copyOfTest.Length];
+        isFiltered = false;
+        for (int i = 0; i < Tests.Length; i++)
+        {
+            Tests[i] = copyOfTest[i];
+        }
+    }
+
+}
+
