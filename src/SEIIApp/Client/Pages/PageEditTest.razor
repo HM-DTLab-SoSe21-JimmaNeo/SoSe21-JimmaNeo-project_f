@@ -11,34 +11,47 @@
             @if (TestDto != null)
             {
 
-                <EditForm EditContext="@context" OnSubmit="OnSubmit">
+        <EditForm EditContext="@context" OnSubmit="OnSubmit">
 
-                    <label>Content Name:</label>
-                    <InputText @bind-Value="TestDto.Topic" />
+            <label>Content Name:</label>
+            <InputText @bind-Value="TestDto.Topic" />
 
-                    <label>Content Description:</label>
+            <label>Content Description:</label>
 
-                    <div class="h-100 d-inline-block" style="width: 500px">
-                        <InputText style="height:100%; width: 100%;" @bind-Value="TestDto.Description" />
+            <div class="h-100 d-inline-block" style="width: 500px">
+                <InputText style="height:100%; width: 100%;" @bind-Value="TestDto.Description" />
+            </div>
+
+            <hr />
+            @foreach (var question in TestDto.Questions)
+            {
+                <div class="card">
+                    <div class="card-body">
+                        <!-- Component for questions in quiz -->
+                        <QuestionDefinitionComponent QuestionDto="question"></QuestionDefinitionComponent>
+                        <button class="btn btn-light btn-sm my-3" @onclick="() => RemoveQuestion(question)">Remove Question</button>
                     </div>
+                </div>
+            }
+            <button class="btn btn-light btn-sm my-3" @onclick="AddQuestion">Add Question</button>
 
-                    <hr />
-                    @foreach (var question in TestDto.Questions)
-                    {
-                        <div class="card">
-                            <div class="card-body">
-                                <!-- Component for questions in quiz -->
-                                <QuestionDefinitionComponent QuestionDto="question"></QuestionDefinitionComponent>
-                                <button class="btn btn-light btn-sm my-3" @onclick="() => RemoveQuestion(question)">Remove Question</button>
-                            </div>
-                        </div>
-                    }
+            @foreach (var link in TestDto.FurtherLinks)
+            {
+                <div class="card">
+                    <div class="card-body">
+                        <!-- Component for questions in quiz -->
+                        <FurtherLinkComponent FurtherLinkDto="link"></FurtherLinkComponent>
+                        <button class="btn btn-light btn-sm my-3" @onclick="() => DeleteFurtherLink(link)">Remove Link</button>
+                    </div>
+                </div>
+            }
+            <button class="btn btn-light" @onclick="AddFurtherLink">Add Link</button>
 
-                    <ValidationSummary />
+            <ValidationSummary />
 
-                    <button class="btn btn-light btn-sm my-3" @onclick="AddQuestion">Add Question</button>
-                    <button class="btn btn-light" @onclick="SaveContentToBackend">Save Complete Quiz</button>
-                </EditForm>
+            
+            <button class="btn btn-light" @onclick="SaveContentToBackend">Save Complete Quiz</button>
+        </EditForm>
 
             }
             else
@@ -51,8 +64,8 @@
 
 @code {
 
-    [Parameter]
-    public int TestID { get; set; }
+        [Parameter]
+        public int TestID { get; set; }
 
     public TestDTO TestDto { get; set; }
 
@@ -77,6 +90,10 @@
     private void PrepareEditOrAddOfTestDefinition(TestDTO test)
     {
         if (test.Questions == null) test.Questions = new List<QuestionDTO>();
+        if (test.Author == null) test.Author = new UserDTO() { Name = "user4", Role = Role.Teacher, UserId = 4};
+        if(test.TestContent == null) test.TestContent = new List<TestContentDTO>();
+        if (test.FurtherLinks == null) test.FurtherLinks = new List<FurtherLinkDTO>();
+
         this.TestDto = test;
     }
 
@@ -109,6 +126,30 @@
 
             NavigationManager.NavigateTo("/content");
         }
+    }
+
+
+    private void AddTestContent()
+    {
+
+        TestDto.TestContent.Add(new TestContentDTO());
+
+    }
+
+    private void DeleteTestContent(TestContentDTO contentDto)
+    {
+        TestDto.TestContent.Remove(contentDto);
+    }
+
+    private void AddFurtherLink()
+    {
+        TestDto.FurtherLinks.Add(new FurtherLinkDTO());
+
+    }
+
+    private void DeleteFurtherLink(FurtherLinkDTO link)
+    {
+        TestDto.FurtherLinks.Remove(link);
     }
 
 }

@@ -17,6 +17,9 @@
 
             <button class="btn btn-light btn-sm my-3" @onclick="AddAnswer">Add Answer</button>
 
+            <label>Explanation</label>
+            <InputText @bind-Value="QuestionDto.Explanation" />
+
         </EditForm>
     }
     else
