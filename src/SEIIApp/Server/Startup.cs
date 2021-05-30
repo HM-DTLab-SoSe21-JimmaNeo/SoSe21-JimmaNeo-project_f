@@ -55,7 +55,7 @@ namespace SEIIApp.Server {
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, Services.UserService userService) {
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, Services.UserService userService, Services.TestService testService) {
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
                 app.UseWebAssemblyDebugging();
@@ -87,7 +87,7 @@ namespace SEIIApp.Server {
             });
 
 #if DEBUG
-            TestDataInitialiser.InitalizeTestData(userService);
+            TestDataInitialiser.InitalizeTestData(userService, testService);
 #endif
         }
     }

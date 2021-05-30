@@ -12,7 +12,7 @@ using AutoMapper;
 namespace SEIIApp.Server.Controllers
 {
     [ApiController]
-    [Route("api/")] 
+    [Route("api/users")] 
     public class UserController : Controller
     {
         private UserService UserService { get; set; }
@@ -25,7 +25,7 @@ namespace SEIIApp.Server.Controllers
             this.Mapper = mapper;
         }
 
-        [HttpGet("LoginUser")]
+        [HttpGet("login")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -40,7 +40,7 @@ namespace SEIIApp.Server.Controllers
             return Ok(mappedResult);
         }
 
-        [HttpGet("ShowUsers")]
+        [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<UserDTO[]> ShowUsers()
         {
@@ -51,15 +51,17 @@ namespace SEIIApp.Server.Controllers
 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [HttpPut("RegisterStudent")]
+        [HttpPut("register")]
         public ActionResult<UserDTO> RegisterStudent([FromBody] LoginInformationDTO ri)
         {
             var userInList = UserService.GetUserWithName(ri.User.Name);
             if (userInList != null) return BadRequest();
 
             var mappedUser = Mapper.Map<User>(ri.User);
-                   
-            return Ok(UserService.AddUser(mappedUser));
+            mappedUser.Pw = ri.Pw;
+            UserService.AddUser(mappedUser);
+
+            return Ok(Mapper.Map<UserDTO>(mappedUser));
         }
 
 
