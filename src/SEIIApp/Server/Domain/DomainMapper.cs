@@ -47,9 +47,6 @@ namespace SEIIApp.Server.Domain
                 .ForMember(subjectAreaDto => subjectAreaDto.Lectures, opts => opts.MapFrom(obj => obj.Lectures.ToList()));
             CreateMap<SubjectAreaDTO, SubjectArea>()
                 .ForMember(subjectAreaObj => subjectAreaObj.Lectures, opts => opts.MapFrom(obj => obj.Lectures.ToList()));
-            // Prof. Kofler fragen:
-            // 1. Probleme wenn nur auf BaseDTO gematched wird?
-            // 2. Kann in DTOs mit List anstatt Array gearbeitet werden?
 
             // TestContent
             CreateMap<TestContent, TestContentDTO>();
