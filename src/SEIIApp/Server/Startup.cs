@@ -50,7 +50,7 @@ namespace SEIIApp.Server {
 
             // Database Services
             services.AddScoped<Services.UserService>();
-            services.AddScoped<Services.LectureService>();
+           
 
         }
 
