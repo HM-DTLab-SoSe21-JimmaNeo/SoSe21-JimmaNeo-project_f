@@ -21,7 +21,7 @@ namespace SEIIApp.Shared
 
     } 
 
-    public class LectureDTO
+    public class LectureDTO : LectureBaseDTO
     {
         // TDDO ??[ValidateComplexType]
 
