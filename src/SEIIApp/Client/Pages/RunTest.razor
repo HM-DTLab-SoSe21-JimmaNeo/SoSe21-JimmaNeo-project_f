@@ -1,0 +1,106 @@
+﻿
+    @page "/runtest/{TestID:int}"
+
+    @inject Services.TestsDefinitionBackendAccessService TestDefinitionService
+    @inject NavigationManager NavigationManager
+
+    
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-3 text-center">
+                <h3>RunTest</h3>
+
+                @if (TestDto != null)
+                {
+
+            <EditForm EditContext="@context" OnSubmit="OnSubmit">
+
+                <label>Content Name:</label>
+                <InputText @bind-Value="TestDto.Topic" />
+
+                <label>Content Description:</label>
+
+                <div class="h-100 d-inline-block" style="width: 500px">
+                    <InputText style="height:100%; width: 100%;" @bind-Value="TestDto.Description" />
+                </div>
+
+                <hr />
+                <ul class="list-group list-group-flush">
+
+                    @* @foreach (var question in TestDto.Questions)*@
+
+                    @while (indexOfAnswer < 2)
+                    {
+                        <li class="text-center list-group-item">
+                            <label> @(TestDto.Questions.ElementAt(indexOfAnswer)) </label>
+                        </li>
+                        foreach (var answer in (TestDto.Questions.ElementAt(indexOfAnswer).Answers))
+                        {
+                            <li class="text-center list-group-item">
+                                <label>@(answer.AnswerText)</label>
+                                <InputCheckbox @bind-Value="isClicked"></InputCheckbox>
+
+                            </li>
+
+                        }
+                        <button class="btn btn-light btn-sm my-3" @onclick="nextIsClicked">Next</button>
+                    }
+                    <ValidationSummary />
+                </ul>
+            </EditForm>
+                        }
+                        else
+                        {<label> not found</label>}
+                </div>
+        </div>
+    </div>
+
+    @code {
+
+        [Parameter]
+        public int TestID { get; set; }
+
+        public TestDTO TestDto { get; set; }
+
+        private EditContext context { get; set; }
+        private bool isClicked { get; set; }
+        
+        private int indexOfAnswer { get; set; } = 0;
+
+
+        private void nextIsClicked()
+        {
+            indexOfAnswer++;
+        }
+        protected override async Task OnParametersSetAsync()
+        {
+            await base.OnParametersSetAsync();
+            this.TestDto = await TestDefinitionService.GetTestById(TestID);
+              
+
+            context = new EditContext(TestDto);
+        }
+
+        private void OnSubmit(EditContext context)
+        {
+
+        }
+
+        private async void SaveContentToBackend()
+        {
+            var isValid = context.Validate();
+            if (isValid)
+            {
+                var answer = await TestDefinitionService.AddOrUpdateTest(TestDto);
+                if (answer != null)
+                {
+                    this.TestDto.TestID = answer.TestID; //refresh id (if created)
+                }
+
+                NavigationManager.NavigateTo("/content");
+            }
+        }
+
+
+    }
+

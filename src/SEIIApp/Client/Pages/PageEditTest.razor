@@ -39,7 +39,7 @@
             {
                 <div class="card">
                     <div class="card-body">
-                        <!-- Component for questions in quiz -->
+                        
                         <FurtherLinkComponent FurtherLinkDto="link"></FurtherLinkComponent>
                         <button class="btn btn-light btn-sm my-3" @onclick="() => DeleteFurtherLink(link)">Remove Link</button>
                     </div>
@@ -90,7 +90,7 @@
     private void PrepareEditOrAddOfTestDefinition(TestDTO test)
     {
         if (test.Questions == null) test.Questions = new List<QuestionDTO>();
-        if (test.Author == null) test.Author = new UserDTO() { Name = "user4", Role = Role.Teacher, UserId = 4};
+        if (test.Author == null) test.Author = new UserDTO() { Name = "user4", Role = Role.Teacher, UserId = 4}; //ToDo
         if(test.TestContent == null) test.TestContent = new List<TestContentDTO>();
         if (test.FurtherLinks == null) test.FurtherLinks = new List<FurtherLinkDTO>();
 
@@ -99,7 +99,7 @@
 
     private void AddQuestion()
     {
-        //Add element to question definition array
+       
         TestDto.Questions.Add(new QuestionDTO());
     }
 
