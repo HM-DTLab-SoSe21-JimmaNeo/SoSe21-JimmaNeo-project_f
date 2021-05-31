@@ -1,0 +1,77 @@
+﻿@page "/register"
+@inject Services.UserBackendAccessService UserService;
+@using SEIIApp.Shared;
+
+<h3>Register</h3>
+
+
+
+<div class="card" style="width:25rem" border="#FFFFFF" >
+    <div class="card-body">
+      
+        <p><font color="red">@msg</font></p>
+         <label for="fname">First Name:</label><br>
+        <input type="text" id="fname"  size="30" name="fname" @bind="FirstName"><br><br>
+
+        <label for="sname">Last Name:</label><br>
+        <input type="text" id="sname" size="30" name="sname" @bind="LastName"><br><br>
+
+        <label for="lname">Username:</label><br>
+        <input type="text" id="uname" size="30" name="uname" @bind="UserName"><br><br>
+
+       
+        <label for="pw">Password:</label><br>  
+        <input type="password" id="p2" size="30" maxlength="20" required @bind="Pw"><br><br>
+
+
+     
+            <button type="button" class="btn btn-outline-primary" @onclick="ToRegister">Register</button>
+            <button type="button" class="btn btn-outline-primary" href="/login">Cancel</button>
+
+            
+         
+    </div>
+
+</div>
+
+@code {
+
+	
+    public string FirstName{get; set;}
+    
+    public string LastName{get; set;}
+    
+    public string UserName{get; set;}
+   
+    public string Pw{get; set;}
+
+    public string msg{get; set;}
+
+    private async void ToRegister(){
+
+        UserDTO user = new UserDTO(){FirstName = FirstName, LastName = LastName, Name = UserName, Role = Role.Student};
+        LoginInformationDTO logInfo = new LoginInformationDTO(){User= user, Pw = Pw};
+
+        if(CheckRegister()){
+            var respones = await UserService.RegisterUser(logInfo);
+        } 
+
+        
+
+    }
+
+    private bool CheckRegister()
+    {
+        bool check = true;
+        if(FirstName == null && LastName == null && UserName == null && Pw == null) {
+            msg = " Please insert information in all fields!";
+            check = false;          
+        }
+
+        return check;
+
+    }
+
+
+}
+
