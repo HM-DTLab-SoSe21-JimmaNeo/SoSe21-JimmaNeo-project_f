@@ -26,7 +26,14 @@ namespace SEIIApp.Client.Services
 
         public async Task<UserDTO> LoginUser(string name, string pw)
         {
-            return await HttpClient.GetFromJsonAsync<UserDTO>(GetUserUrl() + $"/login?name={name}&pw={pw}");
+            try
+            {
+                return await HttpClient.GetFromJsonAsync<UserDTO>(GetUserUrl() + $"/login?name={name}&pw={pw}");
+            }
+            catch (HttpRequestException)
+            {
+                return null;
+            }
         }
 
         public async Task<UserDTO[]> GetAllUsers()
