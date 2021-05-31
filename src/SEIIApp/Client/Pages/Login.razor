@@ -1,0 +1,53 @@
+﻿@page "/login"
+@inject Services.UserBackendAccessService UserService
+@using SEIIApp.Shared;
+
+<h3>Login</h3>
+<div>
+    <table>
+        <tr>
+            <td><label><b>Name</b></label></td>
+            <td><input type="text" id="fname" name="fname" @bind="inputName"></td>
+        </tr>
+        <tr>
+            <td><label><b>Password</b></label></td>
+            <td><input type="text" id="pw" name="lname" @bind="inputPW"></td>
+        </tr>
+    </table>
+    <button class="btn btn-primary" @onclick="PerformLogin">Login</button>
+    <a href="/register">You don't have an account yet? Register here</a> <br>
+    <NavLink class="nav-link" href="manageuser">Admin</NavLink>
+    
+</div>
+
+<p>@msg</p>
+
+@code {
+
+    public static UserDTO User = null;
+
+    public string inputName { get; set; }
+
+    public string inputPW { get; set; }
+
+    public string msg { get; set; }
+
+    private async void  PerformLogin()
+    {
+        var data = await UserService.LoginUser(inputName, inputPW);
+        User = data;
+
+        if (User != null)
+        {
+            msg = $"Hello {User.FirstName} {User.LastName}. You are successfully logged in.";
+        }
+        else
+        {
+            msg = "Ohps.. Something went wrong. Maybe your password or Username is incorrect!";
+        }
+    }
+
+
+
+
+}

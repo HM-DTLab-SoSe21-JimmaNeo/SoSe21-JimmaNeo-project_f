@@ -1,0 +1,66 @@
+﻿@page "/manageuser"
+@inject Services.UserBackendAccessService UserService
+@inject NavigationManager NavigationManager
+@using SEIIApp.Shared;
+@using static SEIIApp.Client.Pages.Login;
+
+<h3>ManageUser</h3>
+
+
+@{
+
+    if (User != null && User.Role == Role.Admin)
+    {
+        <tr>
+            <th>Name</th>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Role</th>
+        </tr>
+        foreach (var user in Users)
+        {
+            <tr>
+                <td>@user.Name</td>
+                <td>@user.FirstName</td>
+                <td>@user.LastName</td>
+                <td>@user.Role</td>
+                <td><button class="btn btn-primary" @onclick="() => EditUser(user)">Edit</button></td>
+                <td><button class="btn btn-danger" @onclick="() => DeleteUser(user)">Delete</button></td>
+            </tr>
+        }
+    
+    }
+    else
+    {
+        <p>You are not allowed to see this!</p>
+    }
+}
+
+
+    @code {
+
+        public UserDTO[] Users = new UserDTO[0];
+
+        protected override async Task OnParametersSetAsync()
+        {
+            await base.OnParametersSetAsync();
+            Users = await UserService.GetAllUsers();
+        }
+
+        private void EditUser(UserDTO user)
+        {
+
+        }
+
+        private async void DeleteUser(UserDTO user)
+        {
+
+            bool successfull = await UserService.DeleteUser(user.UserId);
+            if (successfull)
+            {
+                Users = Users.Where(u => u != user).ToArray();
+            }
+
+        }
+
+    }

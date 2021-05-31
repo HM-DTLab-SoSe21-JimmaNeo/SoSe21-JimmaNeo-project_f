@@ -19,7 +19,7 @@ namespace SEIIApp.Server.DataAccess
 
         private static void AddUser(Services.UserService userService)
         {
-            User system = new User { Name = "system", FirstName = "", LastName = "", Role = Role.None, Pw = "system" };
+            User system = new User { Name = "system", FirstName = "", LastName = "", Role = Role.None, Pw = "system".GetHashCode().ToString() };
             userService.AddUser(system);
 
             for (int i = 2; i < 8; i++)
@@ -67,7 +67,8 @@ namespace SEIIApp.Server.DataAccess
 
         private static User GenerateUser(int id, Role role)
         {
-            User u = new User() { Name = $"user{id}", FirstName = $"first_{id}", LastName = $"last_{id}", Pw= $"pw{id}"};
+            User u = new User() { Name = $"user{id}", FirstName = $"first_{id}", LastName = $"last_{id}"};
+            u.Pw = $"pw{id}".GetHashCode().ToString();
             u.Role = role;
             return u;
         }
