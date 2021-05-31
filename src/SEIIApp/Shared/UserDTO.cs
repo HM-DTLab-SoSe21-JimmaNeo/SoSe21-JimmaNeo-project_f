@@ -16,6 +16,12 @@ namespace SEIIApp.Shared
         [StringLength(20, MinimumLength = 3)]
         public string Name { get; set; }
 
+        [Required]
+        public string FirstName { get; set; }
+
+        [Required]
+        public string LastName { get; set; }
+
         [DefaultValue(Role.None)]
         public Role Role { get; set; }
     }

@@ -46,5 +46,26 @@ namespace SEIIApp.Server.Services
             DatabaseContext.SaveChanges();
             return user;
         }
+
+        public User UpdateUser(User user)
+        {
+            var existingUser = GetUserWithId(user.UserId);
+           
+            Mapper.Map(user, existingUser); // keine Auswirkung
+
+            existingUser.FirstName = user.FirstName;
+            existingUser.LastName = user.LastName;
+            existingUser.Role = user.Role;
+
+            DatabaseContext.User.Update(existingUser);
+            DatabaseContext.SaveChanges();
+            return existingUser;
+        }
+
+        public void RemoveUser(User user)
+        {
+            DatabaseContext.User.Remove(user);
+            DatabaseContext.SaveChanges();
+        }
     }
 }
