@@ -15,9 +15,9 @@
         </tr>
     </table>
     <button class="btn btn-primary" @onclick="PerformLogin">Login</button>
-    <a href="/register">You don't have an account yet? Register here</a> <br>
+    <a href="/register">You don't have an account yet? Register here</a><br>
     <NavLink class="nav-link" href="manageuser">Admin</NavLink>
-    
+
 </div>
 
 <p>@msg</p>
@@ -32,7 +32,7 @@
 
     public string msg { get; set; }
 
-    private async void  PerformLogin()
+    private async void PerformLogin()
     {
         var data = await UserService.LoginUser(inputName, inputPW);
         User = data;
