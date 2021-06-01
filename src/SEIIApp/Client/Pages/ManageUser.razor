@@ -4,6 +4,7 @@
 @using SEIIApp.Shared;
 @using static SEIIApp.Client.Pages.Login;
 
+
 <h3>ManageUser</h3>
 
 
@@ -11,11 +12,15 @@
 
     if (User != null && User.Role == Role.Admin)
     {
+        <table border="1" frame="box" width="80%">
         <tr>
             <th>Name</th>
-            <th>Firstname</th>
-            <th>Lastname</th>
+            <th>FirstName</th>
+            <th>LastName</th>
             <th>Role</th>
+            <th></th>
+            <th></th>
+            <th></th>
         </tr>
         foreach (var user in Users)
         {
@@ -26,8 +31,17 @@
                 <td>@user.Role</td>
                 <td><button class="btn btn-primary" @onclick="() => EditUser(user)">Edit</button></td>
                 <td><button class="btn btn-danger" @onclick="() => DeleteUser(user)">Delete</button></td>
+             @*    <td><select name="role" id="role">
+                <option value="undefined">Undefined</option>
+                <option value="student">Student</option>
+                <option value="teacher">Teacher</option>
+                <option value="admin">Admin</option>
+                </select></td> *@
             </tr>
-        }
+            </table>
+
+
+}
     
     }
     else

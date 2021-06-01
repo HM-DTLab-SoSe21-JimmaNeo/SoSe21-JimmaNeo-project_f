@@ -3,24 +3,27 @@
 @using SEIIApp.Shared;
 
 <h3>Login</h3>
-<div>
-    <table>
-        <tr>
-            <td><label><b>Name</b></label></td>
-            <td><input type="text" id="fname" name="fname" @bind="inputName"></td>
-        </tr>
-        <tr>
-            <td><label><b>Password</b></label></td>
-            <td><input type="text" id="pw" name="lname" @bind="inputPW"></td>
-        </tr>
-    </table>
-    <button class="btn btn-primary" @onclick="PerformLogin">Login</button>
-    <a href="/register">You don't have an account yet? Register here</a><br>
-    <NavLink class="nav-link" href="manageuser">Admin</NavLink>
+
+
+<div class="card" style="width:25rem" border="#FFFFFF" >
+    <div class="card-body">
+      
+        <p><font color="red">@msg</font></p>
+         <label for="uname">Username:</label><br>
+        <input type="text" id="uname"  size="30" name="uname" @bind="inputName"><br><br>
+       
+        <label for="pw">Password:</label><br>  
+        <input type="password" id="pw" size="30" maxlength="20" required @bind="inputPW"><br><br>
+
+            <button type="button" class="btn btn-primary" @onclick="PerformLogin">Login</button>
+            <button type="button" class="btn btn-primary">Cancel</button><br><br>
+           <a href="/register" align="center">You don't have an account yet? <br>Register here</a> <br>
+            <NavLink class="nav-link" href="manageuser">Admin</NavLink>
+    
+    </div>
 
 </div>
 
-<p>@msg</p>
 
 @code {
 
