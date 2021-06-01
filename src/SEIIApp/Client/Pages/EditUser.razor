@@ -1,0 +1,43 @@
+﻿@page "/edituser/{UserId:int}"
+@using SEIIApp.Shared;
+
+<h3>EditUser</h3>
+
+
+
+ @*  <select name="role" id="role" @bind-V">
+                                <option value=4 selected>@user.Role</option> 
+                                <option value=0>Undefined</option>
+                                <option value=1>Student</option>
+                                <option value=2>Teacher</option>
+                                <option value=3>Admin</option>
+                            </select>
+                            *@
+
+
+
+@code {
+    [Parameter]
+    public int UserID{ get; set; }
+
+
+    
+   /* private void EditUser(UserDTO user)
+    {
+        msg = "Try to change user.";
+        var response = UserService.ChangeUser(user);
+
+        if (response != null)
+        {
+            msg = "Change User was successful!";
+        }
+        else
+        {
+            msg = "Change User failed";
+
+        }
+    }
+
+    */
+
+}
