@@ -5,6 +5,7 @@ using SEIIApp.Server.Domain;
 using System.Threading.Tasks;
 using SEIIApp.Server.DataAccess;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
 namespace SEIIApp.Server.Services
 {
@@ -12,17 +13,20 @@ namespace SEIIApp.Server.Services
     {
         private DatabaseContext DatabaseContext { get; set; }
 
-        //private IMapper Mapper { get; set; }
+        private IMapper Mapper { get; set; }
 
-        public LectureService(DatabaseContext db) //, IMapper mapper
+        public LectureService(DatabaseContext db, IMapper mapper)
         {
             this.DatabaseContext = db;
-            //this.Mapper = mapper;
+            this.Mapper = mapper;
         }
 
         private IQueryable<Lecture> GetQueryableForLecture()
         {
-            return DatabaseContext.Lectures;
+            return DatabaseContext.Lectures
+                .Include(lecture => lecture.CreatedBy)
+                .Include(lecture => lecture.Test)
+                .Include(lecture => lecture.Content);
         }
 
         public Lecture[] GetAllLecture()
@@ -45,6 +49,22 @@ namespace SEIIApp.Server.Services
             DatabaseContext.Lectures.Add(lecture);
             DatabaseContext.SaveChanges();
             return lecture;
+        }
+
+        public Lecture UpdateLecture(Lecture lecture)
+        {
+            var exsistingLecture = GetLectureWithId(lecture.LectureId);
+            Mapper.Map(lecture, exsistingLecture);
+
+            DatabaseContext.Lectures.Update(exsistingLecture);
+            DatabaseContext.SaveChanges();
+            return exsistingLecture;
+        }
+
+        public void RemoveLecture(Lecture lecture)
+        {
+            DatabaseContext.Lectures.Remove(lecture);
+            DatabaseContext.SaveChanges();
         }
 
     }
