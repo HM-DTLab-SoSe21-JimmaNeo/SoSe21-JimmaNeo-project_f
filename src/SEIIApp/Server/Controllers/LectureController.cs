@@ -12,7 +12,7 @@ using AutoMapper;
 namespace SEIIApp.Server.Controllers
 {
     [ApiController]
-    [Route("api/")]
+    [Route("api/lectures")]
     public class LectureController : Controller
     {
         private LectureService LectureService { get; set; }
@@ -34,41 +34,50 @@ namespace SEIIApp.Server.Controllers
             return Ok(mappedResult);
         }
 
-        [HttpGet("SearchLecture")]
+        [HttpGet("SearchLecture/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult<UserDTO[]> SearchLecture([FromQuery] string topic)
+        public ActionResult<LectureDTO[]> SearchLecture([FromRoute] int id)
         {
-            var lectureInList = LectureService.GetLectureWithTopic(topic);
-            if (lectureInList == null) return BadRequest();
-            var mappedResult = Mapper.Map<LectureBaseDTO[]>(lectureInList);
+            var lectureInList = LectureService.GetLectureWithId(id);
+            if (lectureInList == null) return StatusCode(StatusCodes.Status404NotFound);
+            var mappedResult = Mapper.Map<LectureDTO[]>(lectureInList);
             return Ok(mappedResult);
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [HttpPut("AddLecture")]
-        public ActionResult<LectureDTO> AddLecture([FromQuery] string topic, [FromQuery] string text)
+        [HttpPut("ChangeLecture")]
+        public ActionResult<LectureDTO> AddOrUpdateLecture([FromBody] LectureDTO lectureDTO)
         {
-            var lectureInList = LectureService.GetLectureWithTopic(topic);
-            if (lectureInList != null) return BadRequest();
-            // TODO ueberarbeitern!!!
-            var allLectures = LectureService.GetAllLecture();
-            int maxID = 1;
-            foreach (Lecture x in allLectures)
+            if (ModelState.IsValid)
             {
-                if(maxID < x.LectureId)
+                var mappedLecture = Mapper.Map<Lecture>(lectureDTO);
+
+                if (mappedLecture.LectureId == 0)
                 {
-                    maxID = x.LectureId;
+                    mappedLecture = LectureService.AddLecture(mappedLecture);
                 }
+                else
+                {
+                    mappedLecture = LectureService.UpdateLecture(mappedLecture);
+                }
+
+                var mappedLectureDTO = Mapper.Map<LectureDTO>(mappedLecture);
+                return Ok(mappedLectureDTO);
             }
-            Lecture lecture = new Lecture();
-            lecture.LectureId = maxID + 1;
-            lecture.Topic = topic;
-            lecture.Text = text;
+            return BadRequest(ModelState);
+        }
 
-            var mappedLecture = Mapper.Map<Lecture>(lecture);
+        [HttpDelete("DeleteLecture/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult DeleteLecture([FromRoute] int id)
+        {
+            var lecture = LectureService.GetLectureWithId(id);
+            if (lecture == null) return StatusCode(StatusCodes.Status404NotFound);
 
-            return Ok(LectureService.AddLecture(mappedLecture));
+            LectureService.RemoveLecture(lecture);
+            return Ok();
         }
 
     }
