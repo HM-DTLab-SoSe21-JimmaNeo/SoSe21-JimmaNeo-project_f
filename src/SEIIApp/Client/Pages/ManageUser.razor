@@ -49,6 +49,7 @@
                 
             </tbody>
         </table>
+        <NavLink class="nav-link" href="/"><button type="button" class="btn btn-outline-primary">Logout</button></NavLink>
       
     }
 
@@ -78,7 +79,7 @@
     private void EditUser(UserDTO user)
     {
     NavigationManager.NavigateTo($"/edituser/{user.UserId}");
-    }
+    }  
 
 
 

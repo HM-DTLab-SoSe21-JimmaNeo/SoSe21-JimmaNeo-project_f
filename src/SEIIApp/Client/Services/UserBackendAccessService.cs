@@ -50,7 +50,7 @@ namespace SEIIApp.Client.Services
             }
             else return null;
         }
-        
+
         public async Task<UserDTO> ChangeUser(UserDTO userDTO)
         {
             var response = await HttpClient.PutAsJsonAsync(GetUserUrl() + "/change", userDTO);
@@ -60,11 +60,31 @@ namespace SEIIApp.Client.Services
             }
             else return null;
         }
-         
+
         public async Task<bool> DeleteUser(int id)
         {
             var response = await HttpClient.DeleteAsync(GetUserUrl() + $"/{id}");
             return response.StatusCode == System.Net.HttpStatusCode.OK;
         }
+
+
+        private string GetUserUrlWithId(int id)
+        {
+            return $"{GetUserUrl()}/{id}";
+        }
+
+        /// <summary>
+        /// Returns a certain quiz by id
+        /// </summary>
+        public async Task<UserDTO> GetUserById(int id)
+        {
+             return await HttpClient.GetFromJsonAsync<UserDTO>(GetUserUrlWithId(id));
+      
+        }
+
+
+
     }
 }
+
+   

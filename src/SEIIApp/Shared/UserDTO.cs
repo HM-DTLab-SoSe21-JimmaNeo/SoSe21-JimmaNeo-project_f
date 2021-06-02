@@ -24,7 +24,9 @@ namespace SEIIApp.Shared
 
         [DefaultValue(Role.None)]
         public Role Role { get; set; }
-    }
+
+       
+}
 
     public enum Role
     {

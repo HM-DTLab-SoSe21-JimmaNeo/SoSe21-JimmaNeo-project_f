@@ -5,6 +5,7 @@ using SEIIApp.Server.Domain;
 using System.Threading.Tasks;
 using SEIIApp.Server.DataAccess;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
 namespace SEIIApp.Server.Services
 {

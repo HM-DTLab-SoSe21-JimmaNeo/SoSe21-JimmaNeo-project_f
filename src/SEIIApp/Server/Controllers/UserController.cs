@@ -12,7 +12,7 @@ using AutoMapper;
 namespace SEIIApp.Server.Controllers
 {
     [ApiController]
-    [Route("api/users")] 
+    [Route("api/users")]
     public class UserController : Controller
     {
         private UserService UserService { get; set; }
@@ -73,7 +73,7 @@ namespace SEIIApp.Server.Controllers
             if (ModelState.IsValid)
             {
                 if (userDTO.UserId == 0) return BadRequest();
-                
+
                 var mappedUser = Mapper.Map<User>(userDTO);
                 mappedUser = UserService.UpdateUser(mappedUser);
 
@@ -95,6 +95,16 @@ namespace SEIIApp.Server.Controllers
             return Ok();
         }
 
-
+        
+        [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<UserDTO> GetUserById([FromRoute]int id)
+        {
+            var user = UserService.GetUserWithId(id);
+            if (user == null) return StatusCode(StatusCodes.Status404NotFound);
+            var mappedResult = Mapper.Map<UserDTO>(user);
+            return Ok(mappedResult);
+        }
     }
 }
