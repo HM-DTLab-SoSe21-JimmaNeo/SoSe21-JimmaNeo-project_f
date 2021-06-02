@@ -21,6 +21,10 @@ namespace SEIIApp.Server.Domain
             CreateMap<FurtherLink, FurtherLinkDTO>();
             CreateMap<FurtherLinkDTO, FurtherLink>();
 
+            // YT-Videos
+            CreateMap<VideoContent, VideoContentDTO>();
+            CreateMap<VideoContentDTO, VideoContent>();
+
             // LectureContent
             CreateMap<LectureContent, LectureContentDTO>();
             CreateMap<LectureContentDTO, LectureContent>();
