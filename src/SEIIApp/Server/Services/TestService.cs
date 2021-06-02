@@ -29,6 +29,7 @@ namespace SEIIApp.Server.Services
             return DatabaseContext.Tests
                 .Include(test => test.Questions).ThenInclude(questions => questions.Answers)
                 .Include(test => test.TestContent)
+                .Include(test => test.Videos)
                 .Include(test => test.FurtherLinks)
                 .Include(test => test.Author);
         }
@@ -65,6 +66,7 @@ namespace SEIIApp.Server.Services
             exsistingTest.Topic = test.Topic;
             exsistingTest.Description = test.Description;
             exsistingTest.Questions = test.Questions;
+            exsistingTest.Videos = test.Videos;
             exsistingTest.FurtherLinks = test.FurtherLinks;
             exsistingTest.TestContent = test.TestContent;
 
