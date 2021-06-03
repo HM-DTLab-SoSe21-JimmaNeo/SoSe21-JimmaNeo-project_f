@@ -9,12 +9,6 @@
 @if (userDTO != null)
 {
 
-
-
-    <label>User Name</label>
-
-     
-        <table width="80%">
             <thead>
                 <tr border="1">
                     <th>Name</th>
@@ -28,50 +22,63 @@
             </thead>
 
             <tbody>
-              
-               
-                    
+   
                     <tr>
-                     <td>@userDTO.Name</td>
-                     <td>@userDTO.FirstName</td>
+                    <td>@userDTO.Name</td>
+                    <td>@userDTO.FirstName</td>
                     <td>@userDTO.LastName</td>
-                    <td> <select name="role" id="role" @bind-value="bla" @bind-value:event="onchange">
-                            <option value=4 selected>@userDTO.Role</option>
-                                <option value=0>Undefined</option>
-                                <option value=1>Student</option>
-                                <option value=2>Teacher</option>
-                                <option value=3>Admin</option>
-                            </select></td>
-                             
-                            <td><button class="btn btn-primary" @onclick="() => SaveRoleChangesOnUser(bla)">Save Changes</button></td>  
-                             <NavLink class="nav-link" href="manageuser"><button type="button" class="btn btn-outline-primary">Back</button></NavLink>
-
-  
-                        <td>  
-                            <br> 
-                            <p>@msg</p>
-                        </td>
-                      
+                    <td> @userDTO.Role</td>                    
+                    <td></td>                               
+                                            
                     </tr>
-                
-               
-                
+              
+                    <tr>
+                        
+                    </tr>
+
             </tbody>
 
-        </table>
+            <tfoot>
 
+                <td></td>
+                <td><input type="text" id="firstName" size="10" maxlength="10" required @bind="inputFirstName"></td>
+                <td> <input type="text" id="lastName" size="10" maxlength="10" required @bind="inputLastName"></td>
+                    
+                    <td> <select name="role" id="role" @bind-value="chosenOption" @bind-value:event="onchange"> 
+                                <option value=0 selected>@userDTO.Role</option>
+                                <option value=1>Undefined</option>
+                                <option value=2>Student</option>
+                                <option value=3>Teacher</option>
+                                <option value=4>Admin</option>
+                            </select></td>
+  
+  
+                        <td>                             
+                            <font color="green">@msg</font>
+                        </td>                      
+                    
+                 
+                    <tr>
+                        <td> <button class="btn btn-primary" @onclick="() => SaveRoleChangesOnUser(chosenOption)">Save Changes</button>  </td>
+                        <td><NavLink class="nav-link" href="manageuser"><button type="button" class="btn btn-outline-primary">Back</button></NavLink> </td>
+                    </tr>
+                
+            </tfoot>
 
 }else {
-    <p>@UserID</p>
-      <p>Something went wrong ;(</p>
+       <p>@userID</p>
+      <font color="red">Something went wrong ;(</font>
 }
 
 @code {
     [Parameter]
-    public int UserID { get; set; }
+    public int userID { get; set; }
+    public string inputFirstName {get; set;}
+    public string inputLastName {get; set;}
 
-    public int bla {get; set;}
+    public int chosenOption {get; set;}
     private string msg{get; set;}
+
 
 
     public UserDTO userDTO { get; set; }
@@ -80,35 +87,49 @@
 
     protected override async Task OnInitializedAsync()
     {
-        userDTO = await UserService.GetUserById(UserID);
+        userDTO = await UserService.GetUserById(userID);
     }
 
-    private void SaveRoleChangesOnUser(int bla ){
+    private void SaveRoleChangesOnUser(int chosenOption ){
+
+         if(inputFirstName == null || inputLastName == null) {
+
+            inputFirstName = userDTO.FirstName;
+            inputLastName = userDTO.LastName;
+          }
+             userDTO.FirstName = inputFirstName;
+             userDTO.LastName = inputLastName;
 
 
-        switch(bla) {
+        switch(chosenOption) {
 
-            case 0: 
-                    userDTO.Role = Role.None;
+             case 0: 
+                    userDTO.Role = this.userDTO.Role;
                     break;
             case 1: 
-                    userDTO.Role = Role.Student;
+                    userDTO.Role = Role.None;
                     break;
             case 2: 
+                    userDTO.Role = Role.Student;
+                    break;
+            case 3: 
                     userDTO.Role = Role.Teacher;
                     break;
 
-            case 3: 
+            case 4: 
                     userDTO.Role = Role.Admin;
                     break;
 
-            default:
+           
+            default:           
                     msg ="No changes!";
                     break;
 
            
         }
+
        var response = UserService.ChangeUser(userDTO);
+
 
           if (response != null)
         {
@@ -121,4 +142,10 @@
         }
     }
 
-}
+
+
+    }
+
+
+
+
