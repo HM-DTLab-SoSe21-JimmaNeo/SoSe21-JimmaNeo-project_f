@@ -1,4 +1,8 @@
-﻿using System;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using SEIIApp.Server.DataAccess;
+using SEIIApp.Server.Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ComponentModel.DataAnnotations;

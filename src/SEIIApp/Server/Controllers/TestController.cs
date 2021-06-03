@@ -51,16 +51,18 @@ namespace SEIIApp.Server.Controllers
 
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<TestDTO> AddOrUpdateTest([FromBody] TestDTO testDTO)
         {
             if (ModelState.IsValid)
             {
                 var mappedTest = Mapper.Map<Test>(testDTO);
-                
+               
                 if (mappedTest.TestId == 0)
                 {
                     mappedTest = TestService.AddTest(mappedTest);
+                    if (mappedTest == null) return StatusCode(StatusCodes.Status404NotFound);
                 } else
                 {
                     mappedTest = TestService.UpdateTest(mappedTest);

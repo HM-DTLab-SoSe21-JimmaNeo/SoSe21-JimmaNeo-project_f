@@ -21,6 +21,10 @@ namespace SEIIApp.Server.Domain
             CreateMap<FurtherLink, FurtherLinkDTO>();
             CreateMap<FurtherLinkDTO, FurtherLink>();
 
+            // YT-Videos
+            CreateMap<VideoContent, VideoContentDTO>();
+            CreateMap<VideoContentDTO, VideoContent>();
+
             // LectureContent
             CreateMap<LectureContent, LectureContentDTO>();
             CreateMap<LectureContentDTO, LectureContent>();
@@ -59,10 +63,13 @@ namespace SEIIApp.Server.Domain
             CreateMap<Test, TestDTO>();
             CreateMap<TestDTO, Test>();
 
-            CreateMap<Test, TestBaseDTO>()
-                .ForMember(testBaseDto => testBaseDto.Author, opts => opts.MapFrom(obj => obj.CreatedBy));
-            CreateMap<TestBaseDTO, Test>()
-                .ForMember(testObj => testObj.CreatedBy, opts => opts.MapFrom(obj => obj.Author));
+            CreateMap<Test, TestBaseDTO>();
+            CreateMap<TestBaseDTO, Test>();
+
+
+            //CompletedTest
+            CreateMap<CompletedTest, CompletedTestDTO>();
+            CreateMap<CompletedTestDTO, CompletedTest>();
 
             // User
             CreateMap<User, UserDTO>();

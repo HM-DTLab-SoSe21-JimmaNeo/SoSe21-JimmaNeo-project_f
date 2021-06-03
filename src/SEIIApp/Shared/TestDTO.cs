@@ -30,6 +30,8 @@ namespace SEIIApp.Shared
         // TDDO [ValidateComplexType]
         public List<QuestionDTO> Questions { get; set; }
         
+        public List<VideoContentDTO> Videos { get; set; }
+
         public List<TestContentDTO> TestContent { get; set; }
 
         public List<FurtherLinkDTO> FurtherLinks { get; set; }
