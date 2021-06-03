@@ -29,10 +29,8 @@ namespace SEIIApp.Server.Domain
             CreateMap<Lecture, LectureDTO>();
             CreateMap<LectureDTO, Lecture>(); 
 
-            CreateMap<Lecture, LectureBaseDTO>()
-                .ForMember(lectureBaseDto => lectureBaseDto.Author, opts => opts.MapFrom(obj => obj.CreatedBy));
-            CreateMap<LectureBaseDTO, Lecture>()
-                .ForMember(lecture => lecture.CreatedBy, opts => opts.MapFrom(obj => obj.Author));
+            CreateMap<Lecture, LectureBaseDTO>();
+            CreateMap<LectureBaseDTO, Lecture>();
 
             // News
             CreateMap<News , NewsDTO>();
