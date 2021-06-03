@@ -15,11 +15,17 @@
         <label for="pw">Password:</label><br>  
         <input type="password" id="pw" size="30" maxlength="20" required @bind="inputPW"><br><br>
 
+
+        <div style="float: left;">
             <button type="button" class="btn btn-primary" @onclick="PerformLogin">Login</button>
-            <button type="button" class="btn btn-primary">Cancel</button><br><br>
-           <a href="/register" align="center">You don't have an account yet? <br>Register here</a> <br>
-            <NavLink class="nav-link" href="manageuser">Admin</NavLink>
-    
+            <NavLink href="/"><button type="button" class="btn btn-primary">Cancel</button></NavLink><br>
+            
+
+        <div>
+           <NavLink href="/register">You don't have an account yet?<br> Register now here!</NavLink> <br><br>
+            <NavLink href="manageuser">Admin</NavLink>
+            </div>
+        </div>
     </div>
 
 </div>
