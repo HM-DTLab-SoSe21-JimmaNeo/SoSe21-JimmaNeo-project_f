@@ -1,0 +1,135 @@
+﻿@page "/runtest/{TestID:int}"
+
+@inject Services.TestsDefinitionBackendAccessService TestDefinitionService
+@inject NavigationManager NavigationManager
+
+
+<div class="container">
+
+    @if (TestDto != null && TestDto.Questions.Any() && TestDto.Questions.Count != 0)
+    {
+        <h2 class="text-center">@(TestDto.Topic)</h2>
+        <label> @(TestDto.Questions.ElementAt(0).Answers.ElementAt(0).IsClicked)</label>
+        <label> @(TestID)</label>
+
+        @*<label> @(TestDto.Topic)</label>
+            <label> @(TestDto.Questions.Count)</label>
+            <label> @(String.IsNullOrEmpty(TestDto.Questions.ElementAt(0).QuestionText))</label>
+            <label> @(String.IsNullOrEmpty(TestDto.Questions.ElementAt(0).QuestionText))</label>
+            <label> @(String.IsNullOrEmpty(TestDto.Questions.ElementAt(1).QuestionText))</label>
+                        <label> @(TestDto.Questions.ElementAt(0).QuestionText)</label>
+                        <label> @(TestDto.Questions.ElementAt(1).QuestionText)</label>  *@
+
+        <EditForm Model="@TestDto">
+
+            <ul class="list-group list-group-flush">
+                @*@while (EnumeraterQuestions.MoveNext() != null)*@
+                @foreach (var question in TestDto.Questions)
+                {
+                    if (!String.IsNullOrEmpty(question.QuestionText))
+                    {
+                        <li class="text-center list-group-item">
+                            <br />
+                            <h3> @(question.QuestionText) </h3>
+                        </li>
+                        if (question.Answers.Any())
+                        {
+                            foreach (var answer in question.Answers)
+                            //for(int i = 0; i < question.Answers.Count-1; i++)
+                            {
+                                if (!String.IsNullOrEmpty(answer.AnswerText))
+                                {
+                                    <li class="text-center list-group-item">
+                                        <label>@(answer.AnswerText)</label>
+                                        <InputCheckbox @bind-Value="answer.IsClicked"></InputCheckbox>
+                                    </li>
+                                }
+                            }
+                        }
+                    }
+
+                    //EnumeraterQuestions.MoveNext();
+                }
+                <button class="btn btn-light btn-sm my-3" @onclick="()=> OnSubmitTest()">Submit</button>
+            </ul>
+        </EditForm>
+
+    }
+    else
+    {
+
+    }
+
+
+</div>
+
+@code {
+
+    [Parameter]
+    public int TestID { get; set; }
+
+    public static TestDTO TestDto { get; set; }
+
+    //private List<QuestionDTO>.Enumerator EnumeraterQuestions { get; set; }
+
+    //private EditContext context { get; set; }
+
+    private bool isClicked { get; set; }
+
+
+    protected override async Task OnParametersSetAsync()
+    {
+
+        var returnedTest = await TestDefinitionService.GetTestById(TestID);
+        await base.OnParametersSetAsync();
+        TestDto = returnedTest;
+        //this.EnumeraterQuestions = returnedTest.Questions.GetEnumerator();
+        //context = new EditContext(TestDto);
+    }
+
+    private async void OnSubmitTest()
+    {
+        //var isValid = context.Validate();
+        // if (isValid){}
+
+        var answer = await TestDefinitionService.AddOrUpdateTest(TestDto);
+        if (answer != null)
+        {
+            NavigationManager.NavigateTo("/resultstest/");
+        }
+
+    }
+
+    /*  private void OnClickNextButton()
+     {
+         EnumeraterQuestions.MoveNext();
+     }
+
+     private void OnClickBeforeButton()
+     {
+         //EnumeraterQuestions.MovePrevious();
+     }
+
+
+           private void OnSubmit(EditContext context)
+            {
+
+            }
+
+            private async void SaveContentToBackend()
+            {
+                var isValid = context.Validate();
+                if (isValid)
+                {
+                    var answer = await TestDefinitionService.AddOrUpdateTest(TestDto);
+                    if (answer != null)
+                    {
+                        this.TestDto.TestID = answer.TestID; //refresh id (if created)
+                    }
+
+                    NavigationManager.NavigateTo("/content");
+                }
+            } */
+
+}
+

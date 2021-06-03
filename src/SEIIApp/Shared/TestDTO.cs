@@ -18,7 +18,7 @@ namespace SEIIApp.Shared
         
         public string Description { get; set; }
 
-        public DateTime DateOfCreation { get; set; }
+        public DateTime DateOfCreation { get; set; } = DateTime.Now;
 
         public UserDTO Author { get; set; }
         
