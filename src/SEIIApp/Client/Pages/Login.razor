@@ -1,5 +1,6 @@
 ﻿@page "/login"
 @inject Services.UserBackendAccessService UserService
+@inject NavigationManager NavigationManager
 @using SEIIApp.Shared;
 
 <h3>Login</h3>
@@ -48,15 +49,38 @@
 
         if (User != null)
         {
-            msg = $"Hello {User.FirstName} {User.LastName}. You are successfully logged in.";
+            switch((int)User.Role) {
+
+             case 0: 
+                    msg="U have no role!";
+                    break;
+                    
+            case 1: //Student
+                    
+                     NavigationManager.NavigateTo("/welcomestudent");
+                    break;
+            case 2: //Teacher
+                    
+                    NavigationManager.NavigateTo("/welcometeacher");
+                    break;
+            case 3: //Admin
+                    NavigationManager.NavigateTo("/manageuser");
+                    
+                    break;
+
+            default:           
+                    msg ="No accepted role!";
+                    break;         
+        }          
+
         }
         else
         {
             msg = "Ohps.. Something went wrong. Maybe your password or Username is incorrect!";
         }
+
+
     }
-
-
 
 
 }
