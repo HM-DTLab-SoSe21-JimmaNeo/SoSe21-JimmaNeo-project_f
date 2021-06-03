@@ -36,11 +36,23 @@ namespace SEIIApp.Server.Controllers
 
         [HttpGet("SearchLecture/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult<LectureDTO[]> SearchLecture([FromRoute] int id)
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<LectureDTO> SearchLecture([FromRoute] int id)
         {
             var lectureInList = LectureService.GetLectureWithId(id);
             if (lectureInList == null) return StatusCode(StatusCodes.Status404NotFound);
-            var mappedResult = Mapper.Map<LectureDTO[]>(lectureInList);
+            var mappedResult = Mapper.Map<LectureDTO>(lectureInList);
+            return Ok(mappedResult);
+        }
+
+        [HttpGet("SearchLecture/{topic}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<LectureDTO> SearchLecture([FromRoute] string topic)
+        {
+            var lectureInList = LectureService.GetLectureWithTopic(topic);
+            if (lectureInList == null) return StatusCode(StatusCodes.Status404NotFound);
+            var mappedResult = Mapper.Map<LectureDTO>(lectureInList);
             return Ok(mappedResult);
         }
 
@@ -61,8 +73,13 @@ namespace SEIIApp.Server.Controllers
                 {
                     mappedLecture = LectureService.UpdateLecture(mappedLecture);
                 }
+                if (mappedLecture == null)
+                {
+                    return BadRequest();
+                }
 
                 var mappedLectureDTO = Mapper.Map<LectureDTO>(mappedLecture);
+                
                 return Ok(mappedLectureDTO);
             }
             return BadRequest(ModelState);
