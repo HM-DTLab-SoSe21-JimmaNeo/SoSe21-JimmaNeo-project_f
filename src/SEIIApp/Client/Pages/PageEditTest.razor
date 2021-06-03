@@ -89,7 +89,9 @@
             {
                 if (test.Questions == null) test.Questions = new List<QuestionDTO>();
                 if (test.Author == null) test.Author = new UserDTO() { Name = "user4", Role = Role.Teacher, UserId = 4}; //ToDo
-                if(test.TestContent == null) test.TestContent = new List<TestContentDTO>();
+                //if(test.TestContent == null) test.TestContent = new List<TestContentDTO>();
+                if (test.Videos == null) test.Videos = new List<VideoContentDTO>();
+                if (test.Content == null) test.Content = new List<PictureContentDTO>();
                 if (test.FurtherLinks == null) test.FurtherLinks = new List<FurtherLinkDTO>();
 
                 this.TestDto = test;
@@ -124,7 +126,7 @@
                 }
             }
 
-            private void AddTestContent()
+            /*private void AddTestContent()
             {
                 TestDto.TestContent.Add(new TestContentDTO());
             }
@@ -132,6 +134,26 @@
             private void DeleteTestContent(TestContentDTO contentDto)
             {
                 TestDto.TestContent.Remove(contentDto);
+            }
+            */
+            private void AddVideoContent()
+            {
+                TestDto.Videos.Add(new VideoContentDTO());
+            }
+
+            private void DeleteVideoContent(VideoContentDTO videoContentDto)
+            {
+                TestDto.Videos.Remove(videoContentDto);
+            }
+
+            private void AddPictureContent()
+            {
+                TestDto.Content.Add(new PictureContentDTO());
+            }
+
+            private void DeletePictureContent(PictureContentDTO pictureContentDto)
+            {
+                TestDto.Content.Remove(pictureContentDto);
             }
 
             private void AddFurtherLink()

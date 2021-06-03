@@ -11,8 +11,11 @@
     *@
 @code {
     /* aufteilung auf Video und Bild. Bei Video mit Link. Bei Bild mit img-feld*/
+    /*[Parameter]
+    public TestContentDTO TestContentDto { get; set; }*/
+    public VideoContentDTO VideoContentDto { get; set; }
     [Parameter]
-    public TestContentDTO TestContentDto { get; set; }
+    public PictureContentDTO PictureContentDto { get; set; }
 
     protected override void OnInitialized()
     {
