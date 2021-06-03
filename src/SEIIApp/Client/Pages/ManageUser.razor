@@ -5,6 +5,7 @@
 @using static SEIIApp.Client.Pages.Login;
 
 
+
 <h3>ManageUser</h3>
 
 
@@ -49,7 +50,7 @@
                 
             </tbody>
         </table>
-        <NavLink class="nav-link" href="/"><button type="button" class="btn btn-outline-primary">Logout</button></NavLink>
+        <button type="button" class="btn btn-outline-primary" @onclick="() => Logout()">Logout</button>
       
     }
 
@@ -81,8 +82,12 @@
     NavigationManager.NavigateTo($"/edituser/{user.UserId}");
     }  
 
+    private void Logout() {
 
-
+        Login.User = null;
+        NavigationManager.NavigateTo("/login");
+ 
+    }
 
 
     private async void DeleteUser(UserDTO user)
