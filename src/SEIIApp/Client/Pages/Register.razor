@@ -1,5 +1,6 @@
 ﻿@page "/register"
 @inject Services.UserBackendAccessService UserService;
+@inject NavigationManager NavigationManager;
 @using SEIIApp.Shared;
 
 <h3>Register</h3>
@@ -51,23 +52,27 @@
 
     private async void ToRegister(){
 
-        UserDTO user = new UserDTO(){FirstName = FirstName, LastName = LastName, Name = UserName, Role = Role.Student};
+        UserDTO user = new UserDTO(){FirstName = this.FirstName, LastName = this.LastName, Name = this.UserName, Role = Role.Student};
         LoginInformationDTO logInfo = new LoginInformationDTO(){User= user, Pw = Pw};
 
         if(CheckRegister()){
-            var respones = await UserService.RegisterUser(logInfo);
+            msg ="You have been successfully registered!";
+            var response = await UserService.RegisterUser(logInfo);            
+            await Task.Delay(2000);
+            NavigationManager.NavigateTo("/login");
+           
             
-        } 
-
-        
-
+        } else {
+            msg ="Please insert your data in all fields.";
+        }
     }
+
+    public void Redirect(string url){}
 
     private bool CheckRegister()
     {
         bool check = true;
         if(FirstName == null && LastName == null && UserName == null && Pw == null) {
-            msg = " Please insert information in all fields!";
             check = false;          
         }
 
