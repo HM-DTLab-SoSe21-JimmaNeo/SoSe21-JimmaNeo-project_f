@@ -3,34 +3,95 @@
 @inject NavigationManager NavigationManager
 @using SEIIApp.Shared;
 
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+</head>
+<style>
+    .col-lg-6 {
+        border: 2px solid #f2f2f2;
+        border-radius: 5px;
+    }
+</style>
 <h3>Login</h3>
 
-
-<div class="card" style="width:25rem" border="#FFFFFF" >
+<!-- Orignial
+<div class="card" style="width:25rem" border="#FFFFFF">
     <div class="card-body">
-      
+
         <p><font color="red">@msg</font></p>
-         <label for="uname">Username:</label><br>
-        <input type="text" id="uname"  size="30" name="uname" @bind="inputName"><br><br>
-       
-        <label for="pw">Password:</label><br>  
+        <label for="uname">Username:</label><br>
+        <input type="text" id="uname" size="30" name="uname" @bind="inputName"><br><br>
+
+        <label for="pw">Password:</label><br>
         <input type="password" id="pw" size="30" maxlength="20" required @bind="inputPW"><br><br>
 
 
         <div style="float: left;">
             <button type="button" class="btn btn-primary" @onclick="PerformLogin">Login</button>
             <NavLink href="/"><button type="button" class="btn btn-primary">Cancel</button></NavLink><br>
-            
 
-        <div>
-           <NavLink href="/register">You don't have an account yet?<br> Register now here!</NavLink> <br><br>
+
+            <div>
+                <NavLink href="/register">You don't have an account yet?<br> Register now here!</NavLink> <br><br>
             </div>
         </div>
     </div>
 
 </div>
+ -->
+<!--Modified One-->
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+    <div class="col mb-4">
+        <div class="card">
+            <div class="card-body">
+                <p><font color="red">@msg</font></p>
+                <div>  <label for="uname">Username:</label><br></div>
+                <input type="text" id="uname" placeholder="Enter Username" size="24" name="uname" @bind="inputName"><br><br>
+                <div> <label for="pw">Password:</label><br></div>
+                <input type="password" id="pw" placeholder="Enter Password" size="24" maxlength="20" required @bind="inputPW"><br><br>
+
+                <div>
+
+                    <button type="button" class="btn btn-primary mr-0" @onclick="PerformLogin">Login</button>
+                    <NavLink href="/"><button type="button" class="btn btn-primary">Cancel</button></NavLink><br>
+
+                </div>
+                <NavLink href="/register">You don't have an account yet?<br> Register now here!</NavLink> <br><br>
+            </div>
+        </div>
+    </div>
+</div>
 
 
+<!-- New One
+<div class="col-lg-6 ">
+    <p><font color="red">@msg</font></p><br />
+    <div class="row">
+        <div class="col-25">
+            <label for="uname">Username:</label>
+        </div>
+        <div class="col-75">
+            <input type="text" id="uname" name="uname" placeholder="Your Username">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-25">
+            <label for="pw"> Password:</label>
+        </div>
+        <div class="col-75">
+            <input type="password" id="pw" name="pw" placeholder="Your Password"><br><br>
+        </div>
+    </div>
+    <div>
+
+        <button type="button" class="btn btn-primary mr-0" @onclick="PerformLogin">Login</button>
+        <NavLink href="/"><button type="button" class="btn btn-primary">Cancel</button></NavLink><br>
+
+    </div>
+    <NavLink href="/register">You don't have an account yet?<br> Register now here!</NavLink> <br><br>
+</div>
+     -->
 @code {
 
     public static UserDTO User = null;
@@ -48,34 +109,35 @@
 
         if (User != null)
         {
-            switch((int)User.Role) {
+            switch ((int)User.Role)
+            {
 
-             case 0: //none
-                    msg="U have no role!";
+                case 0: //none
+                    msg = "U have no role!";
                     break;
-                    
-            case 1: //Student
-                    
-                     NavigationManager.NavigateTo("/welcomestudent");
+
+                case 1: //Student
+
+                    NavigationManager.NavigateTo("/welcomestudent");
                     break;
-            case 2: //Teacher
-                    
+                case 2: //Teacher
+
                     NavigationManager.NavigateTo("/welcometeacher");
                     break;
-            case 3: //Admin
+                case 3: //Admin
                     NavigationManager.NavigateTo("/manageuser");
-                    
+
                     break;
 
-            default:           
-                    msg ="No accepted role!";
-                    break;         
-        }          
+                default:
+                    msg = "No accepted role!";
+                    break;
+            }
 
         }
         else
         {
-            msg = "Ohps.. Something went wrong. Please check your Username and Password!";
+            msg = "Oops.. Something went wrong. Please check your Username and Password!";
         }
 
     }
