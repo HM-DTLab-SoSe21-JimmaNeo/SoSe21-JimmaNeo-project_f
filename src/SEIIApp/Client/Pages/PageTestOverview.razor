@@ -1,4 +1,4 @@
-﻿@page "/content"
+﻿@page "/testoverview"
 @inject Services.TestsDefinitionBackendAccessService TestDefinitionService
 @inject NavigationManager NavigationManager
 
@@ -41,7 +41,7 @@
         </div>
     </div>
 
-    @{ if (Tests?.Length > 0)
+    @{ if (Tests != null)
 
         {
             <ul class="list-group list-group-flush">
@@ -49,9 +49,9 @@
                 @foreach (var content in Tests)
                 {
                 <li class="text-center list-group-item">
-                    @(content.Topic) <button class="btn btn-outline-dark btn-sm" @onclick="() => EditQuiz((TestDTO)content)">Edit</button>
-                    <button class="btn btn-outline-danger btn-sm" @onclick="() => DeleteContent(content.TestID)">Delete</button>
-                    <button class="btn btn-outline-dark btn-sm" @onclick="() => StartTest((TestDTO)content)">Start Test</button>
+                    @(content.DateOfCreation.ToShortDateString()) <b>@(content.Topic)</b> <button class="btn btn-outline-dark btn-sm" @onclick="() => EditQuiz((TestDTO)content)">Edit</button>
+                    <button class="btn btn-outline-danger btn-sm" @onclick="() => DeleteContent(content)">Delete</button>
+                    <button class="btn btn-outline-dark btn-sm" @onclick="() => StartTest(content.TestID)">Start</button>
                 </li>
                 }
             </ul>
@@ -64,14 +64,13 @@
 </div>
 
 @code {
-
     public string searchValue = "";
 
     public bool isFiltered { get; set; }
 
-    public TestBaseDTO[] Tests { get; set; }
+    public List<TestDTO> Tests { get; set; }
 
-    private TestBaseDTO[] copyOfTest { get; set; }
+    private List<TestDTO> copyOfTest { get; set; }
 
     protected override async Task OnParametersSetAsync()
     {
@@ -81,41 +80,24 @@
 
     private void EditQuiz(TestDTO test)
     {
-        NavigationManager.NavigateTo("/contentedit/" + test.TestID);
-    }
-
-    private void StartTest(TestDTO test)
-    {
-        NavigationManager.NavigateTo("/runtest/" + test.TestID);
+        NavigationManager.NavigateTo("/testedit/" + test.TestID);
     }
 
     private void AddQuiz()
     {
-        NavigationManager.NavigateTo("/contentedit/0");
+        NavigationManager.NavigateTo("/testedit/0");
     }
 
-    private async Task DeleteContent(int contentId)
+    private async Task DeleteContent(TestDTO test)
     {
-        for (int i = 0; i < Tests.Length; i++)
+        Tests.Remove(test);
+
+        if (copyOfTest != null)
         {
-            if (contentId == Tests[i].TestID)
-            {
-                if (isFiltered == true)
-                {
-
-                    int indexOfTheDeletedContent = Array.FindIndex(copyOfTest, item => item == Tests[i]);
-                    Tests = Tests.Where((source, index) => index != i).ToArray();
-                    copyOfTest = copyOfTest.Where((source, index) => index != indexOfTheDeletedContent).ToArray();
-                }
-                else
-                {
-
-                    Tests = Tests.Where((source, index) => index != i).ToArray();
-                }
-            }
+            copyOfTest.Remove(test);
         }
-        await TestDefinitionService.DeleteTest(contentId);
 
+        await TestDefinitionService.DeleteTest(test.TestID);
 
     }
 
@@ -125,33 +107,73 @@
         {
 
             isFiltered = true;
-            copyOfTest = new TestDTO[Tests.Length];
 
-            for (int i = 0; i < Tests.Length; i++)
-            {
-                copyOfTest[i] = Tests[i];
-            }
+            copyOfTest = DeepCopy(Tests);
+            Tests.Clear();
+            FilterContent(searchValue);
 
-            for (int i = 0; i < copyOfTest.Length; i++)
-            {
-                if (searchValue != copyOfTest[i].Topic)
-                {
-                    int indexOfTheNotSearchedValues = Array.FindIndex(Tests, item => item == copyOfTest[i]);
-                    Tests = Tests.Where((source, index) => index != indexOfTheNotSearchedValues).ToArray();
-                }
-            }
         }
     }
 
     private void DeleteFilter()
     {
-        Tests = new TestDTO[copyOfTest.Length];
         isFiltered = false;
-        for (int i = 0; i < Tests.Length; i++)
+        Tests = DeepCopy(copyOfTest);
+
+        copyOfTest.Clear();
+    }
+
+    private void FilterContent(String searchValue)
+    {
+        bool isSearchedValue;
+        for (int i = 0; i < copyOfTest.Count; i++)
         {
-            Tests[i] = copyOfTest[i];
+            isSearchedValue = false;
+
+            for (int j = 0; j <= copyOfTest[i].Topic.Length; j++)
+            {
+                // isSearchedValue = string.Equals(searchValue, copyOfTest[i].Topic.Substring(0, j)) == true ? true : false; <- Warum funktioniert das nicht?
+                if (string.Equals(searchValue, copyOfTest[i].Topic.Substring(0, j)))
+                {
+                    isSearchedValue = true;
+                }
+            }
+            if (isSearchedValue)
+            {
+                Tests.Add(copyOfTest[i]);
+            }
         }
     }
+
+    private List<TestDTO> DeepCopy(List<TestDTO> TestDto)
+    {
+        List<TestDTO> TestDtoDeepCopy = new List<TestDTO>();
+
+        foreach (TestDTO TestDtoElement in TestDto)
+        {
+            TestDTO DeepCopyTestElement = new TestDTO();
+
+            DeepCopyTestElement.TestID = TestDtoElement.TestID;
+            DeepCopyTestElement.Topic = TestDtoElement.Topic;
+            DeepCopyTestElement.Description = TestDtoElement.Description;
+            DeepCopyTestElement.DateOfCreation = TestDtoElement.DateOfCreation;
+            DeepCopyTestElement.Author = TestDtoElement.Author;
+            DeepCopyTestElement.Questions = TestDtoElement.Questions;
+            DeepCopyTestElement.TestContent = TestDtoElement.TestContent;
+            DeepCopyTestElement.FurtherLinks = TestDtoElement.FurtherLinks;
+
+            TestDtoDeepCopy.Add(DeepCopyTestElement);
+        }
+
+        return TestDtoDeepCopy;
+    }
+
+
+    private void StartTest(int contentId)
+    {
+        NavigationManager.NavigateTo("/runtest/" + contentId);
+    }
+
 
 }
 

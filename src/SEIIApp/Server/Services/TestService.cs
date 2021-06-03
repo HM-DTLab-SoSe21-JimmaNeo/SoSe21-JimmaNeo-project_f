@@ -30,9 +30,9 @@ namespace SEIIApp.Server.Services
                 .Include(test => test.CreatedBy);
         }
 
-        public Test[] GetAllTests()
+        public List<Test> GetAllTests()
         {
-            return GetQueryableForTest().ToArray();
+            return GetQueryableForTest().ToList();
         }
 
         public Test GetTestWithId(int id)
@@ -50,11 +50,13 @@ namespace SEIIApp.Server.Services
         public Test UpdateTest(Test test)
         {
             var exsistingTest = GetTestWithId(test.TestId);
-            Mapper.Map(test, exsistingTest);
-
-            DatabaseContext.Tests.Update(exsistingTest);
+            /*Mapper.Map(test, exsistingTest);
+            Warum Funktioniert das nicht ?
+            DatabaseContext.Tests.Update(exsistingTest); */
+            DatabaseContext.Tests.Remove(exsistingTest);
+            DatabaseContext.Tests.Add(test);
             DatabaseContext.SaveChanges();
-            return exsistingTest;
+            return test;
         } 
 
         public void RemoveTest(Test test)

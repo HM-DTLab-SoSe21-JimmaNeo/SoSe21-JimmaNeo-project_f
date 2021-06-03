@@ -1,4 +1,4 @@
-﻿@page "/contentedit/{TestID:int}"
+﻿@page "/testedit/{TestID:int}"
 
 @inject Services.TestsDefinitionBackendAccessService TestDefinitionService
 @inject NavigationManager NavigationManager
@@ -17,10 +17,8 @@
             <InputText @bind-Value="TestDto.Topic" />
 
             <label>Content Description:</label>
-
-            <div class="h-100 d-inline-block" style="width: 500px">
-                <InputText style="height:100%; width: 100%;" @bind-Value="TestDto.Description" />
-            </div>
+          
+                <InputText @bind-Value="TestDto.Description" />
 
             <hr />
             @foreach (var question in TestDto.Questions)
@@ -28,10 +26,11 @@
                 <div class="card">
                     <div class="card-body">
                         <!-- Component for questions in quiz -->
-                        <QuestionDefinitionComponent QuestionDto="question"></QuestionDefinitionComponent>
+                        <QuestionDefComponent QuestionDto="question"></QuestionDefComponent>
                         <button class="btn btn-light btn-sm my-3" @onclick="() => RemoveQuestion(question)">Remove Question</button>
                     </div>
                 </div>
+
             }
             <button class="btn btn-light btn-sm my-3" @onclick="AddQuestion">Add Question</button>
 
@@ -39,7 +38,7 @@
             {
                 <div class="card">
                     <div class="card-body">
-                        
+
                         <FurtherLinkComponent FurtherLinkDto="link"></FurtherLinkComponent>
                         <button class="btn btn-light btn-sm my-3" @onclick="() => DeleteFurtherLink(link)">Remove Link</button>
                     </div>
@@ -47,110 +46,103 @@
             }
             <button class="btn btn-light" @onclick="AddFurtherLink">Add Link</button>
 
-            <ValidationSummary />
 
-            
-            <button class="btn btn-light" @onclick="SaveContentToBackend">Save Complete Quiz</button>
+            <button class="btn btn-light" @onclick="() => SaveContentToBackend(this.TestDto)">Save Complete Quiz</button>
         </EditForm>
 
-            }
-            else
-            {
-                <h5>Quiz definition in loading (or not found) ...</h5>
-            }
+                    }
+                    else
+                    {
+                        <h5>Quiz definition in loading (or not found) ...</h5>
+                    }
+
+                </div>
+            </div>
         </div>
-    </div>
-</div>
 
-@code {
+        @code {
 
-        [Parameter]
-        public int TestID { get; set; }
+            [Parameter]
+            public int TestID { get; set; }
 
-    public TestDTO TestDto { get; set; }
+            public TestDTO TestDto { get; set; }
 
-    private EditContext context { get; set; }
+            private EditContext context { get; set; }
 
-    protected override async Task OnParametersSetAsync()
-    {
-        if (TestID != 0)
-        {
-            var existingQuiz = await TestDefinitionService.GetTestById(TestID);
-            PrepareEditOrAddOfTestDefinition(existingQuiz);
-        }
-        else
-        {
-            PrepareEditOrAddOfTestDefinition(new TestDTO());
-        }
-        await base.OnParametersSetAsync();
-
-        context = new EditContext(TestDto);
-    }
-
-    private void PrepareEditOrAddOfTestDefinition(TestDTO test)
-    {
-        if (test.Questions == null) test.Questions = new List<QuestionDTO>();
-        if (test.Author == null) test.Author = new UserDTO() { Name = "user4", Role = Role.Teacher, UserId = 4}; //ToDo
-        if(test.TestContent == null) test.TestContent = new List<TestContentDTO>();
-        if (test.FurtherLinks == null) test.FurtherLinks = new List<FurtherLinkDTO>();
-
-        this.TestDto = test;
-    }
-
-    private void AddQuestion()
-    {
-       
-        TestDto.Questions.Add(new QuestionDTO());
-    }
-
-    private void RemoveQuestion(QuestionDTO question)
-    {
-        TestDto.Questions.Remove(question);
-    }
-
-    private void OnSubmit(EditContext context)
-    {
-
-    }
-
-    private async void SaveContentToBackend()
-    {
-        var isValid = context.Validate();
-        if (isValid)
-        {
-            var answer = await TestDefinitionService.AddOrUpdateTest(TestDto);
-            if (answer != null)
+            protected override async Task OnParametersSetAsync()
             {
-                this.TestDto.TestID = answer.TestID; //refresh id (if created)
+                if (TestID != 0)
+                {
+                    var existingQuiz = await TestDefinitionService.GetTestById(TestID);
+                    PrepareEditOrAddOfTestDefinition(existingQuiz);
+                }
+                else
+                {
+                    PrepareEditOrAddOfTestDefinition(new TestDTO());
+                }
+                await base.OnParametersSetAsync();
+
+                context = new EditContext(TestDto);
             }
 
-            NavigationManager.NavigateTo("/content");
+            private void PrepareEditOrAddOfTestDefinition(TestDTO test)
+            {
+                if (test.Questions == null) test.Questions = new List<QuestionDTO>();
+                if (test.Author == null) test.Author = new UserDTO() { Name = "user4", Role = Role.Teacher, UserId = 4}; //ToDo
+                if(test.TestContent == null) test.TestContent = new List<TestContentDTO>();
+                if (test.FurtherLinks == null) test.FurtherLinks = new List<FurtherLinkDTO>();
+
+                this.TestDto = test;
+            }
+
+            private void AddQuestion()
+            {
+                TestDto.Questions.Add(new QuestionDTO());
+            }
+
+            private void RemoveQuestion(QuestionDTO question)
+            {
+                TestDto.Questions.Remove(question);
+            }
+
+            private void OnSubmit(EditContext context)
+            {
+
+            }
+
+            private async void SaveContentToBackend(TestDTO TestDto)
+            {
+                var isValid = context.Validate();
+                if (isValid)
+                {
+                    var answer = await TestDefinitionService.AddOrUpdateTest(TestDto);
+                    if (answer != null)
+                    {
+                        this.TestDto.TestID = answer.TestID; //refresh id (if created)
+                        NavigationManager.NavigateTo("/testoverview");
+                    }
+                }
+            }
+
+            private void AddTestContent()
+            {
+                TestDto.TestContent.Add(new TestContentDTO());
+            }
+
+            private void DeleteTestContent(TestContentDTO contentDto)
+            {
+                TestDto.TestContent.Remove(contentDto);
+            }
+
+            private void AddFurtherLink()
+            {
+                TestDto.FurtherLinks.Add(new FurtherLinkDTO());
+            }
+
+            private void DeleteFurtherLink(FurtherLinkDTO link)
+            {
+                TestDto.FurtherLinks.Remove(link);
+            }
+
         }
-    }
-
-
-    private void AddTestContent()
-    {
-
-        TestDto.TestContent.Add(new TestContentDTO());
-
-    }
-
-    private void DeleteTestContent(TestContentDTO contentDto)
-    {
-        TestDto.TestContent.Remove(contentDto);
-    }
-
-    private void AddFurtherLink()
-    {
-        TestDto.FurtherLinks.Add(new FurtherLinkDTO());
-
-    }
-
-    private void DeleteFurtherLink(FurtherLinkDTO link)
-    {
-        TestDto.FurtherLinks.Remove(link);
-    }
-
-}
 

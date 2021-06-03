@@ -61,14 +61,14 @@ namespace SEIIApp.Server.DataAccess
             for (int i = 0; i < 3; i++)
             {
                 var question = new Question();
-                question.QuestionText = $"Question {i}";
+                question.QuestionText= $"Question {i}";
                 question.Answers = new List<Answer>();
 
                 for (int c = 0; c < 5; c++)
                 {
                     var answer = new Answer();
                     answer.AnswerText = $"Answer for Question {i} is {c}";
-                    
+
                     if (c % 2 == 0) answer.IsCorrect = true;
                     else answer.IsCorrect = false;
                                      

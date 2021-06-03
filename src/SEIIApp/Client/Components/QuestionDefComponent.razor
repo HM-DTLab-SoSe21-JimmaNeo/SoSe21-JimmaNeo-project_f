@@ -2,25 +2,23 @@
 @{
     if (QuestionDto != null)
     {
-        <EditForm Model="QuestionDto">
-            <DataAnnotationsValidator />
+    <EditForm Model="QuestionDto">
 
-            <label>Question Text</label>
-            <InputText @bind-Value="QuestionDto.Question" />
-            <ValidationSummary />
+        <label>Question Text</label>
+        <InputText @bind-Value="@QuestionDto.QuestionText" />
 
-            @foreach (var a in QuestionDto.Answers)
-            {
-                <AnswerDefComponent AnswerDto="a"></AnswerDefComponent>
-                <button class="btn btn-light btn-sm" @onclick="() => RemoveAnswer(a)">Remove Answer</button>
-            }
+        @foreach (var a in QuestionDto.Answers)
+        {
+            <AnswerDefComponent AnswerDto="a"></AnswerDefComponent>
+            <button class="btn btn-light btn-sm" @onclick="() => RemoveAnswer(a)">Remove Answer</button>
+        }
 
-            <button class="btn btn-light btn-sm my-3" @onclick="AddAnswer">Add Answer</button>
+        <button class="btn btn-light btn-sm my-3" @onclick="AddAnswer">Add Answer</button>
+        <br/>
+        <label>Explanation</label>
+        <InputText @bind-Value="@QuestionDto.Explanation" />
 
-            <label>Explanation</label>
-            <InputText @bind-Value="QuestionDto.Explanation" />
-
-        </EditForm>
+    </EditForm>
     }
     else
     {
@@ -36,7 +34,6 @@
     protected override void OnParametersSet()
     {
         base.OnParametersSet();
-
         InitiQuestionDefintionDto();
     }
 
@@ -44,7 +41,6 @@
     {
         if (QuestionDto.Answers == null)
             QuestionDto.Answers = new List<AnswerDTO>();
-
     }
 
     private void AddAnswer()
@@ -56,7 +52,6 @@
     {
         QuestionDto.Answers.Remove(answer);
     }
-
 
 }
 

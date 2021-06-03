@@ -42,9 +42,9 @@ namespace SEIIApp.Client.Services
         /// <summary>
         /// Returns all tests stored on the backend
         /// </summary>
-        public async Task<TestDTO[]> GetTestOverview()
+        public async Task<List<TestDTO>> GetTestOverview()
         {
-            return await HttpClient.GetFromJsonAsync<TestDTO[]>(GetTestDefinitionUrl());
+            return await HttpClient.GetFromJsonAsync<List<TestDTO>>(GetTestDefinitionUrl());
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace SEIIApp.Client.Services
             {
                 return await response.DeserializeResponseContent<TestDTO>();
             }
-            else return null;
+            return null;
         }
 
         /// <summary>
