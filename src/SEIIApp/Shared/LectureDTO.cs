@@ -21,13 +21,15 @@ namespace SEIIApp.Shared
 
     } 
 
-    public class LectureDTO
+    public class LectureDTO : LectureBaseDTO
     {
         // TDDO ??[ValidateComplexType]
 
         public string Text { get; set; }
 
-        public List<LectureContentDTO> Content { get; set; }
+        public List<PictureContentDTO> Content { get; set; }
+
+        public List<VideoContentDTO> Videos{ get; set; }
 
         public TestBaseDTO Test { get; set; }
     }
