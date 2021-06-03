@@ -28,7 +28,7 @@ namespace SEIIApp.Server.Services
         {
             return DatabaseContext.Tests
                 .Include(test => test.Questions).ThenInclude(questions => questions.Answers)
-                .Include(test => test.TestContent)
+                .Include(test => test.Content)
                 .Include(test => test.Videos)
                 .Include(test => test.FurtherLinks)
                 .Include(test => test.Author);
@@ -68,7 +68,7 @@ namespace SEIIApp.Server.Services
             exsistingTest.Questions = test.Questions;
             exsistingTest.Videos = test.Videos;
             exsistingTest.FurtherLinks = test.FurtherLinks;
-            exsistingTest.TestContent = test.TestContent;
+            exsistingTest.Content = test.Content;
 
             DatabaseContext.Tests.Update(exsistingTest);
             DatabaseContext.SaveChanges();

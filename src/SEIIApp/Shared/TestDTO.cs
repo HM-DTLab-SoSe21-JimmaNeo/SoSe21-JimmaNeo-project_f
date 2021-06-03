@@ -32,7 +32,7 @@ namespace SEIIApp.Shared
         
         public List<VideoContentDTO> Videos { get; set; }
 
-        public List<TestContentDTO> TestContent { get; set; }
+        public List<PictureContentDTO> Content { get; set; }
 
         public List<FurtherLinkDTO> FurtherLinks { get; set; }
 

@@ -25,9 +25,9 @@ namespace SEIIApp.Server.Domain
             CreateMap<VideoContent, VideoContentDTO>();
             CreateMap<VideoContentDTO, VideoContent>();
 
-            // LectureContent
-            CreateMap<LectureContent, LectureContentDTO>();
-            CreateMap<LectureContentDTO, LectureContent>();
+            // Content
+            CreateMap<PictureContent, PictureContentDTO>();
+            CreateMap<PictureContentDTO, PictureContent>();
 
             // Lecture
             CreateMap<Lecture, LectureDTO>();
@@ -49,10 +49,6 @@ namespace SEIIApp.Server.Domain
                 .ForMember(subjectAreaDto => subjectAreaDto.Lectures, opts => opts.MapFrom(obj => obj.Lectures.ToList()));
             CreateMap<SubjectAreaDTO, SubjectArea>()
                 .ForMember(subjectAreaObj => subjectAreaObj.Lectures, opts => opts.MapFrom(obj => obj.Lectures.ToList()));
-
-            // TestContent
-            CreateMap<TestContent, TestContentDTO>();
-            CreateMap<TestContentDTO, TestContent>();
 
             // Test
             CreateMap<Test, TestDTO>();

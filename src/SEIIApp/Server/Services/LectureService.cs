@@ -28,7 +28,8 @@ namespace SEIIApp.Server.Services
             return DatabaseContext.Lectures
                 .Include(lecture => lecture.Author)
                 .Include(lecture => lecture.Test)
-                .Include(lecture => lecture.Content);
+                .Include(lecture => lecture.Content)
+                .Include(lecture => lecture.Videos);
         }
 
         public Lecture[] GetAllLecture()
@@ -65,6 +66,7 @@ namespace SEIIApp.Server.Services
             var exsistingLecture = GetLectureWithId(lecture.LectureId);
             //Mapper.Map(lecture, exsistingLecture);
             exsistingLecture.Content = lecture.Content;
+            exsistingLecture.Videos = lecture.Videos;
             exsistingLecture.Test = lecture.Test;
             exsistingLecture.Text = lecture.Text;
             DatabaseContext.Lectures.Update(exsistingLecture);

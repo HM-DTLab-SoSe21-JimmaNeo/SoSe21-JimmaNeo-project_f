@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SEIIApp.Server.Domain
 {
-    public class LectureContent
+    public class PictureContent
     {
         [Key]
         public int LcId { get; set; }
