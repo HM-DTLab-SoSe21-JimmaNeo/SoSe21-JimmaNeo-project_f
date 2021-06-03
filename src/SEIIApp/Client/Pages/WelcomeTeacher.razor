@@ -1,7 +1,34 @@
 ﻿@page "/welcometeacher"
+@inject NavigationManager NavigationManager
+@using static SEIIApp.Client.Pages.Login;
+@using SEIIApp.Shared;
+
 
 <h3>WelcomeTeacher</h3>
+@{
+if (User != null && User.Role == Role.Teacher)
+    {
+
+<button type="button" class="btn btn-outline-primary" @onclick="() => Logout()">Logout</button>
+
+ }
+
+    else
+    {
+        <p>You are not allowed to see this!</p>
+    }
+    }
 
 @code {
+    public int[] Roles{get; set;}
+
+
+    
+    private void Logout() {
+
+        Login.User = null;
+        NavigationManager.NavigateTo("/login");
+ 
+    }
 
 }
