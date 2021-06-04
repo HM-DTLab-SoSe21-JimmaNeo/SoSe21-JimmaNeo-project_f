@@ -34,6 +34,7 @@ namespace SEIIApp.Server.Controllers
             var user = UserService.GetUserWithName(name);
 
             if (user == null) return NotFound();
+            if (pw == null) return BadRequest(); 
             if (!user.Pw.Equals(pw.GetHashCode().ToString())) return BadRequest();
 
             var mappedResult = Mapper.Map<UserDTO>(user);
