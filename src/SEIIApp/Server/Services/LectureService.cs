@@ -64,11 +64,8 @@ namespace SEIIApp.Server.Services
         public Lecture UpdateLecture(Lecture lecture)
         {
             var exsistingLecture = GetLectureWithId(lecture.LectureId);
-            //Mapper.Map(lecture, exsistingLecture);
-            exsistingLecture.Content = lecture.Content;
-            exsistingLecture.Videos = lecture.Videos;
-            exsistingLecture.Test = lecture.Test;
-            exsistingLecture.Text = lecture.Text;
+            Mapper.Map(lecture, exsistingLecture);
+            
             DatabaseContext.Lectures.Update(exsistingLecture);
             DatabaseContext.SaveChanges();
             return exsistingLecture;
