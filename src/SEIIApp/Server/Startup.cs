@@ -54,7 +54,7 @@ namespace SEIIApp.Server {
             services.AddScoped<Services.TestService>();
             services.AddScoped<Services.NewsService>();
             services.AddScoped<Services.CompletedTestService>();
-
+            services.AddScoped<Services.SubjectAreaService>();
 
         }
 

@@ -34,7 +34,7 @@ namespace SEIIApp.Server.Controllers
             return Ok(mappedResult);
         }
 
-        [HttpGet("SearchLecture/{id}")]
+        [HttpGet("SearchLectureID/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<LectureDTO> SearchLecture([FromRoute] int id)
@@ -45,7 +45,7 @@ namespace SEIIApp.Server.Controllers
             return Ok(mappedResult);
         }
 
-        [HttpGet("SearchLecture/{topic}")]
+        [HttpGet("SearchLectureTopic/{topic}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<LectureDTO> SearchLecture([FromRoute] string topic)
