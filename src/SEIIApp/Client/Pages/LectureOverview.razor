@@ -1,0 +1,182 @@
+﻿@page "/lectureoverview"
+@inject Services.LectureBackendAccessService LectureService
+@inject NavigationManager NavigationManager
+
+<div class="container">
+
+    <h2 class="text-center">Your Lecture</h2>
+    <div class="col text-center">
+
+        <div class="px-5">
+            @*
+            <EditForm Model="@searchValue">
+                <div class="searchcostum input-group pt-2">
+
+
+                     @if (isFiltered == false)
+                {
+                    <div class="px-auto">
+                        <InputText type="search" class="form-control rounded" placeholder="Search by name"
+                                   aria-label="Name of the Content" aria-describedby="search-addon" @bind-Value="@searchValue" />
+
+
+                    </div>
+                    <button class="btn btn-outline-primary btn-sm" @onclick="FilterContentByName">Search</button>
+
+                }
+                else
+                {
+                    <div class="text-center pb-2">
+                        <button class="btn btn-outline-primary" @onclick="DeleteFilter">Return</button>
+                    </div>
+                }
+
+            </div>
+        </EditForm>
+                *@
+                @if (isFiltered == false)
+                {
+                    <div class="text-center py-2">
+                        <button class="btn btn-outline-success" @onclick="AddLecture">Add</button>
+                    </div>}
+            </div>
+    </div>
+
+    @{ if (Lectures != null)
+
+        {
+            <ul class="list-group list-group-flush">
+
+                @foreach (var content in Lectures)
+                {
+                    <li class="text-center list-group-item">
+                        @(content.DateOfCreation.ToShortDateString()) <b>@(content.Topic)</b> <button class="btn btn-outline-dark btn-sm" @onclick="() => EditLecture((LectureDTO)content)">Edit</button>
+                        <button class="btn btn-outline-danger btn-sm" @onclick="() => DeleteLecture(content)">Delete</button>
+                        <button class="btn btn-outline-dark btn-sm" @onclick="() => StartLecture(content.LectureId)">Start</button>
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <h5 class="text-center">Loading ...  or no content found.</h5>
+        }
+    }
+</div>
+
+@code {
+    public string searchValue = "";
+
+    public bool isFiltered { get; set; }
+
+    public List<LectureDTO> Lectures { get; set; }
+
+    private List<TestDTO> copyOfTest { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await base.OnParametersSetAsync();
+        Lectures = await LectureService.GetLectureOverview();
+    }
+
+    private void EditLecture(LectureDTO lecture)
+    {
+        NavigationManager.NavigateTo("/lectureedit/" + lecture.LectureId);
+    }
+
+    private void AddLecture()
+    {
+        NavigationManager.NavigateTo("/lectureedit/0");
+    }
+
+    private async Task DeleteLecture(LectureDTO lecture)
+    {
+        Lectures.Remove(lecture);
+
+       /* if (copyOfTest != null)
+        {
+            copyOfTest.Remove(test);
+        }*/
+
+        await LectureService.DeleteLecture(lecture.LectureId);
+
+    }
+
+    /*private void FilterContentByName()
+    {
+        if (Tests != null && searchValue != null)
+        {
+
+            isFiltered = true;
+
+            copyOfTest = DeepCopy(Tests);
+            Tests.Clear();
+            FilterContent(searchValue);
+
+        }
+    }
+
+    private void DeleteFilter()
+    {
+        isFiltered = false;
+        Tests = DeepCopy(copyOfTest);
+
+        copyOfTest.Clear();
+    }
+
+    private void FilterContent(String searchValue)
+    {
+        bool isSearchedValue;
+        for (int i = 0; i < copyOfTest.Count; i++)
+        {
+            isSearchedValue = false;
+
+            for (int j = 0; j <= copyOfTest[i].Topic.Length; j++)
+            {
+                // isSearchedValue = string.Equals(searchValue, copyOfTest[i].Topic.Substring(0, j)) == true ? true : false; <- Warum funktioniert das nicht?
+                if (string.Equals(searchValue, copyOfTest[i].Topic.Substring(0, j)))
+                {
+                    isSearchedValue = true;
+                }
+            }
+            if (isSearchedValue)
+            {
+                Tests.Add(copyOfTest[i]);
+            }
+        }
+    }
+
+    private List<TestDTO> DeepCopy(List<TestDTO> TestDto)
+    {
+        List<TestDTO> TestDtoDeepCopy = new List<TestDTO>();
+
+        foreach (TestDTO TestDtoElement in TestDto)
+        {
+            TestDTO DeepCopyTestElement = new TestDTO();
+
+            DeepCopyTestElement.TestID = TestDtoElement.TestID;
+            DeepCopyTestElement.Topic = TestDtoElement.Topic;
+            DeepCopyTestElement.Description = TestDtoElement.Description;
+            DeepCopyTestElement.DateOfCreation = TestDtoElement.DateOfCreation;
+            DeepCopyTestElement.Author = TestDtoElement.Author;
+            DeepCopyTestElement.Questions = TestDtoElement.Questions;
+            //DeepCopyTestElement.TestContent = TestDtoElement.TestContent;
+            DeepCopyTestElement.Content = TestDtoElement.Content;
+            DeepCopyTestElement.Videos = TestDtoElement.Videos;
+            DeepCopyTestElement.FurtherLinks = TestDtoElement.FurtherLinks;
+
+            TestDtoDeepCopy.Add(DeepCopyTestElement);
+        }
+
+        return TestDtoDeepCopy;
+    }
+    */
+
+    private void StartLecture(int contentId)
+    {
+        NavigationManager.NavigateTo("/runlecture/" + contentId);
+    }
+
+
+}
+
