@@ -4,11 +4,68 @@
 @inject NavigationManager NavigationManager
 
 <h3>LectureEditPage</h3>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-3 text-center">
+            <h3 class="text-center">Content Editor</h3>
+
+            @if (LectureDto != null)
+            {
+
+        <EditForm EditContext="@context" OnSubmit="OnSubmit">
+
+            <label>Lecture Name:</label>
+            <InputText @bind-Value="LectureDto.Topic" />
+
+
+            @foreach (var video in LectureDto.Videos)
+            {
+                <div class="card">
+                    <div class="card-body">
+
+                        <VideoComponent VideoContentDTO="video"></VideoComponent>
+                        <button class="btn btn-light btn-sm my-3" @onclick="() => DeleteVideoContent(video)">Remove Video</button>
+                    </div>
+                </div>
+            }
+            <button class="btn btn-light" @onclick="AddVideoContent">Add Video</button>
+
+            <hr />
+            @foreach (var picture in LectureDto.Content)
+            {
+                <div class="card">
+                    <div class="card-body">
+                        <!-- Component for questions in quiz -->
+                        <PictureComponent PictureContentDto="picture"></PictureComponent>
+                        <button class="btn btn-light btn-sm my-3" @onclick="() => DeletePictureContent(picture)">Remove Picture</button>
+                    </div>
+                </div>
+
+            }
+            <button class="btn btn-light btn-sm my-3" @onclick="AddPictureContent">Add Picture</button>
+
+            <label>Lecture Text:</label>
+            <InputText @bind-Value="LectureDto.Text" />
+
+           
+
+            <button class="btn btn-light" @onclick="() => SaveContentToBackend(this.LectureDto)">Save Lecture</button>
+        </EditForm>
+
+            }
+            else
+            {
+                <h5>Quiz definition in loading (or not found) ...</h5>
+            }
+
+        </div>
+    </div>
+</div>
 
 @code {
 
-        [Parameter]
-        public int LectureID { get; set; }
+    [Parameter]
+    public int LectureID { get; set; }
 
     public LectureDTO LectureDto { get; set; }
 
