@@ -28,7 +28,8 @@ namespace SEIIApp.Server.Services
         {
             return DatabaseContext.Tests
                 .Include(test => test.Questions).ThenInclude(questions => questions.Answers)
-                .Include(test => test.TestContent)
+                .Include(test => test.Content)
+                .Include(test => test.Videos)
                 .Include(test => test.FurtherLinks)
                 .Include(test => test.Author);
         }
@@ -59,14 +60,7 @@ namespace SEIIApp.Server.Services
         public Test UpdateTest(Test test)
         {          
             var exsistingTest = GetTestWithId(test.TestId);
-            test.Author = exsistingTest.Author;
-            Mapper.Map(test, exsistingTest); // TODO Diese Zeile hat keine Auswirkung 
-
-            exsistingTest.Topic = test.Topic;
-            exsistingTest.Description = test.Description;
-            exsistingTest.Questions = test.Questions;
-            exsistingTest.FurtherLinks = test.FurtherLinks;
-            exsistingTest.TestContent = test.TestContent;
+            Mapper.Map(test, exsistingTest); 
 
             DatabaseContext.Tests.Update(exsistingTest);
             DatabaseContext.SaveChanges();

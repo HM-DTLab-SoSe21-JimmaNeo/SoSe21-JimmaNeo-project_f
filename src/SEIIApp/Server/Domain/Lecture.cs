@@ -17,9 +17,11 @@ namespace SEIIApp.Server.Domain
 
         public DateTime DateOfCreation { get; set; }
 
-        public User CreatedBy { get; set; }
+        public User Author { get; set; }
 
-        public List<LectureContent> Content { get; set; }
+        public List<PictureContent> Content { get; set; }
+
+        public List<VideoContent> Videos{ get; set; }
 
         public Test Test { get; set; }
     }
