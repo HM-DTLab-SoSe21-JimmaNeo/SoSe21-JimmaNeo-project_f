@@ -34,9 +34,9 @@ namespace SEIIApp.Server.Services
                 .Include(test => test.Author);
         }
 
-        public List<Test> GetAllTests()
+        public Test[] GetAllTests()
         {
-            return GetQueryableForTest().ToList();
+            return GetQueryableForTest().ToArray();
         }
 
         public Test GetTestWithId(int id)
@@ -72,7 +72,7 @@ namespace SEIIApp.Server.Services
 
             DatabaseContext.Tests.Update(exsistingTest);
             DatabaseContext.SaveChanges();
-            return test;
+            return exsistingTest;
         } 
 
         public void RemoveTest(Test test)
