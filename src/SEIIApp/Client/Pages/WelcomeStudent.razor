@@ -2,12 +2,13 @@
 @inject NavigationManager NavigationManager
 @using static SEIIApp.Client.Pages.Login;
 @using SEIIApp.Shared;
+@inject UserServicee MyUserService
 
 
 <h3>WelcomeStudent</h3>
 @{
 
-if (User != null && User.Role == Role.Student)
+if (MyUserService.User != null && MyUserService.User.Role == Role.Student)
     {
 
 

@@ -17,7 +17,7 @@ namespace SEIIApp.Client {
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
             builder.Services.AddScoped<Services.UserBackendAccessService>();
             builder.Services.AddScoped<Services.TestsDefinitionBackendAccessService>();
-
+            builder.Services.AddSingleton<Services.UserServicee>();
 
             await builder.Build().RunAsync();
         }

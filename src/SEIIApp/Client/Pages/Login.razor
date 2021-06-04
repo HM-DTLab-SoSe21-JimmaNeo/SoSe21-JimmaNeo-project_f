@@ -1,6 +1,7 @@
 ﻿@page "/login"
 @inject Services.UserBackendAccessService UserService
 @inject NavigationManager NavigationManager
+@inject Services.UserServicee MyUserService
 @using SEIIApp.Shared;
 
 @* 
@@ -111,8 +112,6 @@
  *@
 @code {
 
-    public static UserDTO User = null;
-
     public string inputName { get; set; }
 
     public string inputPW { get; set; }
@@ -122,11 +121,11 @@
     private async Task PerformLogin()
     {
         var data = await UserService.LoginUser(inputName, inputPW);
-        User = data;
+        MyUserService.User = data;
 
-        if (User != null)
+        if (MyUserService.User != null)
         {
-            switch ((int)User.Role)
+            switch ((int)MyUserService.User.Role)
             {
 
                 case 0: //none
