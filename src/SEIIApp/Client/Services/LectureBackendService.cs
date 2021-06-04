@@ -1,0 +1,73 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Json;
+using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
+using SEIIApp.Shared;
+
+namespace SEIIApp.Client.Services
+{
+
+    public class LectureBackendAccessService
+    {
+
+        private HttpClient HttpClient { get; set; }
+
+        public LectureBackendAccessService(HttpClient client)
+        {
+            this.HttpClient = client;
+        }
+
+        private string GetLectureUrl()
+        {
+            return "api/lecture";
+        }
+
+        private string GetLectureUrlWithId(int LectureID)
+        {
+            return $"{GetLectureUrl()}/{LectureID}";
+        }
+
+        /// <summary>
+        /// Returns a certain lecture by id
+        /// </summary>
+        public async Task<LectureDTO> GetLectureById(int LectureID)
+        {
+            return await HttpClient.GetFromJsonAsync<LectureDTO>(GetLectureUrlWithId(LectureID));
+        }
+
+        /// <summary>
+        /// Returns all lectures stored on the backend
+        /// </summary>
+        public async Task<List<LectureDTO>> GetLectureOverview()
+        {
+            return await HttpClient.GetFromJsonAsync<List<LectureDTO>>(GetLectureUrl());
+        }
+
+        /// <summary>
+        /// Adds or updates a lectures on the backend. Returns the lectures if successful else null
+        /// </summary>
+        public async Task<LectureDTO> AddOrUpdateLecture(LectureDTO dto)
+        {
+            var response = await HttpClient.PutAsJsonAsync(GetLectureUrl(), dto);
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return await response.DeserializeResponseContent<LectureDTO>();
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Deletes a lectures and returns true if successful
+        /// </summary>
+        public async Task<bool> DeleteLecture(int LectureID)
+        {
+            var response = await HttpClient.DeleteAsync(GetLectureUrlWithId(LectureID));
+            return response.StatusCode == System.Net.HttpStatusCode.OK;
+        }
+
+    }
+}

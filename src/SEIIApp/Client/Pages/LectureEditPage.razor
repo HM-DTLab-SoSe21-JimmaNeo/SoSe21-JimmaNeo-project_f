@@ -1,0 +1,95 @@
+﻿@page "/lectureedit/{LectureID:int}"
+
+@inject Services.LectureBackendAccessService LectureService
+@inject NavigationManager NavigationManager
+
+<h3>LectureEditPage</h3>
+
+@code {
+
+        [Parameter]
+        public int LectureID { get; set; }
+
+    public LectureDTO LectureDto { get; set; }
+
+    private EditContext context { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (LectureID != 0)
+        {
+            var existingLecture = await LectureService.GetLectureById(LectureID);
+            PrepareEditOrAddOfLecture(existingLecture);
+        }
+        else
+        {
+            PrepareEditOrAddOfLecture(new LectureDTO());
+        }
+        await base.OnParametersSetAsync();
+
+        context = new EditContext(LectureDto);
+    }
+
+    private void PrepareEditOrAddOfLecture(LectureDTO lectureDto)
+    {
+        if (lectureDto.Content == null) lectureDto.Content = new List<PictureContentDTO>();
+        if (lectureDto.Author == null) lectureDto.Author = new UserDTO() { Name = "user4", Role = Role.Teacher, UserId = 4 }; //ToDo
+                                                                                                                              //if(test.TestContent == null) test.TestContent = new List<TestContentDTO>();
+        if (lectureDto.Videos == null) lectureDto.Videos = new List<VideoContentDTO>();
+        if (lectureDto.Content == null) lectureDto.Content = new List<PictureContentDTO>();
+        if (lectureDto.Test == null) lectureDto.Test = new TestDTO(); // TODO nicht sicher?
+
+        this.LectureDto = lectureDto;
+    }
+
+
+    private void OnSubmit(EditContext context)
+    {
+
+    }
+
+    private async void SaveContentToBackend(LectureDTO lectureDto)
+    {
+        var isValid = context.Validate();
+        if (isValid)
+        {
+            var answer = await LectureService.AddOrUpdateLecture(LectureDto);
+            if (answer != null)
+            {
+                this.LectureDto.LectureId = answer.LectureId; //refresh id (if created)
+                NavigationManager.NavigateTo("/lectureoverview");
+            }
+        }
+    }
+
+    private void AddVideoContent()
+    {
+        LectureDto.Videos.Add(new VideoContentDTO());
+    }
+
+    private void DeleteVideoContent(VideoContentDTO videoContentDto)
+    {
+        LectureDto.Videos.Remove(videoContentDto);
+    }
+
+    private void AddPictureContent()
+    {
+        LectureDto.Content.Add(new PictureContentDTO());
+    }
+
+    private void DeletePictureContent(PictureContentDTO pictureContentDto)
+    {
+        LectureDto.Content.Remove(pictureContentDto);
+    }
+
+    private void AddTest()
+    {
+        LectureDto.Test = new TestDTO(); //TODO nicht sicher ?
+    }
+
+    /*private void DeleteFurtherLink(FurtherLinkDTO link)
+    {
+        TestDto.FurtherLinks.Remove(link);
+    }*/
+}
+
