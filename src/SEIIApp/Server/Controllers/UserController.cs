@@ -12,7 +12,7 @@ using AutoMapper;
 namespace SEIIApp.Server.Controllers
 {
     [ApiController]
-    [Route("api/users")] 
+    [Route("api/users")]
     public class UserController : Controller
     {
         private UserService UserService { get; set; }
@@ -34,7 +34,8 @@ namespace SEIIApp.Server.Controllers
             var user = UserService.GetUserWithName(name);
 
             if (user == null) return NotFound();
-            if (!user.Pw.Equals(pw)) return BadRequest();
+            if (pw == null) return BadRequest(); 
+            if (!user.Pw.Equals(pw.GetHashCode().ToString())) return BadRequest();
 
             var mappedResult = Mapper.Map<UserDTO>(user);
             return Ok(mappedResult);
@@ -58,12 +59,53 @@ namespace SEIIApp.Server.Controllers
             if (userInList != null) return BadRequest();
 
             var mappedUser = Mapper.Map<User>(ri.User);
-            mappedUser.Pw = ri.Pw;
+            mappedUser.Pw = ri.Pw.GetHashCode().ToString();
             UserService.AddUser(mappedUser);
 
             return Ok(Mapper.Map<UserDTO>(mappedUser));
         }
 
+        [HttpPut("change")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult<UserDTO> ChangeStudent([FromBody] UserDTO userDTO)
+        {
+            if (ModelState.IsValid)
+            {
+                if (userDTO.UserId == 0) return BadRequest();
 
+                var mappedUser = Mapper.Map<User>(userDTO);
+                mappedUser = UserService.UpdateUser(mappedUser);
+
+                var mappedUserDTO = Mapper.Map<UserDTO>(mappedUser);
+                return Ok(mappedUserDTO);
+            }
+            return BadRequest(ModelState);
+        }
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult DeleteStudent([FromRoute] int id)
+        {
+            var user = UserService.GetUserWithId(id);
+            if (user == null) return StatusCode(StatusCodes.Status404NotFound);
+
+            UserService.RemoveUser(user);
+            return Ok();
+        }
+
+        
+        [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<UserDTO> GetUserById([FromRoute]int id)
+        {
+            var user = UserService.GetUserWithId(id);
+            if (user == null) return StatusCode(StatusCodes.Status404NotFound);
+            var mappedResult = Mapper.Map<UserDTO>(user);
+            return Ok(mappedResult);
+        }
     }
 }
