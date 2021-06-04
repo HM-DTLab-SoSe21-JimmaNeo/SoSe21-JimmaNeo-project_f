@@ -69,34 +69,6 @@
 </div>
 -->
 
-<!-- New One
-<div class="col-lg-6 ">
-    <p><font color="red">@msg</font></p><br />
-    <div class="row">
-        <div class="col-25">
-            <label for="uname">Username:</label>
-        </div>
-        <div class="col-75">
-            <input type="text" id="uname" name="uname" placeholder="Your Username">
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-25">
-            <label for="pw"> Password:</label>
-        </div>
-        <div class="col-75">
-            <input type="password" id="pw" name="pw" placeholder="Your Password"><br><br>
-        </div>
-    </div>
-    <div>
-
-        <button type="button" class="btn btn-primary mr-0" @onclick="PerformLogin">Login</button>
-        <NavLink href="/"><button type="button" class="btn btn-primary">Cancel</button></NavLink><br>
-
-    </div>
-    <NavLink href="/register">You don't have an account yet?<br> Register now here!</NavLink> <br><br>
-</div>
-     -->
 
 <div class="container-fluid">
     <div class="row no-gutter">
@@ -111,12 +83,12 @@
                             <form>
                                 <label for="inputUname">Username:</label>
                                 <div class="form-label-group">
-                                    <input type="text" id="uname" name="uname" class="form-control" placeholder="Your Username" required autofocus @bind="inputName">
+                                    <input type="text" id="uname" name="uname" class="form-control" required autofocus @bind="inputName">
 
                                 </div>
                                 <label for="inputPassword">Password:</label>
                                 <div class="form-label-group">
-                                    <input type="password" id="pw" name="pw" class="form-control" placeholder="Your Password" required @bind="inputPW">
+                                    <input type="password" id="pw" name="pw" class="form-control"  required @bind="inputPW">
 
                                 </div>
 
