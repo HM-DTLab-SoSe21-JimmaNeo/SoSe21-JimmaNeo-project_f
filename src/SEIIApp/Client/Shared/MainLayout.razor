@@ -1,4 +1,8 @@
 ﻿@inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
+@inject UserServicee MyUserService
+@using SEIIApp.Shared;
+
 
 <div class="page">
     <div class="sidebar">
@@ -7,7 +11,12 @@
 
     <div class="main">
         <div class="top-row px-4">
-            <a href="http://blazor.net" target="_blank" class="ml-md-auto">About</a>
+
+            @if (MyUserService.User == null){
+           <NavLink href="/login"> <button type="button" class="btn btn-outline-primary">Login</button></NavLink>
+            } else {
+            <button type ="button" class="btn btn-primary"  @onclick="() => Logout()">Logout</button>
+          }
         </div>
 
         <div class="content px-4">
@@ -15,3 +24,15 @@
         </div>
     </div>
 </div>
+
+@code{
+
+    private void Logout() {
+
+        MyUserService.User = null;
+        NavigationManager.NavigateTo("/login");
+
+    }
+
+}
+

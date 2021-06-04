@@ -1,0 +1,28 @@
+﻿@page "/welcomestudent"
+@inject NavigationManager NavigationManager
+@using static SEIIApp.Client.Pages.Login;
+@using SEIIApp.Shared;
+@inject UserServicee MyUserService
+
+
+<h3>WelcomeStudent</h3>
+@{
+
+if (MyUserService.User != null && MyUserService.User.Role == Role.Student)
+    {
+
+
+ }
+
+    else
+    {
+        <p>You are not allowed to see this!</p>
+    }
+    }
+
+@code {
+    public int[] Roles{get; set;}
+
+
+
+}

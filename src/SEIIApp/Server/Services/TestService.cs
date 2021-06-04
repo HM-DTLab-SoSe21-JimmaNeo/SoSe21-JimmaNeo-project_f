@@ -60,15 +60,7 @@ namespace SEIIApp.Server.Services
         public Test UpdateTest(Test test)
         {          
             var exsistingTest = GetTestWithId(test.TestId);
-            test.Author = exsistingTest.Author;
-            Mapper.Map(test, exsistingTest); // TODO Diese Zeile hat keine Auswirkung 
-
-            exsistingTest.Topic = test.Topic;
-            exsistingTest.Description = test.Description;
-            exsistingTest.Questions = test.Questions;
-            exsistingTest.Videos = test.Videos;
-            exsistingTest.FurtherLinks = test.FurtherLinks;
-            exsistingTest.Content = test.Content;
+            Mapper.Map(test, exsistingTest); 
 
             DatabaseContext.Tests.Update(exsistingTest);
             DatabaseContext.SaveChanges();
