@@ -10,7 +10,6 @@
 if (User != null && User.Role == Role.Student)
     {
 
-<button type="button" class="btn btn-outline-primary" @onclick="() => Logout()">Logout</button>
 
  }
 
@@ -24,13 +23,5 @@ if (User != null && User.Role == Role.Student)
     public int[] Roles{get; set;}
 
 
-
-    
-    private void Logout() {
-
-        Login.User = null;
-        NavigationManager.NavigateTo("/login");
- 
-    }
 
 }
