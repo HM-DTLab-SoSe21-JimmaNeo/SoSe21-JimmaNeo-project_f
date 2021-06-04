@@ -1,6 +1,7 @@
 ﻿@page "/testedit/{TestID:int}"
 
 @inject Services.TestsDefinitionBackendAccessService TestDefinitionService
+
 @inject NavigationManager NavigationManager
 
 <div class="container">
@@ -17,8 +18,20 @@
             <InputText @bind-Value="TestDto.Topic" />
 
             <label>Content Description:</label>
-          
-                <InputText @bind-Value="TestDto.Description" />
+
+            <InputText @bind-Value="TestDto.Description" />
+
+            @foreach (var video in TestDto.Videos)
+            {
+                <div class="card">
+                    <div class="card-body">
+
+                        <VideoComponent VideoContentDTO="video"></VideoComponent>
+                        <button class="btn btn-light btn-sm my-3" @onclick="() => DeleteVideoContent(video)">Remove Video</button>
+                    </div>
+                </div>
+            }
+            <button class="btn btn-light" @onclick="AddVideoContent">Add Video</button>
 
             <hr />
             @foreach (var question in TestDto.Questions)
@@ -83,6 +96,7 @@
                 await base.OnParametersSetAsync();
 
                 context = new EditContext(TestDto);
+                SEIIApp.Client.Components.VideoComponent.OnEditing = true;
             }
 
             private void PrepareEditOrAddOfTestDefinition(TestDTO test)
@@ -138,7 +152,7 @@
             */
             private void AddVideoContent()
             {
-                TestDto.Videos.Add(new VideoContentDTO());
+                TestDto.Videos.Add(new VideoContentDTO() { Path = "https://www.youtube.com/embed/" });
             }
 
             private void DeleteVideoContent(VideoContentDTO videoContentDto)

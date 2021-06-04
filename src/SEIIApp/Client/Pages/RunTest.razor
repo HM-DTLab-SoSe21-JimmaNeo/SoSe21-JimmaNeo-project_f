@@ -20,39 +20,51 @@
                         <label> @(TestDto.Questions.ElementAt(0).QuestionText)</label>
                         <label> @(TestDto.Questions.ElementAt(1).QuestionText)</label>  *@
 
-        <EditForm Model="@TestDto">
+<EditForm Model="@TestDto">
 
-            <ul class="list-group list-group-flush">
-                @*@while (EnumeraterQuestions.MoveNext() != null)*@
-                @foreach (var question in TestDto.Questions)
+    @foreach (var video in TestDto.Videos)
+    {
+        <div class="card">
+            <div class="card-body">
+
+                <VideoComponent VideoContentDTO="video"></VideoComponent>
+               
+            </div>
+        </div>
+    }
+
+
+    <ul class="list-group list-group-flush">
+        @*@while (EnumeraterQuestions.MoveNext() != null)*@
+        @foreach (var question in TestDto.Questions)
+        {
+            if (!String.IsNullOrEmpty(question.QuestionText))
+            {
+                <li class="text-center list-group-item">
+                    <br />
+                    <h3> @(question.QuestionText) </h3>
+                </li>
+                if (question.Answers.Any())
                 {
-                    if (!String.IsNullOrEmpty(question.QuestionText))
+                    foreach (var answer in question.Answers)
+                    //for(int i = 0; i < question.Answers.Count-1; i++)
                     {
-                        <li class="text-center list-group-item">
-                            <br />
-                            <h3> @(question.QuestionText) </h3>
-                        </li>
-                        if (question.Answers.Any())
+                        if (!String.IsNullOrEmpty(answer.AnswerText))
                         {
-                            foreach (var answer in question.Answers)
-                            //for(int i = 0; i < question.Answers.Count-1; i++)
-                            {
-                                if (!String.IsNullOrEmpty(answer.AnswerText))
-                                {
-                                    <li class="text-center list-group-item">
-                                        <label>@(answer.AnswerText)</label>
-                                        <InputCheckbox @bind-Value="answer.IsClicked"></InputCheckbox>
-                                    </li>
-                                }
-                            }
+                            <li class="text-center list-group-item">
+                                <label>@(answer.AnswerText)</label>
+                                <InputCheckbox @bind-Value="answer.IsClicked"></InputCheckbox>
+                            </li>
                         }
                     }
-
-                    //EnumeraterQuestions.MoveNext();
                 }
-                <button class="btn btn-light btn-sm my-3" @onclick="()=> OnSubmitTest()">Submit</button>
-            </ul>
-        </EditForm>
+            }
+
+            //EnumeraterQuestions.MoveNext();
+        }
+        <button class="btn btn-light btn-sm my-3" @onclick="()=> OnSubmitTest()">Submit</button>
+    </ul>
+</EditForm>
 
     }
     else
@@ -83,6 +95,7 @@
         var returnedTest = await TestDefinitionService.GetTestById(TestID);
         await base.OnParametersSetAsync();
         TestDto = returnedTest;
+        SEIIApp.Client.Components.VideoComponent.OnEditing = false;
         //this.EnumeraterQuestions = returnedTest.Questions.GetEnumerator();
         //context = new EditContext(TestDto);
     }
