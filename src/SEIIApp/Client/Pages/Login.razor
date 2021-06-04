@@ -2,7 +2,7 @@
 @inject Services.UserBackendAccessService UserService
 @inject NavigationManager NavigationManager
 @using SEIIApp.Shared;
-
+@* 
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -13,18 +13,20 @@
         border-radius: 5px;
     }
 </style>
+
+*@
 <h3>Login</h3>
 
-<!-- Orignial
+
 <div class="card" style="width:25rem" border="#FFFFFF">
     <div class="card-body">
 
         <p><font color="red">@msg</font></p>
         <label for="uname">Username:</label><br>
-        <input type="text" id="uname" size="30" name="uname" @bind="inputName"><br><br>
+        <input type="text" id="uname" size="30"  placeholder="Enter Username" name="uname" @bind="inputName"><br><br>
 
         <label for="pw">Password:</label><br>
-        <input type="password" id="pw" size="30" maxlength="20" required @bind="inputPW"><br><br>
+        <input type="password" id="pw"  placeholder="Enter Password" size="30" maxlength="20" required @bind="inputPW"><br><br>
 
 
         <div style="float: left;">
@@ -39,8 +41,7 @@
     </div>
 
 </div>
- -->
-<!--Modified One-->
+@* 
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
     <div class="col mb-4">
         <div class="card">
@@ -92,6 +93,7 @@
     <NavLink href="/register">You don't have an account yet?<br> Register now here!</NavLink> <br><br>
 </div>
      -->
+      *@
 @code {
 
     public static UserDTO User = null;
