@@ -2,31 +2,34 @@
 @inject Services.UserBackendAccessService UserService
 @inject NavigationManager NavigationManager
 @using SEIIApp.Shared;
-@* 
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+    <link href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'>
+
+
 </head>
 <style>
-    .col-lg-6 {
+    .col-lg-59 {
         border: 2px solid #f2f2f2;
         border-radius: 5px;
+        width: 25%;
     }
 </style>
+<!--<h3>Login</h3>-->
 
-*@
-<h3>Login</h3>
-
-
+<!-- Orignial
 <div class="card" style="width:25rem" border="#FFFFFF">
     <div class="card-body">
 
         <p><font color="red">@msg</font></p>
         <label for="uname">Username:</label><br>
-        <input type="text" id="uname" size="30"  placeholder="Enter Username" name="uname" @bind="inputName"><br><br>
+        <input type="text" id="uname" size="30" name="uname" @bind="inputName"><br><br>
 
         <label for="pw">Password:</label><br>
-        <input type="password" id="pw"  placeholder="Enter Password" size="30" maxlength="20" required @bind="inputPW"><br><br>
+        <input type="password" id="pw" size="30" maxlength="20" required @bind="inputPW"><br><br>
 
 
         <div style="float: left;">
@@ -41,10 +44,11 @@
     </div>
 
 </div>
-@* 
-<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
-    <div class="col mb-4">
-        <div class="card">
+ -->
+<!--Modified One
+<div>
+    <div class="col-lg-59">
+        <div class="card" width="30%">
             <div class="card-body">
                 <p><font color="red">@msg</font></p>
                 <div>  <label for="uname">Username:</label><br></div>
@@ -63,7 +67,7 @@
         </div>
     </div>
 </div>
-
+-->
 
 <!-- New One
 <div class="col-lg-6 ">
@@ -93,7 +97,45 @@
     <NavLink href="/register">You don't have an account yet?<br> Register now here!</NavLink> <br><br>
 </div>
      -->
-      *@
+
+<div class="container-fluid">
+    <div class="row no-gutter">
+        <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
+        <div class="col-md-8 col-lg-6">
+            <div class="login d-flex align-items-center py-5">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-9 col-lg-8 mx-auto">
+                            <h3 class="login-heading mb-4">Welcome back<br /> to the Login!</h3>
+                            <p><font color="red">@msg</font></p><br />
+                            <form>
+                                <label for="inputUname">Username:</label>
+                                <div class="form-label-group">
+                                    <input type="text" id="uname" name="uname" class="form-control" placeholder="Your Username" required autofocus @bind="inputName">
+
+                                </div>
+                                <label for="inputPassword">Password:</label>
+                                <div class="form-label-group">
+                                    <input type="password" id="pw" name="pw" class="form-control" placeholder="Your Password" required @bind="inputPW">
+
+                                </div>
+
+                                <div class="custom-control custom-checkbox mb-3">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                    <label class="custom-control-label" for="customCheck1">Remember password</label>
+                                </div>
+                                <button type="button" class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" @onclick="PerformLogin">Sign-IN</button>
+                                <div class="text-center">
+                                    <a class="small" href="/register">You don't have an account yet?<br> Register now here!</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @code {
 
     public static UserDTO User = null;
@@ -146,3 +188,4 @@
 
 
 }
+
