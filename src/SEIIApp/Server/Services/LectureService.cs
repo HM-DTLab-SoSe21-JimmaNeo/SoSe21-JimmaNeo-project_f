@@ -13,14 +13,16 @@ namespace SEIIApp.Server.Services
     {
         private DatabaseContext DatabaseContext { get; set; }
 
+        private TestService testService { get; set; }
         private UserService userService { get; set; }
         private IMapper Mapper { get; set; }
 
-        public LectureService(DatabaseContext db, IMapper mapper, UserService userService)
+        public LectureService(DatabaseContext db, IMapper mapper, UserService userService, TestService testService)
         {
             this.DatabaseContext = db;
             this.Mapper = mapper;
             this.userService = userService;
+            this.testService = testService;
         }
 
         private IQueryable<Lecture> GetQueryableForLecture()
@@ -50,11 +52,17 @@ namespace SEIIApp.Server.Services
         public Lecture AddLecture(Lecture lecture)
         {
             lecture.Author = userService.GetUserWithId(lecture.Author.UserId);
-            if(lecture.Author == null) {
+            if (lecture.Author == null)
+            {
                 return null;
             }
-            if(lecture.Author.Role != Shared.Role.Teacher) {
-                return null;            
+            if (lecture.Test.TestId != 0)
+            {
+                lecture.Test = testService.GetTestWithId(lecture.Test.TestId);
+            }
+            else
+            {
+                lecture.Test = null;
             }
             DatabaseContext.Lectures.Add(lecture);
             DatabaseContext.SaveChanges();
@@ -65,8 +73,8 @@ namespace SEIIApp.Server.Services
         {
             var exsistingLecture = GetLectureWithId(lecture.LectureId);
             Mapper.Map(lecture, exsistingLecture);
-            
-            DatabaseContext.Lectures.Update(exsistingLecture);
+            exsistingLecture.Test = testService.GetTestWithId(lecture.Test.TestId);
+            DatabaseContext.Update(exsistingLecture);
             DatabaseContext.SaveChanges();
             return exsistingLecture;
         }
