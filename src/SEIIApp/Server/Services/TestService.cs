@@ -17,18 +17,22 @@ namespace SEIIApp.Server.Services
 
         private UserService UserService { get; set; }
 
-        public TestService(DatabaseContext db, IMapper mapper, UserService userService)
+        private NewsService NewsService { get; set; }
+
+        public TestService(DatabaseContext db, IMapper mapper, UserService userService, NewsService newsService)
         {
             this.DatabaseContext = db;
             this.Mapper = mapper;
             this.UserService = userService;
+            this.NewsService = newsService;
         }
 
         private IQueryable<Test> GetQueryableForTest()
         {
             return DatabaseContext.Tests
                 .Include(test => test.Questions).ThenInclude(questions => questions.Answers)
-                .Include(test => test.TestContent)
+                .Include(test => test.Content)
+                .Include(test => test.Videos)
                 .Include(test => test.FurtherLinks)
                 .Include(test => test.Author);
         }
@@ -53,23 +57,31 @@ namespace SEIIApp.Server.Services
 
             DatabaseContext.Tests.Add(test);
             DatabaseContext.SaveChanges();
+
+            NewsService.AddNews(new News() { 
+                Topic = "New Test", 
+                Content = $"A new Test, named {test.Topic}, was uploaded to this platform. The Test was created by {test.Author.Name}.",
+                DateOfCreation = DateTime.Now
+            });
+
             return test;
         }
 
         public Test UpdateTest(Test test)
         {          
             var exsistingTest = GetTestWithId(test.TestId);
-            test.Author = exsistingTest.Author;
-            Mapper.Map(test, exsistingTest); // TODO Diese Zeile hat keine Auswirkung 
-
-            exsistingTest.Topic = test.Topic;
-            exsistingTest.Description = test.Description;
-            exsistingTest.Questions = test.Questions;
-            exsistingTest.FurtherLinks = test.FurtherLinks;
-            exsistingTest.TestContent = test.TestContent;
+            Mapper.Map(test, exsistingTest); 
 
             DatabaseContext.Tests.Update(exsistingTest);
             DatabaseContext.SaveChanges();
+
+            NewsService.AddNews(new News()
+            {
+                Topic = $"Updated Test {test.Topic}",
+                Content = $"The Test \"{test.Topic}\" has been updated. The Test was updated by {test.Author.Name}.",
+                DateOfCreation = DateTime.Now
+            });
+
             return exsistingTest;
         } 
 

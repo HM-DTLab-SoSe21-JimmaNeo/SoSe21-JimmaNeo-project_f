@@ -62,9 +62,7 @@
             var response = await UserService.RegisterUser(logInfo);     
             if(response == null) {
                 msg ="UserName not available";
-            }else {
-
-           
+            }else {                           
             msg ="You have been successfully registered!";
             await Task.Delay(2000);
             NavigationManager.NavigateTo("/login");

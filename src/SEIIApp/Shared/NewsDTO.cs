@@ -17,7 +17,7 @@ namespace SEIIApp.Shared
 
         public string Content { get; set; }
 
-        public DateTime Date { get; set; }
+        public DateTime DateOfCreation { get; set; }
 
     }
 }

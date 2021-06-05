@@ -1,0 +1,123 @@
+﻿@page "/testoverview"
+@inject Services.TestsDefinitionBackendAccessService TestDefinitionService
+@inject NavigationManager NavigationManager
+
+<div class="container">
+
+    <h2 class="text-center">Your Content</h2>
+    <div class="col text-center">
+
+        <div class="px-5">
+             <EditForm Model="@searchValue">
+            <div class="searchcostum input-group pt-2">
+
+
+                @if (isFiltered == false)
+                {
+                    <div class="px-auto">
+                        <InputText type="search" class="form-control rounded" placeholder="Search by name"
+                                   aria-label="Name of the Content" aria-describedby="search-addon" @bind-Value="@searchValue" />
+
+
+                    </div>
+                    <button class="btn btn-outline-primary btn-sm" @onclick="SearchContent">Search</button>
+
+                }
+                else
+                {
+                    <div class="text-center pb-2">
+                        <button class="btn btn-outline-primary" @onclick="ResetSearchContent">Return</button>
+                    </div>
+                }
+
+            </div>
+        </EditForm>
+     
+            <div class="text-center py-2">
+                <button class="btn btn-outline-success" @onclick="AddQuiz">Add</button>
+            </div>
+        </div>
+    </div>
+
+    @if (Tests != null)
+
+        {
+            <ul class="list-group list-group-flush">
+
+                @foreach (var content in Tests)
+                {
+                <li class="text-center list-group-item">
+                    @(content.DateOfCreation.ToShortDateString()) <b>@(content.Topic)</b> <button class="btn btn-outline-dark btn-sm" @onclick="() => EditQuiz((TestDTO)content)">Edit</button>
+                    <button class="btn btn-outline-danger btn-sm" @onclick="() => DeleteContent(content)">Delete</button>
+                    <button class="btn btn-outline-dark btn-sm" @onclick="() => StartTest(content.TestID)">Start</button>
+                </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <h5 class="text-center">Loading ...  or no content found.</h5>
+        }
+ 
+</div>
+
+@code {
+    public string searchValue = "";
+
+    public bool isFiltered { get; set; }
+
+    public static List<TestDTO> Tests { get; set; }
+
+    private List<TestDTO> copyOfTest { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await base.OnParametersSetAsync();
+        Tests = await TestDefinitionService.GetTestOverview();
+    }
+
+    private void EditQuiz(TestDTO test)
+    {
+        NavigationManager.NavigateTo("/testedit/" + test.TestID);
+    }
+
+    private void AddQuiz()
+    {
+        NavigationManager.NavigateTo("/testedit/0");
+    }
+
+    private async Task DeleteContent(TestDTO test)
+    {
+        Tests.Remove(test);
+       if (copyOfTest != null)
+        {
+            copyOfTest.Remove(test);
+        }
+        await TestDefinitionService.DeleteTest(test.TestID);
+    }
+
+    
+    private void SearchContent()
+    {
+        if (Tests != null && searchValue != null)
+        {
+            copyOfTest = new List<TestDTO>(Tests);
+            isFiltered = true;
+            Tests.Clear();
+            Tests.AddRange(copyOfTest.Where(t => t.Topic.StartsWith(searchValue)));
+        }
+    }
+
+    private void ResetSearchContent()
+    {
+        isFiltered = false;
+        Tests.Clear();
+        Tests.AddRange(copyOfTest);
+    }
+    
+    private void StartTest(int contentId)
+    {
+        NavigationManager.NavigateTo("/runtest/" + contentId);
+    }
+    }
+

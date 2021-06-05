@@ -10,7 +10,7 @@ namespace SEIIApp.Shared
     public class QuestionDTO
     {
         [Required]
-        [StringLength(250)]
+        [StringLength(250, MinimumLength = 1)]
         public string QuestionText { get; set; }
 
         public List<AnswerDTO> Answers { get; set; }

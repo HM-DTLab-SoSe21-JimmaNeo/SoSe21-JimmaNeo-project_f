@@ -1,8 +1,10 @@
 ﻿@page "/login"
 @inject Services.UserBackendAccessService UserService
 @inject NavigationManager NavigationManager
+@inject Services.UserServicee MyUserService
 @using SEIIApp.Shared;
 
+@* 
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -15,9 +17,10 @@
         width: 25%;
     }
 </style>
-<!--<h3>Login</h3>-->
+ *@
+<h3>Login</h3>
 
-<!-- Orignial
+@* 
 <div class="card" style="width:25rem" border="#FFFFFF">
     <div class="card-body">
 
@@ -41,9 +44,8 @@
     </div>
 
 </div>
- -->
-<!--Modified One
-<div>
+  *@
+ <div>
     <div class="col-lg-59">
         <div class="card" width="30%">
             <div class="card-body">
@@ -64,9 +66,8 @@
         </div>
     </div>
 </div>
--->
 
-
+  @*
 <div class="container-fluid">
     <div class="row no-gutter">
         <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
@@ -107,9 +108,8 @@
         </div>
     </div>
 </div>
+ *@
 @code {
-
-    public static UserDTO User = null;
 
     public string inputName { get; set; }
 
@@ -120,11 +120,11 @@
     private async Task PerformLogin()
     {
         var data = await UserService.LoginUser(inputName, inputPW);
-        User = data;
+        MyUserService.User = data;
 
-        if (User != null)
+        if (MyUserService.User != null)
         {
-            switch ((int)User.Role)
+            switch ((int)MyUserService.User.Role)
             {
 
                 case 0: //none
