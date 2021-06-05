@@ -11,16 +11,19 @@ namespace SEIIApp.Server.DataAccess
     {
         public static void InitalizeTestData(Services.UserService userService, Services.TestService testService, Services.NewsService newsService, Services.CompletedTestService completedTestService,Services.LectureService lectureService)
         {
-            AddUser(userService);
-            AddTests(testService, userService);
-            AddCompletedTest(testService, userService, completedTestService);
             AddNews(newsService);
+<<<<<<< HEAD
             AddLectures(lectureService, userService);
+=======
+            AddUser(userService);
+            AddTests(testService, userService, newsService);
+            AddCompletedTest(testService, userService, completedTestService);  
+>>>>>>> master
         }
 
         private static void AddUser(Services.UserService userService)
         {
-            User system = new User { Name = "system", Role = Role.None, Pw = "system" };
+            User system = new User { Name = "system", FirstName = "", LastName = "", Role = Role.None, Pw = "system".GetHashCode().ToString() };
             userService.AddUser(system);
 
             for (int i = 2; i < 8; i++)
@@ -35,9 +38,9 @@ namespace SEIIApp.Server.DataAccess
             }
         }
 
-        private static void AddTests(Services.TestService testService, Services.UserService userService)
+        private static void AddTests(Services.TestService testService, Services.UserService userService, Services.NewsService newsService)
         {
-            for (int i = 1; i < 10; i++)
+            for (int i = 1; i < 6; i++)
             {
                 var test = GenerateTest(userService);
                 test.Topic = "Test " + i;
@@ -68,9 +71,8 @@ namespace SEIIApp.Server.DataAccess
 
         private static User GenerateUser(int id, Role role)
         {
-            User u = new User();
-            u.Name = $"user{id}";
-            u.Pw = $"pw{id}";
+            User u = new User() { Name = $"user{id}", FirstName = $"first_{id}", LastName = $"last_{id}"};
+            u.Pw = $"pw{id}".GetHashCode().ToString();
             u.Role = role;
             return u;
         }

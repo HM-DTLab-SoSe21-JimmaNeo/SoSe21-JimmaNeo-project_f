@@ -17,6 +17,10 @@ namespace SEIIApp.Server.Domain
         [StringLength(20)]
         public string Name { get; set; }
 
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
         public string Pw { get; set; }
         
         public Role Role { get; set; }    

@@ -14,13 +14,16 @@ namespace SEIIApp.Server.Services
         private DatabaseContext DatabaseContext { get; set; }
 
         private UserService userService { get; set; }
+
+        private NewsService NewsService { get; set; }
         private IMapper Mapper { get; set; }
 
-        public LectureService(DatabaseContext db, IMapper mapper, UserService userService)
+        public LectureService(DatabaseContext db, IMapper mapper, UserService userService, NewsService newsService)
         {
             this.DatabaseContext = db;
             this.Mapper = mapper;
             this.userService = userService;
+            this.NewsService = newsService;
         }
 
         private IQueryable<Lecture> GetQueryableForLecture()
@@ -58,19 +61,32 @@ namespace SEIIApp.Server.Services
             }
             DatabaseContext.Lectures.Add(lecture);
             DatabaseContext.SaveChanges();
+
+            NewsService.AddNews(new News()
+            {
+                Topic = "New Lectrue",
+                Content = $"A new Lectrue, named {lecture.Topic}, was uploaded to this platform. The Lectrue was created by {lecture.Author.Name}.",
+                DateOfCreation = DateTime.Now
+            });
+
             return lecture;
         }
 
         public Lecture UpdateLecture(Lecture lecture)
         {
             var exsistingLecture = GetLectureWithId(lecture.LectureId);
-            //Mapper.Map(lecture, exsistingLecture);
-            exsistingLecture.Content = lecture.Content;
-            exsistingLecture.Videos = lecture.Videos;
-            exsistingLecture.Test = lecture.Test;
-            exsistingLecture.Text = lecture.Text;
+            Mapper.Map(lecture, exsistingLecture);
+            
             DatabaseContext.Lectures.Update(exsistingLecture);
             DatabaseContext.SaveChanges();
+
+            NewsService.AddNews(new News()
+            {
+                Topic = $"Updated {lecture.Topic}",
+                Content = $"The Lecture \"{lecture.Topic}\" has been updated. The Lectrue was updated by {lecture.Author.Name}.",
+                DateOfCreation = DateTime.Now
+            });
+
             return exsistingLecture;
         }
 
