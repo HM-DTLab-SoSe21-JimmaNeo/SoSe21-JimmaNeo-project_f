@@ -41,6 +41,7 @@ namespace SEIIApp.Server.Domain
             CreateMap<LectureBaseDTO, Lecture>();
 
             // News
+            CreateMap<News, News>();
             CreateMap<News , NewsDTO>();
             CreateMap<NewsDTO, News>();
 

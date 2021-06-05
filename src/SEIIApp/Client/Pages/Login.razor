@@ -4,73 +4,69 @@
 @inject Services.UserServicee MyUserService
 @using SEIIApp.Shared;
 
-@* 
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
-    <link href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'>
+
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+    </head>
+
+    <style>
+        .col-lg-59 {
+            border: 2px solid #f2f2f2;
+            border-radius: 5px;
+            width: 25%;
+        }
+    </style>
+
+@*
+    <div class="card" style="width:25rem" border="#FFFFFF">
+        <div class="card-body">
+
+            <p><font color="red">@msg</font></p>
+            <label for="uname">Username:</label><br>
+            <input type="text" id="uname" size="30" name="uname" @bind="inputName"><br><br>
+
+            <label for="pw">Password:</label><br>
+            <input type="password" id="pw" size="30" maxlength="20" required @bind="inputPW"><br><br>
 
 
-</head>
-<style>
-    .col-lg-59 {
-        border: 2px solid #f2f2f2;
-        border-radius: 5px;
-        width: 25%;
-    }
-</style>
- *@
-<h3>Login</h3>
+            <div style="float: left;">
+                <button type="button" class="btn btn-outline-primary" @onclick="PerformLogin">Login</button>
+                <NavLink href="/"><button type="button" class="btn btn-primary">Cancel</button></NavLink><br>
 
-@* 
-<div class="card" style="width:25rem" border="#FFFFFF">
-    <div class="card-body">
-
-        <p><font color="red">@msg</font></p>
-        <label for="uname">Username:</label><br>
-        <input type="text" id="uname" size="30" name="uname" @bind="inputName"><br><br>
-
-        <label for="pw">Password:</label><br>
-        <input type="password" id="pw" size="30" maxlength="20" required @bind="inputPW"><br><br>
-
-
-        <div style="float: left;">
-            <button type="button" class="btn btn-outline-primary" @onclick="PerformLogin">Login</button>
-            <NavLink href="/"><button type="button" class="btn btn-primary">Cancel</button></NavLink><br>
-
-
-            <div>
-                <NavLink href="/register">You don't have an account yet?<br> Register now here!</NavLink> <br><br>
-            </div>
-        </div>
-    </div>
-
-</div>
-  *@
- <div>
-    <div class="col-lg-59">
-        <div class="card" width="30%">
-            <div class="card-body">
-                <p><font color="red">@msg</font></p>
-                <div>  <label for="uname">Username:</label><br></div>
-                <input type="text" id="uname" placeholder="Enter Username" size="24" name="uname" @bind="inputName"><br><br>
-                <div> <label for="pw">Password:</label><br></div>
-                <input type="password" id="pw" placeholder="Enter Password" size="24" maxlength="20" required @bind="inputPW"><br><br>
 
                 <div>
-
-                    <button type="button" class="btn btn-primary mr-0" @onclick="PerformLogin">Login</button>
-                    <NavLink href="/"><button type="button" class="btn btn-primary">Cancel</button></NavLink><br>
-
+                    <NavLink href="/register">You don't have an account yet?<br> Register now here!</NavLink> <br><br>
                 </div>
-                <NavLink href="/register">You don't have an account yet?<br> Register now here!</NavLink> <br><br>
+            </div>
+        </div>
+
+    </div>
+*@
+@*
+     <div>
+        <div class="col-lg-59">
+            <div class="card" width="30%">
+                <div class="card-body">
+                    <p><font color="red">@msg</font></p>
+                    <div>  <label for="uname">Username:</label><br></div>
+                    <input type="text" id="uname" placeholder="Enter Username" size="24" name="uname" @bind="inputName"><br><br>
+                    <div> <label for="pw">Password:</label><br></div>
+                    <input type="password" id="pw" placeholder="Enter Password" size="24" maxlength="20" required @bind="inputPW"><br><br>
+
+                    <div>
+
+                        <button type="button" class="btn btn-primary mr-0" @onclick="PerformLogin">Login</button>
+                        <NavLink href="/"><button type="button" class="btn btn-primary">Cancel</button></NavLink><br>
+
+                    </div>
+                    <NavLink href="/register">You don't have an account yet?<br> Register now here!</NavLink> <br><br>
+                </div>
             </div>
         </div>
     </div>
-</div>
-
-  @*
+*@
 <div class="container-fluid">
     <div class="row no-gutter">
         <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
@@ -84,12 +80,14 @@
                             <form>
                                 <label for="inputUname">Username:</label>
                                 <div class="form-label-group">
-                                    <input type="text" id="uname" name="uname" class="form-control" required autofocus @bind="inputName">
+                                    <input type="text" id="uname" name="uname" class="form-control" @bind="inputName">
+
 
                                 </div>
                                 <label for="inputPassword">Password:</label>
                                 <div class="form-label-group">
-                                    <input type="password" id="pw" name="pw" class="form-control"  required @bind="inputPW">
+                                    <input type="password" id="pw" name="pw" class="form-control" @bind="inputPW">
+
 
                                 </div>
 
@@ -99,7 +97,7 @@
                                 </div>
                                 <button type="button" class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" @onclick="PerformLogin">Sign-IN</button>
                                 <div class="text-center">
-                                    <a class="small" href="/register">You don't have an account yet?<br> Register now here!</a>
+                                    <a class="small" href="/register">You don't have an account yet?<br> Register here!</a>
                                 </div>
                             </form>
                         </div>
@@ -109,7 +107,7 @@
         </div>
     </div>
 </div>
- *@
+
 @code {
 
     public string inputName { get; set; }
