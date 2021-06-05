@@ -44,17 +44,12 @@
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        if (VideoContentDTO.VideoLink != null)
-        {
-            string[] getVideoIdentifier = VideoContentDTO.VideoLink.Split('=');
-            VideoContentDTO.Path = "https://www.youtube.com/embed/" + getVideoIdentifier[1];
-        }
     }
 
 
    private void UploadVideo()
     {
-        if(VideoContentDTO.VideoLink != null)
+        if(!String.IsNullOrEmpty(VideoContentDTO.VideoLink) && VideoContentDTO.VideoLink.StartsWith("https://www.youtube."))
         {
             string[] getVideoIdentifier = VideoContentDTO.VideoLink.Split('=');
             VideoContentDTO.Path = "https://www.youtube.com/embed/" + getVideoIdentifier[1];

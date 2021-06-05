@@ -9,8 +9,6 @@
     @if (TestDto != null && TestDto.Questions.Any() && TestDto.Questions.Count != 0)
     {
         <h2 class="text-center">@(TestDto.Topic)</h2>
-        <label> @(TestDto.Questions.ElementAt(0).Answers.ElementAt(0).IsClicked)</label>
-        <label> @(TestID)</label>
 
         <EditForm Model="@TestDto">
 
@@ -18,9 +16,7 @@
             {
                 <div class="card">
                     <div class="card-body">
-
                         <VideoComponent VideoContentDTO="video"></VideoComponent>
-
                     </div>
                 </div>
             }

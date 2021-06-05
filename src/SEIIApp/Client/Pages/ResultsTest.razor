@@ -55,7 +55,10 @@
         <div class="text-center py-2">
             <button class="btn btn-outline-primary" @onclick="() => ReturnBackToTestOverview()">Return To Overview</button>
         </div>
-      }
+        <div class="text-center py-2">
+            <button class="btn btn-outline-primary" @onclick="() => GoToFurtherInformationPage()">Get more information</button>
+        </div>
+    }
 
 </div>
 
@@ -64,6 +67,11 @@
     private void ReturnBackToTestOverview()
     {
         NavigationManager.NavigateTo("/testoverview/");
+    }
+
+    private void GoToFurtherInformationPage()
+    {
+        NavigationManager.NavigateTo("/furtherinformation/"+ RunTest.TestDto.TestID);
     }
 }
 
