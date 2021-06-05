@@ -9,12 +9,13 @@ namespace SEIIApp.Server.DataAccess
 {
     public class TestDataInitialiser
     {
-        public static void InitalizeTestData(Services.UserService userService, Services.TestService testService, Services.NewsService newsService, Services.CompletedTestService completedTestService)
+        public static void InitalizeTestData(Services.UserService userService, Services.TestService testService, Services.NewsService newsService, Services.CompletedTestService completedTestService,Services.LectureService lectureService)
         {
             AddUser(userService);
             AddTests(testService, userService);
             AddCompletedTest(testService, userService, completedTestService);
             AddNews(newsService);
+            AddLectures(lectureService, userService);
         }
 
         private static void AddUser(Services.UserService userService)
@@ -106,6 +107,41 @@ namespace SEIIApp.Server.DataAccess
             return test;
         }
 
-        
+        private static void AddLectures(Services.LectureService lectureService, Services.UserService userService)
+        {
+            for (int i = 1; i < 10; i++)
+            {
+                var lecture = GenerateLecture(userService);
+                lecture.Topic = "Lecture " + i;
+                lecture.LectureId = i;
+                lectureService.AddLecture(lecture);
+               // test = new Services.TestService();
+                //lecture.Test = Services.TestService.GetTestWithId(i);
+            }
+        }
+
+        public static Lecture GenerateLecture(Services.UserService userService)
+        {
+           
+            var lecture = new Lecture();
+            lecture.DateOfCreation = DateTime.UtcNow.Date;
+            lecture.Videos = new List<VideoContent>();
+            lecture.Author = userService.GetUserWithId(4);
+            
+
+           /* for (int i = 0; i < 3; i++)
+            {
+                var video = new VideoContent();
+                lecture.Text = $"Text {i} for lecture ";
+                video.Description = $"Description {i}";
+                //video.Path = $"https://www.youtube.com/embed/";
+                
+                
+                lecture.Videos.Add(video);
+            }
+            */
+            return lecture;
+        }
+
     }
 }

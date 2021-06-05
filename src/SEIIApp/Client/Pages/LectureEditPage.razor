@@ -35,14 +35,13 @@
             {
                 <div class="card">
                     <div class="card-body">
-                        <!-- Component for questions in quiz -->
                         <PictureComponent PictureContentDto="picture"></PictureComponent>
                         <button class="btn btn-light btn-sm my-3" @onclick="() => DeletePictureContent(picture)">Remove Picture</button>
                     </div>
                 </div>
 
             }
-            <button class="btn btn-light btn-sm my-3" @onclick="AddPictureContent">Add Picture</button>
+            <button class="btn btn-light btn-sm my-3" @onclick="AddPictureContent">Add Picture</button><br />
 
             <label>Lecture Text:</label>
             <InputText @bind-Value="LectureDto.Text" />
@@ -105,23 +104,27 @@
 
     }
 
-    private async void SaveContentToBackend(LectureDTO lectureDto)
+    private async void SaveContentToBackend(LectureDTO LectureDto)
     {
+
         var isValid = context.Validate();
         if (isValid)
         {
             var answer = await LectureService.AddOrUpdateLecture(LectureDto);
             if (answer != null)
             {
-                this.LectureDto.LectureId = answer.LectureId; //refresh id (if created)
+                this.LectureDto.LectureId = answer.LectureId; 
                 NavigationManager.NavigateTo("/lectureoverview");
             }
+            else
+                Console.WriteLine("answer = FALSE");
         }
+        else Console.WriteLine("isValid = FALSE");
     }
 
     private void AddVideoContent()
     {
-        LectureDto.Videos.Add(new VideoContentDTO());
+        LectureDto.Videos.Add(new VideoContentDTO() { Path = "https://www.youtube.com/embed/" });
     }
 
     private void DeleteVideoContent(VideoContentDTO videoContentDto)
@@ -144,9 +147,6 @@
         LectureDto.Test = new TestDTO(); //TODO nicht sicher ?
     }
 
-    /*private void DeleteFurtherLink(FurtherLinkDTO link)
-    {
-        TestDto.FurtherLinks.Remove(link);
-    }*/
+
 }
 

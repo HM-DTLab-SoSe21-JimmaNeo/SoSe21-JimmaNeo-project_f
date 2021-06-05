@@ -23,12 +23,12 @@ namespace SEIIApp.Client.Services
 
         private string GetLectureUrl()
         {
-            return "api/lecture";
+            return "api/lectures";
         }
 
         private string GetLectureUrlWithId(int LectureID)
         {
-            return $"{GetLectureUrl()}/{LectureID}";
+            return $"{GetLectureUrl()+"/SearchLecture"}/{LectureID}";
         }
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace SEIIApp.Client.Services
         /// </summary>
         public async Task<List<LectureDTO>> GetLectureOverview()
         {
-            return await HttpClient.GetFromJsonAsync<List<LectureDTO>>(GetLectureUrl());
+            return await HttpClient.GetFromJsonAsync<List<LectureDTO>>(GetLectureUrl()+"/ShowLectures");
         }
 
         /// <summary>
@@ -52,7 +52,8 @@ namespace SEIIApp.Client.Services
         /// </summary>
         public async Task<LectureDTO> AddOrUpdateLecture(LectureDTO dto)
         {
-            var response = await HttpClient.PutAsJsonAsync(GetLectureUrl(), dto);
+            var response = await HttpClient.PutAsJsonAsync(GetLectureUrl()+"/ChangeLecture", dto);
+            
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 return await response.DeserializeResponseContent<LectureDTO>();
