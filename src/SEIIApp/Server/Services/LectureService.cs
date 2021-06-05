@@ -54,8 +54,8 @@ namespace SEIIApp.Server.Services
 
         public Lecture AddLecture(Lecture lecture)
         {
-            /*lecture.Author = userService.GetUserWithId(lecture.Author.UserId);
-           if (lecture.Author == null)
+            //lecture.Author = userService.GetUserWithId(lecture.Author.UserId);
+           /*if (lecture.Author == null)
             {
                 return null;
             }
@@ -66,11 +66,11 @@ namespace SEIIApp.Server.Services
             else
             {
                 lecture.Test = null;
-            }
+            }*/
             DatabaseContext.Lectures.Add(lecture);
             DatabaseContext.SaveChanges();
 
-            NewsService.AddNews(new News()
+            /*NewsService.AddNews(new News()
             {
                 Topic = "New Lectrue",
                 Content = $"A new Lectrue, named {lecture.Topic}, was uploaded to this platform. The Lectrue was created by {lecture.Author.Name}.",

@@ -113,6 +113,7 @@ namespace SEIIApp.Server.DataAccess
                 var lecture = GenerateLecture(userService);
                 lecture.Topic = "Lecture " + i;
                 lecture.LectureId = i;
+                if (lecture == null) Console.WriteLine("lecture ist null");
                 lectureService.AddLecture(lecture);
                // test = new Services.TestService();
                 //lecture.Test = Services.TestService.GetTestWithId(i);

@@ -28,7 +28,7 @@ namespace SEIIApp.Client.Services
 
         private string GetLectureUrlWithId(int LectureID)
         {
-            return $"{GetLectureUrl()+"/SearchLecture"}/{LectureID}";
+            return $"{GetLectureUrl()+"/SearchLectureID"}/{LectureID}";
         }
 
         /// <summary>
