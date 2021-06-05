@@ -1,6 +1,6 @@
 ﻿@using SEIIApp.Shared;
 
-<h3>Video Content</h3>
+<h4>Videos</h4>
 
 <EditForm Model="VideoContentDTO">
     <DataAnnotationsValidator />
@@ -8,13 +8,9 @@
     @if (OnEditing)
     {
         <label>Video-Link</label>
-        <InputText @bind-Value="VideoContentDTO.Path" />
-        <p>
-            Please extend the Url with the Video-Identifier<br />
-            If the YouTube-Link of your Video looks like: <br />
-            "https://www.youtube.com/watch?v=xxxxxxxx": xxxxxxxx is the Identifier. <br />
-            "https://youtu.be/xxxxxxxx": xxxxxxxx is the Identifier.
-        </p>
+        <InputText @bind-Value="VideoContentDTO.VideoLink" />
+        <button class="btn btn-light btn-sm my-3" @onclick="UploadVideo">Upload Video</button>
+        
         <br />
     }
 
@@ -43,11 +39,20 @@
     [Parameter]
     public VideoContentDTO VideoContentDTO { get; set; }
 
-    public static bool OnEditing = false;
+    public static bool OnEditing = true;
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
+    }
+    
 
+    private void UploadVideo()
+    {
+        if(VideoContentDTO.VideoLink != null)
+        {
+            string[] getVideoIdentifier = VideoContentDTO.VideoLink.Split('=');
+            VideoContentDTO.Path = "https://www.youtube.com/embed/" + getVideoIdentifier[1];
+        }
     }
 }

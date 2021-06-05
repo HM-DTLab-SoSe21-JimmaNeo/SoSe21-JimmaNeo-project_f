@@ -4,18 +4,18 @@
     {
     <EditForm Model="QuestionDto">
 
-        <label>Question Text</label>
+        <label>Question Text</label><br />
         <InputText @bind-Value="@QuestionDto.QuestionText" />
 
         @foreach (var a in QuestionDto.Answers)
-        {
+        {<hr />
             <AnswerDefComponent AnswerDto="a"></AnswerDefComponent>
             <button class="btn btn-light btn-sm" @onclick="() => RemoveAnswer(a)">Remove Answer</button>
         }
 
         <button class="btn btn-light btn-sm my-3" @onclick="AddAnswer">Add Answer</button>
         <br/>
-        <label>Explanation</label>
+        <label>Explanation</label><br />
         <InputText @bind-Value="@QuestionDto.Explanation" />
 
     </EditForm>

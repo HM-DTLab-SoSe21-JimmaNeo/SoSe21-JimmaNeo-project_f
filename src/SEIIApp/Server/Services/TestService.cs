@@ -30,6 +30,7 @@ namespace SEIIApp.Server.Services
                 .Include(test => test.Questions).ThenInclude(questions => questions.Answers)
                 .Include(test => test.Content)
                 .Include(test => test.Videos)
+                .Include(test => test.VideosFurtherInformation)
                 .Include(test => test.FurtherLinks)
                 .Include(test => test.Author);
         }
