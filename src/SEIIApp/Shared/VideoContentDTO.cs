@@ -16,5 +16,7 @@ namespace SEIIApp.Shared
 
         [StringLength(250)]
         public string Description { get; set; }
+
+        public string VideoLink { get; set; }
     }
 }
