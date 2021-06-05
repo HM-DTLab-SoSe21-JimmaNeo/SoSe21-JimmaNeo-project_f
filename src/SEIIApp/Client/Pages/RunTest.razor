@@ -12,48 +12,47 @@
         <label> @(TestDto.Questions.ElementAt(0).Answers.ElementAt(0).IsClicked)</label>
         <label> @(TestID)</label>
 
-<EditForm Model="@TestDto">
+        <EditForm Model="@TestDto">
 
-    @foreach (var video in TestDto.Videos)
-    {
-        <div class="card">
-            <div class="card-body">
-
-                <VideoComponent VideoContentDTO="video"></VideoComponent>
-               
-            </div>
-        </div>
-    }
-
-
-    <ul class="list-group list-group-flush">
-        @foreach (var question in TestDto.Questions)
-        { 
-            if (!String.IsNullOrEmpty(question.QuestionText))
+            @foreach (var video in TestDto.Videos)
             {
-                <li class="text-center list-group-item">
-                    <br />
-                    <h3> @(question.QuestionText) </h3>
-                </li>
-                if (question.Answers.Any())
-                {
-                    foreach (var answer in question.Answers)
-                    {
-                        if (!String.IsNullOrEmpty(answer.AnswerText))
-                        {
-                            <li class="text-center list-group-item">
-                                <label>@(answer.AnswerText)</label>
-                                <InputCheckbox @bind-Value="answer.IsClicked"></InputCheckbox>
-                            </li>
-                        }
-                    }
-                }
+                <div class="card">
+                    <div class="card-body">
+
+                        <VideoComponent VideoContentDTO="video"></VideoComponent>
+
+                    </div>
+                </div>
             }
 
-        }
-        <button class="btn btn-light btn-sm my-3" @onclick="()=> OnSubmitTest()">Submit</button>
-    </ul>
-</EditForm>
+            <ul class="list-group list-group-flush">
+                @foreach (var question in TestDto.Questions)
+                {
+                    if (!String.IsNullOrEmpty(question.QuestionText))
+                    {
+                        <li class="text-center list-group-item">
+                            <br />
+                            <h3> @(question.QuestionText) </h3>
+                        </li>
+                        if (question.Answers.Any())
+                        {
+                            foreach (var answer in question.Answers)
+                            {
+                                if (!String.IsNullOrEmpty(answer.AnswerText))
+                                {
+                                    <li class="text-center list-group-item">
+                                        <label>@(answer.AnswerText)</label>
+                                        <InputCheckbox @bind-Value="answer.IsClicked"></InputCheckbox>
+                                    </li>
+                                }
+                            }
+                        }
+                    }
+
+                }
+                <button class="btn btn-light btn-sm my-3" @onclick="()=> OnSubmitTest()">Submit</button>
+            </ul>
+        </EditForm>
 
     }
     else

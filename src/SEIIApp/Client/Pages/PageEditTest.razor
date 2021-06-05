@@ -13,6 +13,7 @@
             {
 
         <EditForm EditContext="@context" OnSubmit="OnSubmit">
+            <DataAnnotationsValidator />
 
             <label>Name of the Test:</label><br />
             <InputText @bind-Value="TestDto.Topic" />
@@ -22,8 +23,8 @@
             <InputText @bind-Value="TestDto.Description" />
             <p>
                 <br /><b>You are able to upload Youtube Videos here if you want to include them in the test!</b>
-            </p>
 
+            </p>
             @foreach (var video in TestDto.Videos)
             {
                 <VideoComponent VideoContentDTO="video"></VideoComponent>
@@ -32,13 +33,17 @@
             <br /><button class="btn btn-light" @onclick="AddVideoContent">Add Video</button><br />
 
             <hr />
+            <p>
+                <br /><b>You can add questions and answers by clicking the button below!</b>
+
+            </p>
             @foreach (var question in TestDto.Questions)
             {
                 <div class="card">
                     <div class="card-body">
                         <!-- Component for questions in quiz -->
                         <QuestionDefComponent QuestionDto="question"></QuestionDefComponent>
-                        <button class="btn btn-light btn-sm my-3" @onclick="() => RemoveQuestion(question)">Remove Question</button>
+                        <button class="btn btn-light" @onclick="() => RemoveQuestion(question)">Remove Question</button>
                     </div>
                 </div>
 
@@ -61,15 +66,15 @@
 
             <br /><button class="btn btn-light" @onclick="AddFurtherLink">Add Link</button><br />
             <hr />
-
-            @foreach (var video in TestDto.VideosFurtherInformation)
+            @if (TestDto.VideosFurtherInformation != null)
             {
-                <VideoComponent VideoContentDTO="video"></VideoComponent>
-                <button class="btn btn-light btn-sm my-3" @onclick="() => DeleteVideosFurtherInformation(video)">Remove Video</button>
+                @foreach (var video in TestDto.VideosFurtherInformation)
+                {
+                    <VideoComponent VideoContentDTO="video"></VideoComponent>
+                    <button class="btn btn-light btn-sm my-3" @onclick="() => DeleteVideosFurtherInformation(video)">Remove Video</button>
+                }
             }
-
             <br /><button class="btn btn-light" @onclick="AddVideosFurtherInformation">Add Video</button><br />
-
             <hr />
             @foreach (var content in TestDto.Content)
             {
@@ -79,6 +84,7 @@
             <br /><button class="btn btn-light" @onclick="AddPictureContent">Add Picture</button><br />
             <hr />
             <button class="btn btn-light" @onclick="() => SaveContentToBackend(this.TestDto)">Save Complete Quiz</button>
+            <ValidationSummary />
         </EditForm>
 
                     }
@@ -119,9 +125,9 @@
             private void PrepareEditOrAddOfTestDefinition(TestDTO test)
             {
                 if (test.Questions == null) test.Questions = new List<QuestionDTO>();
-                if (test.Author == null) test.Author = new UserDTO() { Name = "user4", Role = Role.Teacher, UserId = 4}; //ToDo
+                if (test.Author == null) test.Author = new UserDTO() { FirstName = "Ezzy", LastName = "Bert", Name = "user4", Role = Role.Teacher, UserId = 4}; //ToDo
                 if (test.Videos == null) test.Videos = new List<VideoContentDTO>();
-                if (test.Videos == null) test.VideosFurtherInformation = new List<VideoContentDTO>();
+                if (test.VideosFurtherInformation == null) test.VideosFurtherInformation = new List<VideoContentDTO>();
                 if (test.Content == null) test.Content = new List<PictureContentDTO>();
                 if (test.FurtherLinks == null) test.FurtherLinks = new List<FurtherLinkDTO>();
 
@@ -169,6 +175,7 @@
 
             private void AddVideosFurtherInformation()
             {
+                if (TestDto.VideosFurtherInformation == null) TestDto.VideosFurtherInformation = new List<VideoContentDTO>();
                 TestDto.VideosFurtherInformation.Add(new VideoContentDTO() { Path = "https://www.youtube.com/embed/" });
             }
 

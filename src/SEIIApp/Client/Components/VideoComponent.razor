@@ -8,9 +8,9 @@
     @if (OnEditing)
     {
         <label>Video-Link</label>
-        <InputText @bind-Value="VideoContentDTO.VideoLink" />
+        <InputText @bind-Value="VideoContentDTO.VideoLink"></InputText>
         <button class="btn btn-light btn-sm my-3" @onclick="UploadVideo">Upload Video</button>
-        
+        <ValidationMessage For="@(() => VideoContentDTO.VideoLink)"/>
         <br />
     }
 
@@ -44,10 +44,15 @@
     protected override void OnInitialized()
     {
         base.OnInitialized();
+        if (VideoContentDTO.VideoLink != null)
+        {
+            string[] getVideoIdentifier = VideoContentDTO.VideoLink.Split('=');
+            VideoContentDTO.Path = "https://www.youtube.com/embed/" + getVideoIdentifier[1];
+        }
     }
-    
 
-    private void UploadVideo()
+
+   private void UploadVideo()
     {
         if(VideoContentDTO.VideoLink != null)
         {

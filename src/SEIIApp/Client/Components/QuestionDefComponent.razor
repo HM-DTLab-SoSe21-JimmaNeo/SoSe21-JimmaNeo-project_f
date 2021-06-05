@@ -3,7 +3,7 @@
     if (QuestionDto != null)
     {
     <EditForm Model="QuestionDto">
-
+        <DataAnnotationsValidator />
         <label>Question Text</label><br />
         <InputText @bind-Value="@QuestionDto.QuestionText" />
 
@@ -12,12 +12,12 @@
             <AnswerDefComponent AnswerDto="a"></AnswerDefComponent>
             <button class="btn btn-light btn-sm" @onclick="() => RemoveAnswer(a)">Remove Answer</button>
         }
-
+        <br />
         <button class="btn btn-light btn-sm my-3" @onclick="AddAnswer">Add Answer</button>
-        <br/>
+        <br />
         <label>Explanation</label><br />
         <InputText @bind-Value="@QuestionDto.Explanation" />
-
+        <ValidationSummary />
     </EditForm>
     }
     else
