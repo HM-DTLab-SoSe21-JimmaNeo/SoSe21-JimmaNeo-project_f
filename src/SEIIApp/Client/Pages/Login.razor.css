@@ -5,13 +5,15 @@
 
 .login,
 .image {
-    min-height: 100vh;
+    width: 100%;
+    height: auto;
 }
 
 .bg-image {
-    background-image: url('/Images/pandas.jpg');
-    background-size: cover;
+    background-image: url('/Images/logo_small.png');
+    background-size: contain;
     background-position: center;
+    background-repeat: no-repeat;
 }
 
 .login-heading {
