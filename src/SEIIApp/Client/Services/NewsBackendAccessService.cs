@@ -24,9 +24,9 @@ namespace SEIIApp.Client.Services
             return "api/news";
         }
 
-        public async Task<NewsDTO[]> GetNews()
+        public async Task<List<NewsDTO>> GetNews()
         {
-            return await HttpClient.GetFromJsonAsync<NewsDTO[]>(GetNewsUrl());
+            return await HttpClient.GetFromJsonAsync<List<NewsDTO>>(GetNewsUrl());
         }
 
         public async Task<NewsDTO> AddOrUpdateNews(NewsDTO newsDTO)

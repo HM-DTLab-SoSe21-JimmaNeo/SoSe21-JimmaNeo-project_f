@@ -11,10 +11,10 @@ namespace SEIIApp.Server.DataAccess
     {
         public static void InitalizeTestData(Services.UserService userService, Services.TestService testService, Services.NewsService newsService, Services.CompletedTestService completedTestService)
         {
-            AddUser(userService);
-            AddTests(testService, userService);
-            AddCompletedTest(testService, userService, completedTestService);
             AddNews(newsService);
+            AddUser(userService);
+            AddTests(testService, userService, newsService);
+            AddCompletedTest(testService, userService, completedTestService);  
         }
 
         private static void AddUser(Services.UserService userService)
@@ -34,9 +34,9 @@ namespace SEIIApp.Server.DataAccess
             }
         }
 
-        private static void AddTests(Services.TestService testService, Services.UserService userService)
+        private static void AddTests(Services.TestService testService, Services.UserService userService, Services.NewsService newsService)
         {
-            for (int i = 1; i < 10; i++)
+            for (int i = 1; i < 6; i++)
             {
                 var test = GenerateTest(userService);
                 test.Topic = "Test " + i;
