@@ -19,6 +19,7 @@ namespace SEIIApp.Client {
             builder.Services.AddScoped<Services.TestsDefinitionBackendAccessService>();
             builder.Services.AddSingleton<Services.UserServicee>();
 
+            builder.Services.AddScoped<Services.NewsBackendAccessService>();
             await builder.Build().RunAsync();
         }
     }

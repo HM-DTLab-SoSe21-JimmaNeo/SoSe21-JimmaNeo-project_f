@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using SEIIApp.Server.Domain;
@@ -15,13 +15,16 @@ namespace SEIIApp.Server.Services
 
         private TestService testService { get; set; }
         private UserService userService { get; set; }
+
+        private NewsService NewsService { get; set; }
         private IMapper Mapper { get; set; }
 
-        public LectureService(DatabaseContext db, IMapper mapper, UserService userService, TestService testService)
+        public LectureService(DatabaseContext db, IMapper mapper, UserService userService, NewsService newsService, TestService testService)
         {
             this.DatabaseContext = db;
             this.Mapper = mapper;
             this.userService = userService;
+            this.NewsService = newsService;
             this.testService = testService;
         }
 
@@ -66,6 +69,14 @@ namespace SEIIApp.Server.Services
             }
             DatabaseContext.Lectures.Add(lecture);
             DatabaseContext.SaveChanges();
+
+            NewsService.AddNews(new News()
+            {
+                Topic = "New Lectrue",
+                Content = $"A new Lectrue, named {lecture.Topic}, was uploaded to this platform. The Lectrue was created by {lecture.Author.Name}.",
+                DateOfCreation = DateTime.Now
+            });
+
             return lecture;
         }
 
@@ -76,6 +87,14 @@ namespace SEIIApp.Server.Services
             exsistingLecture.Test = testService.GetTestWithId(lecture.Test.TestId);
             DatabaseContext.Update(exsistingLecture);
             DatabaseContext.SaveChanges();
+
+            NewsService.AddNews(new News()
+            {
+                Topic = $"Updated {lecture.Topic}",
+                Content = $"The Lecture \"{lecture.Topic}\" has been updated. The Lectrue was updated by {lecture.Author.Name}.",
+                DateOfCreation = DateTime.Now
+            });
+
             return exsistingLecture;
         }
 
