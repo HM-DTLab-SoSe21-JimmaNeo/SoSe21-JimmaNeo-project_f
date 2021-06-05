@@ -8,40 +8,38 @@
     <div class="col text-center">
 
         <div class="px-5">
-            <EditForm Model="@searchValue">
-                <div class="searchcostum input-group pt-2">
+             <EditForm Model="@searchValue">
+            <div class="searchcostum input-group pt-2">
 
 
-                    @if (isFiltered == false)
-                    {
-                        <div class="px-auto">
-                            <InputText type="search" class="form-control rounded" placeholder="Search by name"
-                                       aria-label="Name of the Content" aria-describedby="search-addon" @bind-Value="@searchValue" />
+                @if (isFiltered == false)
+                {
+                    <div class="px-auto">
+                        <InputText type="search" class="form-control rounded" placeholder="Search by name"
+                                   aria-label="Name of the Content" aria-describedby="search-addon" @bind-Value="@searchValue" />
 
 
-                        </div>
-                        <button class="btn btn-outline-primary btn-sm" @onclick="FilterContentByName">Search</button>
+                    </div>
+                    <button class="btn btn-outline-primary btn-sm" @onclick="SearchContent">Search</button>
 
-                    }
-                    else
-                    {
-                        <div class="text-center pb-2">
-                            <button class="btn btn-outline-primary" @onclick="DeleteFilter">Return</button>
-                        </div>
-                    }
+                }
+                else
+                {
+                    <div class="text-center pb-2">
+                        <button class="btn btn-outline-primary" @onclick="ResetSearchContent">Return</button>
+                    </div>
+                }
 
-                </div>
-            </EditForm>
-
-            @if (isFiltered == false)
-            {
-                <div class="text-center py-2">
-                    <button class="btn btn-outline-success" @onclick="AddQuiz">Add</button>
-                </div>}
+            </div>
+        </EditForm>
+     
+            <div class="text-center py-2">
+                <button class="btn btn-outline-success" @onclick="AddQuiz">Add</button>
+            </div>
         </div>
     </div>
 
-    @{ if (Tests != null)
+    @if (Tests != null)
 
         {
             <ul class="list-group list-group-flush">
@@ -60,7 +58,7 @@
         {
             <h5 class="text-center">Loading ...  or no content found.</h5>
         }
-    }
+ 
 </div>
 
 @code {
@@ -68,7 +66,7 @@
 
     public bool isFiltered { get; set; }
 
-    public List<TestDTO> Tests { get; set; }
+    public static List<TestDTO> Tests { get; set; }
 
     private List<TestDTO> copyOfTest { get; set; }
 
@@ -91,91 +89,35 @@
     private async Task DeleteContent(TestDTO test)
     {
         Tests.Remove(test);
-
-        if (copyOfTest != null)
+       if (copyOfTest != null)
         {
             copyOfTest.Remove(test);
         }
-
         await TestDefinitionService.DeleteTest(test.TestID);
-
     }
 
-    private void FilterContentByName()
+    
+    private void SearchContent()
     {
         if (Tests != null && searchValue != null)
         {
-
+            copyOfTest = new List<TestDTO>(Tests);
             isFiltered = true;
-
-            copyOfTest = DeepCopy(Tests);
             Tests.Clear();
-            FilterContent(searchValue);
-
+            Tests.AddRange(copyOfTest.Where(t => t.Topic.StartsWith(searchValue)));
         }
     }
 
-    private void DeleteFilter()
+    private void ResetSearchContent()
     {
         isFiltered = false;
-        Tests = DeepCopy(copyOfTest);
-
-        copyOfTest.Clear();
+        Tests.Clear();
+        Tests.AddRange(copyOfTest);
     }
-
-    private void FilterContent(String searchValue)
-    {
-        bool isSearchedValue;
-        for (int i = 0; i < copyOfTest.Count; i++)
-        {
-            isSearchedValue = false;
-
-            for (int j = 0; j <= copyOfTest[i].Topic.Length; j++)
-            {
-                // isSearchedValue = string.Equals(searchValue, copyOfTest[i].Topic.Substring(0, j)) == true ? true : false; <- Warum funktioniert das nicht?
-                if (string.Equals(searchValue, copyOfTest[i].Topic.Substring(0, j)))
-                {
-                    isSearchedValue = true;
-                }
-            }
-            if (isSearchedValue)
-            {
-                Tests.Add(copyOfTest[i]);
-            }
-        }
-    }
-
-    private List<TestDTO> DeepCopy(List<TestDTO> TestDto)
-    {
-        List<TestDTO> TestDtoDeepCopy = new List<TestDTO>();
-
-        foreach (TestDTO TestDtoElement in TestDto)
-        {
-            TestDTO DeepCopyTestElement = new TestDTO();
-
-            DeepCopyTestElement.TestID = TestDtoElement.TestID;
-            DeepCopyTestElement.Topic = TestDtoElement.Topic;
-            DeepCopyTestElement.Description = TestDtoElement.Description;
-            DeepCopyTestElement.DateOfCreation = TestDtoElement.DateOfCreation;
-            DeepCopyTestElement.Author = TestDtoElement.Author;
-            DeepCopyTestElement.Questions = TestDtoElement.Questions;
-            //DeepCopyTestElement.TestContent = TestDtoElement.TestContent;
-            DeepCopyTestElement.Content = TestDtoElement.Content;
-            DeepCopyTestElement.Videos = TestDtoElement.Videos;
-            DeepCopyTestElement.FurtherLinks = TestDtoElement.FurtherLinks;
-
-            TestDtoDeepCopy.Add(DeepCopyTestElement);
-        }
-
-        return TestDtoDeepCopy;
-    }
-
-
+    
     private void StartTest(int contentId)
     {
         NavigationManager.NavigateTo("/runtest/" + contentId);
     }
-
-
-}
+    }
 

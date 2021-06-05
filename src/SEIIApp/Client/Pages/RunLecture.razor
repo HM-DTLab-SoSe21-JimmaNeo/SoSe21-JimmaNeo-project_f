@@ -1,0 +1,73 @@
+﻿@page "/runlecture/{LectureID:int}"
+
+@inject Services.LectureBackendAccessService LectureService
+@inject NavigationManager NavigationManager
+
+
+<div class="container">
+
+    @if (LectureDto != null)
+    {
+        <h2 class="text-center">@(LectureDto.Topic)</h2>
+        
+        <label> @(LectureID)</label>
+
+        <EditForm Model="@LectureDto">
+
+            @foreach (var video in LectureDto.Videos)
+            {
+                <div class="card">
+                    <div class="card-body">
+
+                        <VideoComponent VideoContentDTO="video"></VideoComponent>
+
+                    </div>
+                </div>
+            }
+
+
+            <ul class="list-group list-group-flush">
+                <label > Lecture Text</label>
+                <p >@LectureDto.Text</p>
+                <button class="btn btn-light btn-sm my-3" @onclick="()=> OnSubmitLecture()">Submit</button>
+            </ul>
+        </EditForm>
+
+    }
+
+
+
+</div>
+
+@code {
+
+    [Parameter]
+    public int LectureID { get; set; }
+
+    public static LectureDTO LectureDto { get; set; }
+
+    private bool isClicked { get; set; }
+
+
+    protected override async Task OnParametersSetAsync()
+    {
+
+        var returnedLecture = await LectureService.GetLectureById(LectureID);
+        await base.OnParametersSetAsync();
+        LectureDto = returnedLecture;
+        SEIIApp.Client.Components.VideoComponent.OnEditing = false;
+    }
+
+    private async void OnSubmitLecture()
+    {
+
+        var answer = await LectureService.AddOrUpdateLecture(LectureDto);
+        if (answer != null)
+        {
+            NavigationManager.NavigateTo("/resultslecture/");
+        }
+
+    }
+
+}
+
