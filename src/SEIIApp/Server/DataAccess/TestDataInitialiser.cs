@@ -12,13 +12,10 @@ namespace SEIIApp.Server.DataAccess
         public static void InitalizeTestData(Services.UserService userService, Services.TestService testService, Services.NewsService newsService, Services.CompletedTestService completedTestService,Services.LectureService lectureService)
         {
             AddNews(newsService);
-<<<<<<< HEAD
             AddLectures(lectureService, userService);
-=======
             AddUser(userService);
             AddTests(testService, userService, newsService);
             AddCompletedTest(testService, userService, completedTestService);  
->>>>>>> master
         }
 
         private static void AddUser(Services.UserService userService)

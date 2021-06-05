@@ -54,8 +54,8 @@ namespace SEIIApp.Server.Services
 
         public Lecture AddLecture(Lecture lecture)
         {
-            lecture.Author = userService.GetUserWithId(lecture.Author.UserId);
-            if (lecture.Author == null)
+            /*lecture.Author = userService.GetUserWithId(lecture.Author.UserId);
+           if (lecture.Author == null)
             {
                 return null;
             }
@@ -75,7 +75,7 @@ namespace SEIIApp.Server.Services
                 Topic = "New Lectrue",
                 Content = $"A new Lectrue, named {lecture.Topic}, was uploaded to this platform. The Lectrue was created by {lecture.Author.Name}.",
                 DateOfCreation = DateTime.Now
-            });
+            }); */
 
             return lecture;
         }

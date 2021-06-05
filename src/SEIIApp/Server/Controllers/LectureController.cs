@@ -45,11 +45,7 @@ namespace SEIIApp.Server.Controllers
             return Ok(mappedResult);
         }
 
-<<<<<<< HEAD
-        /*[HttpGet("SearchLecture/{topic}")]
-=======
         [HttpGet("SearchLectureTopic/{topic}")]
->>>>>>> master
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<LectureDTO> SearchLecture([FromRoute] string topic)
@@ -59,7 +55,7 @@ namespace SEIIApp.Server.Controllers
             var mappedResult = Mapper.Map<LectureDTO>(lectureInList);
             return Ok(mappedResult);
         }
-        */
+        
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPut("ChangeLecture")]
