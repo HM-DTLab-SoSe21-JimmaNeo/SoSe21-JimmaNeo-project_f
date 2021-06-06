@@ -19,8 +19,12 @@ namespace SEIIApp.Server.Domain
 
         public User Author { get; set; }
 
-        public List<TestContent> TestContent { get; set; }
+        public List<PictureContent> Content{ get; set; }
 
+        public List<VideoContent> Videos { get; set; }
+
+        public List<VideoContent> VideosFurtherInformation { get; set; }
+        
         public List<Question> Questions { get; set; }
 
         public List<FurtherLink> FurtherLinks { get; set; }

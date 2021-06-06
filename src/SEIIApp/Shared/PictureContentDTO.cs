@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace SEIIApp.Shared
 {
-    public class LectureContentDTO
+    public class PictureContentDTO
     {
         [Required]
-        public string Path;
+        public string Path { get; set; }
 
         [StringLength(250)]
-        public string Description;
+        public string Description { get; set; }
     }
 }

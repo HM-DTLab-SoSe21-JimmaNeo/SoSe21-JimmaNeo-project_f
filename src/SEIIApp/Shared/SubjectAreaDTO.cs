@@ -9,7 +9,7 @@ namespace SEIIApp.Shared
 {
     public class SubjectAreaDTO
     {
-        public int ADId { get; set; }
+        public int SAId { get; set; }
 
         [Required]
         [StringLength(50)]

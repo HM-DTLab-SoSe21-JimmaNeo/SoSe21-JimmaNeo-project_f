@@ -13,12 +13,12 @@ namespace SEIIApp.Shared
         public int TestID { get; set; }
 
         [Required]
-        [StringLength(100, MinimumLength = 1)]
+        [StringLength(100)]
         public string Topic { get; set; }
         
         public string Description { get; set; }
 
-        public DateTime DateOfCreation { get; set; }
+        public DateTime DateOfCreation { get; set; } = DateTime.Now;
 
         public UserDTO Author { get; set; }
         
@@ -30,7 +30,11 @@ namespace SEIIApp.Shared
         // TDDO [ValidateComplexType]
         public List<QuestionDTO> Questions { get; set; }
         
-        public List<TestContentDTO> TestContent { get; set; }
+        public List<VideoContentDTO> Videos { get; set; }
+
+        public List<VideoContentDTO> VideosFurtherInformation { get; set; }
+
+        public List<PictureContentDTO> Content { get; set; }
 
         public List<FurtherLinkDTO> FurtherLinks { get; set; }
 

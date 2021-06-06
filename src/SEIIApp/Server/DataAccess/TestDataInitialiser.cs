@@ -11,10 +11,10 @@ namespace SEIIApp.Server.DataAccess
     {
         public static void InitalizeTestData(Services.UserService userService, Services.TestService testService, Services.NewsService newsService, Services.CompletedTestService completedTestService)
         {
-            AddUser(userService);
-            AddTests(testService, userService);
-            AddCompletedTest(testService, userService, completedTestService);
             AddNews(newsService);
+            AddUser(userService);
+            AddTests(testService, userService, newsService);
+            AddCompletedTest(testService, userService, completedTestService);  
         }
 
         private static void AddUser(Services.UserService userService)
@@ -34,9 +34,9 @@ namespace SEIIApp.Server.DataAccess
             }
         }
 
-        private static void AddTests(Services.TestService testService, Services.UserService userService)
+        private static void AddTests(Services.TestService testService, Services.UserService userService, Services.NewsService newsService)
         {
-            for (int i = 1; i < 10; i++)
+            for (int i = 1; i < 6; i++)
             {
                 var test = GenerateTest(userService);
                 test.Topic = "Test " + i;
@@ -84,7 +84,7 @@ namespace SEIIApp.Server.DataAccess
             for (int i = 0; i < 3; i++)
             {
                 var question = new Question();
-                question.QuestionText = $"Question {i}";
+                question.QuestionText= $"Question {i}";
                 question.Answers = new List<Answer>();
                 question.Explanation = $"Die Antwort für Frage {i} ist ...";
 
@@ -92,7 +92,7 @@ namespace SEIIApp.Server.DataAccess
                 {
                     var answer = new Answer();
                     answer.AnswerText = $"Answer for Question {i} is {c}";
-                    
+
                     if (c % 2 == 0) answer.IsCorrect = true;
                     else answer.IsCorrect = false;
                                      

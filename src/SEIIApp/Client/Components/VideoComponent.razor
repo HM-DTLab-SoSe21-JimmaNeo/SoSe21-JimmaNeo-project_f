@@ -1,0 +1,58 @@
+﻿@using SEIIApp.Shared;
+
+<h4>Videos</h4>
+
+<EditForm Model="VideoContentDTO">
+    <DataAnnotationsValidator />
+
+    @if (OnEditing)
+    {
+        <label>Video-Link</label>
+        <InputText @bind-Value="VideoContentDTO.VideoLink"></InputText>
+        <button class="btn btn-light btn-sm my-3" @onclick="UploadVideo">Upload Video</button>
+        <ValidationMessage For="@(() => VideoContentDTO.VideoLink)"/>
+        <br />
+    }
+
+    @if (VideoContentDTO.Path != null && VideoContentDTO.Path.Length > "https://www.youtube.com/embed/".Length)
+    {
+
+        <iframe width="560" height="315" src="@VideoContentDTO.Path" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <br />
+    }
+
+    @if (OnEditing)
+    {
+        <label>Description</label>
+        <InputText @bind-Value="VideoContentDTO.Description"></InputText>
+    }
+    else
+    {
+        <p>@VideoContentDTO.Description</p>
+    }
+
+    <ValidationSummary />
+</EditForm>
+
+
+@code {
+    [Parameter]
+    public VideoContentDTO VideoContentDTO { get; set; }
+
+    public static bool OnEditing = true;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+    }
+
+
+   private void UploadVideo()
+    {
+        if(!String.IsNullOrEmpty(VideoContentDTO.VideoLink) && VideoContentDTO.VideoLink.StartsWith("https://www.youtube."))
+        {
+            string[] getVideoIdentifier = VideoContentDTO.VideoLink.Split('=');
+            VideoContentDTO.Path = "https://www.youtube.com/embed/" + getVideoIdentifier[1];
+        }
+    }
+}

@@ -1,5 +1,5 @@
 .navbar-toggler {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgb(54,255,127);
 }
 
 .top-row {
@@ -59,4 +59,12 @@
         /* Never collapse the sidebar for wide screens */
         display: block;
     }
+}
+
+.logo-image {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-top: -6px;
 }

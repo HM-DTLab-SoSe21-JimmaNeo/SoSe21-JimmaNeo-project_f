@@ -1,0 +1,27 @@
+﻿
+<h3>AuthorComponent</h3>
+
+<EditForm Model="UserDto">
+    <DataAnnotationsValidator />
+
+    <label>@UserDto.Name </label>
+
+    <label>@UserDto.UserId</label>
+    
+    <label>@UserDto.Role</label>
+    <ValidationSummary />
+</EditForm>
+
+@code {
+
+    [Parameter]
+    public UserDTO UserDto { get; set; }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+
+    }
+
+}

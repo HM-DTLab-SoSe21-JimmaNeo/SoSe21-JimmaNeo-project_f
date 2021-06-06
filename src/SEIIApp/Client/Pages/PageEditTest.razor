@@ -1,0 +1,208 @@
+﻿@page "/testedit/{TestID:int}"
+
+@inject Services.TestsDefinitionBackendAccessService TestDefinitionService
+
+@inject NavigationManager NavigationManager
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-4 text-center">
+            <h3 class="text-center">Content Editor</h3>
+
+            @if (TestDto != null)
+            {
+
+        <EditForm EditContext="@context" OnSubmit="OnSubmit">
+            <DataAnnotationsValidator />
+
+            <label>Name of the Test:</label><br />
+            <InputText @bind-Value="TestDto.Topic" />
+
+            <br /><label>Content Description:</label><br />
+
+            <InputText @bind-Value="TestDto.Description" />
+            <p>
+                <br /><b>You are able to upload Youtube Videos here if you want to include them in the test!</b>
+
+            </p>
+            @foreach (var video in TestDto.Videos)
+            {
+                <VideoComponent VideoContentDTO="video"></VideoComponent>
+                <button class="btn btn-light btn-sm my-3" @onclick="() => DeleteVideoContent(video)">Remove Video</button>
+            }
+            <br /><button class="btn btn-light" @onclick="AddVideoContent">Add Video</button><br />
+
+            <hr />
+            <p>
+                <br /><b>You can add questions and answers by clicking the button below!</b>
+
+            </p>
+            @foreach (var question in TestDto.Questions)
+            {
+                <div class="card">
+                    <div class="card-body">
+                        <!-- Component for questions in quiz -->
+                        <QuestionDefComponent QuestionDto="question"></QuestionDefComponent>
+                        <button class="btn btn-light" @onclick="() => RemoveQuestion(question)">Remove Question</button>
+                    </div>
+                </div>
+
+            }
+            <button class="btn btn-light btn-sm my-3" @onclick="AddQuestion">Add Question</button>
+
+            <br /><p><b>You can add further information about this topic to give you students the possibility to expand their knowledge!</b></p><br />
+
+            @foreach (var link in TestDto.FurtherLinks)
+            {
+                <div class="card">
+                    <div class="card-body">
+
+                        <FurtherLinkComponent FurtherLinkDto="link"></FurtherLinkComponent>
+                        <button class="btn btn-light btn-sm my-3" @onclick="() => DeleteFurtherLink(link)">Remove Link</button>
+                    </div>
+                </div>
+            }
+
+
+            <br /><button class="btn btn-light" @onclick="AddFurtherLink">Add Link</button><br />
+            <hr />
+            @if (TestDto.VideosFurtherInformation != null)
+            {
+                @foreach (var video in TestDto.VideosFurtherInformation)
+                {
+                    <VideoComponent VideoContentDTO="video"></VideoComponent>
+                    <button class="btn btn-light btn-sm my-3" @onclick="() => DeleteVideosFurtherInformation(video)">Remove Video</button>
+                }
+            }
+            <br /><button class="btn btn-light" @onclick="AddVideosFurtherInformation">Add Video</button><br />
+            <hr />
+            @foreach (var content in TestDto.Content)
+            {
+                <PictureComponent PictureContentDTO="content"></PictureComponent>
+                <button class="btn btn-light btn-sm my-3" @onclick="() => DeletePictureContent(content)">Remove Picture</button>
+            }
+            <br /><button class="btn btn-light" @onclick="AddPictureContent">Add Picture</button><br />
+            <hr />
+            <button class="btn btn-light" @onclick="() => SaveContentToBackend(this.TestDto)">Save Complete Quiz</button>
+            <ValidationSummary />
+        </EditForm>
+
+                    }
+                    else
+                    {
+                        <h5>Quiz definition in loading (or not found) ...</h5>
+                    }
+
+                </div>
+            </div>
+        </div>
+
+        @code {
+
+            [Parameter]
+            public int TestID { get; set; }
+
+            public TestDTO TestDto { get; set; }
+
+            private EditContext context { get; set; }
+
+            protected override async Task OnParametersSetAsync()
+            {
+                if (TestID != 0)
+                {
+                    var existingQuiz = await TestDefinitionService.GetTestById(TestID);
+                    PrepareEditOrAddOfTestDefinition(existingQuiz);
+                }
+                else
+                {
+                    PrepareEditOrAddOfTestDefinition(new TestDTO());
+                }
+                await base.OnParametersSetAsync();
+                context = new EditContext(TestDto);
+                //SEIIApp.Client.Components.VideoComponent.OnEditing = true;
+            }
+
+            private void PrepareEditOrAddOfTestDefinition(TestDTO test)
+            {
+                if (test.Questions == null) test.Questions = new List<QuestionDTO>();
+                if (test.Author == null) test.Author = new UserDTO() { FirstName = "Ezzy", LastName = "Bert", Name = "user4", Role = Role.Teacher, UserId = 4}; //ToDo
+                if (test.Videos == null) test.Videos = new List<VideoContentDTO>();
+                if (test.VideosFurtherInformation == null) test.VideosFurtherInformation = new List<VideoContentDTO>();
+                if (test.Content == null) test.Content = new List<PictureContentDTO>();
+                if (test.FurtherLinks == null) test.FurtherLinks = new List<FurtherLinkDTO>();
+
+                this.TestDto = test;
+            }
+
+            private void AddQuestion()
+            {
+                TestDto.Questions.Add(new QuestionDTO());
+            }
+
+            private void RemoveQuestion(QuestionDTO question)
+            {
+                TestDto.Questions.Remove(question);
+            }
+
+            private void OnSubmit(EditContext context)
+            {
+
+            }
+
+            private async void SaveContentToBackend(TestDTO TestDto)
+            {
+                var isValid = context.Validate();
+                if (isValid)
+                {
+                    var answer = await TestDefinitionService.AddOrUpdateTest(TestDto);
+                    if (answer != null)
+                    {
+                        this.TestDto.TestID = answer.TestID; //refresh id (if created)
+                        NavigationManager.NavigateTo("/testoverview");
+                    }
+                }
+            }
+
+            private void AddVideoContent()
+            {
+                TestDto.Videos.Add(new VideoContentDTO() { Path = "https://www.youtube.com/embed/" });
+            }
+
+            private void DeleteVideoContent(VideoContentDTO videoContentDto)
+            {
+                TestDto.Videos.Remove(videoContentDto);
+            }
+
+            private void AddVideosFurtherInformation()
+            {
+                if (TestDto.VideosFurtherInformation == null) TestDto.VideosFurtherInformation = new List<VideoContentDTO>();
+                TestDto.VideosFurtherInformation.Add(new VideoContentDTO() { Path = "https://www.youtube.com/embed/" });
+            }
+
+            private void DeleteVideosFurtherInformation(VideoContentDTO videoContentDto)
+            {
+                TestDto.VideosFurtherInformation.Remove(videoContentDto);
+            }
+
+            private void AddPictureContent()
+            {
+                TestDto.Content.Add(new PictureContentDTO());
+            }
+
+            private void DeletePictureContent(PictureContentDTO pictureContentDto)
+            {
+                TestDto.Content.Remove(pictureContentDto);
+            }
+
+            private void AddFurtherLink()
+            {
+                TestDto.FurtherLinks.Add(new FurtherLinkDTO());
+            }
+
+            private void DeleteFurtherLink(FurtherLinkDTO link)
+            {
+                TestDto.FurtherLinks.Remove(link);
+            }
+
+        }
+

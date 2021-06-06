@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+
 
 namespace SEIIApp.Server.Domain
 {
-    public class LectureContent
+    public class VideoContent
     {
         [Key]
-        public int LcId { get; set; }
+        public int VideoId { get; set; }
 
         public string Path { get; set; }
 
         public string Description { get; set; }
+
+        public string VideoLink { get; set; }
     }
 }

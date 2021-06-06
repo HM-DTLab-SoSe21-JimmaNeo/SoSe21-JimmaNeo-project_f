@@ -1,0 +1,93 @@
+﻿@page "/runtest/{TestID:int}"
+
+@inject Services.TestsDefinitionBackendAccessService TestDefinitionService
+@inject NavigationManager NavigationManager
+
+
+<div class="container">
+
+    @if (TestDto != null && TestDto.Questions.Any() && TestDto.Questions.Count != 0)
+    {
+        <h2 class="text-center">@(TestDto.Topic)</h2>
+
+        <EditForm Model="@TestDto">
+
+            @foreach (var video in TestDto.Videos)
+            {
+                <div class="card">
+                    <div class="card-body">
+                        <VideoComponent VideoContentDTO="video"></VideoComponent>
+                    </div>
+                </div>
+            }
+
+            <ul class="list-group list-group-flush">
+                @foreach (var question in TestDto.Questions)
+                {
+                    if (!String.IsNullOrEmpty(question.QuestionText))
+                    {
+                        <li class="text-center list-group-item">
+                            <br />
+                            <h3> @(question.QuestionText) </h3>
+                        </li>
+                        if (question.Answers.Any())
+                        {
+                            foreach (var answer in question.Answers)
+                            {
+                                if (!String.IsNullOrEmpty(answer.AnswerText))
+                                {
+                                    <li class="text-center list-group-item">
+                                        <label>@(answer.AnswerText)</label>
+                                        <InputCheckbox @bind-Value="answer.IsClicked"></InputCheckbox>
+                                    </li>
+                                }
+                            }
+                        }
+                    }
+
+                }
+                <button class="btn btn-light btn-sm my-3" @onclick="()=> OnSubmitTest()">Submit</button>
+            </ul>
+        </EditForm>
+
+    }
+    else
+    {
+
+    }
+
+
+</div>
+
+@code {
+
+    [Parameter]
+    public int TestID { get; set; }
+
+    public static TestDTO TestDto { get; set; }
+
+    private bool isClicked { get; set; }
+
+
+    protected override async Task OnParametersSetAsync()
+    {
+
+        var returnedTest = await TestDefinitionService.GetTestById(TestID);
+        await base.OnParametersSetAsync();
+        TestDto = returnedTest;
+        SEIIApp.Client.Components.VideoComponent.OnEditing = false;
+    }
+
+    private async void OnSubmitTest()
+    {
+
+        var answer = await TestDefinitionService.AddOrUpdateTest(TestDto);
+        if (answer != null)
+        {
+            NavigationManager.NavigateTo("/resultstest/");
+        }
+
+    }
+
+}
+

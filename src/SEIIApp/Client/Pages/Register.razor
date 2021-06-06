@@ -51,7 +51,7 @@
 
     public string msg{get; set;}
 
-    private async void ToRegister(){
+    private async Task ToRegister(){
 
         UserDTO user = new UserDTO(){FirstName = this.FirstName, LastName = this.LastName, Name = this.UserName, Role = Role.Student};
         LoginInformationDTO logInfo = new LoginInformationDTO(){User= user, Pw = Pw};
@@ -63,9 +63,7 @@
             var response = await UserService.RegisterUser(logInfo);     
             if(response == null) {
                 msg ="UserName not available";
-            }else {
-
-           
+            }else {                           
             msg ="You have been successfully registered!";
             await Task.Delay(2000);
             NavigationManager.NavigateTo("/login");

@@ -1,0 +1,23 @@
+﻿<h4>Further links about the topic</h4>
+
+<EditForm Model="FurtherLinkDto">
+    <DataAnnotationsValidator />
+    <label>Link:</label>
+    <InputText @bind-Value="FurtherLinkDto.Link" />
+    <label>Description:</label>
+    <InputText @bind-Value="FurtherLinkDto.Description" />
+
+    <ValidationSummary />
+</EditForm>
+
+@code {
+
+    [Parameter]
+    public FurtherLinkDTO FurtherLinkDto { get; set; }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+    }
+
+}

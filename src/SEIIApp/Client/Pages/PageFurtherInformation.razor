@@ -1,0 +1,78 @@
+﻿@page "/furtherinformation/{TestID:int}"
+
+@inject Services.TestsDefinitionBackendAccessService TestDefinitionService
+@inject NavigationManager NavigationManager
+
+
+
+
+<div class="container">
+
+    @if (TestDto != null)
+    {
+        <h2 class="text-center">Further information about @(TestDto.Topic)</h2><hr /><ul class="list-group list-group-flush">
+    @if (TestDto.FurtherLinks.Any())
+    {
+        
+        <h4>Links of websites about @(TestDto.Topic)</h4>
+        @foreach (var link in TestDto.FurtherLinks)
+        {
+            <li class="text-center list-group-item">
+                <label>@(link.Description)</label><br />
+                <label>@(link.Link)</label><br /> @*Link muss noch anklickbar werden*@
+           </li>
+        }
+    }
+    @if (TestDto.FurtherLinks.Any())
+    {
+        <h4>Videos about @(TestDto.Topic) </h4>
+        @foreach (var video in TestDto.VideosFurtherInformation)
+        {
+            <li class="text-center list-group-item">
+                <label>@(video.Description)</label><br />
+                <VideoComponent VideoContentDTO="video"></VideoComponent>
+            </li>
+        }
+    }
+    @if (TestDto.Content.Any())
+    {
+        <h4>Pictures about @(TestDto.Topic) </h4>
+        @foreach (var picture in TestDto.Content)
+        {
+            <li class="text-center list-group-item">
+                <label>@(picture.Description)</label><br />
+                <img src="@picture.Path" class="img-thumbnail"> <br />
+
+            </li>
+        }
+
+    }
+</ul>
+
+        <div class="text-center py-2">
+            <button class="btn btn-outline-primary" @onclick="() => ReturnBackToTestOverview()">Return to overview</button>
+        </div>
+    }
+
+</div>
+
+@code{
+
+    [Parameter]
+    public int TestID { get; set; }
+
+    public TestDTO TestDto { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var existingQuiz = await TestDefinitionService.GetTestById(TestID);
+        await base.OnParametersSetAsync();
+        this.TestDto = existingQuiz;
+    }
+
+    private void ReturnBackToTestOverview()
+    {
+        NavigationManager.NavigateTo("/testoverview/");
+    }
+}
+
