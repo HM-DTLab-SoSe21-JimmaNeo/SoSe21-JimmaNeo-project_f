@@ -88,12 +88,12 @@ namespace SEIIApp.Server.Services
             DatabaseContext.Update(exsistingLecture);
             DatabaseContext.SaveChanges();
 
-            NewsService.AddNews(new News()
+           /* NewsService.AddNews(new News()
             {
                 Topic = $"Updated {lecture.Topic}",
                 Content = $"The Lecture \"{lecture.Topic}\" has been updated. The Lectrue was updated by {lecture.Author.Name}.",
                 DateOfCreation = DateTime.Now
-            });
+            });*/
 
             return exsistingLecture;
         }
