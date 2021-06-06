@@ -89,7 +89,7 @@
     private void PrepareEditOrAddOfLecture(LectureDTO lectureDto)
     {
         if (lectureDto.Content == null) lectureDto.Content = new List<PictureContentDTO>();
-        if (lectureDto.Author == null) lectureDto.Author = new UserDTO() { Name = "user4", Role = Role.Teacher, UserId = 4 }; //ToDo
+        if (lectureDto.Author == null) lectureDto.Author = new UserDTO() { FirstName ="firstname" , LastName = "lastname", Name = "user4", Role = Role.Teacher, UserId = 4 }; //ToDo
                                                                                                                               //if(test.TestContent == null) test.TestContent = new List<TestContentDTO>();
         if (lectureDto.Videos == null) lectureDto.Videos = new List<VideoContentDTO>();
         if (lectureDto.Content == null) lectureDto.Content = new List<PictureContentDTO>();
