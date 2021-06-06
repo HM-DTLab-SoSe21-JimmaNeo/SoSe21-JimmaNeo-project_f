@@ -1,13 +1,39 @@
-﻿<h3>PictureComponent</h3>
+﻿   <h3>Upload pictures<br />(PNG Format)</h3><br />
 
-@code {
-    [Parameter]
-    public PictureContentDTO PictureContentDto { get; set; }
+    <EditForm Model="PictureContentDTO">
+        <DataAnnotationsValidator />
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-8">
+                <img src="@PictureContentDTO.Path" class="img-thumbnail"> <br /> <br />
+                <InputFile OnChange="@OnInputFileChanged" style="margin-bottom: 1rem;" class="btn btn-outline-primary"></InputFile>
+            </div>
+            
+        </div>
+        <div>
+                <label>Description:</label>        
+                <InputText @bind-Value="PictureContentDTO.Description" />
+         </div>
 
-    protected override void OnInitialized()
-    {
-        base.OnInitialized();
+        <ValidationSummary />
+    </EditForm>
 
 
+    @code {
+        [Parameter]
+        public PictureContentDTO PictureContentDTO { get; set; }
+
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+        }
+
+        private async Task OnInputFileChanged(InputFileChangeEventArgs inputFileChangeEvent)
+        {
+            var file = inputFileChangeEvent.File;
+            var buffer = new byte[file.Size];
+            await file.OpenReadStream(1512000).ReadAsync(buffer);
+            PictureContentDTO.Path = $"data:image/png;base64,{Convert.ToBase64String(buffer)}";
+        }
+
+        
     }
-}

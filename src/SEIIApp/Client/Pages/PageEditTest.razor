@@ -6,46 +6,51 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-3 text-center">
+        <div class="col-4 text-center">
             <h3 class="text-center">Content Editor</h3>
 
             @if (TestDto != null)
             {
 
         <EditForm EditContext="@context" OnSubmit="OnSubmit">
+            <DataAnnotationsValidator />
 
-            <label>Content Name:</label>
+            <label>Name of the Test:</label><br />
             <InputText @bind-Value="TestDto.Topic" />
 
-            <label>Content Description:</label>
+            <br /><label>Content Description:</label><br />
 
             <InputText @bind-Value="TestDto.Description" />
+            <p>
+                <br /><b>You are able to upload Youtube Videos here if you want to include them in the test!</b>
 
+            </p>
             @foreach (var video in TestDto.Videos)
             {
-                <div class="card">
-                    <div class="card-body">
-
-                        <VideoComponent VideoContentDTO="video"></VideoComponent>
-                        <button class="btn btn-light btn-sm my-3" @onclick="() => DeleteVideoContent(video)">Remove Video</button>
-                    </div>
-                </div>
+                <VideoComponent VideoContentDTO="video"></VideoComponent>
+                <button class="btn btn-light btn-sm my-3" @onclick="() => DeleteVideoContent(video)">Remove Video</button>
             }
-            <button class="btn btn-light" @onclick="AddVideoContent">Add Video</button>
+            <br /><button class="btn btn-light" @onclick="AddVideoContent">Add Video</button><br />
 
             <hr />
+            <p>
+                <br /><b>You can add questions and answers by clicking the button below!</b>
+
+            </p>
             @foreach (var question in TestDto.Questions)
             {
                 <div class="card">
                     <div class="card-body">
                         <!-- Component for questions in quiz -->
                         <QuestionDefComponent QuestionDto="question"></QuestionDefComponent>
-                        <button class="btn btn-light btn-sm my-3" @onclick="() => RemoveQuestion(question)">Remove Question</button>
+                        <button class="btn btn-light" @onclick="() => RemoveQuestion(question)">Remove Question</button>
                     </div>
                 </div>
 
             }
             <button class="btn btn-light btn-sm my-3" @onclick="AddQuestion">Add Question</button>
+
+            <br /><p><b>You can add further information about this topic to give you students the possibility to expand their knowledge!</b></p><br />
 
             @foreach (var link in TestDto.FurtherLinks)
             {
@@ -57,10 +62,29 @@
                     </div>
                 </div>
             }
-            <button class="btn btn-light" @onclick="AddFurtherLink">Add Link</button>
 
 
+            <br /><button class="btn btn-light" @onclick="AddFurtherLink">Add Link</button><br />
+            <hr />
+            @if (TestDto.VideosFurtherInformation != null)
+            {
+                @foreach (var video in TestDto.VideosFurtherInformation)
+                {
+                    <VideoComponent VideoContentDTO="video"></VideoComponent>
+                    <button class="btn btn-light btn-sm my-3" @onclick="() => DeleteVideosFurtherInformation(video)">Remove Video</button>
+                }
+            }
+            <br /><button class="btn btn-light" @onclick="AddVideosFurtherInformation">Add Video</button><br />
+            <hr />
+            @foreach (var content in TestDto.Content)
+            {
+                <PictureComponent PictureContentDTO="content"></PictureComponent>
+                <button class="btn btn-light btn-sm my-3" @onclick="() => DeletePictureContent(content)">Remove Picture</button>
+            }
+            <br /><button class="btn btn-light" @onclick="AddPictureContent">Add Picture</button><br />
+            <hr />
             <button class="btn btn-light" @onclick="() => SaveContentToBackend(this.TestDto)">Save Complete Quiz</button>
+            <ValidationSummary />
         </EditForm>
 
                     }
@@ -94,17 +118,16 @@
                     PrepareEditOrAddOfTestDefinition(new TestDTO());
                 }
                 await base.OnParametersSetAsync();
-
                 context = new EditContext(TestDto);
-                SEIIApp.Client.Components.VideoComponent.OnEditing = true;
+                //SEIIApp.Client.Components.VideoComponent.OnEditing = true;
             }
 
             private void PrepareEditOrAddOfTestDefinition(TestDTO test)
             {
                 if (test.Questions == null) test.Questions = new List<QuestionDTO>();
-                if (test.Author == null) test.Author = new UserDTO() { Name = "user4", Role = Role.Teacher, UserId = 4}; //ToDo
-                //if(test.TestContent == null) test.TestContent = new List<TestContentDTO>();
+                if (test.Author == null) test.Author = new UserDTO() { FirstName = "Ezzy", LastName = "Bert", Name = "user4", Role = Role.Teacher, UserId = 4}; //ToDo
                 if (test.Videos == null) test.Videos = new List<VideoContentDTO>();
+                if (test.VideosFurtherInformation == null) test.VideosFurtherInformation = new List<VideoContentDTO>();
                 if (test.Content == null) test.Content = new List<PictureContentDTO>();
                 if (test.FurtherLinks == null) test.FurtherLinks = new List<FurtherLinkDTO>();
 
@@ -148,6 +171,17 @@
             private void DeleteVideoContent(VideoContentDTO videoContentDto)
             {
                 TestDto.Videos.Remove(videoContentDto);
+            }
+
+            private void AddVideosFurtherInformation()
+            {
+                if (TestDto.VideosFurtherInformation == null) TestDto.VideosFurtherInformation = new List<VideoContentDTO>();
+                TestDto.VideosFurtherInformation.Add(new VideoContentDTO() { Path = "https://www.youtube.com/embed/" });
+            }
+
+            private void DeleteVideosFurtherInformation(VideoContentDTO videoContentDto)
+            {
+                TestDto.VideosFurtherInformation.Remove(videoContentDto);
             }
 
             private void AddPictureContent()
