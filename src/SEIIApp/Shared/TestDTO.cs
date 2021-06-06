@@ -13,7 +13,7 @@ namespace SEIIApp.Shared
         public int TestID { get; set; }
 
         [Required]
-        [StringLength(100, MinimumLength = 1)]
+        [StringLength(100)]
         public string Topic { get; set; }
         
         public string Description { get; set; }
@@ -31,6 +31,8 @@ namespace SEIIApp.Shared
         public List<QuestionDTO> Questions { get; set; }
         
         public List<VideoContentDTO> Videos { get; set; }
+
+        public List<VideoContentDTO> VideosFurtherInformation { get; set; }
 
         public List<PictureContentDTO> Content { get; set; }
 

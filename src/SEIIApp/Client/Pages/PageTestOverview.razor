@@ -50,6 +50,7 @@
                     @(content.DateOfCreation.ToShortDateString()) <b>@(content.Topic)</b> <button class="btn btn-outline-dark btn-sm" @onclick="() => EditQuiz((TestDTO)content)">Edit</button>
                     <button class="btn btn-outline-danger btn-sm" @onclick="() => DeleteContent(content)">Delete</button>
                     <button class="btn btn-outline-dark btn-sm" @onclick="() => StartTest(content.TestID)">Start</button>
+                    <button class="btn btn-outline-info btn-sm" @onclick="() => GetFurtherTopicInformations(content.TestID)">About Topic</button>
                 </li>
                 }
             </ul>
@@ -89,14 +90,14 @@
     private async Task DeleteContent(TestDTO test)
     {
         Tests.Remove(test);
-       if (copyOfTest != null)
+        if (copyOfTest != null)
         {
             copyOfTest.Remove(test);
         }
         await TestDefinitionService.DeleteTest(test.TestID);
     }
 
-    
+
     private void SearchContent()
     {
         if (Tests != null && searchValue != null)
@@ -114,10 +115,15 @@
         Tests.Clear();
         Tests.AddRange(copyOfTest);
     }
-    
+
     private void StartTest(int contentId)
     {
         NavigationManager.NavigateTo("/runtest/" + contentId);
+    }
+
+    private void GetFurtherTopicInformations(int contentId)
+    {
+        NavigationManager.NavigateTo("/furtherinformation/" + contentId);
     }
     }
 
