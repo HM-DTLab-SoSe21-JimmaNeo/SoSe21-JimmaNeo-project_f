@@ -114,6 +114,7 @@
 .input-group {
     position: relative;
     margin: 40px 0 20px;
+    width:auto;
 }
 
 input {
@@ -230,5 +231,6 @@ input:focus ~ .highlight {
         background: transparent;
     }
 }
+
 
 
