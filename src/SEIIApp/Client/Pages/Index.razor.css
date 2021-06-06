@@ -194,9 +194,9 @@ a {
   color: #f4623a;
   text-decoration: underline;
 }
-a:hover {
-  color: #c34e2e;
-}
+    a:hover {
+        color: #009a10;
+    }
 
 a:not([href]):not([class]), a:not([href]):not([class]):hover {
   color: inherit;
@@ -1918,11 +1918,11 @@ progress {
   cursor: pointer;
 }
 .form-control:focus {
-  color: #212529;
-  background-color: #fff;
-  border-color: #fab19d;
-  outline: 0;
-  box-shadow: 0 0 0 0.25rem rgba(244, 98, 58, 0.25);
+    color: #212529;
+    background-color: #fff;
+    border-color: #009a10;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgb(0, 154, 68);
 }
 
 .form-control::-moz-placeholder {
@@ -2426,7 +2426,7 @@ textarea.form-control-lg {
 .btn-primary {
     color: #fff;
     background-color: #009a10;
-    border-color: #f4623a;
+    border-color: #009a10;
 }
     .btn-primary:hover {
         color: #fff;
@@ -9238,4 +9238,12 @@ video {
     width: 100%;
     height: auto;
 }
+.logo-image {
+    width: auto;
+    height: auto;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-top: -6px;
+}
+
 
