@@ -1,4 +1,8 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
+﻿@inject UserServicee MyUserService
+@inject NavigationManager NavigationManager
+
+
+<div class="top-row pl-4 navbar navbar-dark">
     <a class="navbar-brand" href="">JimmaNeo
         <img src="/Images/logo_46px.png" alt="JN" class="logo-image"/>
     </a>
@@ -16,28 +20,85 @@
             </NavLink>
         </li>
 
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="news">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> News
-            </NavLink>
-        </li>
 
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="login">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Login
-            </NavLink>
-        </li>
 
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="WelcomeTeacher">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Teacher
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="WelcomeStudent">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Student
-            </NavLink>
-        </li>
+        @if (MyUserService.User == null)
+        {
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="login">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Login
+                </NavLink>
+            </li>
+
+            switch ((int)MyUserService.User.Role)
+            {
+
+                case 0: //none
+                    {
+                        break;
+                    }
+                case 1: // student
+                    {
+                        <li class="nav-item px-3">
+                            <NavLink class="nav-link" href="WelcomeStudent">
+                                <span class="oi oi-list-rich" aria-hidden="true"></span> Student
+                            </NavLink>
+                        </li>
+                        <li class="nav-item px-3">
+                            <NavLink class="nav-link" href="/welcomestudent">
+                                <span class="oi oi-list-rich" aria-hidden="true"></span> Student
+                            </NavLink>
+                        </li>
+                        break;
+
+
+
+                    }
+                case 2: // Teacher
+                    {
+
+                        <li class="nav-item px-3">
+                            <NavLink class="nav-link" href="WelcomeTeacher">
+                                <span class="oi oi-list-rich" aria-hidden="true"></span> Teacher
+                            </NavLink>
+                        </li>
+
+                        break;
+
+
+
+
+                    }
+                case 3: // Admin
+                    {
+
+                        <li class="nav-item px-3">
+                            <NavLink class="nav-link" href="manageuser">
+                                <span class="oi oi-list-rich" aria-hidden="true"></span> ManageUser
+                            </NavLink>
+                        </li>
+                        break;
+
+                    }
+
+            }
+
+
+        }
+        else
+        {
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" @onclick="() => Logout()">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Logout
+                </NavLink>
+            </li>
+
+        }
+
+
+
+
+
 
 
     </ul>
@@ -45,13 +106,22 @@
 
 
 @code {
-    
+
     private bool collapseNavMenu = true;
 
-    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+            private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
-}
+            private void ToggleNavMenu()
+            {
+                collapseNavMenu = !collapseNavMenu;
+            }
+
+            private void Logout()
+            {
+
+                MyUserService.User = null;
+                NavigationManager.NavigateTo("/login");
+
+            }
+        }
+
