@@ -129,17 +129,17 @@ namespace SEIIApp.Server.DataAccess
             lecture.Author = userService.GetUserWithId(4);
             
 
-           /* for (int i = 0; i < 3; i++)
-            {
-                var video = new VideoContent();
-                lecture.Text = $"Text {i} for lecture ";
-                video.Description = $"Description {i}";
-                //video.Path = $"https://www.youtube.com/embed/";
-                
-                
-                lecture.Videos.Add(video);
-            }
-            */
+            /* for (int i = 0; i < 3; i++)
+             {
+                 var video = new VideoContent();
+                 lecture.Text = $"Text {i} for lecture ";
+                 video.Description = $"Description {i}";
+                 //video.Path = $"https://www.youtube.com/embed/";
+
+
+                 lecture.Videos.Add(video);
+             }
+             */
             return lecture;
         }
 
