@@ -49,6 +49,18 @@ namespace SEIIApp.Server.Controllers
             return Ok(mappedTest);
         }
 
+        [HttpGet("topic/{topic}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<TestDTO> GetTestTopic([FromRoute] string topic)
+        {
+            var test = TestService.GetTestWithTopic(topic);
+            if (test == null) return StatusCode(StatusCodes.Status404NotFound);
+
+            var mappedTest = Mapper.Map<TestDTO>(test);
+            return Ok(mappedTest);
+        }
+
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

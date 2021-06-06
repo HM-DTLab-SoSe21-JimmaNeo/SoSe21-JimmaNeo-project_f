@@ -67,6 +67,7 @@ namespace SEIIApp.Server.Controllers
 
                 if (mappedLecture.LectureId == 0)
                 {
+                    Console.WriteLine("neue lecture");
                     mappedLecture = LectureService.AddLecture(mappedLecture);
                 }
                 else

@@ -1,7 +1,9 @@
 ﻿@page "/lectureedit/{LectureID:int}"
 
+
 @inject Services.LectureBackendAccessService LectureService
 @inject NavigationManager NavigationManager
+@inject Services.TestsDefinitionBackendAccessService TestService
 
 <h3>LectureEditPage</h3>
 <div class="container">
@@ -42,11 +44,17 @@
 
             }
             <button class="btn btn-light btn-sm my-3" @onclick="AddPictureContent">Add Picture</button><br />
+            <label>Test topic:</label>
+            <InputText @bind-Value="TestTopic" />
+
+            <button class="btn btn-light btn-sm my-3" @onclick="AddTestToLecture">Add Test</button><br />
 
             <label>Lecture Text:</label>
             <InputText @bind-Value="LectureDto.Text" />
 
-           
+            <label>Lecture Description:</label>
+            <InputText @bind-Value="LectureDto.Test.Description" />
+
 
             <button class="btn btn-light" @onclick="() => SaveContentToBackend(this.LectureDto)">Save Lecture</button>
         </EditForm>
@@ -63,18 +71,26 @@
 
 @code {
 
-    [Parameter]
-    public int LectureID { get; set; }
+        [Parameter]
+        public int LectureID { get; set; }
 
     public LectureDTO LectureDto { get; set; }
 
     private EditContext context { get; set; }
 
+    private TestBaseDTO TestOfLecture { get; set; }
+
+    private int TestId { get; set; }
+    private string TestTopic { get; set; }
+
     protected override async Task OnParametersSetAsync()
     {
+        
         if (LectureID != 0)
         {
             var existingLecture = await LectureService.GetLectureById(LectureID);
+
+
             PrepareEditOrAddOfLecture(existingLecture);
         }
         else
@@ -84,16 +100,20 @@
         await base.OnParametersSetAsync();
 
         context = new EditContext(LectureDto);
+        VideoComponent.OnEditing = true;
     }
+
+
 
     private void PrepareEditOrAddOfLecture(LectureDTO lectureDto)
     {
+        if (lectureDto.Topic == null) lectureDto.Topic = "lecture Topic";
         if (lectureDto.Content == null) lectureDto.Content = new List<PictureContentDTO>();
         if (lectureDto.Author == null) lectureDto.Author = new UserDTO() { FirstName = "Ezzy", LastName = "Bert", Name = "user4", Role = Role.Teacher, UserId = 4 }; //ToDo
-                                                                                                                                                                      //if(test.TestContent == null) test.TestContent = new List<TestContentDTO>();
+                                                                                                                                                                     //if(test.TestContent == null) test.TestContent = new List<TestContentDTO>();
         if (lectureDto.Videos == null) lectureDto.Videos = new List<VideoContentDTO>();
         if (lectureDto.Content == null) lectureDto.Content = new List<PictureContentDTO>();
-       // if (lectureDto.Test == null) lectureDto.Test = new TestDTO(); // TODO nicht sicher?
+        if (lectureDto.Test == null) lectureDto.Test = new TestDTO(); // TODO nicht sicher?
 
         this.LectureDto = lectureDto;
     }
@@ -104,6 +124,12 @@
 
     }
 
+
+    protected async void GetTestById()
+    {
+        TestOfLecture = await LectureService.GetTestById(TopicToId(TestTopic));
+
+    }
     private async void SaveContentToBackend(LectureDTO LectureDto)
     {
 
@@ -120,6 +146,27 @@
                 Console.WriteLine("answer = FALSE");
         }
         else Console.WriteLine("isValid = FALSE");
+    }
+
+    private int TopicToId(string topic)
+    {
+        int id = Int32.Parse(topic);
+        return id;
+
+
+
+    }
+    private async void AddTestToLecture()
+    {
+
+        int testId = TopicToId(TestTopic);
+        var Test = await TestService.GetTestById(testId);
+        this.LectureDto.Test = new TestBaseDTO() { Topic = Test.Topic, Author = Test.Author, Description = Test.Description, TestID = Test.TestID};
+
+        // GetTestById();
+        //this.LectureDto.Test =TestOfLecture;
+
+        //this.LectureDto.Test =  LectureService.GetTestById(TopicToId(TestTopic)) ; //this.LectureDto.Test.Topic.TopicToId()
     }
 
     private void AddVideoContent()

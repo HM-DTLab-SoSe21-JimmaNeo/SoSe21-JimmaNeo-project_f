@@ -12,10 +12,11 @@ namespace SEIIApp.Server.DataAccess
         public static void InitalizeTestData(Services.UserService userService, Services.TestService testService, Services.NewsService newsService, Services.CompletedTestService completedTestService,Services.LectureService lectureService)
         {
             AddNews(newsService);
-            AddLectures(lectureService, userService);
             AddUser(userService);
+            
             AddTests(testService, userService, newsService);
-            AddCompletedTest(testService, userService, completedTestService);  
+            AddCompletedTest(testService, userService, completedTestService); 
+            AddLectures(lectureService, userService, testService);
         }
 
         private static void AddUser(Services.UserService userService)
@@ -106,7 +107,7 @@ namespace SEIIApp.Server.DataAccess
             return test;
         }
 
-        private static void AddLectures(Services.LectureService lectureService, Services.UserService userService)
+        private static void AddLectures(Services.LectureService lectureService, Services.UserService userService, Services.TestService testservice)
         {
             for (int i = 1; i < 10; i++)
             {
@@ -115,8 +116,9 @@ namespace SEIIApp.Server.DataAccess
                 lecture.LectureId = i;
                 if (lecture == null) Console.WriteLine("lecture ist null");
                 lectureService.AddLecture(lecture);
+               
                // test = new Services.TestService();
-                //lecture.Test = Services.TestService.GetTestWithId(i);
+                lecture.Test = testservice.GetTestWithId(i);
             }
         }
 

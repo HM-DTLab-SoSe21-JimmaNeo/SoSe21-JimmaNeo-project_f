@@ -7,6 +7,8 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using SEIIApp.Shared;
+using SEIIApp.Client.Services;
+
 
 namespace SEIIApp.Client.Services
 {
@@ -39,6 +41,10 @@ namespace SEIIApp.Client.Services
             return await HttpClient.GetFromJsonAsync<LectureDTO>(GetLectureUrlWithId(LectureID));
         }
 
+        public async Task<TestBaseDTO> GetTestById(int TestID)
+        {
+            return await HttpClient.GetFromJsonAsync<TestBaseDTO>($"api/tests/{TestID}");
+        }
         /// <summary>
         /// Returns all lectures stored on the backend
         /// </summary>
