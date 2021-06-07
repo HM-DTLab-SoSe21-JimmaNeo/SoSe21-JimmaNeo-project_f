@@ -1,100 +1,153 @@
-﻿@page "/manageuser"
+@page "/manageuser"
 @inject Services.UserBackendAccessService UserService
 @inject NavigationManager NavigationManager
 @using SEIIApp.Shared;
 @using static SEIIApp.Client.Pages.Login;
 @inject UserServicee MyUserService
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
 
+    <div class="bs">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-xs-5">
+                        <h2 class="text-dark">User Management</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive">
 
-<h3>ManageUser</h3>
+                @{
+                    if (MyUserService.User != null && MyUserService.User.Role == Role.Admin)
+                    {
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Role</th>
+                                    <th></th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var user in Users)
+                                {
+
+                                    <tr>
+                                        <td>@user.Name</td>
+                                        <td>@user.FirstName</td>
+                                        <td>@user.LastName</td>
+                                        <td>@user.Role</td>
+                                        <td>
+                                        </td>
+                                        <td><button class="btn btn-primary" @onclick="() => EditUser(user)"><i class="material-icons">&#xE8B8;</i></button></td>
+                                        <td><button class="btn btn-danger" @onclick="() => DeleteUser(user)"><i class="material-icons">&#xE5C9;</i></button></td>
+
+                                    </tr>
+                                }
 
 
-@{
-    if (MyUserService.User != null && MyUserService.User.Role == Role.Admin)
-    {
-        <table width="80%">
-            <thead>
-                <tr border="1">
-                    <th>Name</th>
-                    <th>Firstname</th>
-                    <th>Lastname</th>
-                    <th>Role</th>
+                            </tbody>
+                        </table>
+                    }
 
-                    <th></th>
-
-                </tr>
-            </thead>
-
-            <tbody>
-              
-                @foreach (var user in Users)
-                {
-                    
-                    <tr>
-                        <td>@user.Name</td>
-                        <td>@user.FirstName</td>
-                        <td>@user.LastName</td>
-                        <td>@user.Role</td>
-                        <td>                    
-
-                        </td>
-                        <td><button class="btn btn-primary" @onclick="() => EditUser(user)">Edit</button></td>                      
-                        <td><button class="btn btn-danger" @onclick="() => DeleteUser(user)">Delete</button></td>
-                        
-
-
-
-                    </tr>
+                    else
+                    {
+                        <p>You are not allowed to see this!</p>
+                    }
                 }
-               
-                
-            </tbody>
-        </table>
+            </div>
+        </div>
+        @*{
+            if (MyUserService.User != null && MyUserService.User.Role == Role.Admin)
+            {
+                <table width="80%">
+                    <thead>
+                        <tr border="1">
+                            <th>Name</th>
+                            <th>Firstname</th>
+                            <th>Lastname</th>
+                            <th>Role</th>
 
-      
-    }
+                            <th></th>
 
-    else
-    {
-        <p>You are not allowed to see this!</p>
-    }
-}
+                        </tr>
+                    </thead>
 
+                    <tbody>
 
-@code {
-  
-    public string msg { get; set; }
-    public int[] Roles{get; set;}
- 
+                        @foreach (var user in Users)
+                        {
 
-    public UserDTO[] Users = new UserDTO[0];
-
-    protected override async Task OnParametersSetAsync()
-    {
-        await base.OnParametersSetAsync();
-        Users = await UserService.GetAllUsers();
-        Roles = new int[Users.Length];
-    }
-
-
-    private void EditUser(UserDTO user)
-    {
-    NavigationManager.NavigateTo($"/edituser/{user.UserId}");
-    }  
+                            <tr>
+                                <td>@user.Name</td>
+                                <td>@user.FirstName</td>
+                                <td>@user.LastName</td>
+                                <td>@user.Role</td>
+                                <td>
+                                </td>
+                                <td><button class="btn btn-primary" @onclick="() => EditUser(user)">Edit</button></td>
+                                <td><button class="btn btn-danger" @onclick="() => DeleteUser(user)">Delete</button></td>
 
 
 
-    private async void DeleteUser(UserDTO user)
-    {
 
-        bool successfull = await UserService.DeleteUser(user.UserId);
-        if (successfull)
-        {
-            Users = Users.Where(u => u != user).ToArray();
+                            </tr>
+                        }
+
+
+                    </tbody>
+                </table>
+
+
+            }
+
+            else
+            {
+                <p>You are not allowed to see this!</p>
+            }
         }
 
-    }
+        *@
 
-    }
+        @code {
+
+            public string msg { get; set; }
+            public int[] Roles { get; set; }
+
+
+            public UserDTO[] Users = new UserDTO[0];
+
+            protected override async Task OnParametersSetAsync()
+            {
+                await base.OnParametersSetAsync();
+                Users = await UserService.GetAllUsers();
+                Roles = new int[Users.Length];
+            }
+
+
+            private void EditUser(UserDTO user)
+            {
+                NavigationManager.NavigateTo($"/edituser/{user.UserId}");
+            }
+
+
+
+            private async void DeleteUser(UserDTO user)
+            {
+
+                bool successfull = await UserService.DeleteUser(user.UserId);
+                if (successfull)
+                {
+                    Users = Users.Where(u => u != user).ToArray();
+                }
+
+            }
+
+        }
