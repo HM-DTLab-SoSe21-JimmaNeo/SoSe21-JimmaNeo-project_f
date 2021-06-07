@@ -114,6 +114,9 @@ namespace SEIIApp.Server.DataAccess
                 var lecture = GenerateLecture(userService);
                 lecture.Topic = "Lecture " + i;
                 lecture.LectureId = i;
+                lecture.Videos = new List<VideoContent>();
+                lecture.Content = new List<PictureContent>();
+               // lecture.Videos.Add(new VideoContent() {VideoId =i, Description= "IpMan!!!", Path= "https://www.youtube.com/watch?v=Pi02ecWGXeo", VideoLink = "https://www.youtube.com/watch?v=Pi02ecWGXeo" });//;{VideoId = i  }
                 if (lecture == null) Console.WriteLine("lecture ist null");
                 lectureService.AddLecture(lecture);
                
@@ -127,9 +130,17 @@ namespace SEIIApp.Server.DataAccess
            
             var lecture = new Lecture();
             lecture.DateOfCreation = DateTime.UtcNow.Date;
-            lecture.Videos = new List<VideoContent>();
-            lecture.Author = userService.GetUserWithId(4);
             
+            lecture.Author = userService.GetUserWithId(4);
+            lecture.Text = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, " +
+                "sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam" +
+                " erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea " +
+                "rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolo" +
+                "r sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam" +
+                " nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed" +
+                " diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. " +
+                "Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.";
+
 
             /* for (int i = 0; i < 3; i++)
              {

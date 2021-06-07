@@ -9,28 +9,46 @@
     @if (LectureDto != null)
     {
         <h2 class="text-center">@(LectureDto.Topic)</h2>
-        
-        <label> @(LectureID)</label>
+
+        <label>Videos</label>
 
         <EditForm Model="@LectureDto">
-
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button class="btn btn-primary me-md-2" type="button" @onclick="()=> GetToTest()">Test</button>
+            </div>
             @foreach (var video in LectureDto.Videos)
             {
                 <div class="card">
                     <div class="card-body">
 
                         <VideoComponent VideoContentDTO="video"></VideoComponent>
-
+                        <p>Video Description</p>
+                        <p>@video.Description</p>
                     </div>
                 </div>
             }
 
 
-            <ul class="list-group list-group-flush">
-                <label > Lecture Text</label>
+            <li class="list-group list-group-flush">
+                <label> Lecture Text</label>
                 <p>@LectureDto.Text</p>
-                <button class="btn btn-light btn-sm my-3" @onclick="()=> OnSubmitLecture()">Submit</button>
-            </ul>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button class="btn btn-primary me-md-2" type="button" @onclick="()=> GetLastLecture()">Back</button>
+                    <button class="btn btn-primary" type="button" @onclick="()=> GetNextLecture()">Next</button>
+                </div>
+            </li>
+
+            @foreach (var picture in LectureDto.Content)
+            {
+                <div class="card">
+                    <div class="card-body">
+
+                        <PictureComponent PictureContentDTO="picture"></PictureComponent>
+                        <p> Picture Description</p>
+                        <p>@picture.Description</p>
+                    </div>
+                </div>
+            }
         </EditForm>
 
     }
@@ -38,6 +56,7 @@
 
 
 </div>
+
 
 @code {
 
@@ -69,5 +88,20 @@
 
     }
 
+    private void GetNextLecture()
+    {
+        NavigationManager.NavigateTo($"/runlecture/{LectureID + 1}");
+    }
+
+    private void GetLastLecture()
+    {
+        if(LectureID>=2)
+            NavigationManager.NavigateTo($"/runlecture/{LectureID -1}");
+    }
+
+    private void GetToTest()
+    {
+        NavigationManager.NavigateTo($"/runtest/{LectureID}");
+    }
 }
 
