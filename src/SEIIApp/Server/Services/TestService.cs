@@ -48,6 +48,13 @@ namespace SEIIApp.Server.Services
             return GetQueryableForTest().Where(test => test.TestId == id).FirstOrDefault();
         }
 
+        public Test GetTestWithTopic(string topic)
+        {
+            return GetQueryableForTest().Where(test => test.Topic == topic).FirstOrDefault();
+        }
+
+
+
         public Test AddTest(Test test)
         {
             User user = UserService.GetUserWithId(test.Author.UserId);
