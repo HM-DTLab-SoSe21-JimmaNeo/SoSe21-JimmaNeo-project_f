@@ -10,37 +10,41 @@
     @if (RunTest.TestDto != null)
     {
         <h2 class="text-center">Results of @(RunTest.TestDto.Topic)</h2>
+        <h3 class="text-center">Your score: @(RunTest.TestDto.ReachedPoints)/@(RunTest.TestDto.MaxPoints) Points</h3>
         <ul class="list-group list-group-flush">
+
             @foreach (var question in RunTest.TestDto.Questions)
             {
+                <hr/>
                 <li class="text-center list-group-item">
-                    <h3>@(question.QuestionText)</h3>
+                    <h4>@(question.QuestionText)</h4>
                 </li>
                 @foreach (var answer in question.Answers)
                 {
 
-                    <li class="text-center list-group-item">
-                        <label>@(answer.AnswerText)</label><br />
+        <li class="text-center list-group-item">
+            <label>@(answer.AnswerText)</label><br />
 
-                        @if (answer.IsClicked)
-                        {
-                            <label style="color:blue">Your answer choice</label><br />
-                        }
-                        else
-                        {
-                            <label style="color:blue">Not clicked</label><br />
-                        }
+            @if (answer.IsClicked)
+            {
+                <label style="color:blue">Your answer choice</label><br />
+            }
+            else
+            {
+                <label style="color:blue">Not clicked</label><br />
+            }
 
-                        @if (answer.IsCorrect)
-                        {
-                            <label style="color:green"> Right Answer</label>
-                        }
-                        else if (answer.IsClicked && !answer.IsCorrect)
-                        {
-                            <label style="color:red"> Wrong Answer</label>
-                        }
+            @if (answer.IsCorrect)
+            {
+                <label style="color:green"> Right Answer</label>
+              
+            }
+            else if (answer.IsClicked && !answer.IsCorrect)
+            {
+                <label style="color:red"> Wrong Answer</label>
+            }
 
-                    </li>
+        </li>
                 }
                 if (question.Explanation != null)
                 {
