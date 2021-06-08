@@ -55,7 +55,7 @@ namespace SEIIApp.Server.Controllers
             var mappedResult = Mapper.Map<LectureDTO>(lectureInList);
             return Ok(mappedResult);
         }
-
+        
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPut("ChangeLecture")]
@@ -67,6 +67,7 @@ namespace SEIIApp.Server.Controllers
 
                 if (mappedLecture.LectureId == 0)
                 {
+                    Console.WriteLine("neue lecture");
                     mappedLecture = LectureService.AddLecture(mappedLecture);
                 }
                 else

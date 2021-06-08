@@ -54,12 +54,13 @@ namespace SEIIApp.Server.Services
 
         public Lecture AddLecture(Lecture lecture)
         {
-            lecture.Author = userService.GetUserWithId(lecture.Author.UserId);
-            if (lecture.Author == null)
+            
+           if (lecture.Author == null)
             {
                 return null;
             }
-            if (lecture.Test.TestId != 0)
+           else lecture.Author = userService.GetUserWithId(lecture.Author.UserId);
+            if (lecture.Test != null && lecture.Test.TestId != 0)
             {
                 lecture.Test = testService.GetTestWithId(lecture.Test.TestId);
             }
@@ -75,7 +76,7 @@ namespace SEIIApp.Server.Services
                 Topic = "New Lectrue",
                 Content = $"A new Lectrue, named {lecture.Topic}, was uploaded to this platform. The Lectrue was created by {lecture.Author.Name}.",
                 DateOfCreation = DateTime.Now
-            });
+            }); 
 
             return lecture;
         }
@@ -84,16 +85,17 @@ namespace SEIIApp.Server.Services
         {
             var exsistingLecture = GetLectureWithId(lecture.LectureId);
             Mapper.Map(lecture, exsistingLecture);
-            exsistingLecture.Test = testService.GetTestWithId(lecture.Test.TestId);
+            if (lecture.Test.TestId != 0) exsistingLecture.Test = testService.GetTestWithId(lecture.Test.TestId);
+            else exsistingLecture.Test = null;
             DatabaseContext.Update(exsistingLecture);
             DatabaseContext.SaveChanges();
 
-            NewsService.AddNews(new News()
+           /* NewsService.AddNews(new News()
             {
                 Topic = $"Updated {lecture.Topic}",
                 Content = $"The Lecture \"{lecture.Topic}\" has been updated. The Lectrue was updated by {lecture.Author.Name}.",
                 DateOfCreation = DateTime.Now
-            });
+            });*/
 
             return exsistingLecture;
         }

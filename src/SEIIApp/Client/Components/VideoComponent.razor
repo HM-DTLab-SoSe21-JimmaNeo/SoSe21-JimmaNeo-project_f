@@ -29,6 +29,7 @@
     else
     {
         <p>@VideoContentDTO.Description</p>
+        <p> not editing</p>
     }
 
     <ValidationSummary />
@@ -39,7 +40,7 @@
     [Parameter]
     public VideoContentDTO VideoContentDTO { get; set; }
 
-    public static bool OnEditing = true;
+    public static bool OnEditing = false; // soll false sein
 
     protected override void OnInitialized()
     {

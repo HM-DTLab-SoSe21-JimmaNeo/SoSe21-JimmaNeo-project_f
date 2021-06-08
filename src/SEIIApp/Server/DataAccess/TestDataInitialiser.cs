@@ -9,12 +9,14 @@ namespace SEIIApp.Server.DataAccess
 {
     public class TestDataInitialiser
     {
-        public static void InitalizeTestData(Services.UserService userService, Services.TestService testService, Services.NewsService newsService, Services.CompletedTestService completedTestService)
+        public static void InitalizeTestData(Services.UserService userService, Services.TestService testService, Services.NewsService newsService, Services.CompletedTestService completedTestService,Services.LectureService lectureService)
         {
             AddNews(newsService);
             AddUser(userService);
+            
             AddTests(testService, userService, newsService);
-            AddCompletedTest(testService, userService, completedTestService);  
+            AddCompletedTest(testService, userService, completedTestService); 
+            AddLectures(lectureService, userService, testService);
         }
 
         private static void AddUser(Services.UserService userService)
@@ -105,6 +107,54 @@ namespace SEIIApp.Server.DataAccess
             return test;
         }
 
-        
+        private static void AddLectures(Services.LectureService lectureService, Services.UserService userService, Services.TestService testservice)
+        {
+            for (int i = 1; i < 10; i++)
+            {
+                var lecture = GenerateLecture(userService);
+                lecture.Topic = "Lecture " + i;
+                lecture.LectureId = i;
+                lecture.Videos = new List<VideoContent>();
+                lecture.Content = new List<PictureContent>();
+               // lecture.Videos.Add(new VideoContent() {VideoId =i, Description= "IpMan!!!", Path= "https://www.youtube.com/watch?v=Pi02ecWGXeo", VideoLink = "https://www.youtube.com/watch?v=Pi02ecWGXeo" });//;{VideoId = i  }
+                if (lecture == null) Console.WriteLine("lecture ist null");
+                lectureService.AddLecture(lecture);
+               
+               // test = new Services.TestService();
+                lecture.Test = testservice.GetTestWithId(i);
+            }
+        }
+
+        public static Lecture GenerateLecture(Services.UserService userService)
+        {
+           
+            var lecture = new Lecture();
+            lecture.DateOfCreation = DateTime.UtcNow.Date;
+            
+            lecture.Author = userService.GetUserWithId(4);
+            lecture.Text = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, " +
+                "sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam" +
+                " erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea " +
+                "rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolo" +
+                "r sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam" +
+                " nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed" +
+                " diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. " +
+                "Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.";
+
+
+            /* for (int i = 0; i < 3; i++)
+             {
+                 var video = new VideoContent();
+                 lecture.Text = $"Text {i} for lecture ";
+                 video.Description = $"Description {i}";
+                 //video.Path = $"https://www.youtube.com/embed/";
+
+
+                 lecture.Videos.Add(video);
+             }
+             */
+            return lecture;
+        }
+
     }
 }

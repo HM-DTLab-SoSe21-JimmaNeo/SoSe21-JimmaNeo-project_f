@@ -1,0 +1,107 @@
+﻿@page "/runlecture/{LectureID:int}"
+
+@inject Services.LectureBackendAccessService LectureService
+@inject NavigationManager NavigationManager
+
+
+<div class="container">
+
+    @if (LectureDto != null)
+    {
+        <h2 class="text-center">@(LectureDto.Topic)</h2>
+
+        <label>Videos</label>
+
+        <EditForm Model="@LectureDto">
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button class="btn btn-primary me-md-2" type="button" @onclick="()=> GetToTest()">Test</button>
+            </div>
+            @foreach (var video in LectureDto.Videos)
+            {
+                <div class="card">
+                    <div class="card-body">
+
+                        <VideoComponent VideoContentDTO="video"></VideoComponent>
+                        <p>Video Description</p>
+                        <p>@video.Description</p>
+                    </div>
+                </div>
+            }
+
+
+            <li class="list-group list-group-flush">
+                <label> Lecture Text</label>
+                <p>@LectureDto.Text</p>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button class="btn btn-primary me-md-2" type="button" @onclick="()=> GetLastLecture()">Back</button>
+                    <button class="btn btn-primary" type="button" @onclick="()=> GetNextLecture()">Next</button>
+                </div>
+            </li>
+
+            @foreach (var picture in LectureDto.Content)
+            {
+                <div class="card">
+                    <div class="card-body">
+
+                        <PictureComponent PictureContentDTO="picture"></PictureComponent>
+                        <p> Picture Description</p>
+                        <p>@picture.Description</p>
+                    </div>
+                </div>
+            }
+        </EditForm>
+
+    }
+
+
+
+</div>
+
+
+@code {
+
+    [Parameter]
+    public int LectureID { get; set; }
+
+    public static LectureDTO LectureDto { get; set; }
+
+    private bool isClicked { get; set; }
+
+
+    protected override async Task OnParametersSetAsync()
+    {
+
+        var returnedLecture = await LectureService.GetLectureById(LectureID);
+        await base.OnParametersSetAsync();
+        LectureDto = returnedLecture;
+        SEIIApp.Client.Components.VideoComponent.OnEditing = false;
+    }
+
+    private async void OnSubmitLecture()
+    {
+
+        var answer = await LectureService.AddOrUpdateLecture(LectureDto);
+        if (answer != null)
+        {
+            NavigationManager.NavigateTo("/resultslecture/");
+        }
+
+    }
+
+    private void GetNextLecture()
+    {
+        NavigationManager.NavigateTo($"/runlecture/{LectureID + 1}");
+    }
+
+    private void GetLastLecture()
+    {
+        if(LectureID>=2)
+            NavigationManager.NavigateTo($"/runlecture/{LectureID -1}");
+    }
+
+    private void GetToTest()
+    {
+        NavigationManager.NavigateTo($"/runtest/{LectureID}");
+    }
+}
+
