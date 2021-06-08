@@ -12,20 +12,20 @@
 
         <EditForm Model="@TestDto">
 
-            @foreach (var video in TestDto.Videos)
-            {
-                <div class="card">
-                    <div class="card-body">
-                        <VideoComponent VideoContentDTO="video"></VideoComponent>
-                    </div>
-                </div>
-            }
-
             <ul class="list-group list-group-flush">
+                @foreach (var video in TestDto.Videos)
+                {
+                    <li class="text-center list-group-item">
+                        <label>@(video.Description)</label><br />
+                        <iframe width="560" height="315" src="@video.Path" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </li>
+                }
+
                 @foreach (var question in TestDto.Questions)
                 {
                     if (!String.IsNullOrEmpty(question.QuestionText))
                     {
+                        <hr />
                         <li class="text-center list-group-item">
                             <br />
                             <h3> @(question.QuestionText) </h3>
@@ -40,7 +40,9 @@
                                         <label>@(answer.AnswerText)</label>
                                         <InputCheckbox @bind-Value="answer.IsClicked"></InputCheckbox>
                                     </li>
+
                                 }
+
                             }
                         }
                     }
@@ -66,9 +68,6 @@
 
     public static TestDTO TestDto { get; set; }
 
-    private bool isClicked { get; set; }
-
-
     protected override async Task OnParametersSetAsync()
     {
 
@@ -80,6 +79,8 @@
 
     private async void OnSubmitTest()
     {
+        TestDto.MaxPoints = CountMaxPoints(TestDto.Questions);
+        TestDto.ReachedPoints = CountReachedPoints(TestDto.Questions);
 
         var answer = await TestDefinitionService.AddOrUpdateTest(TestDto);
         if (answer != null)
@@ -89,5 +90,44 @@
 
     }
 
+    private int CountMaxPoints(List<QuestionDTO> questions)
+    {
+        int maxPoints = 0;
+        foreach(var question in questions){
+            foreach (var answer in question.Answers) {
+                if (answer.IsCorrect)
+                {
+                    maxPoints++;
+                }
+            }
+        }
+        return maxPoints;
+    }
+
+    private int CountReachedPoints(List<QuestionDTO> questions)
+    {
+        int reachedPoints = 0;
+        foreach (var question in questions)
+        {
+            foreach (var answer in question.Answers)
+            {
+                if (answer.IsClicked)
+                {
+                    if (answer.IsCorrect)
+                    {
+                        reachedPoints++;
+                    }
+                    else if(!answer.IsCorrect && reachedPoints > 0)
+                    {
+                        reachedPoints--;
+                    }
+                }else if(answer.IsCorrect && !answer.IsClicked && reachedPoints > 0)
+                {
+                    reachedPoints--;
+                }
+            }
+        }
+        return reachedPoints;
+    }
 }
 

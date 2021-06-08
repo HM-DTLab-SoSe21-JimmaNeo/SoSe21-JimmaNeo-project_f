@@ -14,35 +14,37 @@
     @if (TestDto.FurtherLinks.Any())
     {
         
-        <h4>Links of websites about @(TestDto.Topic)</h4>
+        <h4 >Links of websites about @(TestDto.Topic)</h4>
         @foreach (var link in TestDto.FurtherLinks)
         {
             <li class="text-center list-group-item">
                 <label>@(link.Description)</label><br />
-                <label>@(link.Link)</label><br /> @*Link muss noch anklickbar werden*@
+                <label>@(link.Link)</label><br />
+                <form action="@link.Link">
+                <input type="submit" value="Go to Link" />
+                </form>
            </li>
         }
     }
-    @if (TestDto.FurtherLinks.Any())
+    @if (TestDto.VideosFurtherInformation.Any())
     {
-        <h4>Videos about @(TestDto.Topic) </h4>
+        <h4 class="text-center">Videos about @(TestDto.Topic) </h4>
         @foreach (var video in TestDto.VideosFurtherInformation)
         {
             <li class="text-center list-group-item">
                 <label>@(video.Description)</label><br />
-                <VideoComponent VideoContentDTO="video"></VideoComponent>
+               <iframe width="560" height="315" src="@video.Path" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </li>
         }
     }
     @if (TestDto.Content.Any())
     {
-        <h4>Pictures about @(TestDto.Topic) </h4>
+        <h4 class="text-center">Pictures about @(TestDto.Topic) </h4>
         @foreach (var picture in TestDto.Content)
         {
             <li class="text-center list-group-item">
                 <label>@(picture.Description)</label><br />
-                <img src="@picture.Path" class="img-thumbnail"> <br />
-
+                <img width="560" height="315" src="@picture.Path" class="img-thumbnail" allowfullscreen> <br />
             </li>
         }
 
