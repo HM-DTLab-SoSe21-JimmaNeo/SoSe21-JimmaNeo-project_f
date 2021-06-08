@@ -2,6 +2,7 @@
 @inject NavigationManager NavigationManager
 
 
+
 <div class="top-row pl-4 navbar navbar-dark">
     <a class="navbar-brand" href="">JimmaNeo
         <img src="/Images/logo_46px.png" alt="JN" class="logo-image"/>
@@ -20,115 +21,144 @@
             </NavLink>
         </li>
 
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="news">
+                <span class="oi oi-globe" aria-hidden="true"></span> News
+            </NavLink>
+        </li>
 
 
-        @if (MyUserService.User == null)
+
+
+
+
+
+        @if (MyUserService.User != null)
         {
-            <li class="nav-item px-3">
-                <NavLink class="nav-link" href="login">
-                    <span class="oi oi-list-rich" aria-hidden="true"></span> Login
+
+            <li class="nav-item px-3"> 
+                <NavLink class="nav-link" @onclick="() => Logout()" Match="NavLinkMatch.All">
+                    <span class="oi oi-list-unlocked" aria-hidden="true"></span> Logout
                 </NavLink>
-
-
             </li>
 
+            @switch ((int)MyUserService.User.Role)
+            {
+
+
+                case 1: // student
+                    {
+                        <li class="nav-item px-3">
+                            <NavLink class="nav-link" href="WelcomeStudent" @onclick="()=>expandSubMenu= !expandSubMenu">
+                                <span class="oi oi-plus" aria-hidden="true"></span> Student
+                            </NavLink>
+                            @if (expandSubMenu)
+                            {
+                                <ul class="flex-column">
+                                    <li class="nav-item">
+                                        <NavLink class="expand-menu" href="/welcomestudent">
+                                            <span class="oi oi-minus" aria-hidden="true"></span> Student
+                                        </NavLink>
+                                        <NavLink class="expand-menu" href="/welcomestudent">
+                                            <span class="oi oi-minus" aria-hidden="true"></span> Student
+                                        </NavLink>
+                                    </li>
+                                </ul>
+
+                            }
+
+                        </li>
+
+
+
+                        break;
+
+
+
+                    }
+                case 2: // Teacher
+                    {
+
+                        <li class="nav-item px-3">
+                            <NavLink class="nav-link" href="WelcomeTeacher">
+                                <span class="oi oi-list-rich" aria-hidden="true"></span> Teacher
+                            </NavLink>
+                        </li>
+
+                        break;
+
+
+
+
+                    }
+                case 3: // Admin
+                    {
+
+    <li class="nav-item px-3">
+        <NavLink class="nav-link" href="manageuser">
+            <span class="oi oi-list-rich" aria-hidden="true"></span> ManageUser
+        </NavLink>
+
+      
+    </li>
+                        break;
+
+                    }
+
+
+
+
+            }
 
         }
         else
         {
 
             <li class="nav-item px-3">
-                <NavLink class="nav-link" @onclick="() => Logout()">
-                    <span class="oi oi-list-rich" aria-hidden="true"></span> Logout
+                <NavLink class="nav-link" href="login" Match="NavLinkMatch.All">
+                    <span class="oi oi-lock-locked" aria-hidden="true"></span> Login
                 </NavLink>
+
+
             </li>
 
-           
-
-
-                @switch ((int)MyUserService.User.Role)
-                {
-
-
-                    case 1: // student
-                        {
-                            <li class="nav-item px-3">
-                                <NavLink class="nav-link" href="WelcomeStudent">
-                                    <span class="oi oi-list-rich" aria-hidden="true"></span> Student
-                                </NavLink>
-                            </li>
-                            <li class="nav-item px-3">
-                                <NavLink class="nav-link" href="/welcomestudent">
-                                    <span class="oi oi-list-rich" aria-hidden="true"></span> Student
-                                </NavLink>
-                            </li>
-                            break;
-
-
-
-                        }
-                    case 2: // Teacher
-                        {
-
-                            <li class="nav-item px-3">
-                                <NavLink class="nav-link" href="WelcomeTeacher">
-                                    <span class="oi oi-list-rich" aria-hidden="true"></span> Teacher
-                                </NavLink>
-                            </li>
-
-                            break;
-
-
-
-
-                        }
-                    case 3: // Admin
-                        {
-
-                            <li class="nav-item px-3">
-                                <NavLink class="nav-link" href="manageuser">
-                                    <span class="oi oi-list-rich" aria-hidden="true"></span> ManageUser
-                                </NavLink>
-                            </li>
-                            break;
-
-                        }
-
-                
-
-
-
-            }
         }
 
-
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="faq" Match="NavLinkMatch.All">
+                <span class="oi oi-question-mark" aria-hidden="true"></span> FAQ
+            </NavLink>
+        </li>
 
 
 
 
 
     </ul>
-</div>
+    </div>
 
 
 @code {
 
     private bool collapseNavMenu = true;
     private bool expandSubMenu;
+ 
 
-            private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
-            private void ToggleNavMenu()
-            {
-                collapseNavMenu = !collapseNavMenu;
-            }
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
 
-            private void Logout()
-            {
+    private void Logout()
+    {
 
-                MyUserService.User = null;
-                NavigationManager.NavigateTo("/login");
+        MyUserService.User = null;
+        NavigationManager.NavigateTo("/login", true);
 
-            }
+    }
+
+  
         }
 
