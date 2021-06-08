@@ -119,7 +119,7 @@
                 }
                 await base.OnParametersSetAsync();
                 context = new EditContext(TestDto);
-                //SEIIApp.Client.Components.VideoComponent.OnEditing = true;
+                SEIIApp.Client.Components.VideoComponent.OnEditing = true;
             }
 
             private void PrepareEditOrAddOfTestDefinition(TestDTO test)
@@ -165,7 +165,7 @@
 
             private void AddVideoContent()
             {
-                TestDto.Videos.Add(new VideoContentDTO() { Path = "https://www.youtube.com/embed/" });
+                TestDto.Videos.Add(new VideoContentDTO());
             }
 
             private void DeleteVideoContent(VideoContentDTO videoContentDto)
@@ -176,7 +176,7 @@
             private void AddVideosFurtherInformation()
             {
                 if (TestDto.VideosFurtherInformation == null) TestDto.VideosFurtherInformation = new List<VideoContentDTO>();
-                TestDto.VideosFurtherInformation.Add(new VideoContentDTO() { Path = "https://www.youtube.com/embed/" });
+                TestDto.VideosFurtherInformation.Add(new VideoContentDTO());
             }
 
             private void DeleteVideosFurtherInformation(VideoContentDTO videoContentDto)
