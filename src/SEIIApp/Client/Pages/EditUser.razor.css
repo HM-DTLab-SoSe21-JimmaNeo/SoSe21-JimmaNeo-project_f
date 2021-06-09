@@ -84,10 +84,6 @@ select {
     color: #0779e4
 }
 
-    .button:hover {
-        background-color: #0779e4;
-        color: #fff
-    }
 
 .btn-delete {
     background-color: #dc143c
@@ -105,10 +101,7 @@ select {
     border: 1px solid #ddd
 }
 
-    .danger:hover {
-        background-color: #e20404;
-        color: #fff
-    }
+ 
 
 @media(max-width:576px) {
     .wrapper {
@@ -246,4 +239,18 @@ input:focus ~ .highlight {
         width: 0;
         background: transparent;
     }
+}
+.save:hover {
+    background: white;
+    color: #0779e4;
+}
+
+.cancel:hover {
+    background: white;
+    color: #ff4500;
+}
+
+.delete:hover {
+    background: white;
+    color: #dc143c;
 }

@@ -38,8 +38,8 @@
             </div>
         </div>
         <div class="py-3 pb-4 border-bottom">
-            <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" @onclick="() => SaveRoleChangesOnUser(chosenOption)">Save Changes</button>
-            <button class="btn btn-lg btn-cancel btn-block btn-login text-uppercase font-weight-bold mb-2" style="color:white" @onclick="() => goBacktoUM()">Back</button>
+            <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2 save" @onclick="() => SaveRoleChangesOnUser(chosenOption)">Save Changes</button>
+            <button class="btn btn-lg btn-cancel btn-block btn-login text-uppercase font-weight-bold mb-2 cancel" style="color:white" @onclick="() => goBacktoUM()">Back</button>
         </div>
 
         <div class="d-sm-flex align-items-center pt-3" id="delete">
@@ -47,7 +47,7 @@
                 <b>Delete this account</b>
                 <p>Details about your account and password</p>
             </div>
-            <div class="ml-auto"> <button class="btn btn-lg btn-delete btn-block btn-login text-uppercase font-weight-bold mb-2" style="color:white">Delete</button> </div>
+            <div class="ml-auto"> <button class="btn btn-lg btn-delete btn-block btn-login text-uppercase font-weight-bold mb-2 delete" style="color:white">Delete</button> </div>
         </div>
     </div>
 }

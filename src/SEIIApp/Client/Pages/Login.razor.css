@@ -232,5 +232,9 @@ input:focus ~ .highlight {
     }
 }
 
+.signIN:hover {
+    background: white;
+    color: #2369eb;
+}
 
 
