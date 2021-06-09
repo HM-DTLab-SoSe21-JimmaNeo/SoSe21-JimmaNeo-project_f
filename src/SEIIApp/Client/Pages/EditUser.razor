@@ -1,83 +1,71 @@
 ﻿@page "/edituser/{UserId:int}"
 @inject Services.UserBackendAccessService UserService
 @inject HttpClient Http
+@inject NavigationManager navManager
 @using SEIIApp.Shared;
-
-<h3>EditUser</h3>
-
 
 @if (userDTO != null)
 {
+    <div class="wrapper bg-white mt-sm-5">
+        <h4 class="pb-4 border-bottom">User Editing: @userDTO.Name</h4>
+        <font color="green">@msg</font>
+        <div class="py-2">
+            <div class="row py-2">
+                <div class="col-md-6 pt-md-0 pt-3">       
+                <div class="input-group">
+                                    <input type="text" style='width:100%' required  @bind-value="inputFirstName" @bind-value:event="oninput">
+                                    <span class="highlight"></span>
+                                    <span class="bar"></span>
+                                    <label class="hoverlabel">firstname</label>
+                                </div> </div>
+                <div class="col-md-6 pt-md-0 pt-3">
+                    <div class="input-group">
+                        <input type="text" style='width:100%' required @bind-value="inputLastName" @bind-value:event="oninput">
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label class="hoverlabel">lastname</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row py-2">
+                <select name="role" id="role" @bind-value="chosenOption" @bind-value:event="onchange">
+                    <option value=0 selected>@userDTO.Role</option>
+                    <option value=1>Undefined</option>
+                    <option value=2>Student</option>
+                    <option value=3>Teacher</option>
+                    <option value=4>Admin</option>
+                </select>
+            </div>
+        </div>
+        <div class="py-3 pb-4 border-bottom">
+            <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" @onclick="() => SaveRoleChangesOnUser(chosenOption)">Save Changes</button>
+            <button class="btn btn-lg btn-cancel btn-block btn-login text-uppercase font-weight-bold mb-2" style="color:white" @onclick="() => goBacktoUM()">Back</button>
+        </div>
 
-            <thead>
-                <tr border="1">
-                    <th>Name</th>
-                    <th>Firstname</th>
-                    <th>Lastname</th>
-                    <th>Role</th>
-
-                    <th></th>
-
-                </tr>
-            </thead>
-
-            <tbody>
-   
-                    <tr>
-                    <td>@userDTO.Name</td>
-                    <td>@userDTO.FirstName</td>
-                    <td>@userDTO.LastName</td>
-                    <td> @userDTO.Role</td>                    
-                    <td></td>                               
-                                            
-                    </tr>
-              
-                    <tr>
-                        
-                    </tr>
-
-            </tbody>
-
-            <tfoot>
-
-                <td></td>
-                <td><input type="text" id="firstName" size="10" maxlength="10" required @bind="inputFirstName"></td>
-                <td> <input type="text" id="lastName" size="10" maxlength="10" required @bind="inputLastName"></td>
-                    
-                    <td> <select name="role" id="role" @bind-value="chosenOption" @bind-value:event="onchange"> 
-                                <option value=0 selected>@userDTO.Role</option>
-                                <option value=1>Undefined</option>
-                                <option value=2>Student</option>
-                                <option value=3>Teacher</option>
-                                <option value=4>Admin</option>
-                            </select></td>
-  
-  
-                        <td>                             
-                            <font color="green">@msg</font>
-                        </td>                      
-                    
-                 
-                    <tr>
-                        <td> <button class="btn btn-primary" @onclick="() => SaveRoleChangesOnUser(chosenOption)">Save Changes</button>  </td>
-                        <td><NavLink class="nav-link" href="manageuser"><button type="button" class="btn btn-outline-primary">Back</button></NavLink> </td>
-                    </tr>
-                
-            </tfoot>
-
-}else {
-       <p>@userID</p>
-      <font color="red">Something went wrong ;(</font>
+        <div class="d-sm-flex align-items-center pt-3" id="delete">
+            <div>
+                <b>Delete this account</b>
+                <p>Details about your account and password</p>
+            </div>
+            <div class="ml-auto"> <button class="btn btn-lg btn-delete btn-block btn-login text-uppercase font-weight-bold mb-2" style="color:white">Delete</button> </div>
+        </div>
+    </div>
 }
+else
+{
+    <p>@userID</p>
+    <font color="red">Something went wrong ;(</font>
+}
+
 
 @code {
     [Parameter]
     public int userID { get; set; }
-    public string inputFirstName {get; set;}
-    public string inputLastName {get; set;}
+    public string inputFirstName { get; set; }
+    public string inputLastName { get; set; }
 
-    public int chosenOption {get; set;}
-    private string msg{get; set;}
+    public int chosenOption { get; set; }
+    private string msg { get; set; }
 
 
 
@@ -90,50 +78,55 @@
         userDTO = await UserService.GetUserById(userID);
     }
 
-    private void SaveRoleChangesOnUser(int chosenOption ){
+    private async void SaveRoleChangesOnUser(int chosenOption)
+    {
 
-         if(inputFirstName == null || inputLastName == null) {
+        if (inputFirstName == null || inputLastName == null)
+        {
 
             inputFirstName = userDTO.FirstName;
             inputLastName = userDTO.LastName;
-          }
-             userDTO.FirstName = inputFirstName;
-             userDTO.LastName = inputLastName;
+        }
+        userDTO.FirstName = inputFirstName;
+        userDTO.LastName = inputLastName;
 
 
-        switch(chosenOption) {
+        switch (chosenOption)
+        {
 
-             case 0: 
-                    userDTO.Role = this.userDTO.Role;
-                    break;
-            case 1: 
-                    userDTO.Role = Role.None;
-                    break;
-            case 2: 
-                    userDTO.Role = Role.Student;
-                    break;
-            case 3: 
-                    userDTO.Role = Role.Teacher;
-                    break;
+            case 0:
+                userDTO.Role = this.userDTO.Role;
+                break;
+            case 1:
+                userDTO.Role = Role.None;
+                break;
+            case 2:
+                userDTO.Role = Role.Student;
+                break;
+            case 3:
+                userDTO.Role = Role.Teacher;
+                break;
 
-            case 4: 
-                    userDTO.Role = Role.Admin;
-                    break;
+            case 4:
+                userDTO.Role = Role.Admin;
+                break;
 
-           
-            default:           
-                    msg ="No changes!";
-                    break;
 
-           
+            default:
+                msg = "No changes!";
+                break;
+
+
         }
 
-       var response = UserService.ChangeUser(userDTO);
+        var response = UserService.ChangeUser(userDTO);
 
 
-          if (response != null)
+        if (response != null)
         {
-            msg = "Change User was successful!";
+            msg = "Change User was successfully!";
+            await Task.Delay(2000);
+            navManager.NavigateTo("/manageuser");
         }
         else
         {
@@ -142,9 +135,13 @@
         }
     }
 
-
-
+    private void goBacktoUM()
+    {
+        navManager.NavigateTo("/manageuser");
     }
+
+
+}
 
 
 
