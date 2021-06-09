@@ -1,5 +1,9 @@
 ﻿@using SEIIApp.Shared;
-
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+</head>
 <h4>Videos</h4>
 
 <EditForm Model="VideoContentDTO">
@@ -28,26 +32,29 @@
         }
         else if (VideoContentDTO.Path.Contains("youtube.com/embed"))
         {
-            VideoContentDTO.Path = VideoContentDTO.Path.Substring("https://www.youtube.com/embed/".Length);         
+            VideoContentDTO.Path = VideoContentDTO.Path.Substring("https://www.youtube.com/embed/".Length);
         }
         <div class="iframecontainer">
-        <iframe class="responsive-iframe" src=@("https://www.youtube.com/embed/" + VideoContentDTO.Path) title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        <br />
+            <iframe class="responsive-iframe" src=@("https://www.youtube.com/embed/" + VideoContentDTO.Path) title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <br />
         </div>
     }
 
     @if (OnEditing)
     {
-        <label>Description</label>
-        <InputTextArea @bind-Value="VideoContentDTO.Description"></InputTextArea>
-    }
-    else
-    {
-        <p>@VideoContentDTO.Description</p>
-    }
+   
+            <div class="form-floating">
+                <textarea class="form-control" id="inputMessage" type="text" placeholder="Enter description here..." style="height: 10rem" @bind="VideoContentDTO.Description"></textarea>
+            </div>
 
-    <ValidationSummary />
-</EditForm>
+            }
+            else
+            {
+            <p>@VideoContentDTO.Description</p>
+            }
+
+            <ValidationSummary />
+    </EditForm>
 
 
 @code {
