@@ -37,7 +37,7 @@
     </div>
 *@
 
-<div class="container-fluid">
+<div class="container-fluid" @onkeydown="@Enter">
     <div class="row no-gutter">
         <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
         <div class="col-md-8 col-lg-6">
@@ -49,14 +49,14 @@
                             <p><font color="red">@msg</font></p><br />
                             <form>
                                 <div class="input-group">
-                                    <input type="text" style='width:100%' required @bind="inputName">
+                                    <input type="text" style='width:100%' required @bind-value="inputName" @bind-value:event="oninput">
                                     <span class="highlight"></span>
                                     <span class="bar"></span>
                                     <label class="hoverlabel">Username</label>
                                 </div>
 
                                 <div class="input-group">
-                                    <input type="password" style='width:100%' required @bind="inputPW">
+                                    <input type="password" style='width:100%' required @bind-value="inputPW" @bind-value:event="oninput">
                                     <span class="highlight"></span>
                                     <span class="bar"></span>
                                     <label class="hoverlabel">Password</label>
@@ -129,6 +129,18 @@
         {
             msg = "Oops.. Something went wrong. Please check your Username and Password!";
         }
+
+    }
+    
+   private async Task Enter(KeyboardEventArgs e)
+    {
+    if (e.Code == "Enter" || e.Code == "NumpadEnter")
+    {
+
+    await PerformLogin();
+
+    }
+    }
 
     }
 
