@@ -105,14 +105,15 @@
         }
 
     }
-    
-  private async Task Enter(KeyboardEventArgs e)
-    {
-    if (e.Code == "Enter" || e.Code == "NumpadEnter")
-    {
 
-    await PerformLogin();
+    private async Task Enter(KeyboardEventArgs e)
+    {
+        if (e.Code == "Enter" || e.Code == "NumpadEnter")
+        {
 
+            await PerformLogin();
+
+        }
     }
 
 }
