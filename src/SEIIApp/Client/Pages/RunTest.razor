@@ -15,10 +15,11 @@
             <ul class="list-group list-group-flush">
                 @foreach (var video in TestDto.Videos)
                 {
-                    <li class="text-center list-group-item">
-                        <label>@(video.Description)</label><br />
-                        <iframe width="560" height="315" src="@video.Path" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    </li>
+                <li class="text-center list-group-item">
+                    @*<label>@(video.Description)</label><br />
+                    <iframe width="560" height="315" src="@video.Path" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>*@
+                    <VideoComponent VideoContentDTO="video"></VideoComponent>
+                </li>
                 }
 
                 @foreach (var question in TestDto.Questions)

@@ -11,32 +11,6 @@
     <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
 </head>
 
-@*
-    <div class="card" style="width:25rem" border="#FFFFFF">
-        <div class="card-body">
-
-            <p><font color="red">@msg</font></p>
-            <label for="uname">Username:</label><br>
-            <input type="text" id="uname" size="30" name="uname" @bind="inputName"><br><br>
-
-            <label for="pw">Password:</label><br>
-            <input type="password" id="pw" size="30" maxlength="20" required @bind="inputPW"><br><br>
-
-
-            <div style="float: left;">
-                <button type="button" class="btn btn-outline-primary" @onclick="PerformLogin">Login</button>
-                <NavLink href="/"><button type="button" class="btn btn-primary">Cancel</button></NavLink><br>
-
-
-                <div>
-                    <NavLink href="/register">You don't have an account yet?<br> Register now here!</NavLink> <br><br>
-                </div>
-            </div>
-        </div>
-
-    </div>
-*@
-
 <div class="container-fluid" @onkeydown="@Enter">
     <div class="row no-gutter">
         <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
@@ -49,7 +23,7 @@
                             <p><font color="red">@msg</font></p><br />
                             <form>
                                 <div class="input-group">
-                                    <input type="text" style='width:100%' required @bind-value="inputName" @bind-value:event="oninput">
+                                    <input type="text" style='width:100%' required  @bind-value="inputName" @bind-value:event="oninput">
                                     <span class="highlight"></span>
                                     <span class="bar"></span>
                                     <label class="hoverlabel">Username</label>
@@ -131,19 +105,16 @@
         }
 
     }
-    
-   private async Task Enter(KeyboardEventArgs e)
+
+    private async Task Enter(KeyboardEventArgs e)
     {
-    if (e.Code == "Enter" || e.Code == "NumpadEnter")
-    {
+        if (e.Code == "Enter" || e.Code == "NumpadEnter")
+        {
 
-    await PerformLogin();
+            await PerformLogin();
 
+        }
     }
-    }
-
-    }
-
 
 }
 
