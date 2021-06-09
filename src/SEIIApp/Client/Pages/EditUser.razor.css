@@ -86,14 +86,15 @@ select {
 
 
 .btn-delete {
-    background-color: #dc143c
+    background-color: #dc143c;
+
 }
 
 .btn-primary {
-    background-color: #0779e4
+    background-color: #0779e4;
 }
 .btn-cancel {
-    background-color: #ff4500
+    background-color: #ff4500;
 }
 .danger {
     background-color: #fff;
@@ -120,6 +121,27 @@ select {
     border-radius: 2rem;
 }
 
+.btn-delete_frame {
+    font-size: 0.9rem;
+    letter-spacing: 0.05rem;
+    padding: 0.75rem 1rem;
+    border-radius: 2rem;
+    border-radius: 30px;
+    background-color: #dc143c;
+    border: 2px solid;
+    color: #ffffff;
+}
+
+.btn-cancel_frame {
+    font-size: 0.9rem;
+    letter-spacing: 0.05rem;
+    padding: 0.75rem 1rem;
+    border-radius: 2rem;
+    border-radius: 30px;
+    background-color: #ff4500;
+    border: 2px solid;
+    color: #ffffff;
+}
 .input-group {
     position: relative;
     margin: 40px 0 20px;
@@ -162,7 +184,7 @@ input:valid ~ label {
 .bar {
     position: relative;
     display: block;
-    width: 100%;
+    width: 96%;
 }
 
     .bar:before,
@@ -253,4 +275,7 @@ input:focus ~ .highlight {
 .delete:hover {
     background: white;
     color: #dc143c;
+}
+.rightMargin {
+    margin-right: 10px;
 }
