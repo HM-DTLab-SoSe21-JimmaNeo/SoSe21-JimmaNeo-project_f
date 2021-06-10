@@ -6,11 +6,91 @@
 @using SEIIApp.Shared;
 @inject UserServicee MyUserService
 
-<h3>WelcomeTeacher</h3>
+
 @{
     if (MyUserService.User != null && MyUserService.User.Role == Role.Teacher)
     {
+        <h1>Welcome Teacher @MyUserService.User.Name!</h1>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
 
+        <div>
+            <table class="tableaverage">
+                <tr>
+                    <th valign=top width="200">Lecture</th>
+                    <th valign=top width="200">Created Test</th>
+                    <th valign=top width="200">Date</th>
+                    <th valign=top width="200">Average points(%)</th>
+                </tr>
+                <tr>
+                    <td>Lecture1</td>
+                    <td>Test1</td>
+                    <td>09-04-2021</td>
+                    <td>78</td>
+                </tr>
+                <tr>
+                    <td>Lecture1</td>
+                    <td>Test2</td>
+                    <td>09-05-2021</td>
+                    <td>60</td>
+                </tr>
+                <tr>
+                    <td>Lecture5</td>
+                    <td>Test7</td>
+                    <td>09-03-2021</td>
+                    <td>40</td>
+                </tr>
+                <tr>
+                    <td>Lecture4</td>
+                    <td>Test4</td>
+                    <td>09-02-2021</td>
+                    <td>40</td>
+                </tr>
+            </table>
+
+            <br>
+            <br>
+            <br>
+            <table class="tablenews">
+                <h1>News</h1>
+                <tr>
+                    <th></th>
+                    <th width="200">Date</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td><img src="\Images\WelcomeStudent\4.jpg" width="200" /></td>
+                    <td>09-06-2021</td>
+                    <td>
+                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,<br>
+                        sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem<br> ipsum
+                        dolor sit amet.
+                    </td>
+                </tr>
+                <tr>
+                    <td><img src="\Images\WelcomeStudent\krankenhaus1.jpg" width="200" /></td>
+                    <td>06-06-2021</td>
+                    <td>
+                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,<br>
+                        sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem<br> ipsum
+                        dolor sit amet.
+                    </td>
+                </tr>
+                <tr>
+                    <td><img src="\Images\WelcomeStudent\krankenhaus2.jpg" width="200" /></td>
+                    <td>04-06-2021</td>
+                    <td>
+                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,<br>
+                        sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem<br> ipsum
+                        dolor sit amet.
+                    </td>
+                </tr>
+
+            </table>
+        </div>
 
     }
 
@@ -24,7 +104,6 @@
     public int[] Roles { get; set; }
     [Parameter]
     public int userID { get; set; }
-
 
 
 }
