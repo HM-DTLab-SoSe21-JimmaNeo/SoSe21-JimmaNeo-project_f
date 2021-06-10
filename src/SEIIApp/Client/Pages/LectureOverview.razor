@@ -1,6 +1,7 @@
 ﻿@page "/lectureoverview"
 @inject Services.LectureBackendAccessService LectureService
 @inject NavigationManager NavigationManager
+@inject UserServicee UserService
 
 <div class="container">
 
@@ -9,42 +10,48 @@
 
         <div class="px-5">
             @*
-            <EditForm Model="@searchValue">
-                <div class="searchcostum input-group pt-2">
+                        <EditForm Model="@searchValue">
+                            <div class="searchcostum input-group pt-2">
 
 
-                     @if (isFiltered == false)
-                {
-                    <div class="px-auto">
-                        <InputText type="search" class="form-control rounded" placeholder="Search by name"
-                                   aria-label="Name of the Content" aria-describedby="search-addon" @bind-Value="@searchValue" />
+                                 @if (isFiltered == false)
+                            {
+                                <div class="px-auto">
+                                    <InputText type="search" class="form-control rounded" placeholder="Search by name"
+                                               aria-label="Name of the Content" aria-describedby="search-addon" @bind-Value="@searchValue" />
 
 
-                    </div>
-                    <button class="btn btn-outline-primary btn-sm" @onclick="FilterContentByName">Search</button>
+                                </div>
+                                <button class="btn btn-outline-primary btn-sm" @onclick="FilterContentByName">Search</button>
 
-                }
-                else
-                {
-                    <div class="text-center pb-2">
-                        <button class="btn btn-outline-primary" @onclick="DeleteFilter">Return</button>
-                    </div>
-                }
+                            }
+                            else
+                            {
+                                <div class="text-center pb-2">
+                                    <button class="btn btn-outline-primary" @onclick="DeleteFilter">Return</button>
+                                </div>
+                            }
 
-            </div>
-        </EditForm>
-                *@
+                        </div>
+                    </EditForm>
+
                 @if (isFiltered == false)
                 {
                     <div class="text-center py-2">
                         <button class="btn btn-outline-success" @onclick="AddLecture">Add</button>
                     </div>}
-            </div>
+            *@
+        </div>
     </div>
 
-    @{ if (Lectures != null)
-        
+    @if (Lectures != null)
+    {
+
+        if (UserService.User != null && UserService.User.Role == Role.Teacher)
         {
+            <div class="text-center py-2">
+                <button class="btn btn-outline-success" @onclick="AddLecture">Add</button>
+            </div>
             <ul class="list-group list-group-flush">
 
                 @foreach (var content in Lectures)
@@ -57,10 +64,30 @@
                 }
             </ul>
         }
+        else if (UserService.User != null && UserService.User.Role == Role.Student)
+        {
+            <ul class="list-group list-group-flush">
+
+                @foreach (var content in Lectures)
+                {
+                    <li class="text-center list-group-item">
+                        @(content.DateOfCreation.ToShortDateString()) <b>@(content.Topic)</b>
+
+                        <button class="btn btn-outline-dark btn-sm" @onclick="() => StartLecture(content.LectureId)">Start</button>
+                    </li>
+                }
+            </ul>
+
+        }
         else
         {
-            <h5 class="text-center">Loading ...  or no content found.</h5>
+            <label>Please login to use this page.</label>
         }
+
+    }
+    else
+    {
+        <h5 class="text-center">Loading ...  or no content found.</h5>
     }
 </div>
 
@@ -93,10 +120,10 @@
     {
         Lectures.Remove(lecture);
 
-       /* if (copyOfTest != null)
-        {
-            copyOfTest.Remove(test);
-        }*/
+        /* if (copyOfTest != null)
+         {
+             copyOfTest.Remove(test);
+         }*/
 
         await LectureService.DeleteLecture(lecture.LectureId);
 
