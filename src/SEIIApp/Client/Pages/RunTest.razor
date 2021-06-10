@@ -15,11 +15,9 @@
             <ul class="list-group list-group-flush">
                 @foreach (var video in TestDto.Videos)
                 {
-                <li class="text-center list-group-item">
-                    @*<label>@(video.Description)</label><br />
-                    <iframe width="560" height="315" src="@video.Path" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>*@
-                    <VideoComponent VideoContentDTO="video"></VideoComponent>
-                </li>
+                    <li class="text-center list-group-item">
+                        <VideoComponent VideoContentDTO="video"></VideoComponent>
+                    </li>
                 }
 
                 @foreach (var question in TestDto.Questions)
@@ -28,9 +26,18 @@
                     {
                         <hr />
                         <li class="text-center list-group-item">
-                            <br />
-                            <h3> @(question.QuestionText) </h3>
-                        </li>
+                <br />
+                <h3> @(question.QuestionText) </h3>
+            </li>
+                        if (question.Pictures.Any())
+                        {
+                            foreach (var picture in question.Pictures)
+                            {
+                                <li class="text-center list-group-item">
+                                    <PictureComponent PictureContentDTO="picture"></PictureComponent>
+                                </li>
+                            }
+                        }
                         if (question.Answers.Any())
                         {
                             foreach (var answer in question.Answers)
@@ -76,6 +83,7 @@
         await base.OnParametersSetAsync();
         TestDto = returnedTest;
         SEIIApp.Client.Components.VideoComponent.OnEditing = false;
+        SEIIApp.Client.Components.PictureComponent.OnEditing = false;
     }
 
     private async void OnSubmitTest()
@@ -94,8 +102,10 @@
     private int CountMaxPoints(List<QuestionDTO> questions)
     {
         int maxPoints = 0;
-        foreach(var question in questions){
-            foreach (var answer in question.Answers) {
+        foreach (var question in questions)
+        {
+            foreach (var answer in question.Answers)
+            {
                 if (answer.IsCorrect)
                 {
                     maxPoints++;
@@ -118,11 +128,12 @@
                     {
                         reachedPoints++;
                     }
-                    else if(!answer.IsCorrect && reachedPoints > 0)
+                    else if (!answer.IsCorrect && reachedPoints > 0)
                     {
                         reachedPoints--;
                     }
-                }else if(answer.IsCorrect && !answer.IsClicked && reachedPoints > 0)
+                }
+                else if (answer.IsCorrect && !answer.IsClicked && reachedPoints > 0)
                 {
                     reachedPoints--;
                 }
@@ -131,4 +142,3 @@
         return reachedPoints;
     }
 }
-
