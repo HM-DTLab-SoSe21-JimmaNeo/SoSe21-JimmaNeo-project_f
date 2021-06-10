@@ -57,16 +57,12 @@
                                     {
                                         <ul class="flex-column">
                                             <li class="nav-item">
-                                                <NavLink class="expand-menu" href="/welcomestudent">
-                                                    <span class="oi oi-minus" aria-hidden="true"></span> Run Test
+                                                <NavLink class="expand-menu" href="/lectureoverview">
+                                                    <span class="oi oi-minus" aria-hidden="true"></span> Lectures
                                                 </NavLink>
-                                                <NavLink class="expand-menu" href="/welcomestudent">
-                                                    <span class="oi oi-minus" aria-hidden="true"></span> Run Lecture
+                                                <NavLink class="expand-menu" href="/testoverview">
+                                                    <span class="oi oi-minus" aria-hidden="true"></span> Tests
                                                 </NavLink>
-                                                <NavLink class="expand-menu" href="/resultstest/">
-                                                    <span class="oi oi-minus" aria-hidden="true"></span> Test results
-                                                </NavLink>
-
                                             </li>
                                         </ul>
 
@@ -84,28 +80,28 @@
                         case 2: // Teacher
                             {
 
-            <li class="nav-item px-3">
-                <NavLink class="nav-link" href="WelcomeTeacher" @onclick="()=>expandSubMenu= !expandSubMenu">
-                    <span class="oi oi-plus" aria-hidden="true"></span> Teacher
-                </NavLink>
+                                <li class="nav-item px-3">
+                                    <NavLink class="nav-link" href="WelcomeTeacher" @onclick="()=>expandSubMenu= !expandSubMenu">
+                                        <span class="oi oi-plus" aria-hidden="true"></span> Teacher
+                                    </NavLink>
 
-                @if (expandSubMenu)
-                {
+                                    @if (expandSubMenu)
+                                    {
 
-                    
-                    <ul class="flex-column">
-                        <li class="nav-item">
-                            <NavLink class="expand-menu" href="/lectureoverview">
-                                <span class="oi oi-minus" aria-hidden="true"></span> Lectures
-                            </NavLink>
-                            <NavLink class="expand-menu" href="/testoverview">
-                                <span class="oi oi-minus" aria-hidden="true"></span> Tests
-                            </NavLink>
-                        </li>
-                    </ul>
 
-                }
-            </li>
+                                        <ul class="flex-column">
+                                            <li class="nav-item">
+                                                <NavLink class="expand-menu" href="/lectureoverview">
+                                                    <span class="oi oi-minus" aria-hidden="true"></span> Lectures
+                                                </NavLink>
+                                                <NavLink class="expand-menu" href="/testoverview">
+                                                    <span class="oi oi-minus" aria-hidden="true"></span> Tests
+                                                </NavLink>
+                                            </li>
+                                        </ul>
+
+                                    }
+                                </li>
 
                                 break;
                             }
@@ -137,6 +133,12 @@
                     </li>
 
                 }
+
+                <li class="nav-item px-3">
+                    <NavLink class="nav-link" href="contact" Match="NavLinkMatch.All">
+                        <span class="oi oi-heart" aria-hidden="true"></span> Contact us
+                    </NavLink>
+                </li>
 
                 <li class="nav-item px-3">
                     <NavLink class="nav-link" href="faq" Match="NavLinkMatch.All">
@@ -183,7 +185,7 @@
 
     private void Logout()
     {
-        collapseNavMenu = !collapseNavMenu;
+       
         MyUserService.User = null;
         NavigationManager.NavigateTo("/login");
 
