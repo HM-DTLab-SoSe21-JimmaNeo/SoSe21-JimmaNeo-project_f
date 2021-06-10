@@ -16,7 +16,7 @@
             @if (LectureDto != null)
             {
                // if (UserService.User == null) Console.WriteLine("User ist null"); // wenn student angemeldet ist wird er null
-                if (UserService.User != null && UserService.User.Role == Role.Teacher || UserService.User.Role == Role.Admin)
+                if (UserService.User != null && UserService.User.Role == Role.Teacher)
                 {
                     VideoComponent.OnEditing = true;
                     PictureComponent.OnEditing = true;
