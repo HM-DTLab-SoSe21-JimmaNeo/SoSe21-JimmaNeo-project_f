@@ -1,6 +1,7 @@
 ﻿@page "/runtest/{TestID:int}"
 
-@inject Services.TestsDefinitionBackendAccessService TestDefinitionService
+@inject Services.TestsDefinitionBackendAccessService TestService
+@inject Services.CompletedTestBackendAccessService CompletedTestService
 @inject NavigationManager NavigationManager
 
 
@@ -79,7 +80,7 @@
     protected override async Task OnParametersSetAsync()
     {
 
-        var returnedTest = await TestDefinitionService.GetTestById(TestID);
+        var returnedTest = await TestService.GetTestById(TestID);
         await base.OnParametersSetAsync();
         TestDto = returnedTest;
         SEIIApp.Client.Components.VideoComponent.OnEditing = false;
@@ -91,7 +92,7 @@
         TestDto.MaxPoints = CountMaxPoints(TestDto.Questions);
         TestDto.ReachedPoints = CountReachedPoints(TestDto.Questions);
 
-        var answer = await TestDefinitionService.AddOrUpdateTest(TestDto);
+        var answer = await TestService.AddOrUpdateTest(TestDto);
         if (answer != null)
         {
             NavigationManager.NavigateTo("/resultstest/");
@@ -140,5 +141,15 @@
             }
         }
         return reachedPoints;
+    }
+
+    private CompletedTestDTO CreateCompletedTest(TestDTO test)
+    {
+        CompletedTestDTO completedTest = new CompletedTestDTO();
+        completedTest.SolvedTest = test;
+        completedTest.MaxPoints = test.MaxPoints;
+        completedTest.ReachedPoints = test.ReachedPoints;
+
+        return completedTest;
     }
 }

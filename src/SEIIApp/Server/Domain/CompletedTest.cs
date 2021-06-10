@@ -10,16 +10,18 @@ using System.Threading.Tasks;
 
 namespace SEIIApp.Server.Domain
 {
-    public class CompletedTest
-    {
-        [Key]
-        public int CtId { get; set; }
+  public class CompletedTest
+  {
+    [Key]
+    public int CtId { get; set; }
 
-        public Test SolvedTest { get; set; }
+    public Test SolvedTest { get; set; }
 
-        public User Student { get; set; }
+    public User Student { get; set; }
 
-        public int ReachedPoints { get; set; }
+    public int ReachedPoints { get; set; }
 
-    }
+    public int MaxPoints { get; set; }
+
+  }
 }
