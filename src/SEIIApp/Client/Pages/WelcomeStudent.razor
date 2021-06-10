@@ -1,4 +1,5 @@
 ﻿@page "/welcomestudent"
+@page "/welcomestudent/{UserId:int}" 
 @inject NavigationManager NavigationManager
 @using static SEIIApp.Client.Pages.Login;
 @using SEIIApp.Shared;
@@ -8,21 +9,22 @@
 <h3>WelcomeStudent</h3>
 @{
 
-if (MyUserService.User != null && MyUserService.User.Role == Role.Student)
+    if (MyUserService.User != null && MyUserService.User.Role == Role.Student)
     {
 
 
- }
+    }
 
     else
     {
         <p>You are not allowed to see this!</p>
     }
-    }
+}
 
 @code {
-    public int[] Roles{get; set;}
-
+    public int[] Roles { get; set; }
+    [Parameter]
+    public int userID { get; set; }
 
 
 }

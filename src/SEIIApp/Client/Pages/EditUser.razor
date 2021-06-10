@@ -11,19 +11,23 @@
         <font color="green">@msg</font>
         <div class="py-2">
             <div class="row py-2">
-                <div class="col-md-6 pt-md-0 pt-3">       
-                <div class="input-group">
-                                    <input class ="rightMargin"type="text" style='width:100%' required  @bind-value="inputFirstName" @bind-value:event="oninput">
-                                    <span class="highlight"></span>
-                                    <span class="bar"></span>
-                                    <label class="hoverlabel">firstname</label>
-                                </div> </div>
                 <div class="col-md-6 pt-md-0 pt-3">
+                    <label>current firstname: @userDTO.FirstName</label>
                     <div class="input-group">
-                        <input class ="rightMargin" type="text" style='width:100%' required @bind-value="inputLastName" @bind-value:event="oninput">
+
+                        <input class="rightMargin" type="text" style='width:100%' required @bind-value="inputFirstName" @bind-value:event="oninput">
                         <span class="highlight"></span>
                         <span class="bar"></span>
-                        <label class="hoverlabel">lastname</label>
+                        <label class="hoverlabel">new firstname</label>
+                    </div>
+                </div>
+                <div class="col-md-6 pt-md-0 pt-3">
+                    <label>current lastname: @userDTO.LastName</label>
+                    <div class="input-group">
+                        <input class="rightMargin" type="text" style='width:100%' required @bind-value="inputLastName" @bind-value:event="oninput">
+                        <span class="highlight"></span>
+                        <span class="bar"></span>
+                        <label class="hoverlabel">new lastname</label>
                     </div>
                 </div>
             </div>
