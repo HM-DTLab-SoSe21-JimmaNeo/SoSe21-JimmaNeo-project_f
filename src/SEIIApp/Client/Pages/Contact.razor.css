@@ -462,11 +462,6 @@ textarea {
     border-color: #009a10;
 }
 
-    .btn-primary:hover {
-        color: #fff;
-        background-color: #004E08;
-        border-color: #c34e2e;
-    }
 
     .btn-check:focus + .btn-primary, .btn-primary:focus {
         color: #fff;
@@ -485,11 +480,7 @@ textarea {
             box-shadow: 0 0 0 0.25rem rgba(246, 122, 88, 0.5);
         }
 
-    .btn-primary:disabled, .btn-primary.disabled {
-        color: #fff;
-        background-color: #f4623a;
-        border-color: #f4623a;
-    }
+
 
 .justify-content-center {
     justify-content: center !important;
@@ -518,4 +509,17 @@ textarea {
 
 .fs-2 {
     font-size: calc(1.325rem + 0.9vw) !important;
+}
+.submit_Btn {
+    border-radius: 30px;
+    font-size: 18px;
+    font-weight: bold;
+    border: 2px solid;
+    color: #ffffff;
+    height: 50px;
+}
+
+.submit-form:hover {
+    background: #ffffff;
+    color: #009a10;
 }
