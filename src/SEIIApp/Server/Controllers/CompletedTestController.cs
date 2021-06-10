@@ -68,7 +68,7 @@ namespace SEIIApp.Server.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<CompletedTestDTO> AddTest([FromBody] CompletedTestDTO completedTest)    
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && completedTest.CtId == 0)
             {
                 var mappedTest = Mapper.Map<CompletedTest>(completedTest);
 
