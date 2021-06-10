@@ -1,0 +1,281 @@
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: aliceblue
+}
+
+.wrapper {
+    padding: 30px 50px;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    margin: 10px auto;
+    max-width: 600px
+}
+
+h4 {
+    letter-spacing: -1px;
+    font-weight: 400
+}
+
+.img {
+    width: 70px;
+    height: 70px;
+    border-radius: 6px;
+    object-fit: cover
+}
+
+#img-section p,
+#deactivate p {
+    font-size: 12px;
+    color: #777;
+    margin-bottom: 10px;
+    text-align: justify
+}
+
+#img-section b,
+#img-section button,
+#deactivate b {
+    font-size: 14px
+}
+
+label {
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 500;
+    color: #777;
+    padding-left: 3px
+}
+
+.form-control {
+    border-radius: 10px
+}
+
+input[placeholder] {
+    font-weight: 500
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border: 1.5px solid #0779e4
+}
+
+select {
+    display: block;
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    height: 40px;
+    padding: 5px 10px
+}
+
+    select:focus {
+        outline: none
+    }
+
+.button {
+    background-color: #fff;
+    color: #0779e4
+}
+
+
+.btn-delete {
+    background-color: #dc143c;
+
+}
+
+.btn-primary {
+    background-color: #0779e4;
+}
+.btn-cancel {
+    background-color: #ff4500;
+}
+.danger {
+    background-color: #fff;
+    color: #e20404;
+    border: 1px solid #ddd
+}
+
+ 
+
+@media(max-width:576px) {
+    .wrapper {
+        padding: 25px 20px
+    }
+
+    #deactivate {
+        line-height: 18px
+    }
+}
+
+.btn-login {
+    font-size: 0.9rem;
+    letter-spacing: 0.05rem;
+    padding: 0.75rem 1rem;
+    border-radius: 2rem;
+}
+
+.btn-delete_frame {
+    font-size: 0.9rem;
+    letter-spacing: 0.05rem;
+    padding: 0.75rem 1rem;
+    border-radius: 2rem;
+    border-radius: 30px;
+    background-color: #dc143c;
+    border: 2px solid;
+    color: #ffffff;
+}
+
+.btn-cancel_frame {
+    font-size: 0.9rem;
+    letter-spacing: 0.05rem;
+    padding: 0.75rem 1rem;
+    border-radius: 2rem;
+    border-radius: 30px;
+    background-color: #ff4500;
+    border: 2px solid;
+    color: #ffffff;
+}
+.input-group {
+    position: relative;
+    margin: 40px 0 20px;
+    width: auto;
+}
+
+input {
+    font-size: 18px;
+    padding: 10px 10px 10px 5px;
+    display: block;
+    width: 315px;
+    border: none;
+    border-bottom: 1px solid #757575;
+}
+
+    input:focus {
+        outline: none;
+    }
+
+.hoverlabel {
+    color: #999;
+    font-size: 18px;
+    font-weight: normal;
+    position: absolute;
+    pointer-events: none;
+    left: 5px;
+    top: 10px;
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+}
+
+input:focus ~ label,
+input:valid ~ label {
+    top: -20px;
+    font-size: 14px;
+    color: #4285f4;
+}
+
+.bar {
+    position: relative;
+    display: block;
+    width: 96%;
+}
+
+    .bar:before,
+    .bar:after {
+        content: '';
+        height: 2px;
+        width: 0;
+        bottom: 1px;
+        position: absolute;
+        background: #4285f4;
+        transition: 0.2s ease all;
+        -moz-transition: 0.2s ease all;
+        -webkit-transition: 0.2s ease all;
+    }
+
+    .bar:before {
+        left: 50%;
+    }
+
+    .bar:after {
+        right: 50%;
+    }
+
+input:focus ~ .bar:before,
+input:focus ~ .bar:after {
+    width: 50%;
+}
+
+.highlight {
+    position: absolute;
+    height: 60%;
+    width: 100px;
+    top: 25%;
+    left: 0;
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+input:focus ~ .highlight {
+    -webkit-animation: inputHighlighter 0.3s ease;
+    -moz-animation: inputHighlighter 0.3s ease;
+    animation: inputHighlighter 0.3s ease;
+}
+
+/* animations */
+@-webkit-keyframes inputHighlighter {
+    from {
+        background: #4285f4;
+    }
+
+    to {
+        width: 0;
+        background: transparent;
+    }
+}
+
+@-moz-keyframes inputHighlighter {
+    from {
+        background: #009a10;
+    }
+
+    to {
+        width: 0;
+        background: transparent;
+    }
+}
+
+@keyframes inputHighlighter {
+    from {
+        background: #4285f4;
+    }
+
+    to {
+        width: 0;
+        background: transparent;
+    }
+}
+.save:hover {
+    background: white;
+    color: #0779e4;
+}
+
+.cancel:hover {
+    background: white;
+    color: #ff4500;
+}
+
+.delete:hover {
+    background: white;
+    color: #dc143c;
+}
+.rightMargin {
+    margin-right: 10px;
+}

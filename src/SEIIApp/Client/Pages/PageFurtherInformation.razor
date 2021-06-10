@@ -14,7 +14,7 @@
     @if (TestDto.FurtherLinks.Any())
     {
         
-        <h4 >Links of websites about @(TestDto.Topic)</h4>
+        <h4 class="text-center">Links of websites about @(TestDto.Topic)</h4>
         @foreach (var link in TestDto.FurtherLinks)
         {
             <li class="text-center list-group-item">
@@ -32,8 +32,7 @@
         @foreach (var video in TestDto.VideosFurtherInformation)
         {
             <li class="text-center list-group-item">
-                <label>@(video.Description)</label><br />
-               <iframe width="560" height="315" src="@video.Path" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <VideoComponent VideoContentDTO="video"></VideoComponent>
             </li>
         }
     }
@@ -43,8 +42,7 @@
         @foreach (var picture in TestDto.Content)
         {
             <li class="text-center list-group-item">
-                <label>@(picture.Description)</label><br />
-                <img width="560" height="315" src="@picture.Path" class="img-thumbnail" allowfullscreen> <br />
+                <PictureComponent PictureContentDTO="picture"></PictureComponent>
             </li>
         }
 
@@ -70,6 +68,8 @@
         var existingQuiz = await TestDefinitionService.GetTestById(TestID);
         await base.OnParametersSetAsync();
         this.TestDto = existingQuiz;
+        SEIIApp.Client.Components.VideoComponent.OnEditing = false;
+        SEIIApp.Client.Components.PictureComponent.OnEditing = false;
     }
 
     private void ReturnBackToTestOverview()

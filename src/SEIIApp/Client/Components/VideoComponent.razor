@@ -1,5 +1,9 @@
 ﻿@using SEIIApp.Shared;
-
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+</head>
 <h4>Videos</h4>
 
 <EditForm Model="VideoContentDTO">
@@ -7,53 +11,61 @@
 
     @if (OnEditing)
     {
-        <label>Video-Link</label>
-        <InputText @bind-Value="VideoContentDTO.VideoLink"></InputText>
-        <button class="btn btn-light btn-sm my-3" @onclick="UploadVideo">Upload Video</button>
-        <ValidationMessage For="@(() => VideoContentDTO.VideoLink)"/>
-        <br />
+
+        <div class="input-group">
+            <input type="text" style='width:100%' required @bind-value="VideoContentDTO.Path" @bind-value:event="oninput">
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label class="hoverlabel">Video-Link</label>
+        </div>
     }
 
-    @if (VideoContentDTO.Path != null && VideoContentDTO.Path.Length > "https://www.youtube.com/embed/".Length)
+    @if (VideoContentDTO.Path != null)
     {
-
-        <iframe width="560" height="315" src="@VideoContentDTO.Path" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        <br />
+        @if (VideoContentDTO.Path.Contains("youtube.com/watch"))
+        {
+            VideoContentDTO.Path = VideoContentDTO.Path.Substring(VideoContentDTO.Path.IndexOf('=') + 1);
+        }
+        else if (VideoContentDTO.Path.Contains("https://youtu.be"))
+        {
+            VideoContentDTO.Path = VideoContentDTO.Path.Substring("https://youtu.be/".Length);
+        }
+        else if (VideoContentDTO.Path.Contains("youtube.com/embed"))
+        {
+            VideoContentDTO.Path = VideoContentDTO.Path.Substring("https://www.youtube.com/embed/".Length);
+        }
+        <div class="iframecontainer">
+            <iframe class="responsive-iframe" src=@("https://www.youtube.com/embed/" + VideoContentDTO.Path) title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <br />
+        </div>
     }
 
     @if (OnEditing)
     {
-        <label>Description</label>
-        <InputText @bind-Value="VideoContentDTO.Description"></InputText>
-    }
-    else
-    {
-        <p>@VideoContentDTO.Description</p>
-        <p> not editing</p>
-    }
+   
+            <div class="form-floating">
+                <textarea class="form-control" id="inputMessage" type="text" placeholder="Enter description here..." style="height: 10rem" @bind="VideoContentDTO.Description"></textarea>
+            </div>
 
-    <ValidationSummary />
-</EditForm>
+            }
+            else
+            {
+            <p>@VideoContentDTO.Description</p>
+            }
+
+            <ValidationSummary />
+    </EditForm>
 
 
 @code {
     [Parameter]
     public VideoContentDTO VideoContentDTO { get; set; }
 
-    public static bool OnEditing = false; // soll false sein
+    public static bool OnEditing = false; 
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
     }
 
-
-   private void UploadVideo()
-    {
-        if(!String.IsNullOrEmpty(VideoContentDTO.VideoLink) && VideoContentDTO.VideoLink.StartsWith("https://www.youtube."))
-        {
-            string[] getVideoIdentifier = VideoContentDTO.VideoLink.Split('=');
-            VideoContentDTO.Path = "https://www.youtube.com/embed/" + getVideoIdentifier[1];
-        }
-    }
 }

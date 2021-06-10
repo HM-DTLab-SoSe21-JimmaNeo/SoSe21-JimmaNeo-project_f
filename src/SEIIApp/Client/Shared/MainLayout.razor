@@ -6,30 +6,195 @@
 
 <div class="page">
     <div class="sidebar">
-        <NavMenu />
-    </div>
 
-    <div class="main">
-        <div class="top-row px-4">
+        <div class="top-row pl-4 navbar navbar-dark">
+            <a class="navbar-brand" href="">
+                JimmaNeo
+                <img src="/Images/logo_46px.png" alt="JN" class="logo-image" />
+            </a>
+            <button class="navbar-toggler" @onclick="ToggleNavMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
 
-            @if (MyUserService.User == null){
-           <NavLink href="/login"> <button type="button" class="btn btn-outline-primary">Login</button></NavLink>
+
+        <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+            <ul class="nav flex-column">
+                <li class="nav-item px-3">
+                    <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                        <span class="oi oi-home" aria-hidden="true"></span> Home
+                    </NavLink>
+                </li>
+
+                <li class="nav-item px-3">
+                    <NavLink class="nav-link" href="news">
+                        <span class="oi oi-globe" aria-hidden="true"></span> News
+                    </NavLink>
+                </li>
+
+
+
+                @if (MyUserService.User != null)
+                {
+
+                    <li class="nav-item px-3">
+                        <NavLink class="nav-link" @onclick="() => Logout()" Match="NavLinkMatch.All">
+                            <span class="oi oi-lock-unlocked" aria-hidden="true"></span> Logout
+                        </NavLink>
+                    </li>
+
+                    @switch ((int)MyUserService.User.Role)
+                    {
+
+
+                        case 1: // student
+                            {
+                                <li class="nav-item px-3">
+                                    <NavLink class="nav-link" href="WelcomeStudent" @onclick="()=>expandSubMenu= !expandSubMenu">
+                                        <span class="oi oi-plus" aria-hidden="true"></span> Student
+                                    </NavLink>
+                                    @if (expandSubMenu)
+                                    {
+                                        <ul class="flex-column">
+                                            <li class="nav-item">
+                                                <NavLink class="expand-menu" href="/lectureoverview">
+                                                    <span class="oi oi-minus" aria-hidden="true"></span> Lectures
+                                                </NavLink>
+                                                <NavLink class="expand-menu" href="/testoverview">
+                                                    <span class="oi oi-minus" aria-hidden="true"></span> Tests
+                                                </NavLink>
+                                            </li>
+                                        </ul>
+
+                                    }
+
+                                </li>
+
+
+
+                                break;
+
+
+
+                            }
+                        case 2: // Teacher
+                            {
+
+                                <li class="nav-item px-3">
+                                    <NavLink class="nav-link" href="WelcomeTeacher" @onclick="()=>expandSubMenu= !expandSubMenu">
+                                        <span class="oi oi-plus" aria-hidden="true"></span> Teacher
+                                    </NavLink>
+
+                                    @if (expandSubMenu)
+                                    {
+
+
+                                        <ul class="flex-column">
+                                            <li class="nav-item">
+                                                <NavLink class="expand-menu" href="/lectureoverview">
+                                                    <span class="oi oi-minus" aria-hidden="true"></span> Lectures
+                                                </NavLink>
+                                                <NavLink class="expand-menu" href="/testoverview">
+                                                    <span class="oi oi-minus" aria-hidden="true"></span> Tests
+                                                </NavLink>
+                                            </li>
+                                        </ul>
+
+                                    }
+                                </li>
+
+                                break;
+                            }
+                        case 3: // Admin
+                            {
+
+                                <li class="nav-item px-3">
+                                    <NavLink class="nav-link" href="manageuser">
+                                        <span class="oi oi-list-rich" aria-hidden="true"></span> ManageUser
+                                    </NavLink>
+
+
+                                </li>
+                                break;
+
+                            }
+                    }
+
+                }
+                else
+                {
+
+                    <li class="nav-item px-3">
+                        <NavLink class="nav-link" href="login" Match="NavLinkMatch.All" @onclick="ToggleNavMenu">
+                            <span class="oi oi-lock-locked" aria-hidden="true"></span> Login
+                        </NavLink>
+
+
+                    </li>
+
+                }
+
+                <li class="nav-item px-3">
+                    <NavLink class="nav-link" href="/contact" Match="NavLinkMatch.All">
+                        <span class="oi oi-heart" aria-hidden="true"></span> Contact us
+                    </NavLink>
+                </li>
+
+                <li class="nav-item px-3">
+                    <NavLink class="nav-link" href="/faq" Match="NavLinkMatch.All">
+                        <span class="oi oi-question-mark" aria-hidden="true"></span> FAQ
+                    </NavLink>
+                </li>
+
+            </ul>
+        </div>
+        </div>
+
+
+        <div class="main">
+            <div class="top-row px-4">
+
+            @if (MyUserService.User == null)
+            {
+                <div>
+                <button type="button" class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2 logIn" @onclick="() => Login()">Login</button>
+            </div>
             } else {
-            <button type ="button" class="btn btn-primary"  @onclick="() => Logout()">Logout</button>
+            <button type ="button" class="btn btn-lg btn-primary btn-block btn-logout text-uppercase font-weight-bold mb-2 logIn"  @onclick="() => Logout()">Logout</button>
           }
         </div>
 
-        <div class="content px-4">
-            @Body
+            <div class="content px-4">
+                @Body
+            </div>
         </div>
     </div>
-</div>
-
+    
 @code{
 
-    private void Logout() {
+    private bool collapseNavMenu = true;
+    private bool expandSubMenu;
 
+
+    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    public void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+
+    private void Logout()
+    {
+       
         MyUserService.User = null;
+        NavigationManager.NavigateTo("/login");
+
+
+    }
+
+    private void Login()
+    {
+
         NavigationManager.NavigateTo("/login");
 
     }
