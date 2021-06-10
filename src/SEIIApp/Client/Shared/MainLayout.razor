@@ -58,11 +58,15 @@
                                         <ul class="flex-column">
                                             <li class="nav-item">
                                                 <NavLink class="expand-menu" href="/welcomestudent">
-                                                    <span class="oi oi-minus" aria-hidden="true"></span> Area1
+                                                    <span class="oi oi-minus" aria-hidden="true"></span> Run Test
                                                 </NavLink>
                                                 <NavLink class="expand-menu" href="/welcomestudent">
-                                                    <span class="oi oi-minus" aria-hidden="true"></span> Area2
+                                                    <span class="oi oi-minus" aria-hidden="true"></span> Run Lecture
                                                 </NavLink>
+                                                <NavLink class="expand-menu" href="/resultstest/">
+                                                    <span class="oi oi-minus" aria-hidden="true"></span> Test results
+                                                </NavLink>
+
                                             </li>
                                         </ul>
 
@@ -80,17 +84,30 @@
                         case 2: // Teacher
                             {
 
-                                <li class="nav-item px-3">
-                                    <NavLink class="nav-link" href="WelcomeTeacher">
-                                        <span class="oi oi-list-rich" aria-hidden="true"></span> Teacher
-                                    </NavLink>
-                                </li>
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="WelcomeTeacher" @onclick="()=>expandSubMenu= !expandSubMenu">
+                    <span class="oi oi-plus" aria-hidden="true"></span> Teacher
+                </NavLink>
+
+                @if (expandSubMenu)
+                {
+
+                    
+                    <ul class="flex-column">
+                        <li class="nav-item">
+                            <NavLink class="expand-menu" href="/lectureoverview">
+                                <span class="oi oi-minus" aria-hidden="true"></span> Lectures
+                            </NavLink>
+                            <NavLink class="expand-menu" href="/testoverview">
+                                <span class="oi oi-minus" aria-hidden="true"></span> Tests
+                            </NavLink>
+                        </li>
+                    </ul>
+
+                }
+            </li>
 
                                 break;
-
-
-
-
                             }
                         case 3: // Admin
                             {
@@ -105,10 +122,6 @@
                                 break;
 
                             }
-
-
-
-
                     }
 
                 }
@@ -130,10 +143,6 @@
                         <span class="oi oi-question-mark" aria-hidden="true"></span> FAQ
                     </NavLink>
                 </li>
-
-
-
-
 
             </ul>
         </div>
