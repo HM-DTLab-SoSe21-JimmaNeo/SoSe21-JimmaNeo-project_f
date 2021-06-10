@@ -1,0 +1,98 @@
+body {
+    background-color: #fff;
+    font-family: Arial;
+}
+.registration-form {
+    padding: 35px;
+}
+
+.registration-form form {
+        background-color: #fff;
+        max-width: 600px;
+        margin: auto;
+       
+
+}
+
+    .registration-form .form-img {
+        text-align: center;
+        background-color: #009a10;
+        border-radius: 50%;
+        font-size: 40px;
+        color: white;
+        width: 100px;
+        height: 100px;
+        margin: auto;
+        margin-bottom: 45px;
+    }
+
+.img1 {
+    height:80px;
+    width:80px;
+    text-align: center;
+    color: white;
+    padding-bottom: 5px;  
+}
+
+.img-user {
+    
+    text-align: center;
+    background-color: #5891ff;
+    border-radius: 50%;
+    font-size: 40px;
+    color: white;
+    width: 100px;
+    height: 100px;
+    margin: auto;
+    margin-bottom: 50px;
+    line-height: 100px;
+}
+
+
+.registration-control {
+        border-radius: 20px;
+        margin-bottom: 25px;
+        padding: 10px 20px;
+}
+
+.form-control {
+    border: 1px solid #777;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+}
+
+.create-account {
+    border-radius: 30px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #2369eb;
+    border: 2px solid;
+    color: white;
+    height: 50px;
+}
+
+.create-account:hover{
+ background: white;
+ color: #2369eb;
+}
+
+.cancle-account {
+    border-radius: 30px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #f00c17;
+    border: 2px solid;
+    color: #ffffff;
+    height: 50px;
+}
+
+.cancle-account:hover{
+    background: #ffffff;
+	color: #f00c17;
+}
+
+a:link{
+    text-decoration: none;
+}

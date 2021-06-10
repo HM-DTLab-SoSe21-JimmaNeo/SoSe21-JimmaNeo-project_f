@@ -1,85 +1,136 @@
-﻿@page "/register"
+@page "/register"
 @inject Services.UserBackendAccessService UserService;
 @inject NavigationManager NavigationManager;
 @using SEIIApp.Shared;
 
-<h3>Register</h3>
 
 
 
-<div class="card" style="width:25rem" border="#FFFFFF" >
-    <div class="card-body">
-      
-        <p><font color="red">@msg</font></p>
-         <label for="fname">First Name:</label><br>
-        <input type="text" id="fname" placeholder="Enter First Name" size="30" name="fname" @bind="FirstName"><br><br>
+<head>
+    <link rel="stylesheet" type="text/css" href="register.razor.css">
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+</head>
 
-        <label for="sname">Last Name:</label><br>
-        <input type="text" id="sname"  placeholder="Enter Last Name" size="30" name="sname" @bind="LastName"><br><br>
-
-        <label for="lname">Username:</label><br>
-        <input type="text" id="uname" size="30" placeholder="Enter User Name" name="uname" @bind="UserName"><br><br>
-
-       
-        <label for="pw">Password:</label><br>  
-        <input type="password" id="p2" size="30" maxlength="20" placeholder="Enter Passwort" required @bind="Pw"><br><br>
-
-
-     <div style="float: left;">
-            <button type="button" class="btn btn-outline-primary" @onclick="ToRegister">Register</button>
-            <NavLink href="/"><button type="button" class="btn btn-primary">Cancel</button></NavLink><br>
-          </div>   
-
-
-            
-         
+<body>
+    <h1 align="center">Join JimmaNeo!</h1>
+    <div class="registration-form">
+        <form>
+            <div class="form-img">
+                <span>
+                    <i class="img img-user"></i>
+                    <img class="img1" src="/Images/benutzer.png" />
+                </span>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="fname" placeholder="First name">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="sname" placeholder="Last name">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="uname" placeholder="Username">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" id="p2" placeholder="Passwort">
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-block create-account" @onclick="ToRegister">Create</button>
+            </div>
+            <div class="form-group">
+                <a href="/">
+                    <button type="button" class="btn btn-block cancle-account" href="/">Cancel</button>
+                </a>
+            </div>
+        </form>
     </div>
+</body>
 
-</div>
+
+
+
+@*<div class="card" style="width:25rem" border="#FFFFFF" >
+        <div class="card-body">
+
+            <p><font color="red">@msg</font></p>
+             <label for="fname">First Name:</label><br>
+            #C#<input type="text" id="fname" placeholder="Enter First Name" size="30" name="fname" @bind="FirstName"><br><br>
+
+            <label for="sname">Last Name:</label><br>
+            #c#<input type="text" id="sname"  placeholder="Enter Last Name" size="30" name="sname" @bind="LastName"><br><br>
+
+            <label for="lname">Username:</label><br>
+            #c#<input type="text" id="uname" size="30" placeholder="Enter User Name" name="uname" @bind="UserName"><br><br>
+
+
+            <label for="pw">Password:</label><br>
+            <input type="password" id="p2" size="30" maxlength="20" placeholder="Enter Passwort" required @bind="Pw"><br><br>
+
+
+         <div style="float: left;">
+                <button type="button" class="btn btn-outline-primary" @onclick="ToRegister">Register</button>
+                <NavLink href="/"><button type="button" class="btn btn-primary">Cancel</button></NavLink><br>
+              </div>
+
+
+
+
+        </div>
+
+    </div>
+*@
+
 
 @code {
 
-	
-    public string FirstName{get; set;}
-    
-    public string LastName{get; set;}
-    
-    public string UserName{get; set;}
-   
-    public string Pw{get; set;}
 
-    public string msg{get; set;}
+    public string FirstName { get; set; }
 
-    private async Task ToRegister(){
+    public string LastName { get; set; }
 
-        UserDTO user = new UserDTO(){FirstName = this.FirstName, LastName = this.LastName, Name = this.UserName, Role = Role.Student};
-        LoginInformationDTO logInfo = new LoginInformationDTO(){User= user, Pw = Pw};
+    public string UserName { get; set; }
+
+    public string Pw { get; set; }
+
+    public string msg { get; set; }
+
+    private async Task ToRegister()
+    {
+
+        UserDTO user = new UserDTO() { FirstName = this.FirstName, LastName = this.LastName, Name = this.UserName, Role = Role.Student };
+        LoginInformationDTO logInfo = new LoginInformationDTO() { User = user, Pw = Pw };
 
 
         // Doppelklick?
-        if(CheckRegister()){
-            
-            var response = await UserService.RegisterUser(logInfo);     
-            if(response == null) {
-                msg ="UserName not available";
-            }else {                           
-            msg ="You have been successfully registered!";
-            await Task.Delay(2000);
-            NavigationManager.NavigateTo("/login");
+        if (CheckRegister())
+        {
+
+            var response = await UserService.RegisterUser(logInfo);
+            if (response == null)
+            {
+                msg = "UserName not available";
             }
-            
-        } else {
-            msg ="Please insert your data in all fields.";
+            else
+            {
+                msg = "You have been successfully registered!";
+                await Task.Delay(2000);
+                NavigationManager.NavigateTo("/login");
+            }
+
+        }
+        else
+        {
+            msg = "Please insert your data in all fields.";
         }
     }
 
-    public void Redirect(string url){}
+    public void Redirect(string url) { }
 
     private bool CheckRegister()
     {
         bool check = true;
-        if(FirstName == null && LastName == null && UserName == null && Pw == null) {
-            check = false;          
+        if (FirstName == null && LastName == null && UserName == null && Pw == null)
+        {
+            check = false;
         }
 
         return check;

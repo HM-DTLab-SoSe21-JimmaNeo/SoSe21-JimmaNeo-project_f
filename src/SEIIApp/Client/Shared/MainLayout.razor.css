@@ -147,3 +147,47 @@
 
 
 }
+
+.btn-primary {
+    background-color: #0779e4;
+}
+
+.btn-login {
+    font-size: 0.9rem;
+    letter-spacing: 0.05rem;
+    padding: 0.75rem 1rem;
+    border-radius: 2rem;
+    min-width: 40px;
+    min-height: 20px;
+    max-width: 80px;
+    max-height: 40px;
+    line-height: 12px;
+    margin-top: 12px;
+    margin-right: 12px;
+    position: absolute;
+    top: 0;
+    right:0;
+}
+
+.btn-logout {
+    position: relative;
+    padding-top: 25px;
+    font-size: 0.9rem;
+    letter-spacing: 0.05rem;
+    padding: 0.75rem 1rem;
+    border-radius: 2rem;
+    min-width: 50px;
+    min-height: 40px;
+    max-width: 100px;
+    max-height: 20px;
+    line-height: 12px;
+    margin-top: 12px;
+    margin-right: 12px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.logIn:hover {
+    background: white;
+    color: #0779e4;
+}
