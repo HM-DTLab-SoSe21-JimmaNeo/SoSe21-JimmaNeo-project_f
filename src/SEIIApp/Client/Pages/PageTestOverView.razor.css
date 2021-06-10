@@ -1,13 +1,12 @@
 ﻿body {
-    background: beige;
-    max-width: 600px;
+    max-width: 100%;
     margin: auto;
 }
 
 .btn-edit {
-    font-size: 10px;
-    height: 30px;
-    width: 40px;
+    font-size: 15px;
+    height: 40px;
+    width: 60px;
     text-align: center;
     padding: 0px;
     margin: 1px 1px;
@@ -23,9 +22,9 @@
     }
 
 .btn-delete {
-    font-size: 10px;
-    height: 30px;
-    width: 40px;
+    font-size: 15px;
+    height: 40px;
+    width: 60px;
     text-align: center;
     padding: 0px;
     margin: 1px 1px;
@@ -41,9 +40,9 @@
     }
 
 .btn-start {
-    font-size: 10px;
-    height: 30px;
-    width: 40px;
+    font-size: 15px;
+    height: 40px;
+    width: 60px;
     text-align: center;
     padding: 0px;
     margin: 1px 1px;
@@ -59,9 +58,9 @@
     }
 
 .btn-about {
-    font-size: 10px;
-    height: 30px;
-    width: 40px;
+    font-size: 15px;
+    height: 40px;
+    width: 60px;
     text-align: center;
     padding: 0px;
     margin: 1px 1px;
