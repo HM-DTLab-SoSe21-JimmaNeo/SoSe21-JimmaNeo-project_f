@@ -1,17 +1,92 @@
 ﻿@page "/welcomestudent"
-@page "/welcomestudent/{UserId:int}" 
+@page "/welcomestudent/{UserId:int}"
 @inject NavigationManager NavigationManager
 @using static SEIIApp.Client.Pages.Login;
 @using SEIIApp.Shared;
 @inject UserServicee MyUserService
 
 
-<h3>WelcomeStudent</h3>
+
+
 @{
 
     if (MyUserService.User != null && MyUserService.User.Role == Role.Student)
     {
+        <h1>Welcome Student @MyUserService.User.Name!</h1>
+        <br>
+        <br>
+        <h3>What shall we do today?</h3>
 
+        <br>
+        <br>
+        <br>
+
+        <div>
+            <table>
+                <tr>
+                    <th valign=top>
+                        <div class="divtodo">
+                            <h2>To-Do-Today (@todos.Count(todo => !todo.IsDone))</h2>
+
+                            <ul>
+                                @foreach (var todo in todos)
+                                {
+                                    <li>
+                                        <input type="checkbox" @bind="todo.IsDone" />
+                                        <input @bind="todo.Title" />
+                                    </li>
+                                }
+                            </ul>
+
+                            <input placeholder="Something todo" @bind="newTodo" />
+                            <button class="btn btn-success" @onclick="AddTodo">Add todo</button>
+                        </div>
+                    </th>
+                    <th><img src="\Images\WelcomeStudent\Lecture.png" alt="Lecture" class="img1"></th>
+                    <th></th>
+                    <th><img src="\Images\WelcomeStudent\TestDiagramme.png" alt="Tests" class="img1"></th>
+                </tr>
+            </table>
+            <br>
+            <br>
+            <br>
+            <table class="tablenews">
+                <h1>News</h1>
+                <tr>
+                    <th></th>
+                    <th width="200">Date</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td><img src="\Images\WelcomeStudent\4.jpg" width="200" /></td>
+                    <td>09-06-2021</td>
+                    <td>
+                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,<br>
+                        sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem<br> ipsum
+                        dolor sit amet.
+                    </td>
+                </tr>
+                <tr>
+                    <td><img src="\Images\WelcomeStudent\krankenhaus1.jpg" width="200" /></td>
+                    <td>06-06-2021</td>
+                    <td>
+                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,<br>
+                        sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem<br> ipsum
+                        dolor sit amet.
+                    </td>
+                </tr>
+                <tr>
+                    <td><img src="\Images\WelcomeStudent\krankenhaus2.jpg" width="200" /></td>
+                    <td>04-06-2021</td>
+                    <td>
+                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,<br>
+                        sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem<br> ipsum
+                        dolor sit amet.
+                    </td>
+                </tr>
+
+            </table>
+        </div>
 
     }
 
@@ -25,6 +100,18 @@
     public int[] Roles { get; set; }
     [Parameter]
     public int userID { get; set; }
+
+    private List<Services.WelcomeStudentService> todos = new();
+    private string newTodo;
+
+    private void AddTodo()
+    {
+        if (!string.IsNullOrWhiteSpace(newTodo))
+        {
+            todos.Add(new Services.WelcomeStudentService { Title = newTodo });
+            newTodo = string.Empty;
+        }
+    }
 
 
 }
