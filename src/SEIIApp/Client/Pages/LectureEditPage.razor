@@ -16,6 +16,8 @@
 
         <EditForm EditContext="@context" OnSubmit="OnSubmit">
 
+
+
             <label>Lecture Name:</label>
             <InputText @bind-Value="LectureDto.Topic" />
 
@@ -33,24 +35,31 @@
             <button class="btn btn-light" @onclick="AddVideoContent">Add Video</button>
 
             <hr />
+          
+            
             @foreach (var picture in LectureDto.Content)
             {
                 <div class="card">
                     <div class="card-body">
-                        <PictureComponent PictureContentDto="picture"></PictureComponent>
+                        <PictureComponent PictureContentDTO="picture"></PictureComponent>
                         <button class="btn btn-light btn-sm my-3" @onclick="() => DeletePictureContent(picture)">Remove Picture</button>
                     </div>
                 </div>
 
             }
-            <button class="btn btn-light btn-sm my-3" @onclick="AddPictureContent">Add Picture</button><br />
-            <label>Test topic:</label>
+            <br /><button class="btn btn-light" @onclick="AddPictureContent">Add Picture</button><br />
+            <hr />
+          
+
+
+
+            <label>Test ID:</label>
             <InputText @bind-Value="TestTopic" />
 
             <button class="btn btn-light btn-sm my-3" @onclick="AddTestToLecture">Add Test</button><br />
 
             <label>Lecture Text:</label>
-            
+
             <InputText @bind-Value="LectureDto.Text" />
 
             <label>Lecture Description:</label>
@@ -82,11 +91,12 @@
     private TestBaseDTO TestOfLecture { get; set; }
 
     private int TestId { get; set; }
+
     private string TestTopic { get; set; }
 
     protected override async Task OnParametersSetAsync()
     {
-        
+
         if (LectureID != 0)
         {
             var existingLecture = await LectureService.GetLectureById(LectureID);
@@ -109,7 +119,7 @@
     private void PrepareEditOrAddOfLecture(LectureDTO lectureDto)
     {
         if (lectureDto.Topic == null) lectureDto.Topic = "lecture Topic";
-        if (lectureDto.Content == null) lectureDto.Content = new List<PictureContentDTO>();
+
         if (lectureDto.Author == null) lectureDto.Author = new UserDTO() { FirstName = "Ezzy", LastName = "Bert", Name = "user4", Role = Role.Teacher, UserId = 4 }; //ToDo
                                                                                                                                                                      //if(test.TestContent == null) test.TestContent = new List<TestContentDTO>();
         if (lectureDto.Videos == null) lectureDto.Videos = new List<VideoContentDTO>();
@@ -161,7 +171,7 @@
     {
 
         int testId = TopicToId(TestTopic);
-        var Test = await TestService.GetTestById(testId);
+        var Test = await LectureService.GetTestById(testId);
         this.LectureDto.Test = new TestBaseDTO() { Topic = Test.Topic, Author = Test.Author, Description = Test.Description, TestID = Test.TestID};
 
         // GetTestById();
