@@ -8,49 +8,55 @@
 
     @if (LectureDto != null)
     {
-        <h2 class="text-center">@(LectureDto.Topic)</h2>
+        VideoComponent.OnEditing = false;
+        PictureComponent.OnEditing = false;
+        <h2 class="text-center">@(LectureDto.Topic)</h2><hr />
+        <ul class="list-group list-group-flush">
 
-        <label>Videos</label>
+            <h4>Videos</h4>
 
-        <EditForm Model="@LectureDto">
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <button class="btn btn-primary me-md-2" type="button" @onclick="()=> GetToTest()">Test</button>
-            </div>
-            @foreach (var video in LectureDto.Videos)
-            {
-                <div class="card">
-                    <div class="card-body">
-
-                        <VideoComponent VideoContentDTO="video"></VideoComponent>
-                        <p>Video Description</p>
-                        <p>@video.Description</p>
-                    </div>
-                </div>
-            }
-
-
-
-            @foreach (var picture in LectureDto.Content)
-            {
-                <div class="card">
-                    <div class="card-body">
-
-                        <PictureComponent PictureContentDTO="picture"></PictureComponent>
-                        <p> Picture Description</p>
-                        <p>@picture.Description</p>
-                    </div>
-                </div>
-            } <li class="list-group list-group-flush">
-                <label> Lecture Text</label>
-                <p>@LectureDto.Text</p>
+           <EditForm Model="@LectureDto"> 
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button class="btn btn-primary me-md-2" type="button" @onclick="()=> GetLastLecture()">Back</button>
-                    <button class="btn btn-primary" type="button" @onclick="()=> GetNextLecture()">Next</button>
+                    <button class="btn btn-primary me-md-2" type="button" @onclick="()=> GetToTest()">Test</button>
                 </div>
-            </li>
+                @foreach (var video in LectureDto.Videos)
+                {
+                    <div class="card">
+                        <div class="card-body">
+
+
+                            <VideoComponent VideoContentDTO="video"></VideoComponent>
+                            <p>Video Description</p>
+                            <p>@video.Description</p>
+                        </div>
+                    </div>
+                }
+
+        
+        <h4> Pictures</h4>
+        @foreach (var picture in LectureDto.Content)
+        {
+            <div class="card">
+                <div class="card-body">
+                    <li class="text-center list-group-item">
+                        <PictureComponent PictureContentDTO="picture"></PictureComponent>
+                        <p>@picture.Description</p>
+                    </li>
+
+
+                </div>
+            </div>
+        } <li class="list-group list-group-flush">
+            <label> Lecture Text</label>
+            <p>@LectureDto.Text</p>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                <button class="btn btn-primary me-md-2" type="button" @onclick="()=> GetLastLecture()">Back</button>
+                <button class="btn btn-primary" type="button" @onclick="()=> GetNextLecture()">Next</button>
+            </div>
+        </li>
 
         </EditForm>
-
+</ul>
     }
 
 

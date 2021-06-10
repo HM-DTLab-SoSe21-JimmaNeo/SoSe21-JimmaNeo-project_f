@@ -49,6 +49,8 @@
 
         if (UserService.User != null && UserService.User.Role == Role.Teacher)
         {
+            VideoComponent.OnEditing = true;
+            PictureComponent.OnEditing = true;
             <div class="text-center py-2">
                 <button class="btn btn-outline-success" @onclick="AddLecture">Add</button>
             </div>
