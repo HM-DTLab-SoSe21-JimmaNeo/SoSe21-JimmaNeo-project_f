@@ -37,7 +37,7 @@
         {
 
             <li class="nav-item px-3"> 
-                <NavLink class="nav-link" @onclick="() => Logout()" Match="NavLinkMatch.All">
+                <NavLink class="nav-link" @onclick="() => Logout()" Match="NavLinkMatch.All" >
                     <span class="oi oi-list-unlocked" aria-hidden="true"></span> Logout
                 </NavLink>
             </li>
@@ -87,9 +87,6 @@
 
                         break;
 
-
-
-
                     }
                 case 3: // Admin
                     {
@@ -115,7 +112,7 @@
         {
 
             <li class="nav-item px-3">
-                <NavLink class="nav-link" href="login" Match="NavLinkMatch.All">
+                <NavLink class="nav-link" href="login" Match="NavLinkMatch.All" @onclick="ToggleNavMenu">
                     <span class="oi oi-lock-locked" aria-hidden="true"></span> Login
                 </NavLink>
 
@@ -142,23 +139,24 @@
 
     private bool collapseNavMenu = true;
     private bool expandSubMenu;
- 
+
 
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
-    private void ToggleNavMenu()
+    public void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
     }
 
     private void Logout()
     {
-
+        collapseNavMenu = !collapseNavMenu;
         MyUserService.User = null;
-        NavigationManager.NavigateTo("/login", true);
+        NavigationManager.NavigateTo("/login");
+
 
     }
 
-  
+
         }
 
