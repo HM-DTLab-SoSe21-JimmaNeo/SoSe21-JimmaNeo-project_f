@@ -1,6 +1,7 @@
 ﻿@page "/testoverview"
 @inject Services.TestsDefinitionBackendAccessService TestDefinitionService
 @inject NavigationManager NavigationManager
+@inject UserServicee UserService
 
 <head>
     <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
@@ -11,9 +12,12 @@
         <form>
             <h2 class="text-center">Tests</h2>
             <hr class="divider" b-6rl0707n1o="" style="color: black">
+            if (UserService.User != null && UserService.User.Role == Role.Teacher)
+            {
             <div class="text-center">
                 <button class="btn btn-outline-success btn-sm" @onclick="AddTest">Add Test</button>
             </div>
+            }
             <div class="row">
                 <div class="col-md-6">
                     <EditForm Model="@searchValue">
@@ -55,12 +59,14 @@
                             <div class="col-md-6" style="font-size:17px">
                                 @(content.DateOfCreation.ToShortDateString()) <b>@(content.Topic)</b>
                             </div>
-
+                            if (UserService.User != null && UserService.User.Role == Role.Teacher)
+                            {
                             <div class="btn- col-md-6 text-right" style="align-content: right">
                                 <button class="btn btn-outline-dark btn-sm"
                             @onclick="() => EditQuiz((TestDTO)content)">Edit</button>
                                 <button class="btn btn-outline-danger btn-sm"
                             @onclick="() => DeleteContent(content)">Delete</button>
+                                }
                                 <button class="btn btn-outline-success btn-sm"
                             @onclick="() => StartTest(content.TestID)">Start</button>
                                 <button class="btn btn-outline-primary btn-sm"
