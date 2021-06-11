@@ -21,17 +21,20 @@
                     <img class="img1" src="/Images/benutzer.png" />
                 </span>
             </div>
+
+            <p><font color="red">@msg</font></p>
+
             <div class="form-group">
-                <input type="text" class="form-control" id="fname" placeholder="First name">
+                <input type="text" class="form-control" id="fname" placeholder="First name" @bind="FirstName">
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" id="sname" placeholder="Last name">
+                <input type="text" class="form-control" id="sname" placeholder="Last name" @bind="LastName">
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" id="uname" placeholder="Username">
+                <input type="text" class="form-control" id="uname" placeholder="Username" @bind="UserName">
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" id="p2" placeholder="Passwort">
+                <input type="password" class="form-control" id="p2" placeholder="Passwort" required @bind="Pw">
             </div>
             <div class="form-group">
                 <button type="button" class="btn btn-block create-account" @onclick="ToRegister">Create</button>
@@ -53,13 +56,13 @@
 
             <p><font color="red">@msg</font></p>
              <label for="fname">First Name:</label><br>
-            #C#<input type="text" id="fname" placeholder="Enter First Name" size="30" name="fname" @bind="FirstName"><br><br>
+            <input type="text" id="fname" placeholder="Enter First Name" size="30" name="fname" @bind="FirstName"><br><br>
 
             <label for="sname">Last Name:</label><br>
-            #c#<input type="text" id="sname"  placeholder="Enter Last Name" size="30" name="sname" @bind="LastName"><br><br>
+            <input type="text" id="sname"  placeholder="Enter Last Name" size="30" name="sname" @bind="LastName"><br><br>
 
             <label for="lname">Username:</label><br>
-            #c#<input type="text" id="uname" size="30" placeholder="Enter User Name" name="uname" @bind="UserName"><br><br>
+            <input type="text" id="uname" size="30" placeholder="Enter User Name" name="uname" @bind="UserName"><br><br>
 
 
             <label for="pw">Password:</label><br>
