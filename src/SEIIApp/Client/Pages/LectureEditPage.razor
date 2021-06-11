@@ -29,7 +29,7 @@
 
 
             <label>Lecture Name:</label><br />
-            <InputText @bind-Value="LectureDto.Topic" />
+            <InputText @bind-Value="LectureDto.Topic" /><br />
 
 
             @foreach (var video in LectureDto.Videos)
@@ -40,7 +40,7 @@
                         <VideoComponent VideoContentDTO="video"></VideoComponent>
                         <button class="btn btn-light btn-sm my-3" @onclick="() => DeleteVideoContent(video)">Remove Video</button>
                     </div>
-                </div>
+                </div><br />
             }
             <button class="btn btn-light" @onclick="AddVideoContent">Add Video</button>
 

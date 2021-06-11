@@ -10,12 +10,12 @@ namespace SEIIApp.Shared
   public class QuestionDTO
   {
     [Required]
-    [StringLength(250, MinimumLength = 1)]
+    [StringLength(500, MinimumLength = 1)]
     public string QuestionText { get; set; }
 
     public List<AnswerDTO> Answers { get; set; }
 
-    [StringLength(250)]
+    [StringLength(500)]
     public string Explanation { get; set; }
 
     public List<PictureContentDTO> Pictures { get; set; }
