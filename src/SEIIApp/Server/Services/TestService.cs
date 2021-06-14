@@ -64,8 +64,14 @@ namespace SEIIApp.Server.Services
 
       test.Author = user;
 
-      DatabaseContext.Tests.Add(test);
-      DatabaseContext.SaveChanges();
+            NewsService.AddNews(new News()
+            {
+                Topic = "New Test",
+                Content = $"A new Test, named {test.Topic}, was uploaded to this platform. The Test was created by {test.Author.Name}.",
+                DateOfCreation = DateTime.Now,
+                Creator = "System",
+                Tags = "New ,Exam, Challenge, Power, FUN"
+            });
 
       NewsService.AddNews(new News()
       {
@@ -82,8 +88,14 @@ namespace SEIIApp.Server.Services
       var exsistingTest = GetTestWithId(test.TestId);
       Mapper.Map(test, exsistingTest);
 
-      DatabaseContext.Tests.Update(exsistingTest);
-      DatabaseContext.SaveChanges();
+            NewsService.AddNews(new News()
+            {
+                Topic = $"Updated Test {test.Topic}",
+                Content = $"The Test \"{test.Topic}\" has been updated. The Test was updated by {test.Author.Name}.",
+                DateOfCreation = DateTime.Now,
+                 Creator = "System",
+                Tags = "Update, Exam, Challenge, Power, FUN"
+            });
 
       NewsService.AddNews(new News()
       {
