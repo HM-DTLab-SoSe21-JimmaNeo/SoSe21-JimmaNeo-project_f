@@ -117,6 +117,7 @@ namespace SEIIApp.Server.DataAccess
                
                // test = new Services.TestService();
                 lecture.Test = testservice.GetTestWithId(i);
+                //lectureService.UpdateLecture(lecture);
             }
         }
 
