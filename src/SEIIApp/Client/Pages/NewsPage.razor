@@ -1,46 +1,71 @@
-﻿@page "/news"
+@page "/news"
 @inject UserServicee UserService
 @inject NewsBackendAccessService NewsService
-<head>
-    <style>
-        .solid{
-            border-style: solid;
-            border-width: thin;
-        }
-    </style>
-</head>
+    <html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+    </head>
+<body>
+    <h3>News</h3>
 
-<h3>News</h3>
-
-@if (UserService.User != null && UserService.User.Role == Role.Admin)
-{
-<div>
-    <h4>Add a News</h4>
-    <label>Topic</label>
-    <input @bind="Topic" />
-    <label>Content</label>
-    <input @bind="Content" />
-    <button class="btn btn-success" @onclick="AddNews">Add</button>
-    <label>@Message</label>
-</div>
-
-}
-
-@if (News != null)
-{
-    @foreach (var news in News)
+    @if (UserService.User != null && UserService.User.Role == Role.Admin)
     {
-        <div class="solid">
-            <label>@news.Topic</label> <label>From @news.DateOfCreation.ToString("yyyy'-'MM'-'dd")</label>
-            <p>@news.Content</p>
-            @if (UserService.User != null && UserService.User.Role == Role.Admin)
-            {
-                <button class="btn btn-outline-danger btn-sm" @onclick="() => DeleteContent(news)">Delete</button>
-            }
-
+        <div>
+            <h4>Add a News</h4>
+            <label>Topic</label>
+            <input @bind="Topic" />
+            <label>Content</label>
+            <input @bind="Content" />
+            <button class="btn btn-success" @onclick="AddNews">Add</button>
+            <label>@Message</label>
         </div>
+
     }
-}
+
+    @if (News != null)
+    {
+        @foreach (var news in News)
+        {
+            <div class="solid">
+                <label>@news.Topic</label> <label>From @news.DateOfCreation.ToString("yyyy'-'MM'-'dd")</label>
+                <p>@news.Content</p>
+                @if (UserService.User != null && UserService.User.Role == Role.Admin)
+                {
+                    <button class="btn btn-outline-danger btn-sm" @onclick="() => DeleteContent(news)">Delete</button>
+                }
+
+            </div>
+
+            <div class="blog-card">
+                <div class="meta">
+                    <div class="photo" style="background-image: url('images/coffee.jpg')"></div>
+                    <ul class="details">
+                        <li><a href="#"></a></li>
+                        <li>@news.DateOfCreation.ToString("yyyy'-'MM'-'dd")</li>
+                        <li>
+                            <ul>
+                                <li><a href="#">Test</a></li>
+                                <li><a href="#">Topic</a></li>
+                                <li><a href="#">Learning</a></li>
+                                <li><a href="#">Knowledge</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="description">
+                    <h1>@news.Topic</h1>
+                    <h2>Opening a door to the future</h2>
+                    <p>@news.Content  </p>
+                </div>
+            </div>
+
+        }
+    }
+
+    </body>
+</html>
 
 
 @code {
@@ -63,7 +88,7 @@
 
     private async Task AddNews()
     {
-        NewsDTO NewNews = new NewsDTO() { Topic = Topic, Content = Content, DateOfCreation = DateTime.Now};
+        NewsDTO NewNews = new NewsDTO() { Topic = Topic, Content = Content, DateOfCreation = DateTime.Now };
         NewNews = await NewsService.AddOrUpdateNews(NewNews);
 
         if (NewNews != null)
@@ -73,7 +98,8 @@
 
             Topic = "";
             Content = "";
-        } else
+        }
+        else
         {
             Message = "Couldn't add new News";
         }
@@ -93,3 +119,4 @@
 
 
 }
+
