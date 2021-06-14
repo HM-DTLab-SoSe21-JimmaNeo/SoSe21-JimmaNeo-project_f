@@ -73,10 +73,10 @@ body {
     transition: left 0.2s;
     background: rgba(0, 0, 0, 0.6);
     color: #fff;
-    padding: 200px;
+    padding: 10px;
     max-width: 100%;
-    font-size: 0.9rem;
-    max-height: auto;
+    font-size: 1.0rem;
+    height: auto;
 }
 
     .blog-card .details a {

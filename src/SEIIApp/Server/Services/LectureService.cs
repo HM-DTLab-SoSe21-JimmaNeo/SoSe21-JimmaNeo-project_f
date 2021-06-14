@@ -75,7 +75,9 @@ namespace SEIIApp.Server.Services
             {
                 Topic = "New Lecture",
                 Content = $"A new Lecture, named {lecture.Topic}, was uploaded to this platform. The Lecture was created by {lecture.Author.Name}.",
-                DateOfCreation = DateTime.Now
+                DateOfCreation = DateTime.Now,
+                Creator = "System",
+                Tags =  "New,Topic, Learning, Knowledge" 
             }); 
 
             return lecture;
@@ -90,12 +92,14 @@ namespace SEIIApp.Server.Services
             DatabaseContext.Update(exsistingLecture);
             DatabaseContext.SaveChanges();
 
-           /* NewsService.AddNews(new News()
+           NewsService.AddNews(new News()
             {
                 Topic = $"Updated {lecture.Topic}",
                 Content = $"The Lecture \"{lecture.Topic}\" has been updated. The Lectrue was updated by {lecture.Author.Name}.",
-                DateOfCreation = DateTime.Now
-            });*/
+                DateOfCreation = DateTime.Now,
+               Creator = "System",
+               Tags = "New,Topic, Learning, Knowledge"
+           });
 
             return exsistingLecture;
         }

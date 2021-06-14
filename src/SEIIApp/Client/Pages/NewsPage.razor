@@ -5,7 +5,7 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes" />
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+
     </head>
 
     <body>
@@ -43,14 +43,14 @@
                     <div class="meta" style="width: 100%">
                         <div class="photo" style= "width: 100%; background-image: url('images/coffee2.jpg')"></div>
                         <ul class="details">
-                            <li><a href="#"></a></li>
-                            <li>@news.DateOfCreation.ToString("yyyy'-'MM'-'dd")</li>
+                            <li> <span class="oi oi-person" aria-hidden="true"></span><a href="#"></a> System</li>
+                            <li><span class="oi oi-calendar" aria-hidden="true"></span> @news.DateOfCreation.ToString("yyyy'-'MM'-'dd")</li>
                             <li>
                                 <ul>
-                                    <li><a href="#">Test</a></li>
-                                    <li><a href="#">Topic</a></li>
-                                    <li><a href="#">Learning</a></li>
-                                    <li><a href="#">Knowledge</a></li>
+                                    <span class="oi oi-tags" aria-hidden="true"></span>
+                                  
+                                    <li>@news.Tags</li>
+                                    
                                 </ul>
                             </li>
                         </ul>
@@ -59,15 +59,7 @@
                         <h1>@news.Topic</h1>
                         <h2>Opening a door to the future</h2>
                         <p>
-                            @news.Content Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-
-                            Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
-
-                            Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
-
-                            Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
-
-                            Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis.
+                            @news.Content
                         </p>
                     </div>
                 </div>
