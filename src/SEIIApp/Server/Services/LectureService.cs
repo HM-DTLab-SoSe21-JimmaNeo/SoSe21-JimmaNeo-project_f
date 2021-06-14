@@ -73,8 +73,8 @@ namespace SEIIApp.Server.Services
 
             NewsService.AddNews(new News()
             {
-                Topic = "New Lectrue",
-                Content = $"A new Lectrue, named {lecture.Topic}, was uploaded to this platform. The Lectrue was created by {lecture.Author.Name}.",
+                Topic = "New Lecture",
+                Content = $"A new Lecture, named {lecture.Topic}, was uploaded to this platform. The Lecture was created by {lecture.Author.Name}.",
                 DateOfCreation = DateTime.Now
             }); 
 
