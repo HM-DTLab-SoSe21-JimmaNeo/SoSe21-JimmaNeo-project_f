@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using SEIIApp.Server.DataAccess;
 using SEIIApp.Server.Domain;
@@ -77,7 +77,9 @@ namespace SEIIApp.Server.Services
       {
         Topic = "New Test",
         Content = $"A new Test, named {test.Topic}, was uploaded to this platform. The Test was created by {test.Author.Name}.",
-        DateOfCreation = DateTime.Now
+        DateOfCreation = DateTime.Now,
+        Creator = "System",
+        Tags = "New ,Exam, Challenge, Power, FUN"
       });
 
       return test;
@@ -101,7 +103,9 @@ namespace SEIIApp.Server.Services
       {
         Topic = $"Updated Test {test.Topic}",
         Content = $"The Test \"{test.Topic}\" has been updated. The Test was updated by {test.Author.Name}.",
-        DateOfCreation = DateTime.Now
+        DateOfCreation = DateTime.Now,
+        Creator = "System",
+        Tags = "New ,Exam, Challenge, Power, FUN"
       });
 
       return exsistingTest;
