@@ -51,7 +51,6 @@ namespace SEIIApp.Server.Services
 
         public CompletedTest AddCompletedTest(CompletedTest completedTest)
         {
-            if (completedTest.SolvedTest == null || completedTest.Student == null) return null;
             
             User user = UserService.GetUserWithId(completedTest.Student.UserId);
             Test test = TestService.GetTestWithId(completedTest.SolvedTest.TestId);
