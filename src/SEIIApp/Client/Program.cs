@@ -23,6 +23,8 @@ namespace SEIIApp.Client {
             builder.Services.AddSingleton<Services.UserServicee>();
 
             builder.Services.AddScoped<Services.NewsBackendAccessService>();
+            builder.Services.AddScoped<Services.CompletedTestBackendAccessService>();
+            
             await builder.Build().RunAsync();
         }
     }
