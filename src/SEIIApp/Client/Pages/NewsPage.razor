@@ -47,27 +47,32 @@
 
                 </div>
                 *@<div class="blog-card" style="width: 100%">
-                      <div class="meta" style="width: 100%">
-                          @if (news.Topic.Contains("Test"))
-                          {
-                             <div class="photo" style="width: 100%; background-image: url('images/News/3426.jpg')"></div>}
-                          else if (news.Topic.Contains("Lecture"))
-                          { <div class="photo" style="width: 100%; background-image: url('images/News/1926.jpg')"></div>}
-                    else {<div class="photo" style="width: 100%;background-image: url('images/News/5150707.jpg')"></div> }
-                          <ul class="details">
-                              <li> <span class="oi oi-person" aria-hidden="true"></span><a href="#"></a> @news.Creator</li>
-                              <li><span class="oi oi-calendar" aria-hidden="true"></span> @news.DateOfCreation.ToString("yyyy'-'MM'-'dd")</li>
-                              <li><span class="oi oi-tags" aria-hidden="true"></span> @news.Tags</li>
-                          </ul>
-                      </div>
-                    <div class="description">
-                        <h1>@news.Topic</h1>
-                        <h2>Opening a door to the future</h2>
-                        <p>
-                            @news.Content
-                        </p>
-                    </div>
-                </div>
+    <div class="meta" style="width: 100%">
+        @if (news.Topic.Contains("Test"))
+        {
+            <div class="photo" style="width: 100%; background-image: url('images/News/3426.jpg')"></div>}
+        else if (news.Topic.Contains("Lecture"))
+        { <div class="photo" style="width: 100%; background-image: url('images/News/1926.jpg')"></div>}
+        else
+        {<div class="photo" style="width: 100%;background-image: url('images/News/5150707.jpg')"></div>}
+        <ul class="details">
+            <li> <span class="oi oi-person" aria-hidden="true"></span><a href="#"></a> @news.Creator</li>
+            <li><span class="oi oi-calendar" aria-hidden="true"></span> @news.DateOfCreation.ToString("yyyy'-'MM'-'dd")</li>
+            <li><span class="oi oi-tags" aria-hidden="true"></span> @news.Tags</li>
+        </ul>
+    </div>
+    <div class="description">
+        <h1>@news.Topic</h1>
+        <h2>Opening a door to the future</h2>
+        <p>
+            @news.Content
+        </p>
+    </div>
+    @if (UserService.User != null && UserService.User.Role == Role.Admin)
+    {
+        <button class="btn btn-delete  delete-form" @onclick="() => DeleteContent(news)">Delete</button>
+    }
+</div>
 
 
             }

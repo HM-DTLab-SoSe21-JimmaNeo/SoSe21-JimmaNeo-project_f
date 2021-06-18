@@ -641,7 +641,11 @@ textarea {
     background-color: #0779e4;
     border-color: #0779e4;
 }
-
+.btn-delete {
+    color: #fff;
+    background-color: #dc143c;
+    border-color: #dc143c;
+}
 
     .btn-check:focus + .btn-primary, .btn-primary:focus {
         color: #fff;
@@ -703,4 +707,8 @@ textarea {
 .submit-form:hover {
     background: #ffffff;
     color: #0779e4;
+}
+.delete-form:hover {
+    background: #ffffff;
+    color: #dc143c;
 }
