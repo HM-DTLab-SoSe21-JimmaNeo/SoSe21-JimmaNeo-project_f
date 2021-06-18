@@ -17,6 +17,7 @@ namespace SEIIApp.Server.Domain
 
         public DateTime DateOfCreation { get; set; }
 
-
+        public string Creator { get; set;}
+        public string Tags { get; set; }
     }
 }

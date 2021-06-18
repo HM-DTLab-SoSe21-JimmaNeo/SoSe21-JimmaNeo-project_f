@@ -1,46 +1,80 @@
-﻿@page "/news"
+@page "/news"
 @inject UserServicee UserService
 @inject NewsBackendAccessService NewsService
-<head>
-    <style>
-        .solid{
-            border-style: solid;
-            border-width: thin;
+    <html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes" />
+    </head>
+
+    <body>
+        <h3>News</h3>
+
+        @if (UserService.User != null && UserService.User.Role == Role.Admin)
+        {
+         
+            <h3 class="login-heading mb-4">Add a News</h3>
+            <form>
+                  <div class="form-floating mb-3" @onkeydown="@Enter">
+                            <input class="form-control" id="inputTopic" type="text" placeholder="Enter your name..." required @bind-value="Topic" @bind-value:event="oninput"/>
+                            <label for="inputTopic">Topic</label>
+                        </div>
+                <div class="form-floating mb-3" @onkeydown="@Enter">
+                    <textarea class="form-control" id="inputContent" type="text" placeholder="Enter your message here..." style="height: 10rem" @bind-value="Content"@bind-value:event="oninput"></textarea>
+                    <label for="inputContent">Message</label>
+                </div>
+                <br />
+            </form>
+            <form>
+                <button class="btn btn-primary btn-xl submit-form submit_Btn" style="width:100%" type="button" @onclick="AddNews">ADD</button>
+            </form>
+
         }
-    </style>
-</head>
 
-<h3>News</h3>
-
-@if (UserService.User != null && UserService.User.Role == Role.Admin)
-{
-<div>
-    <h4>Add a News</h4>
-    <label>Topic</label>
-    <input @bind="Topic" />
-    <label>Content</label>
-    <input @bind="Content" />
-    <button class="btn btn-success" @onclick="AddNews">Add</button>
-    <label>@Message</label>
-</div>
-
-}
-
-@if (News != null)
-{
-    @foreach (var news in News)
-    {
-        <div class="solid">
-            <label>@news.Topic</label> <label>From @news.DateOfCreation.ToString("yyyy'-'MM'-'dd")</label>
-            <p>@news.Content</p>
-            @if (UserService.User != null && UserService.User.Role == Role.Admin)
+        @if (News != null)
+        {
+            @foreach (var news in News)
             {
-                <button class="btn btn-outline-danger btn-sm" @onclick="() => DeleteContent(news)">Delete</button>
-            }
 
-        </div>
-    }
-}
+
+@*  <div class="solid">
+                    <label>@news.Topic</label> <label>From @news.DateOfCreation.ToString("yyyy'-'MM'-'dd")</label>
+                    <p>@news.Content</p>
+                    @if (UserService.User != null && UserService.User.Role == Role.Admin)
+                    {
+                        <button class="btn btn-outline-danger btn-sm" @onclick="() => DeleteContent(news)">Delete</button>
+                    }
+
+                </div>
+                *@<div class="blog-card" style="width: 100%">
+                      <div class="meta" style="width: 100%">
+                          @if (news.Topic.Contains("Test"))
+                          {
+                             <div class="photo" style="width: 100%; background-image: url('images/News/3426.jpg')"></div>}
+                          else if (news.Topic.Contains("Lecture"))
+                          { <div class="photo" style="width: 100%; background-image: url('images/News/1926.jpg')"></div>}
+                    else {<div class="photo" style="width: 100%;background-image: url('images/News/5150707.jpg')"></div> }
+                          <ul class="details">
+                              <li> <span class="oi oi-person" aria-hidden="true"></span><a href="#"></a> @news.Creator</li>
+                              <li><span class="oi oi-calendar" aria-hidden="true"></span> @news.DateOfCreation.ToString("yyyy'-'MM'-'dd")</li>
+                              <li><span class="oi oi-tags" aria-hidden="true"></span> @news.Tags</li>
+                          </ul>
+                      </div>
+                    <div class="description">
+                        <h1>@news.Topic</h1>
+                        <h2>Opening a door to the future</h2>
+                        <p>
+                            @news.Content
+                        </p>
+                    </div>
+                </div>
+
+
+            }
+        }
+
+    </body>
+</html>
 
 
 @code {
@@ -63,7 +97,7 @@
 
     private async Task AddNews()
     {
-        NewsDTO NewNews = new NewsDTO() { Topic = Topic, Content = Content, DateOfCreation = DateTime.Now};
+        NewsDTO NewNews = new NewsDTO() { Topic = Topic, Content = Content, DateOfCreation = DateTime.Now, Creator=UserService.User.Name};
         NewNews = await NewsService.AddOrUpdateNews(NewNews);
 
         if (NewNews != null)
@@ -73,7 +107,9 @@
 
             Topic = "";
             Content = "";
-        } else
+
+        }
+        else
         {
             Message = "Couldn't add new News";
         }
@@ -89,7 +125,18 @@
         }
     }
 
+    private async Task Enter(KeyboardEventArgs e)
+    {
+        if (e.Code == "Enter" || e.Code == "NumpadEnter")
+        {
+
+            await AddNews();
+
+        }
+    }
+
 
 
 
 }
+
