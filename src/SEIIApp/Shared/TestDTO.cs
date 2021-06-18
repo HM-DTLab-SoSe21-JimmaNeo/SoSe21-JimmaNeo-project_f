@@ -22,10 +22,6 @@ namespace SEIIApp.Shared
 
         public UserDTO Author { get; set; }
 
-        public int MaxPoints { get; set; }
-
-        public int ReachedPoints { get; set; }
-
     }
 
     public class TestDTO : TestBaseDTO
