@@ -11,7 +11,7 @@ namespace SEIIApp.Shared
     {
         public int LectureId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Lecture Topic is required")]
         [StringLength(50)]
         public string Topic { get; set; }
 
@@ -23,12 +23,14 @@ namespace SEIIApp.Shared
 
     public class LectureDTO : LectureBaseDTO
     {
-        // TDDO ??[ValidateComplexType]
+        [ValidateComplexType]
 
         public string Text { get; set; }
 
+        [ValidateComplexType]
         public List<PictureContentDTO> Content { get; set; }
 
+        [ValidateComplexType]
         public List<VideoContentDTO> Videos{ get; set; }
 
         public TestBaseDTO Test { get; set; }

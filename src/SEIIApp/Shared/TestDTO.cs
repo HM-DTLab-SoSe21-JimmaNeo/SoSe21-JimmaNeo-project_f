@@ -12,8 +12,8 @@ namespace SEIIApp.Shared
     {
         public int TestID { get; set; }
 
-        [Required]
-        [StringLength(100)]
+        [Required(ErrorMessage = "Test Topic is required")]
+        [StringLength(50)]
         public string Topic { get; set; }
         
         public string Description { get; set; }

@@ -1,11 +1,24 @@
-﻿<h4>Further links about the topic</h4>
+﻿@using SEIIApp.Shared;
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+</head>
 
+<h4>Website links about the topic</h4>
 <EditForm Model="FurtherLinkDto">
     <DataAnnotationsValidator />
-    <label>Link:</label>
-    <InputText @bind-Value="FurtherLinkDto.Link" />
-    <label>Description:</label>
-    <InputText @bind-Value="FurtherLinkDto.Description" />
+    <div class="input-group">
+
+        <input type="text" style='width:100%' required @bind-value="FurtherLinkDto.Link" @bind-value:event="oninput">
+        <span class="highlight"></span>
+        <span class="bar"></span>
+        <label class="hoverlabel">Website-Link</label>
+    </div>
+    
+    <div class="form-floating">
+        <textarea class="form-control" id="inputMessage" type="text" placeholder="Enter description here..." style="height: 10rem" @bind="FurtherLinkDto.Description"></textarea>
+    </div>
 
     <ValidationSummary />
 </EditForm>

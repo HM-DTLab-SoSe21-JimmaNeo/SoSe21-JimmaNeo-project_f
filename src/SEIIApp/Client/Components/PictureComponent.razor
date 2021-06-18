@@ -1,20 +1,20 @@
 ﻿@if (OnEditing)
 {
-    <h3>Upload pictures<br />(PNG Format)</h3><br />
+    <h3>Pictures<br />(PNG Format)</h3><br />
     <EditForm Model="PictureContentDTO">
         <DataAnnotationsValidator />
         <div class="row">
-            <div class="col-lg-4 col-md-6 col-sm-8">
+            <div class="col-lg-4 col-md-6 col-sm-8 text-center">
                 <img src="@PictureContentDTO.Path" class="img-thumbnail"> <br /> <br />
-                <InputFile OnChange="@OnInputFileChanged" style="margin-bottom: 1rem;" class="btn btn-outline-primary">
+                <InputFile OnChange="@OnInputFileChanged" style="margin-bottom: 1rem;" class="btn btn-outline-dark">
                 </InputFile>
             </div>
 
         </div>
-        <div>
-            <label>Description:</label>
-            <InputText @bind-Value="PictureContentDTO.Description" />
+        <div class="form-floating">
+            <textarea class="form-control" id="inputMessage" type="text" placeholder="Enter description here..." style="height: 10rem" @bind="PictureContentDTO.Description"></textarea>
         </div>
+
 
         <ValidationSummary />
     </EditForm>
