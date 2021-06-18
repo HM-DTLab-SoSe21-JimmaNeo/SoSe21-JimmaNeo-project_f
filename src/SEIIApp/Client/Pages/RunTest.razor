@@ -93,6 +93,10 @@
         TestDto.MaxPoints = CountMaxPoints(TestDto.Questions);
         TestDto.ReachedPoints = CountReachedPoints(TestDto.Questions);
 
+        CompletedTestDTO completedTest = CreateCompletedTest(TestDto);
+
+        CompletedTestService.AddCompletedTest(completedTest);
+
         var answer = await TestService.AddOrUpdateTest(TestDto);
         if (answer != null)
         {
