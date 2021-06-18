@@ -1,6 +1,7 @@
 ﻿@page "/testedit/{TestID:int}"
 
 @inject Services.TestsDefinitionBackendAccessService TestDefinitionService
+@inject UserServicee UserService
 
 @inject NavigationManager NavigationManager
 
@@ -28,8 +29,10 @@
                     @foreach (var video in TestDto.Videos)
                     {
                         <VideoComponent VideoContentDTO="video"></VideoComponent>
-                        <button class="btn btn-light btn-sm my-3" @onclick="() => DeleteVideoContent(video)">Remove
-                            Video</button>
+                        <button class="btn btn-light btn-sm my-3" @onclick="() => DeleteVideoContent(video)">
+                            Remove
+                            Video
+                        </button>
                     }
                     <br /><button class="btn btn-light" @onclick="AddVideoContent">Add Video</button><br />
 
@@ -43,7 +46,7 @@
                         <div class="card">
                             <div class="card-body">
                                 <!-- Component for questions in quiz -->
-                        <QuestionDefComponent QuestionDto="question"></QuestionDefComponent>
+                                <QuestionDefComponent QuestionDto="question"></QuestionDefComponent>
                                 <button class="btn btn-light" @onclick="() => RemoveQuestion(question)">Remove Question</button>
                             </div>
                         </div>
@@ -52,8 +55,12 @@
                     <button class="btn btn-light btn-sm my-3" @onclick="AddQuestion">Add Question</button>
 
                     <br />
-                    <p><b>You can add further information about this topic to give you students the possibility to expand
-                            their knowledge!</b></p><br />
+                    <p>
+                        <b>
+                            You can add further information about this topic to give you students the possibility to expand
+                            their knowledge!
+                        </b>
+                    </p><br />
 
                     @foreach (var link in TestDto.FurtherLinks)
                     {
@@ -61,8 +68,10 @@
                             <div class="card-body">
 
                                 <FurtherLinkComponent FurtherLinkDto="link"></FurtherLinkComponent>
-                                <button class="btn btn-light btn-sm my-3" @onclick="() => DeleteFurtherLink(link)">Remove
-                                    Link</button>
+                                <button class="btn btn-light btn-sm my-3" @onclick="() => DeleteFurtherLink(link)">
+                                    Remove
+                                    Link
+                                </button>
                             </div>
                         </div>
                     }
@@ -75,8 +84,10 @@
                         @foreach (var video in TestDto.VideosFurtherInformation)
                         {
                             <VideoComponent VideoContentDTO="video"></VideoComponent>
-                            <button class="btn btn-light btn-sm my-3" @onclick="() => DeleteVideosFurtherInformation(video)">Remove
-                                Video</button>
+                            <button class="btn btn-light btn-sm my-3" @onclick="() => DeleteVideosFurtherInformation(video)">
+                                Remove
+                                Video
+                            </button>
                         }
                     }
                     <br /><button class="btn btn-light" @onclick="AddVideosFurtherInformation">Add Video</button><br />
@@ -84,13 +95,17 @@
                     @foreach (var content in TestDto.Content)
                     {
                         <PictureComponent PictureContentDTO="content"></PictureComponent>
-                        <button class="btn btn-light btn-sm my-3" @onclick="() => DeletePictureContent(content)">Remove
-                            Picture</button>
+                        <button class="btn btn-light btn-sm my-3" @onclick="() => DeletePictureContent(content)">
+                            Remove
+                            Picture
+                        </button>
                     }
                     <br /><button class="btn btn-light" @onclick="AddPictureContent">Add Picture</button><br />
                     <hr />
-                    <button class="btn btn-light" @onclick="() => SaveContentToBackend(this.TestDto)">Save Complete
-                        Quiz</button>
+                    <button class="btn btn-light" @onclick="() => SaveContentToBackend(this.TestDto)">
+                        Save Complete
+                        Quiz
+                    </button>
                     <ValidationSummary />
                 </EditForm>
 
@@ -133,15 +148,7 @@
     private void PrepareEditOrAddOfTestDefinition(TestDTO test)
     {
         if (test.Questions == null) test.Questions = new List<QuestionDTO>();
-        if (test.Author == null) test.Author = new UserDTO()
-        {
-            FirstName = "Ezzy",
-            LastName = "Bert",
-            Name = "user4",
-            Role =
-        Role.Teacher,
-            UserId = 4
-        }; //ToDo
+        if (test.Author == null) test.Author = UserService.User;
         if (test.Videos == null) test.Videos = new List<VideoContentDTO>();
         if (test.VideosFurtherInformation == null) test.VideosFurtherInformation = new List<VideoContentDTO>();
         if (test.Content == null) test.Content = new List<PictureContentDTO>();

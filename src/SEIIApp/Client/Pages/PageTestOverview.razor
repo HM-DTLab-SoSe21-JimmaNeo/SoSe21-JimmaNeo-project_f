@@ -5,71 +5,87 @@
 
 <div class="container">
 
-    <h2 class="text-center">Tests</h2>
+    <h2 class="text-center">Your Tests</h2>
     <hr class="divider" b-6rl0707n1o="">
     <div class="col text-center">
 
         <div class="px-5">
-             <EditForm Model="@searchValue">
-            <div class="searchcostum input-group pt-2">
+            <EditForm Model="@searchValue">
+                <div class="searchcostum input-group pt-2">
 
 
-                @if (isFiltered == false)
-                {
-                    <div class="px-auto">
-                        <InputText type="search" class="form-control rounded" placeholder="Search by name"
-                                   aria-label="Name of the Content" aria-describedby="search-addon" @bind-Value="@searchValue" />
+                    @if (isFiltered == false)
+                    {
+                        <div class="px-auto">
+                            <InputText type="search" class="form-control rounded" placeholder="Search by name"
+                                       aria-label="Name of the Content" aria-describedby="search-addon" @bind-Value="@searchValue" />
 
 
-                    </div>
-                    <button class="btn btn-outline-primary btn-sm" @onclick="SearchContent">Search</button>
-                    <hr/>
+                        </div>
+                        <button class="btn btn-outline-primary btn-sm" @onclick="SearchContent">Search</button>
+                        <hr />
 
-                }
-                else
-                {
-                    <div class="text-center pb-2">
-                        <button class="btn btn-outline-primary" @onclick="ResetSearchContent">Return</button>
-                    </div>
-                   <hr/>
-                }
+                    }
+                    else
+                    {
+                        <div class="text-center pb-2">
+                            <button class="btn btn-outline-primary" @onclick="ResetSearchContent">Return</button>
+                        </div>
+                        <hr />
+                    }
 
-            </div>
-        </EditForm>
-     @if (UserService.User != null && UserService.User.Role == Role.Teacher)
-        {
-            <div class="text-center py-2">
-                <button class="btn btn-outline-success btn-sm" @onclick="AddTest">Add Test</button>
-            </div>
-        }
+                </div>
+            </EditForm>
+            @if (UserService.User != null && UserService.User.Role == Role.Teacher)
+            {
+                <div class="text-center py-2">
+                    <button class="btn btn-outline-success btn-sm" @onclick="AddTest">Add Test</button>
+                </div>
+            }
         </div>
     </div>
 
     @if (Tests != null)
 
+    {
+        @if (UserService.User != null && UserService.User.Role == Role.Teacher)
         {
             <ul class="list-group list-group-flush">
 
                 @foreach (var content in Tests)
                 {
-                <li class="text-center list-group-item">
-                    @(content.DateOfCreation.ToShortDateString()) <b>@(content.Topic)</b> 
-                    @if (UserService.User != null && UserService.User.Role == Role.Teacher)
-                    {
-                    <button class="btn btn-outline-dark btn-sm" @onclick="() => EditQuiz((TestDTO)content)">Edit</button>
-                    <button class="btn btn-outline-danger btn-sm" @onclick="() => DeleteTest(content)">Delete</button>
-                    }
-                    <button class="btn btn-outline-success btn-sm" @onclick="() => StartTest(content.TestID)">Start</button>
-                    <button class="btn btn-outline-primary btn-sm" @onclick="() => GetFurtherTopicInformations(content.TestID)">Topic</button>
-                </li>
+                    <li class="text-center list-group-item">
+                        @(content.DateOfCreation.ToShortDateString()) <b>@(content.Topic)</b>
+
+                        <button class="btn btn-outline-dark btn-sm" @onclick="() => EditQuiz((TestDTO)content)">Edit</button>
+                        <button class="btn btn-outline-danger btn-sm" @onclick="() => DeleteTest(content)">Delete</button>
+
+                        <button class="btn btn-outline-success btn-sm" @onclick="() => StartTest(content.TestID)">Start</button>
+                        <button class="btn btn-outline-primary btn-sm" @onclick="() => GetFurtherTopicInformations(content.TestID)">Topic</button>
+                    </li>
                 }
             </ul>
         }
-        else
+        else if (UserService.User != null && UserService.User.Role == Role.Student)
         {
-            <h5 class="text-center">Loading ...  or no content found.</h5>
+            <ul class="list-group list-group-flush">
+
+                @foreach (var content in Tests)
+                {
+                    <li class="text-center list-group-item">
+                        @(content.DateOfCreation.ToShortDateString()) <b>@(content.Topic)</b>
+                        <button class="btn btn-outline-success btn-sm" @onclick="() => StartTest(content.TestID)">Start</button>
+                        <button class="btn btn-outline-primary btn-sm" @onclick="() => GetFurtherTopicInformations(content.TestID)">Topic</button>
+                    </li>
+                }
+            </ul>
         }
- 
+    }
+    else
+    {
+        <h5 class="text-center">Loading ...  or no content found.</h5>
+    }
+
 </div>
 
 @code {
