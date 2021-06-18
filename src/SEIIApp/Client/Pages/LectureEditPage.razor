@@ -1,9 +1,11 @@
 ﻿@page "/lectureedit/{LectureID:int}"
 
+@inject UserServicee UserService
 
 @inject Services.LectureBackendAccessService LectureService
 @inject NavigationManager NavigationManager
 @inject Services.TestsDefinitionBackendAccessService TestService
+
 
 <h3>LectureEditPage</h3>
 <div class="container">
@@ -13,52 +15,70 @@
 
             @if (LectureDto != null)
             {
-
-        <EditForm EditContext="@context" OnSubmit="OnSubmit">
-
-            <label>Lecture Name:</label>
-            <InputText @bind-Value="LectureDto.Topic" />
-
-
-            @foreach (var video in LectureDto.Videos)
-            {
-                <div class="card">
-                    <div class="card-body">
-
-                        <VideoComponent VideoContentDTO="video"></VideoComponent>
-                        <button class="btn btn-light btn-sm my-3" @onclick="() => DeleteVideoContent(video)">Remove Video</button>
-                    </div>
-                </div>
-            }
-            <button class="btn btn-light" @onclick="AddVideoContent">Add Video</button>
-
-            <hr />
-            @foreach (var picture in LectureDto.Content)
-            {
-                <div class="card">
-                    <div class="card-body">
-                        <PictureComponent PictureContentDto="picture"></PictureComponent>
-                        <button class="btn btn-light btn-sm my-3" @onclick="() => DeletePictureContent(picture)">Remove Picture</button>
-                    </div>
-                </div>
-
-            }
-            <button class="btn btn-light btn-sm my-3" @onclick="AddPictureContent">Add Picture</button><br />
-            <label>Test topic:</label>
-            <InputText @bind-Value="TestTopic" />
-
-            <button class="btn btn-light btn-sm my-3" @onclick="AddTestToLecture">Add Test</button><br />
-
-            <label>Lecture Text:</label>
-            
-            <InputText @bind-Value="LectureDto.Text" />
-
-            <label>Lecture Description:</label>
-            <InputText @bind-Value="LectureDto.Test.Description" />
+               // if (UserService.User == null) Console.WriteLine("User ist null"); // wenn student angemeldet ist wird er null
+                if (UserService.User != null && UserService.User.Role == Role.Teacher)
+                {
+                    VideoComponent.OnEditing = true;
+                    PictureComponent.OnEditing = true;
+                <EditForm EditContext="@context" OnSubmit="OnSubmit">
 
 
-            <button class="btn btn-light" @onclick="() => SaveContentToBackend(this.LectureDto)">Save Lecture</button>
-        </EditForm>
+
+                    <label>Lecture Name:</label>
+                    <InputText @bind-Value="LectureDto.Topic" />
+
+
+                    @foreach (var video in LectureDto.Videos)
+                    {
+                        <div class="card">
+                            <div class="card-body">
+
+                                <VideoComponent VideoContentDTO="video"></VideoComponent>
+                                <button class="btn btn-light btn-sm my-3" @onclick="() => DeleteVideoContent(video)">Remove Video</button>
+                            </div>
+                        </div>
+                    }
+                    <button class="btn btn-light" @onclick="AddVideoContent">Add Video</button>
+
+                    <hr />
+
+
+                    @foreach (var picture in LectureDto.Content)
+                    {
+                        <div class="card">
+                            <div class="card-body">
+                                <PictureComponent PictureContentDTO="picture"></PictureComponent>
+                                <button class="btn btn-light btn-sm my-3" @onclick="() => DeletePictureContent(picture)">Remove Picture</button>
+                            </div>
+                        </div>
+
+                    }
+                    <br /><button class="btn btn-light" @onclick="AddPictureContent">Add Picture</button><br />
+                    <hr />
+
+
+
+
+                    <label>Test ID:</label>
+                    <InputText @bind-Value="TestTopic" />
+
+                    <button class="btn btn-light btn-sm my-3" @onclick="AddTestToLecture">Add Test</button><br />
+
+                    <label>Lecture Text:</label>
+
+                    <InputText @bind-Value="LectureDto.Text" />
+
+                    <label>Lecture Description:</label>
+                    <InputText @bind-Value="LectureDto.Test.Description" />
+
+
+                    <button class="btn btn-light" @onclick="() => SaveContentToBackend(this.LectureDto)">Save Lecture</button>
+                </EditForm>
+                }
+                else
+                {
+                    <label>No access to this page!</label>
+                }
 
             }
             else
@@ -72,8 +92,8 @@
 
 @code {
 
-        [Parameter]
-        public int LectureID { get; set; }
+    [Parameter]
+    public int LectureID { get; set; }
 
     public LectureDTO LectureDto { get; set; }
 
@@ -82,11 +102,12 @@
     private TestBaseDTO TestOfLecture { get; set; }
 
     private int TestId { get; set; }
+
     private string TestTopic { get; set; }
 
     protected override async Task OnParametersSetAsync()
     {
-        
+
         if (LectureID != 0)
         {
             var existingLecture = await LectureService.GetLectureById(LectureID);
@@ -109,7 +130,7 @@
     private void PrepareEditOrAddOfLecture(LectureDTO lectureDto)
     {
         if (lectureDto.Topic == null) lectureDto.Topic = "lecture Topic";
-        if (lectureDto.Content == null) lectureDto.Content = new List<PictureContentDTO>();
+
         if (lectureDto.Author == null) lectureDto.Author = new UserDTO() { FirstName = "Ezzy", LastName = "Bert", Name = "user4", Role = Role.Teacher, UserId = 4 }; //ToDo
                                                                                                                                                                      //if(test.TestContent == null) test.TestContent = new List<TestContentDTO>();
         if (lectureDto.Videos == null) lectureDto.Videos = new List<VideoContentDTO>();
@@ -161,8 +182,8 @@
     {
 
         int testId = TopicToId(TestTopic);
-        var Test = await TestService.GetTestById(testId);
-        this.LectureDto.Test = new TestBaseDTO() { Topic = Test.Topic, Author = Test.Author, Description = Test.Description, TestID = Test.TestID};
+        var Test = await LectureService.GetTestById(testId);
+        this.LectureDto.Test = new TestBaseDTO() { Topic = Test.Topic, Author = Test.Author, Description = Test.Description, TestID = Test.TestID };
 
         // GetTestById();
         //this.LectureDto.Test =TestOfLecture;

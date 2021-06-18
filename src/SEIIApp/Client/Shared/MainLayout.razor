@@ -13,15 +13,15 @@
         <div class="main">
             <div class="top-row px-4">
 
-                @if (MyUserService.User == null)
-                {
-                    <NavLink href="/login"> <button type="button" class="btn btn-outline-primary">Login</button></NavLink>
-                }
-                else
-                {
-                    <button type="button" class="btn btn-primary" @onclick="() => Logout()">Logout</button>
-                }
+            @if (MyUserService.User == null)
+            {
+                <div>
+                <button type="button" class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2 logIn" @onclick="() => Login()">Login</button>
             </div>
+            } else {
+            <button type ="button" class="btn btn-lg btn-primary btn-block btn-logout text-uppercase font-weight-bold mb-2 logIn"  @onclick="() => Logout()">Logout</button>
+          }
+        </div>
 
             <div class="content px-4">
                 @Body

@@ -11,7 +11,6 @@ namespace SEIIApp.Server.DataAccess
     {
         public static void InitalizeTestData(Services.UserService userService, Services.TestService testService, Services.NewsService newsService, Services.CompletedTestService completedTestService,Services.LectureService lectureService)
         {
-            AddNews(newsService);
             AddUser(userService);
             
             AddTests(testService, userService, newsService);
@@ -47,12 +46,8 @@ namespace SEIIApp.Server.DataAccess
             }
         }
 
-        private static void AddNews(Services.NewsService newsService)
-        {
-            News news = new() { Topic = "Este News", Content = "Dies ist die erste News auf diesem System", DateOfCreation = DateTime.UtcNow.Date };
-            newsService.AddNews(news);
-        }
 
+     
         private static void AddCompletedTest(Services.TestService testService, Services.UserService userService, Services.CompletedTestService completedTestService)
         {
             Random random = new Random();
@@ -122,6 +117,7 @@ namespace SEIIApp.Server.DataAccess
                
                // test = new Services.TestService();
                 lecture.Test = testservice.GetTestWithId(i);
+                //lectureService.UpdateLecture(lecture);
             }
         }
 
