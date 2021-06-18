@@ -19,5 +19,8 @@ namespace SEIIApp.Shared
 
         public DateTime DateOfCreation { get; set; }
 
+        public string Creator { get; set; }
+
+        public string Tags { get; set; }
     }
 }
