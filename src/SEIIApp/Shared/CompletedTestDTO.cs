@@ -16,5 +16,7 @@ namespace SEIIApp.Shared
 
         public int ReachedPoints { get; set; }
 
+        public int PossiblePoints { get; set; }
+
     }
 }

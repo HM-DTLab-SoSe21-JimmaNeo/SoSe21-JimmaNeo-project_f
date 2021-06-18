@@ -49,6 +49,11 @@ namespace SEIIApp.Server.Services
             return GetQueryableForTest().Where(completedTest => completedTest.SolvedTest.TestId == testId).ToArray();
         }
 
+        public CompletedTest[] GetCompletedTestsWithAuthorId(int authorId)
+        {
+            return GetQueryableForTest().Where(completedTest => completedTest.SolvedTest.Author.UserId == authorId).ToArray();
+        }
+
         public CompletedTest AddCompletedTest(CompletedTest completedTest)
         {
             User user = UserService.GetUserWithId(completedTest.Student.UserId);
