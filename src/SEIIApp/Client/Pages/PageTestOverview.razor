@@ -17,7 +17,7 @@
                     @if (isFiltered == false)
                     {
                         <div class="px-auto">
-                            <InputText type="search" class="form-control rounded" placeholder="Search by name"
+                            <InputText type="search" class="form-control rounded" placeholder="Search by Testname"
                                        aria-label="Name of the Content" aria-describedby="search-addon" @bind-Value="@searchValue" />
 
 
@@ -54,15 +54,23 @@
 
                 @foreach (var content in Tests)
                 {
-                    <li class="text-center list-group-item">
-                        @(content.DateOfCreation.ToShortDateString()) <b>@(content.Topic)</b>
+                <li class="text-center list-group-item">
+                    <b>
+                        @(content.TestID)
+                    </b>
+                    @(content.DateOfCreation.ToShortDateString())
+                    @(content.DateOfCreation.ToShortDateString())
+                    @(content.Author.Name)
+                    @(content.Author.LastName)
+                    <b>
+                        @(content.Topic)
+                    </b>
 
-                        <button class="btn btn-outline-dark btn-sm" @onclick="() => EditQuiz((TestDTO)content)">Edit</button>
-                        <button class="btn btn-outline-danger btn-sm" @onclick="() => DeleteTest(content)">Delete</button>
-
-                        <button class="btn btn-outline-success btn-sm" @onclick="() => StartTest(content.TestID)">Start</button>
-                        <button class="btn btn-outline-primary btn-sm" @onclick="() => GetFurtherTopicInformations(content.TestID)">Topic</button>
-                    </li>
+                    <button class="btn btn-outline-dark btn-sm" @onclick="() => EditQuiz((TestDTO)content)">Edit</button>
+                    <button class="btn btn-outline-danger btn-sm" @onclick="() => DeleteTest(content)">Delete</button>
+                    <button class="btn btn-outline-success btn-sm" @onclick="() => StartTest(content.TestID)">Start</button>
+                    <button class="btn btn-outline-primary btn-sm" @onclick="() => GetFurtherTopicInformations(content.TestID)">Topic</button>
+                </li>
                 }
             </ul>
         }
@@ -72,11 +80,20 @@
 
                 @foreach (var content in Tests)
                 {
-                    <li class="text-center list-group-item">
-                        @(content.DateOfCreation.ToShortDateString()) <b>@(content.Topic)</b>
-                        <button class="btn btn-outline-success btn-sm" @onclick="() => StartTest(content.TestID)">Start</button>
-                        <button class="btn btn-outline-primary btn-sm" @onclick="() => GetFurtherTopicInformations(content.TestID)">Topic</button>
-                    </li>
+                <li class="text-center list-group-item">
+                    <b>
+                        @(content.TestID)
+                    </b>
+                    @(content.DateOfCreation.ToShortDateString())
+                    @(content.DateOfCreation.ToShortDateString())
+                    @(content.Author.Name)
+                    @(content.Author.LastName)
+                    <b>
+                        @(content.Topic)
+                    </b>
+                    <button class="btn btn-outline-success btn-sm" @onclick="() => StartTest(content.TestID)">Start</button>
+                    <button class="btn btn-outline-primary btn-sm" @onclick="() => GetFurtherTopicInformations(content.TestID)">Topic</button>
+                </li>
                 }
             </ul>
         }
