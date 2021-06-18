@@ -139,7 +139,7 @@
 
 
 
-            private async void DeleteUser(UserDTO user)
+            private async Task DeleteUser(UserDTO user)
             {
 
                 bool successfull = await UserService.DeleteUser(user.UserId);

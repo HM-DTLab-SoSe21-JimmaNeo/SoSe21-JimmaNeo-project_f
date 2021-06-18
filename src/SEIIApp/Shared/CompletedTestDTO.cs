@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace SEIIApp.Shared
 {
-    public class CompletedTestDTO
-    {
-        public int CtId { get; set; }
+  public class CompletedTestDTO
+  {
+    public int CtId { get; set; }
 
-        public TestBaseDTO SolvedTest { get; set; }
+    public TestBaseDTO SolvedTest { get; set; }
 
-        public UserDTO Student { get; set; }
+    public UserDTO Student { get; set; }
 
-        public int ReachedPoints { get; set; }
+    public int ReachedPoints { get; set; }
 
-        public int PossiblePoints { get; set; }
+    public int MaxPoints { get; set; }
 
-    }
+  }
 }

@@ -82,11 +82,11 @@
 
                 case 1: //Student
 
-                    NavigationManager.NavigateTo("/welcomestudent");
+                    NavigationManager.NavigateTo($"/welcomestudent/{MyUserService.User.UserId}");
                     break;
                 case 2: //Teacher
 
-                    NavigationManager.NavigateTo("/welcometeacher");
+                    NavigationManager.NavigateTo($"/welcometeacher/{MyUserService.User.UserId}");
                     break;
                 case 3: //Admin
                     NavigationManager.NavigateTo("/manageuser");
