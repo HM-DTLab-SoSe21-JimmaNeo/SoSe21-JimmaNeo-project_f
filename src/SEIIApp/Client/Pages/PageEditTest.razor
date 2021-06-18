@@ -13,8 +13,8 @@
             @if (TestDto != null)
             {
 
-                <EditForm EditContext="@context" OnSubmit="OnSubmit">
-                    <DataAnnotationsValidator />
+                <EditForm EditContext="@context" OnValidSubmit="SaveContentToBackend">
+                    <ObjectGraphDataAnnotationsValidator />
 
                     <label>Name of the Test:</label><br />
                     <InputText @bind-Value="TestDto.Topic" />
@@ -45,7 +45,6 @@
                     {
                         <div class="card">
                             <div class="card-body">
-                                <!-- Component for questions in quiz -->
                                 <QuestionDefComponent QuestionDto="question"></QuestionDefComponent>
                                 <button class="btn btn-light" @onclick="() => RemoveQuestion(question)">Remove Question</button>
                             </div>
@@ -102,7 +101,7 @@
                     }
                     <br /><button class="btn btn-light" @onclick="AddPictureContent">Add Picture</button><br />
                     <hr />
-                    <button class="btn btn-light" @onclick="() => SaveContentToBackend(this.TestDto)">
+                    <button class="btn btn-light" @onclick="SaveContentToBackend">
                         Save Complete
                         Quiz
                     </button>
@@ -172,7 +171,7 @@
 
     }
 
-    private async void SaveContentToBackend(TestDTO TestDto)
+    private async void SaveContentToBackend()
     {
         var isValid = context.Validate();
         if (isValid)

@@ -11,6 +11,7 @@ namespace SEIIApp.Shared
     public class VideoContentDTO
     {
         [Required]
+        [StringLength(100, MinimumLength = 1)]
         public string Path { get; set; }
 
         [StringLength(250)]
