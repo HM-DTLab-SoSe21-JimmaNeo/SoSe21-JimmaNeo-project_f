@@ -57,7 +57,8 @@ namespace SEIIApp.Server.DataAccess
             for (int i = 1; i < 6; i++)
             {
                 Test solved = testService.GetTestWithId(i);
-                CompletedTest completedTest = new() { Student = user, SolvedTest = solved, ReachedPoints = random.Next( 0, 10)};
+                CompletedTest completedTest = new() { Student = user, SolvedTest = solved, ReachedPoints = random.Next( 0, 10), MaxPoints = 9};
+
 
                 completedTestService.AddCompletedTest(completedTest);
             }
