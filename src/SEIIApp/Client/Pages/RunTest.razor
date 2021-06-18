@@ -3,6 +3,7 @@
 @inject Services.TestsDefinitionBackendAccessService TestService
 @inject Services.CompletedTestBackendAccessService CompletedTestService
 @inject NavigationManager NavigationManager
+@inject UserServicee UserService
 
 
 <div class="container">
@@ -27,9 +28,9 @@
                     {
                         <hr />
                         <li class="text-center list-group-item">
-                <br />
-                <h3> @(question.QuestionText) </h3>
-            </li>
+                            <br />
+                            <h3> @(question.QuestionText) </h3>
+                        </li>
                         if (question.Pictures.Any())
                         {
                             foreach (var picture in question.Pictures)
@@ -149,6 +150,7 @@
         completedTest.SolvedTest = test;
         completedTest.MaxPoints = test.MaxPoints;
         completedTest.ReachedPoints = test.ReachedPoints;
+        completedTest.Student = UserService.User;
 
         return completedTest;
     }
