@@ -77,9 +77,7 @@
                 <textarea class="form-control" id="inputMessage" type="text" placeholder="Enter Text for lecture here..." style="height: 15rem" @bind="LectureDto.Text"></textarea>
             </div><br />
             <hr />
-            <label>Lecture Description:</label><br />
-            <InputText @bind-Value="LectureDto.Test.Description" /><br />
-            <hr />
+            
 
 
             <button class="btn btn-light" @onclick="() => SaveContentToBackend(this.LectureDto)">Save Lecture</button>
