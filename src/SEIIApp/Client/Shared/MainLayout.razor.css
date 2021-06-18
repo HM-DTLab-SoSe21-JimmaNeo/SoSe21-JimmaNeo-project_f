@@ -68,18 +68,27 @@
         padding-right: 1.5rem !important;
     }
 
-    //navmenue
+    .navbar-toggler {
+        display: none;
+    }
+
+    .collapse {
+        /* Never collapse the sidebar for wide screens */
+        display: block;
+    }
+}
+
+    /*navbar*/
 
     .navbar-toggler {
         background-color: rgb(54,255,127);
     }
-
     .top-row {
         height: 3.5rem;
         background-color: #07ff8821;
     }
 
-    .navbar-brand{
+    .navbar-brand {
         font-size: 1.1rem;
     }
 
@@ -122,16 +131,7 @@
                 color: white;
             }
 
-    @media (min-width: 641px) {
-        .navbar-toggler {
-            display: none;
-        }
 
-        .collapse {
-            /* Never collapse the sidebar for wide screens */
-            display: block;
-        }
-    }
 
     .logo-image {
         width: auto;
@@ -140,13 +140,6 @@
         overflow: hidden;
         margin-top: -6px;
     }
-
-
-
-
-
-
-}
 
 .btn-primary {
     background-color: #0779e4;
