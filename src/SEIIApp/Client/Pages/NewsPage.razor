@@ -1,9 +1,9 @@
-﻿@page "/news"
+@page "/news"
 @inject UserServicee UserService
 @inject NewsBackendAccessService NewsService
 <head>
     <style>
-        .solid{
+        .solid {
             border-style: solid;
             border-width: thin;
         }
@@ -22,74 +22,63 @@
     <input @bind="Content" />
     <button class="btn btn-success" @onclick="AddNews">Add</button>
     <label>@Message</label>
-</div>
-
-}
+</div>}
 
 @if (News != null)
 {
-    @foreach (var news in News)
+@foreach (var news in News)
+{
+<div class="solid">
+    <label>@news.Topic</label> <label>From @news.DateOfCreation.ToString("yyyy'-'MM'-'dd")</label>
+    <p>@news.Content</p>
+    @if (UserService.User != null && UserService.User.Role == Role.Admin)
     {
-        <div class="solid">
-            <label>@news.Topic</label> <label>From @news.DateOfCreation.ToString("yyyy'-'MM'-'dd")</label>
-            <p>@news.Content</p>
-            @if (UserService.User != null && UserService.User.Role == Role.Admin)
+<button class="btn btn-outline-danger btn-sm" @onclick="() => DeleteContent(news)">Delete</button>}
+
+</div>}}
+
+
+@code { [Parameter]
+            public List<NewsDTO> News { get; set; }
+
+            private string Topic { get; set; }
+
+            private string Content { get; set; }
+
+            private string Message { get; set; }
+
+            protected override async Task OnParametersSetAsync()
             {
-                <button class="btn btn-outline-danger btn-sm" @onclick="() => DeleteContent(news)">Delete</button>
+                await base.OnParametersSetAsync();
+                News = await NewsService.GetNews();
+                News.Reverse();
             }
 
-        </div>
-    }
-}
+            private async Task AddNews()
+            {
+                NewsDTO NewNews = new NewsDTO() { Topic = Topic, Content = Content, DateOfCreation = DateTime.Now };
+                NewNews = await NewsService.AddOrUpdateNews(NewNews);
 
+                if (NewNews != null)
+                {
+                    News.Insert(0, NewNews);
+                    Message = "Successfully added new News.";
 
-@code {
+                    Topic = "";
+                    Content = "";
+                }
+                else
+                {
+                    Message = "Couldn't add new News";
+                }
 
-    [Parameter]
-    public List<NewsDTO> News { get; set; }
+            }
 
-    private string Topic { get; set; }
-
-    private string Content { get; set; }
-
-    private string Message { get; set; }
-
-    protected override async Task OnParametersSetAsync()
-    {
-        await base.OnParametersSetAsync();
-        News = await NewsService.GetNews();
-        News.Reverse();
-    }
-
-    private async Task AddNews()
-    {
-        NewsDTO NewNews = new NewsDTO() { Topic = Topic, Content = Content, DateOfCreation = DateTime.Now};
-        NewNews = await NewsService.AddOrUpdateNews(NewNews);
-
-        if (NewNews != null)
-        {
-            News.Insert(0, NewNews);
-            Message = "Successfully added new News.";
-
-            Topic = "";
-            Content = "";
-        } else
-        {
-            Message = "Couldn't add new News";
-        }
-
-    }
-
-    private async void DeleteContent(NewsDTO news)
-    {
-        bool deleted = await NewsService.DeleteNews(news.NewsID);
-        if (deleted)
-        {
-            News.Remove(news);
-        }
-    }
-
-
-
-
-}
+            private async void DeleteContent(NewsDTO news)
+            {
+                bool deleted = await NewsService.DeleteNews(news.NewsID);
+                if (deleted)
+                {
+                    News.Remove(news);
+                }
+            } }

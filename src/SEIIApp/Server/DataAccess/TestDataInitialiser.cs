@@ -11,7 +11,6 @@ namespace SEIIApp.Server.DataAccess
     {
         public static void InitalizeTestData(Services.UserService userService, Services.TestService testService, Services.NewsService newsService, Services.CompletedTestService completedTestService,Services.LectureService lectureService)
         {
-            AddNews(newsService);
             AddUser(userService);
             
             AddTests(testService, userService, newsService);
@@ -47,6 +46,30 @@ namespace SEIIApp.Server.DataAccess
                 test.Description = "ExampleTest " + i;
                 testService.AddTest(test);
             }
+        }
+
+
+     
+        private static void AddCompletedTest(Services.TestService testService, Services.UserService userService, Services.CompletedTestService completedTestService)
+        {
+            Random random = new Random();
+            User user = userService.GetUserWithId(7);
+            for (int i = 1; i < 6; i++)
+            {
+                Test solved = testService.GetTestWithId(i);
+                CompletedTest completedTest = new() { Student = user, SolvedTest = solved, ReachedPoints = random.Next( 0, 10)};
+
+                completedTestService.AddCompletedTest(completedTest);
+            }
+        }
+
+
+        private static User GenerateUser(int id, Role role)
+        {
+            User u = new User() { Name = $"user{id}", FirstName = $"first_{id}", LastName = $"last_{id}"};
+            u.Pw = $"pw{id}".GetHashCode().ToString();
+            u.Role = role;
+            return u;
         }
   public static Test GenerateTest(Services.UserService userService)
         {
@@ -147,27 +170,10 @@ namespace SEIIApp.Server.DataAccess
             newsService.AddNews(news);
         }
 
-        private static void AddCompletedTest(Services.TestService testService, Services.UserService userService, Services.CompletedTestService completedTestService)
-        {
-            Random random = new Random();
-            User user = userService.GetUserWithId(7);
-            for (int i = 1; i < 6; i++)
-            {
-                Test solved = testService.GetTestWithId(i);
-                CompletedTest completedTest = new() { Student = user, SolvedTest = solved, ReachedPoints = random.Next( 0, 10)};
-
-                completedTestService.AddCompletedTest(completedTest);
-            }
-        }
+       
 
 
-        private static User GenerateUser(int id, Role role)
-        {
-            User u = new User() { Name = $"user{id}", FirstName = $"first_{id}", LastName = $"last_{id}"};
-            u.Pw = $"pw{id}".GetHashCode().ToString();
-            u.Role = role;
-            return u;
-        }
+        
 
       
         private static void AddLectures(Services.LectureService lectureService, Services.UserService userService, Services.TestService testservice)
