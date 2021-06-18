@@ -41,6 +41,11 @@ namespace SEIIApp.Client.Services
             return await HttpClient.GetFromJsonAsync<CompletedTestDTO[]>(GetCompletedTestUrl() + $"/testId/{testId}");
         } 
 
+        public async Task<CompletedTestDTO[]> GetCompletedTestsWithAuthotId(int authorId)
+        {
+            return await HttpClient.GetFromJsonAsync<CompletedTestDTO[]>(GetCompletedTestUrl() + $"/authorId/{authorId}");
+        }
+
         public async Task<CompletedTestDTO> AddCompletedTest(CompletedTestDTO completedTestDTO)
         {
             var response = await HttpClient.PutAsJsonAsync(GetCompletedTestUrl(), completedTestDTO);
