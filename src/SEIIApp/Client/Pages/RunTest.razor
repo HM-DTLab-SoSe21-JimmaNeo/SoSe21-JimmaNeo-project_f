@@ -1,7 +1,9 @@
 ﻿@page "/runtest/{TestID:int}"
 
-@inject Services.TestsDefinitionBackendAccessService TestDefinitionService
+@inject Services.TestsDefinitionBackendAccessService TestService
+@inject Services.CompletedTestBackendAccessService CompletedTestService
 @inject NavigationManager NavigationManager
+@inject UserServicee UserService
 
 
 <div class="container">
@@ -26,9 +28,9 @@
                     {
                         <hr />
                         <li class="text-center list-group-item">
-                <br />
-                <h3> @(question.QuestionText) </h3>
-            </li>
+                            <br />
+                            <h3> @(question.QuestionText) </h3>
+                        </li>
                         if (question.Pictures.Any())
                         {
                             foreach (var picture in question.Pictures)
@@ -76,10 +78,12 @@
 
     public static TestDTO TestDto { get; set; }
 
+    public static CompletedTestDTO CompletedTestDTO { get; set; }
+
     protected override async Task OnParametersSetAsync()
     {
 
-        var returnedTest = await TestDefinitionService.GetTestById(TestID);
+        var returnedTest = await TestService.GetTestById(TestID);
         await base.OnParametersSetAsync();
         TestDto = returnedTest;
         SEIIApp.Client.Components.VideoComponent.OnEditing = false;
@@ -88,10 +92,11 @@
 
     private async void OnSubmitTest()
     {
-        TestDto.MaxPoints = CountMaxPoints(TestDto.Questions);
-        TestDto.ReachedPoints = CountReachedPoints(TestDto.Questions);
+        CompletedTestDTO completedTest = CreateCompletedTest(TestDto);
+        CompletedTestDTO = completedTest;
+        CompletedTestService.AddCompletedTest(completedTest);
 
-        var answer = await TestDefinitionService.AddOrUpdateTest(TestDto);
+        var answer = await TestService.AddOrUpdateTest(TestDto);
         if (answer != null)
         {
             NavigationManager.NavigateTo("/resultstest/");
@@ -140,5 +145,16 @@
             }
         }
         return reachedPoints;
+    }
+
+    private CompletedTestDTO CreateCompletedTest(TestDTO test)
+    {
+        CompletedTestDTO completedTest = new CompletedTestDTO();
+        completedTest.SolvedTest = test;
+        completedTest.MaxPoints = CountMaxPoints(TestDto.Questions);
+        completedTest.ReachedPoints = CountReachedPoints(TestDto.Questions);
+        completedTest.Student = UserService.User;
+
+        return completedTest;
     }
 }
