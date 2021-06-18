@@ -78,6 +78,8 @@
 
     public static TestDTO TestDto { get; set; }
 
+    public static CompletedTestDTO CompletedTestDTO { get; set; }
+
     protected override async Task OnParametersSetAsync()
     {
 
@@ -90,11 +92,8 @@
 
     private async void OnSubmitTest()
     {
-        TestDto.MaxPoints = CountMaxPoints(TestDto.Questions);
-        TestDto.ReachedPoints = CountReachedPoints(TestDto.Questions);
-
         CompletedTestDTO completedTest = CreateCompletedTest(TestDto);
-
+        CompletedTestDTO = completedTest;
         CompletedTestService.AddCompletedTest(completedTest);
 
         var answer = await TestService.AddOrUpdateTest(TestDto);
@@ -152,8 +151,8 @@
     {
         CompletedTestDTO completedTest = new CompletedTestDTO();
         completedTest.SolvedTest = test;
-        completedTest.MaxPoints = test.MaxPoints;
-        completedTest.ReachedPoints = test.ReachedPoints;
+        completedTest.MaxPoints = CountMaxPoints(TestDto.Questions);
+        completedTest.ReachedPoints = CountReachedPoints(TestDto.Questions);
         completedTest.Student = UserService.User;
 
         return completedTest;
