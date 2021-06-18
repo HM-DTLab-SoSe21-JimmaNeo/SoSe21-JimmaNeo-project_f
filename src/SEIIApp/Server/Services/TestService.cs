@@ -31,6 +31,7 @@ namespace SEIIApp.Server.Services
         {
             return DatabaseContext.Tests
                 .Include(test => test.Questions).ThenInclude(questions => questions.Answers)
+                .Include(test => test.Questions).ThenInclude(questions => questions.Pictures)
                 .Include(test => test.Content)
                 .Include(test => test.Videos)
                 .Include(test => test.VideosFurtherInformation)
