@@ -21,6 +21,7 @@ namespace SEIIApp.Client {
             builder.Services.AddScoped<Services.LectureBackendAccessService>();
 
             builder.Services.AddSingleton<Services.UserServicee>();
+            builder.Services.AddSingleton<Services.AppState>();
 
             builder.Services.AddScoped<Services.NewsBackendAccessService>();
             await builder.Build().RunAsync();
