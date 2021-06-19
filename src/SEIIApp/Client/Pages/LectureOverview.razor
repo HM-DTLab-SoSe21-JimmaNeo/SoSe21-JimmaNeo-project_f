@@ -6,7 +6,7 @@
 <div class="container">
 
     <h2 class="text-center">Your Lecture</h2>
-    <hr class="divider" b-6rl0707n1o="">
+    <hr class="divider">
     <div class="col text-center">
 
         <div class="px-5">
@@ -36,49 +36,100 @@
 
                 </div>
             </EditForm>
-           
+            @if (UserService.User != null && UserService.User.Role == Role.Teacher)
+            {
+                VideoComponent.OnEditing = true;
+                PictureComponent.OnEditing = true;
+                <div class="text-center py-2">
+                    <button class="btn btn-outline-success btn-sm" @onclick="AddLecture">Add Test</button>
+                </div>
+            }
+
         </div>
     </div>
+
+  
+
+
 
     @if (Lectures != null)
     {
 
         if (UserService.User != null && UserService.User.Role == Role.Teacher)
-        {
-            VideoComponent.OnEditing = true;
-            PictureComponent.OnEditing = true;
-            <div class="text-center py-2">
-                <button class="btn btn-outline-success" @onclick="AddLecture">Add</button>
-            </div>
+        { 
             <ul class="list-group list-group-flush">
+
 
                 @foreach (var content in Lectures)
                 {
-                <li class="text-center list-group-item">
-                    @(content.Author.Name)
-                    @(content.DateOfCreation.ToShortDateString()) <b>@(content.Topic)</b> 
-                    <button class="btn btn-outline-dark btn-sm" @onclick="() => EditLecture((LectureDTO)content)">Edit</button>
-                    <button class="btn btn-outline-danger btn-sm" @onclick="() => DeleteLecture(content)">Delete</button>
-
-                    <button class="btn btn-outline-dark btn-sm" @onclick="() => StartLecture(content.LectureId)">Start</button>
-                </li>
+                    <li class="text-center list-group-item">
+                        
+                        <div class="card">
+                            <div class="card-body">
+                                <b>
+                                    LectureID:
+                                </b>
+                                @(content.LectureId)
+                                <b>
+                                    Date:
+                                </b>
+                                @(content.DateOfCreation.ToShortDateString())
+                                <b>
+                                    Author:
+                                </b>
+                                @(content.Author.Name)
+                                @(content.Author.LastName)
+                                <b>
+                                    Topic: 
+                                </b>
+                                @(content.Topic)
+                                <br />
+                                <button class="btn btn-outline-dark btn-sm" @onclick="() => EditLecture((LectureDTO)content)">Edit</button>
+                                <button class="btn btn-outline-danger btn-sm" @onclick="() => DeleteLecture(content)">Delete</button>
+                                <button class="btn btn-outline-dark btn-sm" @onclick="() => StartLecture(content.LectureId)">Start</button>
+                            </div>
+                        </div>
+                    </li>
                 }
             </ul>
         }
         else if (UserService.User != null && UserService.User.Role == Role.Student)
         {
-            <ul class="list-group list-group-flush">
+<ul class="list-group list-group-flush">
 
-                @foreach (var content in Lectures)
-                {
-                    <li class="text-center list-group-item">
-                        @(content.Author.Name)
-                        @(content.DateOfCreation.ToShortDateString()) <b>@(content.Topic)</b>
+    @foreach (var content in Lectures)
+    {
+        <li class="text-center list-group-item">
+            <div class="card">
+                <div class="card-body">
+                    <b>
+                        LectureID:
+                    </b>
+                    @(content.LectureId)
+                    <b>
+                        Date:
+                    </b>
+                    @(content.DateOfCreation.ToShortDateString())
+                    <b>
+                        Author:
+                    </b>
+                    @(content.Author.Name)
+                    @(content.Author.LastName)
+                    <b>
+                        Topic:
+                    </b>
 
-                        <button class="btn btn-outline-dark btn-sm" @onclick="() => StartLecture(content.LectureId)">Start</button>
-                    </li>
-                }
-            </ul>
+                    @(content.Topic)
+                    <br />
+                    <br />
+                    <button class="btn btn-outline-success btn-sm" @onclick="() => StartLecture(content.LectureId)">Start</button>
+
+                </div>
+            </div>
+        </li>
+    }
+    }
+</ul>
 
         }
         else
