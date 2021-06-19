@@ -23,9 +23,7 @@
             <div class="card-body">
                 <label>@(link.Description)</label><br />
                 <label>@(link.Link)</label><br />
-                <form action="@link.Link">
-                    <input type="submit" value="Go to Link" />
-                </form>
+                <a href="@(link.Link)">@(link.Link)</a>
             </div>
         </div>
     </li>
