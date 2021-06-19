@@ -1,4 +1,4 @@
-@inject AppState AppState
+@inject UserRefreshService UserRefresh
 @inherits LayoutComponentBase
 @inject NavigationManager NavigationManager
 @inject UserServicee MyUserService
@@ -50,7 +50,7 @@
 
         MyUserService.User = null;
         expandSubMenu = false;
-        AppState.LoggedIn = false;
+        UserRefresh.LoggedIn = false;
         NavigationManager.NavigateTo("/login");
 
 
