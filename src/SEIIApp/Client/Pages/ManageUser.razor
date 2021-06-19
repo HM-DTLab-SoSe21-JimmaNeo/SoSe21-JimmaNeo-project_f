@@ -2,15 +2,19 @@
 @inject Services.UserBackendAccessService UserService
 @inject NavigationManager NavigationManager
 @using SEIIApp.Shared;
-@using static SEIIApp.Client.Pages.Login;
 @inject UserServicee MyUserService
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+   
 
-
-    <div class="bs">
+    <body>
+        <div class="bs">
             <div class="table-title">
                 <div class="row">
                     <div class="col-xs-5">
@@ -18,6 +22,7 @@
                     </div>
                 </div>
             </div>
+        
             <div class="table-responsive">
 
                 @{
@@ -47,14 +52,59 @@
                                         <td>
                                         </td>
                                         <td><button class="btn btn-primary" @onclick="() => EditUser(user)"><i class="material-icons">&#xE8B8;</i></button></td>
-                                        <td><button class="btn btn-danger" @onclick="() => DeleteUser(user)"><i class="material-icons">&#xE5C9;</i></button></td>
+                                        <td><button class="btn btn-danger" @onclick="() => ModalShow(user)"><i class="material-icons">&#xE5C9;</i></button></td>
 
                                     </tr>
+
                                 }
+
 
 
                             </tbody>
                         </table>
+
+                        @if (showModal)
+                        {
+                            <div class="modal fade show" id="myModal" style="display:block" aria-modal="true" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+
+                                        <!-- Modal Header -->
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Confirm delete</h4>
+                                            <button type="button" class="close" @onclick="@ModalCancel">&times;</button>
+                                        </div>
+
+                                        <!-- Modal body -->
+                                        <div class="modal-body">
+                                            <p>Are you sure you want to delete @currentUser.Name?</p>
+                                        </div>
+
+                                        <!-- Modal footer -->
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn" @onclick="@ModalCancel">Cancel</button>
+                                            <button type="button" class="btn btn-danger" @onclick="() => DeleteUser(currentUser)">Delete</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
+                        <hr />
+                        @if (deleteAlert)
+                        {
+
+                            <div class="alert">
+                                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                                <strong> User @currentUser.Name is successfully deleted!</strong>
+                            </div>                 
+
+                        }
+
+
+
+
                     }
 
                     else
@@ -63,91 +113,59 @@
                     }
                 }
             </div>
-        </div>
-        @*{
-            if (MyUserService.User != null && MyUserService.User.Role == Role.Admin)
-            {
-                <table width="80%">
-                    <thead>
-                        <tr border="1">
-                            <th>Name</th>
-                            <th>Firstname</th>
-                            <th>Lastname</th>
-                            <th>Role</th>
+                        </div>
+    </body>
+</html>
 
-                            <th></th>
+    @code {
 
-                        </tr>
-                    </thead>
-
-                    <tbody>
-
-                        @foreach (var user in Users)
-                        {
-
-                            <tr>
-                                <td>@user.Name</td>
-                                <td>@user.FirstName</td>
-                                <td>@user.LastName</td>
-                                <td>@user.Role</td>
-                                <td>
-                                </td>
-                                <td><button class="btn btn-primary" @onclick="() => EditUser(user)">Edit</button></td>
-                                <td><button class="btn btn-danger" @onclick="() => DeleteUser(user)">Delete</button></td>
+        private string msg { get; set; }
+        private bool showModal = false;
+        private bool deleteAlert = false;
+        public int[] Roles { get; set; }
+        public UserDTO currentUser { get; set; }
 
 
+        public UserDTO[] Users = new UserDTO[0];
 
-
-                            </tr>
-                        }
-
-
-                    </tbody>
-                </table>
-
-
-            }
-
-            else
-            {
-                <p>You are not allowed to see this!</p>
-            }
+        protected override async Task OnParametersSetAsync()
+        {
+            await base.OnParametersSetAsync();
+            Users = await UserService.GetAllUsers();
+            Roles = new int[Users.Length];
         }
 
-        *@
 
-        @code {
+        private void EditUser(UserDTO user)
+        {
+            NavigationManager.NavigateTo($"/edituser/{user.UserId}");
+        }
 
-            public string msg { get; set; }
-            public int[] Roles { get; set; }
 
 
-            public UserDTO[] Users = new UserDTO[0];
+        private async Task DeleteUser(UserDTO user)
+        {
+            showModal = true;
+            deleteAlert = true;
 
-            protected override async Task OnParametersSetAsync()
+            bool successfull = await UserService.DeleteUser(user.UserId);
+            if (successfull)
             {
-                await base.OnParametersSetAsync();
-                Users = await UserService.GetAllUsers();
-                Roles = new int[Users.Length];
+                Users = Users.Where(u => u != user).ToArray();
             }
+            showModal = false;
 
-
-            private void EditUser(UserDTO user)
-            {
-                NavigationManager.NavigateTo($"/edituser/{user.UserId}");
-            }
-
-
-
-            private async Task DeleteUser(UserDTO user)
-            {
-
-                bool successfull = await UserService.DeleteUser(user.UserId);
-                if (successfull)
-                {
-                    Users = Users.Where(u => u != user).ToArray();
-                }
-
-            }
 
         }
+
+        void ModalShow(UserDTO user)
+        {
+
+            showModal = true;
+            currentUser = user;
+
+        }
+
+        void ModalCancel() => showModal = false;
+
+    }
