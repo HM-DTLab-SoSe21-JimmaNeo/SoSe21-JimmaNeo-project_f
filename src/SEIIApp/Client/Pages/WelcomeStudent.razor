@@ -5,100 +5,111 @@
 @inject UserServicee MyUserService
 
 
+<html lang="en">
+        <head>
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes" />
+        </head>
+        <body>
+            @{
 
+                if (MyUserService.User != null && MyUserService.User.Role == Role.Student)
+                {
+                    <h1>Welcome Student @MyUserService.User.Name!</h1>
+                    <br>
+                    <br>
+                    <h3>What shall we do today?</h3>
 
-@{
+                    <br>
+                    <br>
+                    <br>
 
-    if (MyUserService.User != null && MyUserService.User.Role == Role.Student)
-    {
-        <h1>Welcome Student @MyUserService.User.Name!</h1>
-        <br>
-        <br>
-        <h3>What shall we do today?</h3>
+                        <div>
+                            <table>
+                                <tr>
+                                    <th valign=top>
+                                        <div class="divtodo">
+                                            <h2>To-Do-Today (@todos.Count(todo => !todo.IsDone))</h2>
 
-        <br>
-        <br>
-        <br>
+                                            <ul>
+                                                @foreach (var todo in todos)
+                                                {
+                                                    <li>
+                                                        <input type="checkbox" @bind="todo.IsDone" />
+                                                        <input @bind="todo.Title" />
+                                                    </li>
+                                                }
+                                            </ul>
 
-        <div>
-            <table>
-                <tr>
-                    <th valign=top>
-                        <div class="divtodo">
-                            <h2>To-Do-Today (@todos.Count(todo => !todo.IsDone))</h2>
+                                            <input placeholder="Something todo" @bind="newTodo" />
+                                            <button class="btn btn-success" @onclick="AddTodo">Add todo</button>
+                                        </div>
+                                    </th>
+                                    <th><img src="\Images\WelcomeStudent\Lecture.png" alt="Lecture" class="img1"></th>
+                                    <th></th>
+                                    <th><img src="\Images\WelcomeStudent\TestDiagramme.png" alt="Tests" class="img1"></th>
+                                </tr>
+                            </table>
+                            <br>
+                            <br>
+                            <br>
+                            <table class="tablenews">
+                                <h1>News</h1>
+                                <tr>
+                                    <th></th>
+                                    <th width="200">Date</th>
+                                    <th>Description</th>
+                                </tr>
+                                <tr>
+                                    <td><img src="\Images\WelcomeStudent\4.jpg" width="200" /></td>
+                                    <td>09-06-2021</td>
+                                    <td>
+                                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,<br>
+                                        sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem<br> ipsum
+                                        dolor sit amet.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><img src="\Images\WelcomeStudent\krankenhaus1.jpg" width="200" /></td>
+                                    <td>06-06-2021</td>
+                                    <td>
+                                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,<br>
+                                        sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem<br> ipsum
+                                        dolor sit amet.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><img src="\Images\WelcomeStudent\krankenhaus2.jpg" width="200" /></td>
+                                    <td>04-06-2021</td>
+                                    <td>
+                                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,<br>
+                                        sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem<br> ipsum
+                                        dolor sit amet.
+                                    </td>
+                                </tr>
 
-                            <ul>
-                                @foreach (var todo in todos)
-                                {
-                                    <li>
-                                        <input type="checkbox" @bind="todo.IsDone" />
-                                        <input @bind="todo.Title" />
-                                    </li>
-                                }
-                            </ul>
-
-                            <input placeholder="Something todo" @bind="newTodo" />
-                            <button class="btn btn-success" @onclick="AddTodo">Add todo</button>
+                            </table>
                         </div>
-                    </th>
-                    <th><img src="\Images\WelcomeStudent\Lecture.png" alt="Lecture" class="img1"></th>
-                    <th></th>
-                    <th><img src="\Images\WelcomeStudent\TestDiagramme.png" alt="Tests" class="img1"></th>
-                </tr>
-            </table>
-            <br>
-            <br>
-            <br>
-            <table class="tablenews">
-                <h1>News</h1>
-                <tr>
-                    <th></th>
-                    <th width="200">Date</th>
-                    <th>Description</th>
-                </tr>
-                <tr>
-                    <td><img src="\Images\WelcomeStudent\4.jpg" width="200" /></td>
-                    <td>09-06-2021</td>
-                    <td>
-                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,<br>
-                        sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem<br> ipsum
-                        dolor sit amet.
-                    </td>
-                </tr>
-                <tr>
-                    <td><img src="\Images\WelcomeStudent\krankenhaus1.jpg" width="200" /></td>
-                    <td>06-06-2021</td>
-                    <td>
-                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,<br>
-                        sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem<br> ipsum
-                        dolor sit amet.
-                    </td>
-                </tr>
-                <tr>
-                    <td><img src="\Images\WelcomeStudent\krankenhaus2.jpg" width="200" /></td>
-                    <td>04-06-2021</td>
-                    <td>
-                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,<br>
-                        sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem<br> ipsum
-                        dolor sit amet.
-                    </td>
-                </tr>
 
-            </table>
-        </div>
+            }
 
-    }
+            else
+            {
+    <p>You are not allowed to see this!</p>
+            }
+        }
 
-    else
-    {
-        <p>You are not allowed to see this!</p>
-    }
-}
+    </body>
+
+    </html>
+
+
 
 @code {
     public int[] Roles { get; set; }
     [Parameter]
     public int userID { get; set; }
+    
 
     private List<Services.WelcomeStudentService> todos = new();
     private string newTodo;
