@@ -3,7 +3,12 @@
 <EditForm Model="AnswerDto">
     <DataAnnotationsValidator />
 
-    <InputText @bind-Value="AnswerDto.AnswerText" />
+    <div class="input-group">
+        <input type="password" style='width:100%' required @bind-value="AnswerDto.AnswerText" @bind-value:event="oninput">
+        <span class="highlight"></span>
+        <span class="bar"></span>
+        <label class="hoverlabel">Answer</label>
+    </div>
 
     <label>Is correct answer?</label>
     <InputCheckbox @bind-Value="AnswerDto.IsCorrect"></InputCheckbox>

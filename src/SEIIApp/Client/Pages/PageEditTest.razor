@@ -16,12 +16,18 @@
         <EditForm EditContext="@context" OnSubmit="OnSubmit">
             <ObjectGraphDataAnnotationsValidator />
 
-            <label>Name of the Test:</label><br />
-            <InputText @bind-Value="TestDto.Topic" />
+            <div class="input-group">
 
-            <br /><label>Content Description:</label><br />
+                <input type="text" style='width:100%' required @bind-value="TestDto.Topic" @bind-value:event="oninput">
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label class="hoverlabel">Tobic of the test:</label>
+            </div>
 
-            <InputText @bind-Value="TestDto.Description" />
+            <div class="form-floating">
+                <textarea class="form-control" id="inputMessage" type="text" placeholder="Enter description here..." style="height: 10rem" @bind="TestDto.Description"></textarea>
+            </div>
+
             <p>
                 <br /><b>You are able to upload Youtube Videos here if you want to include them in the test!</b>
 
@@ -93,6 +99,7 @@
                             </button>
                         </div>
                     </div>
+                    <br />
                 }
 
             }

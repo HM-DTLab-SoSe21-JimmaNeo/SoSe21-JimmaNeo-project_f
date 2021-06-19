@@ -4,8 +4,13 @@
     {
     <EditForm Model="QuestionDto">
         <ObjectGraphDataAnnotationsValidator />
-        <label>Question Text</label><br />
-        <InputText @bind-Value="@QuestionDto.QuestionText" />
+        <div class="input-group">
+
+            <input type="text" style='width:100%' required @bind-value="QuestionDto.QuestionText" @bind-value:event="oninput">
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label class="hoverlabel">Question</label>
+        </div>>
         @foreach (var p in QuestionDto.Pictures)
         {<hr />
             <PictureComponent PictureContentDTO="p"></PictureComponent><br />
@@ -24,8 +29,10 @@
         <br />
         <button class="btn btn-light btn-sm my-3" @onclick="AddAnswer">Add Answer</button>
         <br />
-        <label>Explanation</label><br />
-        <InputText @bind-Value="@QuestionDto.Explanation" />
+
+        <div class="form-floating">
+            <textarea class="form-control" id="inputMessage" type="text" placeholder="Enter explanation of question here..." style="height: 10rem" @bind="QuestionDto.Explanation"></textarea>
+        </div>
 
     </EditForm>
     }

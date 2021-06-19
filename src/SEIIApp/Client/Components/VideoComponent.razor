@@ -9,7 +9,7 @@
 <EditForm Model="VideoContentDTO">
 
     <DataAnnotationsValidator />
-   
+
     @if (OnEditing)
     {
 
@@ -40,8 +40,8 @@
             <iframe class="responsive-iframe" src=@("https://www.youtube.com/embed/" + VideoContentDTO.Path) title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             <br />
         </div>
-        <ValidationSummary/>
-        
+        <ValidationSummary />
+
     }
 
     @if (OnEditing)
@@ -56,7 +56,6 @@
     {
         <p>@VideoContentDTO.Description</p>
     }
-
 
 </EditForm>
 
