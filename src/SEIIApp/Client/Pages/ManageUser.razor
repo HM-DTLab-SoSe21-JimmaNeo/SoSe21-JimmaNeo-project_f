@@ -14,6 +14,16 @@
    
 
     <body>
+        @if (clicked)
+        {
+
+            <div class="alert">
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                <strong> User @currentUser.Name has been deleted successfully!</strong>
+            </div>
+
+
+        }
         <div class="bs">
             <div class="table-title">
                 <div class="row">
@@ -22,7 +32,7 @@
                     </div>
                 </div>
             </div>
-        
+
             <div class="table-responsive">
 
                 @{
@@ -92,18 +102,6 @@
 
                         }
                         <hr />
-                        @if (deleteAlert)
-                        {
-
-                            <div class="alert">
-                                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-                                <strong> User @currentUser.Name is successfully deleted!</strong>
-                            </div>                 
-
-                        }
-
-
-
 
                     }
 
@@ -113,7 +111,7 @@
                     }
                 }
             </div>
-                        </div>
+        </div>
     </body>
 </html>
 
@@ -121,7 +119,7 @@
 
         private string msg { get; set; }
         private bool showModal = false;
-        private bool deleteAlert = false;
+        private bool clicked = false;
         public int[] Roles { get; set; }
         public UserDTO currentUser { get; set; }
 
@@ -146,15 +144,19 @@
         private async Task DeleteUser(UserDTO user)
         {
             showModal = true;
-            deleteAlert = true;
+            clicked = true;
 
             bool successfull = await UserService.DeleteUser(user.UserId);
             if (successfull)
             {
                 Users = Users.Where(u => u != user).ToArray();
             }
-            showModal = false;
 
+            showModal = false;
+            StateHasChanged();
+            await Task.Delay(3000);
+
+            clicked = false;
 
         }
 
