@@ -6,41 +6,37 @@
 <div class="container">
 
     <h2 class="text-center">Your Lecture</h2>
+    <hr class="divider" b-6rl0707n1o="">
     <div class="col text-center">
 
         <div class="px-5">
-            @*
-                        <EditForm Model="@searchValue">
-                            <div class="searchcostum input-group pt-2">
+            <EditForm Model="@searchValue">
+                <div class="searchcostum input-group pt-2">
 
 
-                                 @if (isFiltered == false)
-                            {
-                                <div class="px-auto">
-                                    <InputText type="search" class="form-control rounded" placeholder="Search by name"
-                                               aria-label="Name of the Content" aria-describedby="search-addon" @bind-Value="@searchValue" />
+                    @if (isFiltered == false)
+                    {
+                        <div class="px-auto">
+                            <InputText type="search" class="form-control rounded" placeholder="Search by Lecturename"
+                                       aria-label="Name of the Content" aria-describedby="search-addon" @bind-Value="@searchValue" />
 
-
-                                </div>
-                                <button class="btn btn-outline-primary btn-sm" @onclick="FilterContentByName">Search</button>
-
-                            }
-                            else
-                            {
-                                <div class="text-center pb-2">
-                                    <button class="btn btn-outline-primary" @onclick="DeleteFilter">Return</button>
-                                </div>
-                            }
 
                         </div>
-                    </EditForm>
+                        <button class="btn btn-outline-primary btn-sm" @onclick="SearchContent">Search</button>
+                        <hr />
 
-                @if (isFiltered == false)
-                {
-                    <div class="text-center py-2">
-                        <button class="btn btn-outline-success" @onclick="AddLecture">Add</button>
-                    </div>}
-            *@
+                    }
+                    else
+                    {
+                        <div class="text-center pb-2">
+                            <button class="btn btn-outline-primary" @onclick="ResetSearchContent">Return</button>
+                        </div>
+                        <hr />
+                    }
+
+                </div>
+            </EditForm>
+           
         </div>
     </div>
 
@@ -58,11 +54,14 @@
 
                 @foreach (var content in Lectures)
                 {
-                    <li class="text-center list-group-item">
-                        @(content.DateOfCreation.ToShortDateString()) <b>@(content.Topic)</b> <button class="btn btn-outline-dark btn-sm" @onclick="() => EditLecture((LectureDTO)content)">Edit</button>
-                        <button class="btn btn-outline-danger btn-sm" @onclick="() => DeleteLecture(content)">Delete</button>
-                        <button class="btn btn-outline-dark btn-sm" @onclick="() => StartLecture(content.LectureId)">Start</button>
-                    </li>
+                <li class="text-center list-group-item">
+                    @(content.Author.Name)
+                    @(content.DateOfCreation.ToShortDateString()) <b>@(content.Topic)</b> 
+                    <button class="btn btn-outline-dark btn-sm" @onclick="() => EditLecture((LectureDTO)content)">Edit</button>
+                    <button class="btn btn-outline-danger btn-sm" @onclick="() => DeleteLecture(content)">Delete</button>
+
+                    <button class="btn btn-outline-dark btn-sm" @onclick="() => StartLecture(content.LectureId)">Start</button>
+                </li>
                 }
             </ul>
         }
@@ -73,6 +72,7 @@
                 @foreach (var content in Lectures)
                 {
                     <li class="text-center list-group-item">
+                        @(content.Author.Name)
                         @(content.DateOfCreation.ToShortDateString()) <b>@(content.Topic)</b>
 
                         <button class="btn btn-outline-dark btn-sm" @onclick="() => StartLecture(content.LectureId)">Start</button>
@@ -100,7 +100,7 @@
 
     public List<LectureDTO> Lectures { get; set; }
 
-    private List<TestDTO> copyOfTest { get; set; }
+    private List<LectureDTO> copyOfLectures { get; set; }
 
     protected override async Task OnParametersSetAsync()
     {
@@ -122,84 +122,33 @@
     {
         Lectures.Remove(lecture);
 
-        /* if (copyOfTest != null)
+         if (copyOfLectures != null)
          {
-             copyOfTest.Remove(test);
-         }*/
+             copyOfLectures.Remove(lecture);
+         }
 
         await LectureService.DeleteLecture(lecture.LectureId);
 
     }
 
-    /*private void FilterContentByName()
+    private void SearchContent()
     {
-        if (Tests != null && searchValue != null)
+        if (Lectures != null && searchValue != null)
         {
-
+            copyOfLectures = new List<LectureDTO>(Lectures);
             isFiltered = true;
-
-            copyOfTest = DeepCopy(Tests);
-            Tests.Clear();
-            FilterContent(searchValue);
-
+            Lectures.Clear();
+            Lectures.AddRange(copyOfLectures.Where(t => t.Topic.ToLower().StartsWith(searchValue.ToLower())));
         }
     }
 
-    private void DeleteFilter()
+    private void ResetSearchContent()
     {
         isFiltered = false;
-        Tests = DeepCopy(copyOfTest);
-
-        copyOfTest.Clear();
+        Lectures.Clear();
+        Lectures.AddRange(copyOfLectures);
     }
 
-    private void FilterContent(String searchValue)
-    {
-        bool isSearchedValue;
-        for (int i = 0; i < copyOfTest.Count; i++)
-        {
-            isSearchedValue = false;
-
-            for (int j = 0; j <= copyOfTest[i].Topic.Length; j++)
-            {
-                // isSearchedValue = string.Equals(searchValue, copyOfTest[i].Topic.Substring(0, j)) == true ? true : false; <- Warum funktioniert das nicht?
-                if (string.Equals(searchValue, copyOfTest[i].Topic.Substring(0, j)))
-                {
-                    isSearchedValue = true;
-                }
-            }
-            if (isSearchedValue)
-            {
-                Tests.Add(copyOfTest[i]);
-            }
-        }
-    }
-
-    private List<TestDTO> DeepCopy(List<TestDTO> TestDto)
-    {
-        List<TestDTO> TestDtoDeepCopy = new List<TestDTO>();
-
-        foreach (TestDTO TestDtoElement in TestDto)
-        {
-            TestDTO DeepCopyTestElement = new TestDTO();
-
-            DeepCopyTestElement.TestID = TestDtoElement.TestID;
-            DeepCopyTestElement.Topic = TestDtoElement.Topic;
-            DeepCopyTestElement.Description = TestDtoElement.Description;
-            DeepCopyTestElement.DateOfCreation = TestDtoElement.DateOfCreation;
-            DeepCopyTestElement.Author = TestDtoElement.Author;
-            DeepCopyTestElement.Questions = TestDtoElement.Questions;
-            //DeepCopyTestElement.TestContent = TestDtoElement.TestContent;
-            DeepCopyTestElement.Content = TestDtoElement.Content;
-            DeepCopyTestElement.Videos = TestDtoElement.Videos;
-            DeepCopyTestElement.FurtherLinks = TestDtoElement.FurtherLinks;
-
-            TestDtoDeepCopy.Add(DeepCopyTestElement);
-        }
-
-        return TestDtoDeepCopy;
-    }
-    */
 
     private void StartLecture(int contentId)
     {
