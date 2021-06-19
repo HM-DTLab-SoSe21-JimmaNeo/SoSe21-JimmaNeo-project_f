@@ -10,11 +10,16 @@
             <span class="highlight"></span>
             <span class="bar"></span>
             <label class="hoverlabel">Question</label>
-        </div>>
+        </div>
+        <p>
+            <br /><b>Add pictures to the questions</b>
+
+        </p>
         @foreach (var p in QuestionDto.Pictures)
         {<hr />
             <PictureComponent PictureContentDTO="p"></PictureComponent><br />
             <button class="btn btn-light btn-sm" @onclick="() => RemovePicture(p)">Remove Picture</button>
+            <br />
         }
         <br />
         <button class="btn btn-light btn-sm my-3" @onclick="AddPicture">Add Picture</button>
@@ -24,6 +29,7 @@
         {<hr />
             <AnswerDefComponent AnswerDto="a"></AnswerDefComponent>
             <button class="btn btn-light btn-sm" @onclick="() => RemoveAnswer(a)">Remove Answer</button>
+            <br />
         }
         <ValidationSummary />
         <br />

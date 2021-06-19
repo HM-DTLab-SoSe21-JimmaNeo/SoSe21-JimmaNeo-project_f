@@ -8,7 +8,8 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-7 text-center">
-            <h3 class="text-center">Test Editor</h3>
+            <h2 class="text-center">Test Editor</h2>
+            <hr class="divider">
 
             @if (TestDto != null)
             {
@@ -28,10 +29,10 @@
                 <textarea class="form-control" id="inputMessage" type="text" placeholder="Enter description here..." style="height: 10rem" @bind="TestDto.Description"></textarea>
             </div>
 
-            <p>
-                <br /><b>You are able to upload Youtube Videos here if you want to include them in the test!</b>
+            <h5>
+                <br /><b>Upload Youtube Videos</b>
 
-            </p>
+            </h5>
             @foreach (var video in TestDto.Videos)
             {<div class="card">
                     <div class="card-body">
@@ -42,14 +43,15 @@
                         </button>
                     </div>
                 </div>
+                <br />
             }
             <br /><button class="btn btn-light" @onclick="AddVideoContent">Add Video</button><br />
 
             <hr />
-            <p>
-                <br /><b>You can add questions and answers by clicking the button below!</b>
+            <h5>
+                <br /><b>Add questions and answers</b>
 
-            </p>
+            </h5>
             @foreach (var question in TestDto.Questions)
             {
                 <div class="card">
@@ -58,17 +60,18 @@
                         <button class="btn btn-light" @onclick="() => RemoveQuestion(question)">Remove Question</button>
                     </div>
                 </div>
+                <br />
 
             }
             <button class="btn btn-light btn-sm my-3" @onclick="AddQuestion">Add Question</button>
 
             <br />
-            <p>
+            <h5>
                 <b>
-                    You can add further information about this topic to give you students the possibility to expand
+                    Add further information about this topic to give you students the possibility to expand
                     their knowledge!
                 </b>
-            </p><br />
+            </h5><br />
 
             @foreach (var link in TestDto.FurtherLinks)
             {

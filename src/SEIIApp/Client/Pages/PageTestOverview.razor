@@ -6,7 +6,7 @@
 <div class="container">
 
     <h2 class="text-center">Your Tests</h2>
-    <hr class="divider" b-6rl0707n1o="">
+    <hr class="divider">
     <div class="col text-center">
 
         <div class="px-5">
@@ -55,20 +55,33 @@
                 @foreach (var content in Tests)
                 {
                 <li class="text-center list-group-item">
-                    <b>
-                        @(content.TestID)
-                    </b>
-                    @(content.DateOfCreation.ToShortDateString())
-                    @(content.Author.Name)
-                    @(content.Author.LastName)
-                    <b>
-                        @(content.Topic)
-                    </b>
+                    <div class="card">
+                        <div class="card-body">
+                            <b>
+                                TestID:
+                            </b>
+                            @(content.TestID)
+                            <b>
+                                Date:
+                            </b>
+                            @(content.DateOfCreation.ToShortDateString())
+                            <b>
+                                Author:
+                            </b>
+                            @(content.Author.Name)
+                            @(content.Author.LastName)
+                            <b>
+                                Topic:
+                            </b>
 
-                    <button class="btn btn-outline-dark btn-sm" @onclick="() => EditQuiz((TestDTO)content)">Edit</button>
-                    <button class="btn btn-outline-danger btn-sm" @onclick="() => DeleteTest(content)">Delete</button>
-                    <button class="btn btn-outline-success btn-sm" @onclick="() => StartTest(content.TestID)">Start</button>
-                    <button class="btn btn-outline-primary btn-sm" @onclick="() => GetFurtherTopicInformations(content.TestID)">Topic</button>
+                            @(content.Topic)
+                            <br/>
+                            <button class="btn btn-outline-dark btn-sm" @onclick="() => EditQuiz((TestDTO)content)">Edit</button>
+                            <button class="btn btn-outline-danger btn-sm" @onclick="() => DeleteTest(content)">Delete</button>
+                            <button class="btn btn-outline-success btn-sm" @onclick="() => StartTest(content.TestID)">Start</button>
+                            <button class="btn btn-outline-primary btn-sm" @onclick="() => GetFurtherTopicInformations(content.TestID)">Topic</button>
+                        </div>
+                    </div>
                 </li>
                 }
             </ul>
@@ -80,17 +93,32 @@
                 @foreach (var content in Tests)
                 {
                 <li class="text-center list-group-item">
-                    <b>
-                        @(content.TestID)
-                    </b>
-                    @(content.DateOfCreation.ToShortDateString())
-                    @(content.Author.Name)
-                    @(content.Author.LastName)
-                    <b>
-                        @(content.Topic)
-                    </b>
-                    <button class="btn btn-outline-success btn-sm" @onclick="() => StartTest(content.TestID)">Start</button>
-                    <button class="btn btn-outline-primary btn-sm" @onclick="() => GetFurtherTopicInformations(content.TestID)">Topic</button>
+                    <div class="card">
+                        <div class="card-body">
+                            <b>
+                                TestID:
+                            </b>
+                            @(content.TestID)
+                            <b>
+                                Date:
+                            </b>
+                            @(content.DateOfCreation.ToShortDateString())
+                            <b>
+                                Author:
+                            </b>
+                            @(content.Author.Name)
+                            @(content.Author.LastName)
+                            <b>
+                                Topic:
+                            </b>
+
+                            @(content.Topic)
+                            <br />
+                            <br />
+                            <button class="btn btn-outline-success btn-sm" @onclick="() => StartTest(content.TestID)">Start</button>
+                            <button class="btn btn-outline-primary btn-sm" @onclick="() => GetFurtherTopicInformations(content.TestID)">Topic</button>
+                        </div>
+                    </div>
                 </li>
                 }
             </ul>
