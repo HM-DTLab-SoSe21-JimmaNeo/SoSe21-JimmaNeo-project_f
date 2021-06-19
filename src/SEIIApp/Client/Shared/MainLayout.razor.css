@@ -1,5 +1,5 @@
 .page {
-    position: center;
+    position: relative;
     display: flex;
     flex-direction: column;
 }
@@ -60,7 +60,6 @@
     .top-row {
         position: sticky;
         top: 0;
-        height: 3.5rem;
         background-color: #07ff8821;
         z-index: 1;
     }
@@ -71,7 +70,6 @@
     }
 }
 
-    /*navbar*/
 
 .btn-primary {
     background-color: #0779e4;

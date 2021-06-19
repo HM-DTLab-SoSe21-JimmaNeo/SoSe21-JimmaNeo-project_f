@@ -1,4 +1,4 @@
-﻿@inject AppState AppState
+﻿@inject UserRefreshService UserRefresh
 @implements IDisposable
 @inject UserServicee MyUserService
 @inject NavigationManager NavigationManager
@@ -170,19 +170,19 @@
     {
         collapseNavMenu = !collapseNavMenu;
         MyUserService.User = null;
-        AppState.LoggedIn = false;
+        UserRefresh.LoggedIn = false;
         NavigationManager.NavigateTo("/login");
 
 
     }
     protected override void OnInitialized()
     {
-        AppState.OnChange += StateHasChanged;
+        UserRefresh.OnChange += StateHasChanged;
     }
 
     public void Dispose()
     {
-        AppState.OnChange -= StateHasChanged;
+        UserRefresh.OnChange -= StateHasChanged;
     }
 
 }
