@@ -11,6 +11,7 @@
     @if (TestDto != null && TestDto.Questions.Any() && TestDto.Questions.Count != 0)
     {
         <h2 class="text-center">@(TestDto.Topic)</h2>
+        <hr class="divider">
 
         <EditForm Model="@TestDto">
 
@@ -27,11 +28,13 @@
                     if (!String.IsNullOrEmpty(question.QuestionText))
                     {
                         <hr />
+                        <div class="card">
+                            <div class="card-body">
                         <li class="text-center list-group-item">
                             <br />
                             <h3> @(question.QuestionText) </h3>
                         </li>
-                        if (question.Pictures.Any())
+                        @if (question.Pictures.Any())
                         {
                             foreach (var picture in question.Pictures)
                             {
@@ -40,7 +43,7 @@
                                 </li>
                             }
                         }
-                        if (question.Answers.Any())
+                        @if (question.Answers.Any())
                         {
                             foreach (var answer in question.Answers)
                             {
@@ -55,6 +58,8 @@
 
                             }
                         }
+            </div>
+                </div>
                     }
 
                 }

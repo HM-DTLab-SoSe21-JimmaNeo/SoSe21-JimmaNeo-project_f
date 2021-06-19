@@ -22,7 +22,7 @@
                 <input type="text" style='width:100%' required @bind-value="TestDto.Topic" @bind-value:event="oninput">
                 <span class="highlight"></span>
                 <span class="bar"></span>
-                <label class="hoverlabel">Tobic of the test:</label>
+                <label class="hoverlabel">Topic of the test:</label>
             </div>
 
             <div class="form-floating">
@@ -63,7 +63,7 @@
                 <br />
 
             }
-            <button class="btn btn-light btn-sm my-3" @onclick="AddQuestion">Add Question</button>
+            <button class="btn btn-light" @onclick="AddQuestion">Add Question</button>
 
             <br />
             <h5>
@@ -124,7 +124,7 @@
             <hr />
             <button class="btn btn-light" @onclick="SaveContentToBackend">
                 Save Complete
-                Quiz
+                Test
             </button>
 
             <ValidationSummary />
