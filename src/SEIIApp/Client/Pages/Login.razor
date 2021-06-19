@@ -1,5 +1,5 @@
 @page "/login"
-@inject AppState AppState
+@inject UserRefreshService UserRefresh
 @inject Services.UserBackendAccessService UserService
 @inject NavigationManager NavigationManager
 @inject Services.UserServicee MyUserService
@@ -84,16 +84,16 @@
                 case 1: //Student
 
                     NavigationManager.NavigateTo($"/welcomestudent/{MyUserService.User.UserId}");
-                    AppState.LoggedIn = true;
+                    UserRefresh.LoggedIn = true;
                     break;
                 case 2: //Teacher
 
                     NavigationManager.NavigateTo($"/welcometeacher/{MyUserService.User.UserId}");
-                    AppState.LoggedIn = true;
+                    UserRefresh.LoggedIn = true;
                     break;
                 case 3: //Admin
                     NavigationManager.NavigateTo("/manageuser");
-                    AppState.LoggedIn = true;
+                    UserRefresh.LoggedIn = true;
 
                     break;
 
