@@ -49,10 +49,14 @@
         } <li class="list-group list-group-flush">
             <label> Lecture Text</label>
             <p>@LectureDto.Text</p>
+            
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <button class="btn btn-primary me-md-2" type="button" @onclick="()=> GetLastLecture()">Back</button>
-                <button class="btn btn-primary" type="button" @onclick="()=> GetNextLecture()">Next</button>
-            </div>
+                <div class="w-100">
+                    <button class="btn btn-secondary" type="button" @onclick="()=> GetLastLecture()">Back</button>
+
+                    <button class="btn btn-primary float-right" type="button" @onclick="()=> GetNextLecture()">Next</button>
+                    </div>
+                </div>
         </li>
 
         </EditForm>

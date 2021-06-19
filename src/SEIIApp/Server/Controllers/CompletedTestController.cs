@@ -62,13 +62,25 @@ namespace SEIIApp.Server.Controllers
             return Ok(mappedResult);
         }
 
+        [HttpGet("authorId/{authorId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<CompletedTestDTO[]> GetCompletedTestWithAuthorId([FromRoute] int authorId)
+        {
+            var tests = CompletedTestService.GetCompletedTestsWithAuthorId(authorId);
+            if (tests == null || tests.Length == 0) return StatusCode(StatusCodes.Status404NotFound);
+
+            var mappedResult = Mapper.Map<CompletedTestDTO[]>(tests);
+            return Ok(mappedResult);
+        }
+
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<CompletedTestDTO> AddTest([FromBody] CompletedTestDTO completedTest)    
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && completedTest.CtId == 0)
             {
                 var mappedTest = Mapper.Map<CompletedTest>(completedTest);
 

@@ -10,70 +10,80 @@
 <h3>LectureEditPage</h3>
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-3 text-center">
-            <h3 class="text-center">Content Editor</h3>
-
+        <div class="col-7 text-center">
+            <h4 class="text-center">Content Editor</h4>
+            <p></p>
+            <p></p>
+            <p></p>
+            
             @if (LectureDto != null)
             {
+                
                // if (UserService.User == null) Console.WriteLine("User ist null"); // wenn student angemeldet ist wird er null
                 if (UserService.User != null && UserService.User.Role == Role.Teacher)
                 {
                     VideoComponent.OnEditing = true;
                     PictureComponent.OnEditing = true;
-                <EditForm EditContext="@context" OnSubmit="OnSubmit">
+        <EditForm EditContext="@context" OnSubmit="OnSubmit">
+           
+
+
+            <label>Lecture Name:</label><br />
+            <InputText @bind-Value="LectureDto.Topic" /><br />
+
+
+            @foreach (var video in LectureDto.Videos)
+            {
+                <div class="card">
+                    <div class="card-body">
+
+                        <VideoComponent VideoContentDTO="video"></VideoComponent>
+                        <button class="btn btn-light btn-sm my-3" @onclick="() => DeleteVideoContent(video)">Remove Video</button>
+                    </div>
+                </div><br />
+            }
+            <button class="btn btn-light" @onclick="AddVideoContent">Add Video</button>
+
+            <hr />
+
+
+            @foreach (var picture in LectureDto.Content)
+            {
+                <div class="card">
+                    <div class="card-body">
+                        <PictureComponent PictureContentDTO="picture"></PictureComponent>
+                        <button class="btn btn-light btn-sm my-3" @onclick="() => DeletePictureContent(picture)">Remove Picture</button>
+                    </div>
+                </div><br />
+
+            }
+            <button class="btn btn-light" @onclick="AddPictureContent">Add Picture</button><br />
+            <hr />
 
 
 
-                    <label>Lecture Name:</label>
-                    <InputText @bind-Value="LectureDto.Topic" />
+
+            <label>Test ID:</label><br />
+            <InputText @bind-Value="TestTopic" />
+
+            <button class="btn btn-light btn-sm my-3" @onclick="AddTestToLecture">Add Test</button><br />
+            <hr />
+
+            <label>Lecture Text:</label><br />
+            
+            <br />
+            
+            <div class="form-floating">
+                <textarea class="form-control" id="inputMessage" type="text" placeholder="Enter Text for lecture here..." style="height: 15rem" @bind="LectureDto.Text"></textarea>
+            </div><br />
+            <hr />
+            
 
 
-                    @foreach (var video in LectureDto.Videos)
-                    {
-                        <div class="card">
-                            <div class="card-body">
-
-                                <VideoComponent VideoContentDTO="video"></VideoComponent>
-                                <button class="btn btn-light btn-sm my-3" @onclick="() => DeleteVideoContent(video)">Remove Video</button>
-                            </div>
-                        </div>
-                    }
-                    <button class="btn btn-light" @onclick="AddVideoContent">Add Video</button>
-
-                    <hr />
-
-
-                    @foreach (var picture in LectureDto.Content)
-                    {
-                        <div class="card">
-                            <div class="card-body">
-                                <PictureComponent PictureContentDTO="picture"></PictureComponent>
-                                <button class="btn btn-light btn-sm my-3" @onclick="() => DeletePictureContent(picture)">Remove Picture</button>
-                            </div>
-                        </div>
-
-                    }
-                    <br /><button class="btn btn-light" @onclick="AddPictureContent">Add Picture</button><br />
-                    <hr />
-
-
-
-
-                    <label>Test ID:</label>
-                    <InputText @bind-Value="TestTopic" />
-
-                    <button class="btn btn-light btn-sm my-3" @onclick="AddTestToLecture">Add Test</button><br />
-
-                    <label>Lecture Text:</label>
-
-                    <InputText @bind-Value="LectureDto.Text" />
-
-                    <label>Lecture Description:</label>
-                    <InputText @bind-Value="LectureDto.Test.Description" />
-
-
-                    <button class="btn btn-light" @onclick="() => SaveContentToBackend(this.LectureDto)">Save Lecture</button>
-                </EditForm>
+            <button class="btn btn-light" @onclick="() => SaveContentToBackend(this.LectureDto)">Save Lecture</button>
+            <p></p>
+            
+        </EditForm>
                 }
                 else
                 {

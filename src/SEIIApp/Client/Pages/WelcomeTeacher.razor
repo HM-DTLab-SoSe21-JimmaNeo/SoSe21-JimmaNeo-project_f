@@ -2,108 +2,131 @@
 @page "/welcometeacher/{UserId:int}"
 
 @inject NavigationManager NavigationManager
-@using static SEIIApp.Client.Pages.Login;
-@using SEIIApp.Shared;
 @inject UserServicee MyUserService
+@inject Services.CompletedTestBackendAccessService CompletedTestService
 
+@using SEIIApp.Shared;
 
 @{
-    if (MyUserService.User != null && MyUserService.User.Role == Role.Teacher)
+    @if (MyUserService.User != null && MyUserService.User.Role == Role.Teacher)
     {
         <h1>Welcome Teacher @MyUserService.User.Name!</h1>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
+        <br />
 
-        <div>
+        @if (SortedTests != null && SortedTests.Count > 0)
+        {
+            
             <table class="tableaverage">
-                <tr>
-                    <th valign=top width="200">Lecture</th>
-                    <th valign=top width="200">Created Test</th>
-                    <th valign=top width="200">Date</th>
-                    <th valign=top width="200">Average points(%)</th>
-                </tr>
-                <tr>
-                    <td>Lecture1</td>
-                    <td>Test1</td>
-                    <td>09-04-2021</td>
-                    <td>78</td>
-                </tr>
-                <tr>
-                    <td>Lecture1</td>
-                    <td>Test2</td>
-                    <td>09-05-2021</td>
-                    <td>60</td>
-                </tr>
-                <tr>
-                    <td>Lecture5</td>
-                    <td>Test7</td>
-                    <td>09-03-2021</td>
-                    <td>40</td>
-                </tr>
-                <tr>
-                    <td>Lecture4</td>
-                    <td>Test4</td>
-                    <td>09-02-2021</td>
-                    <td>40</td>
-                </tr>
+                <thead>
+                    <tr>
+                        <th valign=top width="200">TestId</th>
+                        <th valign=top width="200">Topic</th>
+                        <th valign=top width="200">Date</th>
+                        <th valign=top width="200">Average points(%)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var test in SortedTests)
+                    {
+                    <tr>
+                        <td>@test.TestID</td>
+                        <td>@test.Topic</td>
+                        <td>@test.DateOfCreation</td>
+                        <td>@(Math.Round(Results[SortedTests.IndexOf(test)], 2))</td>
+                    </tr>
+                    }                   
+                </tbody>
             </table>
 
-            <br>
-            <br>
-            <br>
-            <table class="tablenews">
-                <h1>News</h1>
-                <tr>
-                    <th></th>
-                    <th width="200">Date</th>
-                    <th>Description</th>
-                </tr>
-                <tr>
-                    <td><img src="\Images\WelcomeStudent\4.jpg" width="200" /></td>
-                    <td>09-06-2021</td>
-                    <td>
-                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,<br>
-                        sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem<br> ipsum
-                        dolor sit amet.
-                    </td>
-                </tr>
-                <tr>
-                    <td><img src="\Images\WelcomeStudent\krankenhaus1.jpg" width="200" /></td>
-                    <td>06-06-2021</td>
-                    <td>
-                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,<br>
-                        sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem<br> ipsum
-                        dolor sit amet.
-                    </td>
-                </tr>
-                <tr>
-                    <td><img src="\Images\WelcomeStudent\krankenhaus2.jpg" width="200" /></td>
-                    <td>04-06-2021</td>
-                    <td>
-                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,<br>
-                        sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem<br> ipsum
-                        dolor sit amet.
-                    </td>
-                </tr>
 
-            </table>
-        </div>
 
+           
+        } else
+        {
+            <p>Either you have not yet created a test or no test you created was solved</p>
+        }
     }
 
     else
     {
         <p>You are not allowed to see this!</p>
     }
+
+   
+
 }
 
 @code {
     public int[] Roles { get; set; }
+
     [Parameter]
     public int userID { get; set; }
+
+    private CompletedTestDTO[] CompletedTests { get; set; }
+
+    private List<TestBaseDTO> SortedTests { get; set; }
+
+    private double[] Results { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await base.OnParametersSetAsync();
+
+        var result = await CompletedTestService.GetCompletedTestsWithAuthotId(userID);
+
+        if (result != null && result.Length > 0)
+        {
+            CompletedTests = result;
+        }
+
+        CalculateResults();
+    }
+
+    private void CalculateResults()
+    {
+        SortedTests = SortTests();
+        Results = new double[SortedTests.Count];
+        int index = 0;
+
+        foreach(var test in SortedTests)
+        {
+            var solvedTests = CompletedTests.Where(solved => solved.SolvedTest.TestID == test.TestID);
+            double reachedPoints = 0, maxPoints = 0;
+            foreach (var solved in solvedTests)
+            {
+                reachedPoints += solved.ReachedPoints;
+                maxPoints += solved.MaxPoints;
+            }
+            Results[index] = (reachedPoints / maxPoints) * 100;
+            index++;
+        }
+    }
+
+    private List<TestBaseDTO> SortTests()
+    {
+        List<TestBaseDTO> Tests = new();
+
+        foreach (var test in CompletedTests)
+        {
+            if (!IsInList(Tests, test.SolvedTest))
+            {
+                Tests.Add(test.SolvedTest);
+            }
+        }
+        return Tests;
+    }
+
+    private bool IsInList(List<TestBaseDTO> tests, TestBaseDTO test)
+    {
+        foreach (var inList in tests)
+        {
+            if (inList.TestID == test.TestID)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
 
 }

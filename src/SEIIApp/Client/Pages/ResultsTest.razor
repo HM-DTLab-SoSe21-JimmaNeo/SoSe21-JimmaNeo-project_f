@@ -2,6 +2,8 @@
 
 @inject Services.TestsDefinitionBackendAccessService TestDefinitionService
 @inject NavigationManager NavigationManager
+@inject Services.CompletedTestBackendAccessService CompletedTestService 
+ 
 @using static RunTest
 
 
@@ -10,7 +12,7 @@
     @if (RunTest.TestDto != null)
     {
         <h2 class="text-center">Results of @(RunTest.TestDto.Topic)</h2>
-        <h3 class="text-center">Your score: @(RunTest.TestDto.ReachedPoints)/@(RunTest.TestDto.MaxPoints) Points</h3>
+        <h3 class="text-center">Your score: @(RunTest.CompletedTestDTO.ReachedPoints)/@(RunTest.CompletedTestDTO.MaxPoints) Points</h3>
         <ul class="list-group list-group-flush">
 
             @foreach (var question in RunTest.TestDto.Questions)
