@@ -7,12 +7,14 @@
 <h4>Videos</h4>
 
 <EditForm Model="VideoContentDTO">
+
     <DataAnnotationsValidator />
 
     @if (OnEditing)
     {
 
         <div class="input-group">
+
             <input type="text" style='width:100%' required @bind-value="VideoContentDTO.Path" @bind-value:event="oninput">
             <span class="highlight"></span>
             <span class="bar"></span>
@@ -38,23 +40,24 @@
             <iframe class="responsive-iframe" src=@("https://www.youtube.com/embed/" + VideoContentDTO.Path) title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             <br />
         </div>
+        <ValidationSummary />
+
     }
 
     @if (OnEditing)
     {
-   
-            <div class="form-floating">
-                <textarea class="form-control" id="inputMessage" type="text" placeholder="Enter description here..." style="height: 10rem" @bind="VideoContentDTO.Description"></textarea>
-            </div>
 
-            }
-            else
-            {
-            <p>@VideoContentDTO.Description</p>
-            }
+        <div class="form-floating">
+            <textarea class="form-control" id="inputMessage" type="text" placeholder="Enter description here..." style="height: 10rem" @bind="VideoContentDTO.Description"></textarea>
+        </div>
 
-            <ValidationSummary />
-    </EditForm>
+    }
+    else
+    {
+        <p>@VideoContentDTO.Description</p>
+    }
+
+</EditForm>
 
 
 @code {

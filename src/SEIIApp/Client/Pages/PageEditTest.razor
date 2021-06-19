@@ -7,107 +7,128 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-4 text-center">
-            <h3 class="text-center">Content Editor</h3>
+        <div class="col-7 text-center">
+            <h2 class="text-center">Test Editor</h2>
+            <hr class="divider">
 
             @if (TestDto != null)
             {
 
-                <EditForm EditContext="@context" OnSubmit="OnSubmit">
-                    <DataAnnotationsValidator />
+        <EditForm EditContext="@context" OnSubmit="OnSubmit">
+            <ObjectGraphDataAnnotationsValidator />
 
-                    <label>Name of the Test:</label><br />
-                    <InputText @bind-Value="TestDto.Topic" />
+            <div class="input-group">
 
-                    <br /><label>Content Description:</label><br />
+                <input type="text" style='width:100%' required @bind-value="TestDto.Topic" @bind-value:event="oninput">
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label class="hoverlabel">Topic of the test:</label>
+            </div>
 
-                    <InputText @bind-Value="TestDto.Description" />
-                    <p>
-                        <br /><b>You are able to upload Youtube Videos here if you want to include them in the test!</b>
+            <div class="form-floating">
+                <textarea class="form-control" id="inputMessage" type="text" placeholder="Enter description here..." style="height: 10rem" @bind="TestDto.Description"></textarea>
+            </div>
 
-                    </p>
-                    @foreach (var video in TestDto.Videos)
-                    {
+            <h5>
+                <br /><b>Upload Youtube Videos</b>
+
+            </h5>
+            @foreach (var video in TestDto.Videos)
+            {<div class="card">
+                    <div class="card-body">
                         <VideoComponent VideoContentDTO="video"></VideoComponent>
                         <button class="btn btn-light btn-sm my-3" @onclick="() => DeleteVideoContent(video)">
                             Remove
                             Video
                         </button>
-                    }
-                    <br /><button class="btn btn-light" @onclick="AddVideoContent">Add Video</button><br />
+                    </div>
+                </div>
+                <br />
+            }
+            <br /><button class="btn btn-light" @onclick="AddVideoContent">Add Video</button><br />
 
-                    <hr />
-                    <p>
-                        <br /><b>You can add questions and answers by clicking the button below!</b>
+            <hr />
+            <h5>
+                <br /><b>Add questions and answers</b>
 
-                    </p>
-                    @foreach (var question in TestDto.Questions)
-                    {
-                        <div class="card">
-                            <div class="card-body">
-                                <!-- Component for questions in quiz -->
-                                <QuestionDefComponent QuestionDto="question"></QuestionDefComponent>
-                                <button class="btn btn-light" @onclick="() => RemoveQuestion(question)">Remove Question</button>
-                            </div>
-                        </div>
+            </h5>
+            @foreach (var question in TestDto.Questions)
+            {
+                <div class="card">
+                    <div class="card-body">
+                        <QuestionDefComponent QuestionDto="question"></QuestionDefComponent>
+                        <button class="btn btn-light" @onclick="() => RemoveQuestion(question)">Remove Question</button>
+                    </div>
+                </div>
+                <br />
 
-                    }
-                    <button class="btn btn-light btn-sm my-3" @onclick="AddQuestion">Add Question</button>
+            }
+            <button class="btn btn-light" @onclick="AddQuestion">Add Question</button>
 
-                    <br />
-                    <p>
-                        <b>
-                            You can add further information about this topic to give you students the possibility to expand
-                            their knowledge!
-                        </b>
-                    </p><br />
+            <br />
+            <h5>
+                <b>
+                    Add further information about this topic to give you students the possibility to expand
+                    their knowledge!
+                </b>
+            </h5><br />
 
-                    @foreach (var link in TestDto.FurtherLinks)
-                    {
-                        <div class="card">
-                            <div class="card-body">
+            @foreach (var link in TestDto.FurtherLinks)
+            {
+                <div class="card">
+                    <div class="card-body">
+                        <FurtherLinkComponent FurtherLinkDto="link"></FurtherLinkComponent>
+                        <button class="btn btn-light btn-sm my-3" @onclick="() => DeleteFurtherLink(link)">
+                            Remove
+                            Link
+                        </button>
+                    </div>
+                </div>
+                <br />
+            }
 
-                                <FurtherLinkComponent FurtherLinkDto="link"></FurtherLinkComponent>
-                                <button class="btn btn-light btn-sm my-3" @onclick="() => DeleteFurtherLink(link)">
-                                    Remove
-                                    Link
-                                </button>
-                            </div>
-                        </div>
-                    }
 
-
-                    <br /><button class="btn btn-light" @onclick="AddFurtherLink">Add Link</button><br />
-                    <hr />
-                    @if (TestDto.VideosFurtherInformation != null)
-                    {
-                        @foreach (var video in TestDto.VideosFurtherInformation)
-                        {
+            <br /><button class="btn btn-light" @onclick="AddFurtherLink">Add Link</button><br />
+            <hr />
+            @if (TestDto.VideosFurtherInformation != null)
+            {
+                @foreach (var video in TestDto.VideosFurtherInformation)
+                {<div class="card">
+                        <div class="card-body">
                             <VideoComponent VideoContentDTO="video"></VideoComponent>
                             <button class="btn btn-light btn-sm my-3" @onclick="() => DeleteVideosFurtherInformation(video)">
                                 Remove
                                 Video
                             </button>
-                        }
-                    }
-                    <br /><button class="btn btn-light" @onclick="AddVideosFurtherInformation">Add Video</button><br />
-                    <hr />
-                    @foreach (var content in TestDto.Content)
-                    {
+                        </div>
+                    </div>
+                    <br />
+                }
+
+            }
+            <br /><button class="btn btn-light" @onclick="AddVideosFurtherInformation">Add Video</button><br />
+            <hr />
+            @foreach (var content in TestDto.Content)
+            {<div class="card">
+                    <div class="card-body">
                         <PictureComponent PictureContentDTO="content"></PictureComponent>
                         <button class="btn btn-light btn-sm my-3" @onclick="() => DeletePictureContent(content)">
                             Remove
                             Picture
                         </button>
-                    }
-                    <br /><button class="btn btn-light" @onclick="AddPictureContent">Add Picture</button><br />
-                    <hr />
-                    <button class="btn btn-light" @onclick="() => SaveContentToBackend(this.TestDto)">
-                        Save Complete
-                        Quiz
-                    </button>
-                    <ValidationSummary />
-                </EditForm>
+                    </div>
+                </div>
+                <br />
+            }
+            <br /><button class="btn btn-light" @onclick="AddPictureContent">Add Picture</button><br />
+            <hr />
+            <button class="btn btn-light" @onclick="SaveContentToBackend">
+                Save Complete
+                Test
+            </button>
+
+            <ValidationSummary />
+        </EditForm>
 
             }
             else
@@ -127,6 +148,8 @@
     public TestDTO TestDto { get; set; }
 
     private EditContext context { get; set; }
+
+    private bool isNotValid { get; set; }
 
     protected override async Task OnParametersSetAsync()
     {
@@ -162,17 +185,17 @@
         TestDto.Questions.Add(new QuestionDTO());
     }
 
+    private void OnSubmit()
+    {
+        
+    }
+
     private void RemoveQuestion(QuestionDTO question)
     {
         TestDto.Questions.Remove(question);
     }
 
-    private void OnSubmit(EditContext context)
-    {
-
-    }
-
-    private async void SaveContentToBackend(TestDTO TestDto)
+    private async void SaveContentToBackend()
     {
         var isValid = context.Validate();
         if (isValid)
@@ -182,6 +205,10 @@
             {
                 this.TestDto.TestID = answer.TestID; //refresh id (if created)
                 NavigationManager.NavigateTo("/testoverview");
+            }
+            else
+            {
+                isNotValid = true;
             }
         }
     }

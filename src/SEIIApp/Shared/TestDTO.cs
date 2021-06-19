@@ -12,8 +12,8 @@ namespace SEIIApp.Shared
     {
         public int TestID { get; set; }
 
-        [Required]
-        [StringLength(100)]
+        [Required(ErrorMessage = "Test Topic is required")]
+        [StringLength(50)]
         public string Topic { get; set; }
         
         public string Description { get; set; }
@@ -27,15 +27,19 @@ namespace SEIIApp.Shared
     public class TestDTO : TestBaseDTO
     {
 
-        // TDDO [ValidateComplexType]
+        [ValidateComplexType]
         public List<QuestionDTO> Questions { get; set; }
-        
+
+        [ValidateComplexType]
         public List<VideoContentDTO> Videos { get; set; }
 
+        [ValidateComplexType]
         public List<VideoContentDTO> VideosFurtherInformation { get; set; }
 
+        [ValidateComplexType]
         public List<PictureContentDTO> Content { get; set; }
 
+        [ValidateComplexType]
         public List<FurtherLinkDTO> FurtherLinks { get; set; }
 
     }

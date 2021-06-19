@@ -9,7 +9,7 @@ namespace SEIIApp.Shared
 {
     public class FurtherLinkDTO
     {
-        [Required]
+        [Required(ErrorMessage = "Url of Link is required")]
         public string Link { get; set; }
 
         [StringLength(100)]
