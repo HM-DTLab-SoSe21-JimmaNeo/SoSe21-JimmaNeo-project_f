@@ -9,8 +9,7 @@ body {
 .registration-form form {
         background-color: #fff;
         max-width: 600px;
-        margin: auto;
-       
+        margin: auto;     
 
 }
 
@@ -96,3 +95,38 @@ body {
 a:link{
     text-decoration: none;
 }
+
+/* The alert message box */
+.alert {
+    padding: 20px;
+    color: #842029;
+    background-color: #f8d7da;
+    border-color: #f5c2c7;
+    margin-bottom: 15px;
+}
+
+.alert-success {
+    padding: 20px;
+    color: #0f5132;
+    background-color: #d1e7dd;
+    border-color: #badbcc;
+    margin-bottom: 15px;
+}
+
+
+/* The close button */
+.closebtn {
+    margin-left: 15px;
+    color: darkred;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+    /* When moving the mouse over the close button */
+    .closebtn:hover {
+        color: black;
+    }
