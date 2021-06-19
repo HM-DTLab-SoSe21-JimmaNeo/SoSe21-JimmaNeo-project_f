@@ -5,7 +5,16 @@
 @using SEIIApp.Shared;
 
 @if (userDTO != null)
+
 {
+    if (clicked) {
+    <div class="alert-success">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        <strong>User has been changed successfully!</strong>
+    </div>
+    }
+
+
     <div class="wrapper bg-white mt-sm-5">
         <h4 class="pb-4 border-bottom">User Editing: @userDTO.Name</h4>
         <font color="green">@msg</font>
@@ -69,6 +78,7 @@ else
     public string inputLastName { get; set; }
 
     public int chosenOption { get; set; }
+    private bool clicked = false;
     private string msg { get; set; }
 
 
@@ -128,7 +138,7 @@ else
 
         if (response != null)
         {
-            msg = "Change User was successfully!";
+            clicked = true;
             await Task.Delay(2000);
             navManager.NavigateTo("/manageuser");
         }
