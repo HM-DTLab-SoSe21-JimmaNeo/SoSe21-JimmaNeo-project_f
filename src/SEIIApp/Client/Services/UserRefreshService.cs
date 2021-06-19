@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace SEIIApp.Client.Services
 {
-    public class AppState
+    public class UserRefreshService
     {
         private bool _loggedIn;
         public event Action OnChange;
