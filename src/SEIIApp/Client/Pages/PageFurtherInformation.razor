@@ -10,47 +10,58 @@
 
     @if (TestDto != null)
     {
-        <h2 class="text-center">Further information about @(TestDto.Topic)</h2><hr /><ul class="list-group list-group-flush">
+        <h2 class="text-center">Further information about @(TestDto.Topic)</h2><hr class="divider" />
+    <ul class="list-group list-group-flush">
     @if (TestDto.FurtherLinks.Any())
     {
         
-        <h4 class="text-center">Links of websites about @(TestDto.Topic)</h4>
+        <h4 class="text-center"><b>Website-Links about @(TestDto.Topic)</b></h4>
         @foreach (var link in TestDto.FurtherLinks)
         {
-            <li class="text-center list-group-item">
+    <li class="text-center list-group-item">
+        <div class="card">
+            <div class="card-body">
                 <label>@(link.Description)</label><br />
                 <label>@(link.Link)</label><br />
-                <form action="@link.Link">
-                <input type="submit" value="Go to Link" />
-                </form>
-           </li>
+                <a href="@(link.Link)">@(link.Link)</a>
+            </div>
+        </div>
+    </li>
         }
     }
     @if (TestDto.VideosFurtherInformation.Any())
     {
-        <h4 class="text-center">Videos about @(TestDto.Topic) </h4>
+        <h4 class="text-center"><b>Videos about @(TestDto.Topic) </b></h4>
         @foreach (var video in TestDto.VideosFurtherInformation)
         {
-            <li class="text-center list-group-item">
+    <li class="text-center list-group-item">
+        <div class="card">
+            <div class="card-body">
                 <VideoComponent VideoContentDTO="video"></VideoComponent>
-            </li>
+            </div>
+        </div>
+    </li>
         }
     }
     @if (TestDto.Content.Any())
     {
-        <h4 class="text-center">Pictures about @(TestDto.Topic) </h4>
+        <h4 class="text-center"><b>Pictures about @(TestDto.Topic) </b></h4>
         @foreach (var picture in TestDto.Content)
         {
-            <li class="text-center list-group-item">
+    <li class="text-center list-group-item">
+        <div class="card">
+            <div class="card-body">
                 <PictureComponent PictureContentDTO="picture"></PictureComponent>
-            </li>
+            </div>
+        </div>
+    </li>
         }
 
     }
 </ul>
 
         <div class="text-center py-2">
-            <button class="btn btn-outline-primary" @onclick="() => ReturnBackToTestOverview()">Return to overview</button>
+            <button class="btn btn-light" @onclick="() => ReturnBackToTestOverview()">Return to overview</button>
         </div>
     }
 

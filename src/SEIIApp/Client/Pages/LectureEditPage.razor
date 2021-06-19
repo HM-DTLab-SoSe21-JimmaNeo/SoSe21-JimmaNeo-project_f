@@ -25,7 +25,8 @@
                     VideoComponent.OnEditing = true;
                     PictureComponent.OnEditing = true;
         <EditForm EditContext="@context" OnSubmit="OnSubmit">
-           
+            <ObjectGraphDataAnnotationsValidator />
+
 
 
             <label>Lecture Name:</label><br />
@@ -70,19 +71,19 @@
             <hr />
 
             <label>Lecture Text:</label><br />
-            
+
             <br />
-            
+
             <div class="form-floating">
                 <textarea class="form-control" id="inputMessage" type="text" placeholder="Enter Text for lecture here..." style="height: 15rem" @bind="LectureDto.Text"></textarea>
             </div><br />
             <hr />
-            
+
 
 
             <button class="btn btn-light" @onclick="() => SaveContentToBackend(this.LectureDto)">Save Lecture</button>
             <p></p>
-            
+            <ValidationSummary />
         </EditForm>
                 }
                 else

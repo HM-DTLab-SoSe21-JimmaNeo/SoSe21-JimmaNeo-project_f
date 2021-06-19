@@ -9,7 +9,7 @@ namespace SEIIApp.Shared
 {
     public class AnswerDTO
     {
-        [Required]
+        [Required(ErrorMessage = "Answer is required")]
         public string AnswerText { get; set; }
 
         public bool IsCorrect { get; set; }

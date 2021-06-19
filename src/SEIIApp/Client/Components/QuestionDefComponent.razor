@@ -3,29 +3,43 @@
     if (QuestionDto != null)
     {
     <EditForm Model="QuestionDto">
-        <DataAnnotationsValidator />
-         <label>Question Text</label><br />
-        <InputText @bind-Value="@QuestionDto.QuestionText" />
+        <ObjectGraphDataAnnotationsValidator />
+        <div class="input-group">
+
+            <input type="text" style='width:100%' required @bind-value="QuestionDto.QuestionText" @bind-value:event="oninput">
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label class="hoverlabel">Question</label>
+        </div>
+        <p>
+            <br /><b>Add pictures to the question</b>
+
+        </p>
         @foreach (var p in QuestionDto.Pictures)
         {<hr />
             <PictureComponent PictureContentDTO="p"></PictureComponent><br />
             <button class="btn btn-light btn-sm" @onclick="() => RemovePicture(p)">Remove Picture</button>
+            <br />
         }
         <br />
         <button class="btn btn-light btn-sm my-3" @onclick="AddPicture">Add Picture</button>
         <br />
-       
+
         @foreach (var a in QuestionDto.Answers)
         {<hr />
             <AnswerDefComponent AnswerDto="a"></AnswerDefComponent>
             <button class="btn btn-light btn-sm" @onclick="() => RemoveAnswer(a)">Remove Answer</button>
+            <br />
         }
+        <ValidationSummary />
         <br />
         <button class="btn btn-light btn-sm my-3" @onclick="AddAnswer">Add Answer</button>
         <br />
-        <label>Explanation</label><br />
-        <InputText @bind-Value="@QuestionDto.Explanation" />
-        <ValidationSummary />
+
+        <div class="form-floating">
+            <textarea class="form-control" id="inputMessage" type="text" placeholder="Enter explanation of question here..." style="height: 10rem" @bind="QuestionDto.Explanation"></textarea>
+        </div>
+
     </EditForm>
     }
     else

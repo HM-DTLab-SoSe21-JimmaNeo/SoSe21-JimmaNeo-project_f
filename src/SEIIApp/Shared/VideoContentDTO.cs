@@ -10,7 +10,8 @@ namespace SEIIApp.Shared
 {
     public class VideoContentDTO
     {
-        [Required]
+        [Required(ErrorMessage = "Video Url-Path is required")]
+        [StringLength(100, MinimumLength = 1)]
         public string Path { get; set; }
 
         [StringLength(250)]
