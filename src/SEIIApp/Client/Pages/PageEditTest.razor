@@ -37,7 +37,7 @@
             {<div class="card shadow">
                     <div class="card-body">
                         <VideoComponent VideoContentDTO="video"></VideoComponent>
-                        <button class="btn btn-light btn-sm my-3" @onclick="() => DeleteVideoContent(video)">
+                        <button class="btn btn-light btn-sm shadow" @onclick="() => DeleteVideoContent(video)">
                             Remove
                             Video
                         </button>
@@ -45,7 +45,7 @@
                 </div>
                 <br />
             }
-            <br /><button class="btn btn-light" @onclick="AddVideoContent">Add Video</button><br />
+            <br /><button class="btn btn-light shadow" @onclick="AddVideoContent">Add Video</button><br />
 
             <hr />
             <h5>
@@ -57,13 +57,13 @@
                 <div class="card shadow">
                     <div class="card-body">
                         <QuestionDefComponent QuestionDto="question"></QuestionDefComponent>
-                        <button class="btn btn-light" @onclick="() => RemoveQuestion(question)">Remove Question</button>
+                        <button class="btn btn-light shadow" @onclick="() => RemoveQuestion(question)">Remove Question</button>
                     </div>
                 </div>
                 <br />
 
             }
-            <button class="btn btn-light" @onclick="AddQuestion">Add Question</button>
+            <button class="btn btn-light shadow" @onclick="AddQuestion">Add Question</button>
 
             <br />
             <hr />
@@ -79,7 +79,7 @@
                 <div class="card shadow">
                     <div class="card-body">
                         <FurtherLinkComponent FurtherLinkDto="link"></FurtherLinkComponent>
-                        <button class="btn btn-light btn-sm my-3" @onclick="() => DeleteFurtherLink(link)">
+                        <button class="btn btn-light btn-sm shadow" @onclick="() => DeleteFurtherLink(link)">
                             Remove
                             Link
                         </button>
@@ -89,7 +89,7 @@
             }
 
 
-            <br /><button class="btn btn-light" @onclick="AddFurtherLink">Add Link</button><br />
+            <br /><button class="btn btn-light shadow" @onclick="AddFurtherLink">Add Link</button><br />
             <hr />
             @if (TestDto.VideosFurtherInformation != null)
             {
@@ -97,7 +97,7 @@
                 {<div class="card shadow">
                         <div class="card-body">
                             <VideoComponent VideoContentDTO="video"></VideoComponent>
-                            <button class="btn btn-light btn-sm my-3" @onclick="() => DeleteVideosFurtherInformation(video)">
+                            <button class="btn btn-light btn-sm shadow" @onclick="() => DeleteVideosFurtherInformation(video)">
                                 Remove
                                 Video
                             </button>
@@ -107,13 +107,13 @@
                 }
 
             }
-            <br /><button class="btn btn-light" @onclick="AddVideosFurtherInformation">Add Video</button><br />
+            <br /><button class="btn btn-light shadow" @onclick="AddVideosFurtherInformation">Add Video</button><br />
             <hr />
             @foreach (var content in TestDto.Content)
             {<div class="card shadow">
                     <div class="card-body">
                         <PictureComponent PictureContentDTO="content"></PictureComponent>
-                        <button class="btn btn-light btn-sm my-3" @onclick="() => DeletePictureContent(content)">
+                        <button class="btn btn-light btn-sm shadow" @onclick="() => DeletePictureContent(content)">
                             Remove
                             Picture
                         </button>
@@ -121,11 +121,13 @@
                 </div>
                 <br />
             }
-            <br /><button class="btn btn-light" @onclick="AddPictureContent">Add Picture</button><br />
+            <br /><button class="btn btn-light shadow" @onclick="AddPictureContent">Add Picture</button><br />
             <hr />
-            <button class="btn btn-light" @onclick="SaveContentToBackend">
-                Save Complete
-                Test
+            <button class="btn btn-light shadow" @onclick="SaveContentToBackend">
+                <b>
+                    Save Complete
+                    Test
+                </b>
             </button>
 
             <ValidationSummary />
