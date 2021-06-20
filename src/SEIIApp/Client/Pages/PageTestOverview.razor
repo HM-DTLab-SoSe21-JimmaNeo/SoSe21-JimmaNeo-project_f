@@ -16,13 +16,13 @@
 
                     @if (isFiltered == false)
                     {
-                        <div class="px-auto">
+                        <div class="px-auto shadow">
                             <InputText type="search" class="form-control rounded" placeholder="Search by Topic"
                                        aria-label="Name of the Content" style="width: 155px;" aria-describedby="search-addon" @bind-Value="@searchValue" />
 
 
                         </div>
-                        <button class="btn btn-outline-primary btn-sm" @onclick="SearchContent">
+                        <button class="btn btn-outline-primary btn-sm shadow" @onclick="SearchContent">
                          Search</button>
                         <hr />
 
@@ -40,7 +40,7 @@
             @if (UserService.User != null && UserService.User.Role == Role.Teacher)
             {
                 <div class="text-center py-2">
-                    <button class="btn btn-outline-success btn-sm" @onclick="AddTest">Add Test</button>
+                    <button class="btn btn-outline-secondary btn-sm shadow" @onclick="AddTest">+ Add Test</button>
                 </div>
             }
         </div>
