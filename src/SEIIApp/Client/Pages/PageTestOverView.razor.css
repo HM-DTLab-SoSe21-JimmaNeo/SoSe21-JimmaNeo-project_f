@@ -10,3 +10,12 @@ hr.divider {
 hr.divider-light {
     background-color: #fff;
 }
+
+/* The alert message box */
+.alert {
+    padding: 20px;
+    color: #842029;
+    background-color: #f8d7da;
+    border-color: #f5c2c7;
+    margin-bottom: 15px;
+}
