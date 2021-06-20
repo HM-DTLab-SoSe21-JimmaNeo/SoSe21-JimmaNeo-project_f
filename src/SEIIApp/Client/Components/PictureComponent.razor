@@ -23,7 +23,13 @@
 else
 {
     <img src="@PictureContentDTO.Path" class=" img-thumbnail" allowfullscreen> <br />
-    <label>@(PictureContentDTO.Description)</label><br />
+    <hr/>
+    if (!String.IsNullOrEmpty(PictureContentDTO.Description))
+    {
+        <hr/>
+    <h5 class="text-center"> <b>Picture Description</b></h5>
+    <p class="text-center">@(PictureContentDTO.Description)</p><br />
+    }
 }
 @code {
     [Parameter]

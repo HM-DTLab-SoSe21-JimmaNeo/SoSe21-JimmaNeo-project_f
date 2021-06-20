@@ -18,9 +18,14 @@
             <ul class="list-group list-group-flush">
                 @foreach (var video in TestDto.Videos)
                 {
-                    <li class="text-center list-group-item">
-                        <VideoComponent VideoContentDTO="video"></VideoComponent>
-                    </li>
+                <li class="text-center list-group-item">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <VideoComponent VideoContentDTO="video"></VideoComponent>
+                        </div>
+                    </div>
+                </li>
+
                 }
 
                 @foreach (var question in TestDto.Questions)
@@ -28,7 +33,7 @@
                     if (!String.IsNullOrEmpty(question.QuestionText))
                     {
                         <hr />
-                        <div class="card">
+                        <div class="card shadow">
                             <div class="card-body">
                         <li class="text-center list-group-item">
                             <br />
@@ -63,7 +68,7 @@
                     }
 
                 }
-                <button class="btn btn-light btn-sm my-3" @onclick="()=> OnSubmitTest()">Submit</button>
+                <button class="btn btn-light btn-sm shadow" @onclick="()=> OnSubmitTest()">Submit</button>
             </ul>
         </EditForm>
 

@@ -16,13 +16,14 @@
 
                     @if (isFiltered == false)
                     {
-                        <div class="px-auto">
-                            <InputText type="search" class="form-control rounded" placeholder="Search by Testname"
-                                       aria-label="Name of the Content" aria-describedby="search-addon" @bind-Value="@searchValue" />
+                        <div class="px-auto shadow">
+                            <InputText type="search" class="form-control rounded" placeholder="Search by Topic"
+                                       aria-label="Name of the Content" style="width: 155px;" aria-describedby="search-addon" @bind-Value="@searchValue" />
 
 
                         </div>
-                        <button class="btn btn-outline-primary btn-sm" @onclick="SearchContent">Search</button>
+                        <button class="btn btn-outline-primary btn-sm shadow" @onclick="SearchContent">
+                         Search</button>
                         <hr />
 
                     }
@@ -39,7 +40,7 @@
             @if (UserService.User != null && UserService.User.Role == Role.Teacher)
             {
                 <div class="text-center py-2">
-                    <button class="btn btn-outline-success btn-sm" @onclick="AddTest">Add Test</button>
+                    <button class="btn btn-outline-secondary btn-sm shadow" @onclick="AddTest">+ Add Test</button>
                 </div>
             }
         </div>
@@ -54,37 +55,66 @@
 
                 @foreach (var content in Tests)
                 {
-                <li class="text-center list-group-item">
-                    <div class="card">
-                        <div class="card-body">
-                            <b>
-                                TestID:
-                            </b>
-                            @(content.TestID)
-                            <b>
-                                Date:
-                            </b>
-                            @(content.DateOfCreation.ToShortDateString())
-                            <b>
-                                Author:
-                            </b>
-                            @(content.Author.Name)
-                            @(content.Author.LastName)
-                            <b>
-                                Topic:
-                            </b>
+                    <li class="text-center list-group-item">
+                        <div class="card shadow">
+                            <div class="card-body">
+                                <b>
+                                    TestID:
+                                </b>
+                                @(content.TestID)
+                                <b>
+                                    Date:
+                                </b>
+                                @(content.DateOfCreation.ToShortDateString())
+                                <b>
+                                    Author:
+                                </b>
+                                @(content.Author.Name)
+                                @(content.Author.LastName)
+                                <b>
+                                    Topic:
+                                </b>
 
-                            @(content.Topic)
-                            <br/>
-                            <button class="btn btn-outline-dark btn-sm" @onclick="() => EditQuiz((TestDTO)content)">Edit</button>
-                            <button class="btn btn-outline-danger btn-sm" @onclick="() => DeleteTest(content)">Delete</button>
-                            <button class="btn btn-outline-success btn-sm" @onclick="() => StartTest(content.TestID)">Start</button>
-                            <button class="btn btn-outline-primary btn-sm" @onclick="() => GetFurtherTopicInformations(content.TestID)">Topic</button>
+                                @(content.Topic)
+                                <br />
+                                <button class="btn btn-outline-dark btn-sm" @onclick="() => EditQuiz((TestDTO)content)">Edit</button>
+                                <button class="btn btn-outline-danger btn-sm" @onclick="() => ModalShow(content)">Delete</button>
+                                <button class="btn btn-outline-success btn-sm" @onclick="() => StartTest(content.TestID)">Start</button>
+                                <button class="btn btn-outline-primary btn-sm" @onclick="() => GetFurtherTopicInformations(content.TestID)">Topic</button>
+                            </div>
                         </div>
-                    </div>
-                </li>
+                    </li>
                 }
             </ul>
+            @if (showModal)
+            {
+                <div class="modal fade show" id="myModal" style="display:block" aria-modal="true" role="dialog">
+                    <div class="modal-dialog shadow">
+                        <div class="modal-content">
+
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Confirm delete</h4>
+                                <button type="button" class="close" @onclick="@ModalCancel">&times;</button>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <p>Are you sure you want to delete @currentTest.Topic?</p>
+                            </div>
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn" @onclick="@ModalCancel">Cancel</button>
+                                <button type="button" class="btn btn-danger" @onclick="() => DeleteTest(currentTest)">Delete</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            }
+            
         }
         else if (UserService.User != null && UserService.User.Role == Role.Student)
         {
@@ -92,34 +122,34 @@
 
                 @foreach (var content in Tests)
                 {
-                <li class="text-center list-group-item">
-                    <div class="card">
-                        <div class="card-body">
-                            <b>
-                                TestID:
-                            </b>
-                            @(content.TestID)
-                            <b>
-                                Date:
-                            </b>
-                            @(content.DateOfCreation.ToShortDateString())
-                            <b>
-                                Author:
-                            </b>
-                            @(content.Author.Name)
-                            @(content.Author.LastName)
-                            <b>
-                                Topic:
-                            </b>
+                    <li class="text-center list-group-item">
+                        <div class="card">
+                            <div class="card-body">
+                                <b>
+                                    TestID:
+                                </b>
+                                @(content.TestID)
+                                <b>
+                                    Date:
+                                </b>
+                                @(content.DateOfCreation.ToShortDateString())
+                                <b>
+                                    Author:
+                                </b>
+                                @(content.Author.Name)
+                                @(content.Author.LastName)
+                                <b>
+                                    Topic:
+                                </b>
 
-                            @(content.Topic)
-                            <br />
-                            <br />
-                            <button class="btn btn-outline-success btn-sm" @onclick="() => StartTest(content.TestID)">Start</button>
-                            <button class="btn btn-outline-primary btn-sm" @onclick="() => GetFurtherTopicInformations(content.TestID)">Topic</button>
+                                @(content.Topic)
+                                <br />
+                                <br />
+                                <button class="btn btn-outline-success btn-sm" @onclick="() => StartTest(content.TestID)">Start</button>
+                                <button class="btn btn-outline-primary btn-sm" @onclick="() => GetFurtherTopicInformations(content.TestID)">Topic</button>
+                            </div>
                         </div>
-                    </div>
-                </li>
+                    </li>
                 }
             </ul>
         }
@@ -140,6 +170,10 @@
 
     private List<TestDTO> copyOfTest { get; set; }
 
+    private TestDTO currentTest { get; set; }
+
+    private bool showModal = false;
+
     protected override async Task OnParametersSetAsync()
     {
         await base.OnParametersSetAsync();
@@ -158,13 +192,17 @@
 
     private async Task DeleteTest(TestDTO test)
     {
-        
+
         Tests.Remove(test);
         if (copyOfTest != null)
         {
             copyOfTest.Remove(test);
         }
-       await TestDefinitionService.DeleteTest(test.TestID);
+        await TestDefinitionService.DeleteTest(test.TestID);
+
+        showModal = false;
+        StateHasChanged();
+        await Task.Delay(3000);
     }
 
 
@@ -195,4 +233,14 @@
     {
         NavigationManager.NavigateTo("/furtherinformation/" + contentId);
     }
+
+    void ModalShow(TestDTO test)
+    {
+
+        showModal = true;
+        currentTest = test;
+
+    }
+
+    void ModalCancel() => showModal = false;
 }

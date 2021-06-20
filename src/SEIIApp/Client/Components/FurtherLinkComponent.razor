@@ -1,28 +1,41 @@
-﻿@using SEIIApp.Shared;
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
-</head>
+﻿
 
-<h4>Website links about the topic</h4>
-<EditForm Model="FurtherLinkDto">
-    <DataAnnotationsValidator />
-    <div class="input-group">
+@if (OnEditing)
+{
+    <h4>Website links about the topic</h4>
+    <EditForm Model="FurtherLinkDto">
+        <DataAnnotationsValidator />
+        <div class="input-group">
 
-        <input type="text" style='width:100%' required @bind-value="FurtherLinkDto.Link" @bind-value:event="oninput">
-        <span class="highlight"></span>
-        <span class="bar"></span>
-        <label class="hoverlabel">Website-Link</label>
-    </div>
+            <input type="text" style='width:100%' required @bind-value="FurtherLinkDto.Link" @bind-value:event="oninput">
+            <span class="highlight"></span>
+            <span class="bar"></span>
+            <label class="hoverlabel">Website-Link</label>
+        </div>
 
-    <div class="form-floating">
-        <textarea class="form-control" id="inputMessage" type="text" placeholder="Enter description here..." style="height: 10rem" @bind="FurtherLinkDto.Description"></textarea>
-    </div>
-    <ValidationSummary />
-</EditForm>
+        <div class="form-floating">
+            <textarea class="form-control" id="inputMessage" type="text" placeholder="Enter description here..." style="height: 10rem" @bind="FurtherLinkDto.Description"></textarea>
+        </div>
+        <ValidationSummary />
+    </EditForm>
+}
+else
+{
+    <a href="@(FurtherLinkDto.Link)">@(FurtherLinkDto.Link)</a>
+    @if (!String.IsNullOrEmpty(FurtherLinkDto.Description))
+    {
+        <hr/>
+        <h5 class="text-center"> <b>Website-Link Description</b></h5>
+        <p class="text-center">@(FurtherLinkDto.Description)</p>
+        <br />
+    }
+
+}
+
 
 @code {
+
+    public static bool OnEditing = false;
 
     [Parameter]
     public FurtherLinkDTO FurtherLinkDto { get; set; }
