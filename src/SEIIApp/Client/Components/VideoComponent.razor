@@ -22,7 +22,7 @@
         </div>
     }
 
-    @if (VideoContentDTO.Path != null)
+    @if (VideoContentDTO.Path != null && VideoContentDTO.Path.Length > 0)
     {
         @if (VideoContentDTO.Path.Contains("youtube.com/watch"))
         {
