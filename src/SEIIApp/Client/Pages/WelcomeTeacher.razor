@@ -1,5 +1,4 @@
 ﻿@page "/welcometeacher"
-@page "/welcometeacher/{UserId:int}"
 
 @inject NavigationManager NavigationManager
 @inject UserServicee MyUserService
@@ -14,8 +13,7 @@
         <br />
 
         @if (SortedTests != null && SortedTests.Count > 0)
-        {
-            
+        {          
             <table class="tableaverage">
                 <thead>
                     <tr>
@@ -37,10 +35,6 @@
                     }                   
                 </tbody>
             </table>
-
-
-
-           
         } else
         {
             <p>Either you have not yet created a test or no test you created was solved</p>
@@ -57,11 +51,6 @@
 }
 
 @code {
-    public int[] Roles { get; set; }
-
-    [Parameter]
-    public int userID { get; set; }
-
     private CompletedTestDTO[] CompletedTests { get; set; }
 
     private List<TestBaseDTO> SortedTests { get; set; }
@@ -70,16 +59,18 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        await base.OnParametersSetAsync();
-
-        var result = await CompletedTestService.GetCompletedTestsWithAuthotId(userID);
-
-        if (result != null && result.Length > 0)
+        if (MyUserService.User != null && MyUserService.User.Role == Role.Teacher)
         {
-            CompletedTests = result;
-        }
+            await base.OnParametersSetAsync();
 
-        CalculateResults();
+            var result = await CompletedTestService.GetCompletedTestsWithAuthotId(MyUserService.User.UserId);
+
+            if (result != null && result.Length > 0)
+            {
+                CompletedTests = result;
+                CalculateResults();
+            }
+        }
     }
 
     private void CalculateResults()

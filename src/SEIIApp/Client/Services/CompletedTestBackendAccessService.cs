@@ -28,22 +28,45 @@ namespace SEIIApp.Client.Services
 
         public async Task<CompletedTestDTO> GetCompletedTestWithId(int id)
         {
-            return await HttpClient.GetFromJsonAsync<CompletedTestDTO>(GetCompletedTestUrl() + $"/{id}");
+            try
+            {
+                return await HttpClient.GetFromJsonAsync<CompletedTestDTO>(GetCompletedTestUrl() + $"/{id}");
+            } catch (HttpRequestException)
+            {
+                return null;
+            }
         }
 
         public async Task<CompletedTestDTO[]> GetCompletedTestsWithUserId(int userId)
         {
-            return await HttpClient.GetFromJsonAsync<CompletedTestDTO[]>(GetCompletedTestUrl() + $"/userId/{userId}");
-        }
+            try
+            {
+                return await HttpClient.GetFromJsonAsync<CompletedTestDTO[]>(GetCompletedTestUrl() + $"/userId/{userId}");
+            }
+            catch (HttpRequestException) { 
+                return null; 
+            }
+         }
         
         public async Task<CompletedTestDTO[]> GetCompletedTestsWithTestId(int testId)
         {
-            return await HttpClient.GetFromJsonAsync<CompletedTestDTO[]>(GetCompletedTestUrl() + $"/testId/{testId}");
-        } 
+            try
+            {
+                return await HttpClient.GetFromJsonAsync<CompletedTestDTO[]>(GetCompletedTestUrl() + $"/testId/{testId}");
+            } catch (HttpRequestException)
+            {
+                return null;
+            }   
+        }
 
         public async Task<CompletedTestDTO[]> GetCompletedTestsWithAuthotId(int authorId)
         {
-            return await HttpClient.GetFromJsonAsync<CompletedTestDTO[]>(GetCompletedTestUrl() + $"/authorId/{authorId}");
+            try {
+                return await HttpClient.GetFromJsonAsync<CompletedTestDTO[]>(GetCompletedTestUrl() + $"/authorId/{authorId}");
+            } catch (HttpRequestException)
+            {
+                return null;
+            }
         }
 
         public async Task<CompletedTestDTO> AddCompletedTest(CompletedTestDTO completedTestDTO)
