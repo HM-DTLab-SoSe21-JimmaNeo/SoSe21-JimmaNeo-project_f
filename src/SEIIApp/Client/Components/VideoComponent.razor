@@ -1,17 +1,12 @@
-﻿@using SEIIApp.Shared;
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
-</head>
-<h4>Videos</h4>
-
+﻿
 <EditForm Model="VideoContentDTO">
 
     <DataAnnotationsValidator />
 
     @if (OnEditing)
     {
+        <h4>Videos</h4>
+
 
         <div class="input-group">
 
@@ -54,7 +49,12 @@
     }
     else
     {
-        <p>@VideoContentDTO.Description</p>
+        if (!String.IsNullOrEmpty(VideoContentDTO.Description))
+        {
+         <hr/>
+        <h5 class="text-center"> <b>Video Description</b></h5>
+        <p class="text-center">@VideoContentDTO.Description</p>
+        }
     }
 
 </EditForm>

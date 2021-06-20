@@ -34,7 +34,7 @@
 
             </h5>
             @foreach (var video in TestDto.Videos)
-            {<div class="card">
+            {<div class="card shadow">
                     <div class="card-body">
                         <VideoComponent VideoContentDTO="video"></VideoComponent>
                         <button class="btn btn-light btn-sm my-3" @onclick="() => DeleteVideoContent(video)">
@@ -54,7 +54,7 @@
             </h5>
             @foreach (var question in TestDto.Questions)
             {
-                <div class="card">
+                <div class="card shadow">
                     <div class="card-body">
                         <QuestionDefComponent QuestionDto="question"></QuestionDefComponent>
                         <button class="btn btn-light" @onclick="() => RemoveQuestion(question)">Remove Question</button>
@@ -66,16 +66,17 @@
             <button class="btn btn-light" @onclick="AddQuestion">Add Question</button>
 
             <br />
+            <hr />
             <h5>
                 <b>
-                    Add further information about this topic to give you students the possibility to expand
+                    Add further information about this topic via Website-Link, Youtube-Video, Png-Picture to give you students the possibility to expand
                     their knowledge!
                 </b>
             </h5><br />
 
             @foreach (var link in TestDto.FurtherLinks)
             {
-                <div class="card">
+                <div class="card shadow">
                     <div class="card-body">
                         <FurtherLinkComponent FurtherLinkDto="link"></FurtherLinkComponent>
                         <button class="btn btn-light btn-sm my-3" @onclick="() => DeleteFurtherLink(link)">
@@ -93,7 +94,7 @@
             @if (TestDto.VideosFurtherInformation != null)
             {
                 @foreach (var video in TestDto.VideosFurtherInformation)
-                {<div class="card">
+                {<div class="card shadow">
                         <div class="card-body">
                             <VideoComponent VideoContentDTO="video"></VideoComponent>
                             <button class="btn btn-light btn-sm my-3" @onclick="() => DeleteVideosFurtherInformation(video)">
@@ -109,7 +110,7 @@
             <br /><button class="btn btn-light" @onclick="AddVideosFurtherInformation">Add Video</button><br />
             <hr />
             @foreach (var content in TestDto.Content)
-            {<div class="card">
+            {<div class="card shadow">
                     <div class="card-body">
                         <PictureComponent PictureContentDTO="content"></PictureComponent>
                         <button class="btn btn-light btn-sm my-3" @onclick="() => DeletePictureContent(content)">
@@ -166,6 +167,7 @@
         context = new EditContext(TestDto);
         SEIIApp.Client.Components.VideoComponent.OnEditing = true;
         SEIIApp.Client.Components.PictureComponent.OnEditing = true;
+        SEIIApp.Client.Components.FurtherLinkComponent.OnEditing = true;
     }
 
     private void PrepareEditOrAddOfTestDefinition(TestDTO test)
@@ -187,7 +189,7 @@
 
     private void OnSubmit()
     {
-        
+
     }
 
     private void RemoveQuestion(QuestionDTO question)

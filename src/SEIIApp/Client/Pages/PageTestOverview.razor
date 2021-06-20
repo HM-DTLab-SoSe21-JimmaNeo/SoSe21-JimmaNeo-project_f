@@ -17,12 +17,13 @@
                     @if (isFiltered == false)
                     {
                         <div class="px-auto">
-                            <InputText type="search" class="form-control rounded" placeholder="Search by Testname"
-                                       aria-label="Name of the Content" aria-describedby="search-addon" @bind-Value="@searchValue" />
+                            <InputText type="search" class="form-control rounded" placeholder="Search by Topic"
+                                       aria-label="Name of the Content" style="width: 155px;" aria-describedby="search-addon" @bind-Value="@searchValue" />
 
 
                         </div>
-                        <button class="btn btn-outline-primary btn-sm" @onclick="SearchContent">Search</button>
+                        <button class="btn btn-outline-primary btn-sm" @onclick="SearchContent">
+                         Search</button>
                         <hr />
 
                     }
@@ -55,7 +56,7 @@
                 @foreach (var content in Tests)
                 {
                     <li class="text-center list-group-item">
-                        <div class="card">
+                        <div class="card shadow">
                             <div class="card-body">
                                 <b>
                                     TestID:
@@ -113,7 +114,7 @@
                 </div>
 
             }
-            <hr />
+            
         }
         else if (UserService.User != null && UserService.User.Role == Role.Student)
         {

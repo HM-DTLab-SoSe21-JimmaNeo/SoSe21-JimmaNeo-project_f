@@ -11,54 +11,58 @@
     @if (TestDto != null)
     {
         <h2 class="text-center">Further information about @(TestDto.Topic)</h2><hr class="divider" />
-    <ul class="list-group list-group-flush">
-    @if (TestDto.FurtherLinks.Any())
-    {
-        
-        <h4 class="text-center"><b>Website-Links about @(TestDto.Topic)</b></h4>
-        @foreach (var link in TestDto.FurtherLinks)
-        {
-    <li class="text-center list-group-item">
-        <div class="card">
-            <div class="card-body">
-                <label>@(link.Description)</label><br />
-                <label>@(link.Link)</label><br />
-                <a href="@(link.Link)">@(link.Link)</a>
-            </div>
-        </div>
-    </li>
-        }
-    }
-    @if (TestDto.VideosFurtherInformation.Any())
-    {
-        <h4 class="text-center"><b>Videos about @(TestDto.Topic) </b></h4>
-        @foreach (var video in TestDto.VideosFurtherInformation)
-        {
-    <li class="text-center list-group-item">
-        <div class="card">
-            <div class="card-body">
-                <VideoComponent VideoContentDTO="video"></VideoComponent>
-            </div>
-        </div>
-    </li>
-        }
-    }
-    @if (TestDto.Content.Any())
-    {
-        <h4 class="text-center"><b>Pictures about @(TestDto.Topic) </b></h4>
-        @foreach (var picture in TestDto.Content)
-        {
-    <li class="text-center list-group-item">
-        <div class="card">
-            <div class="card-body">
-                <PictureComponent PictureContentDTO="picture"></PictureComponent>
-            </div>
-        </div>
-    </li>
-        }
+        <br />
+        <ul class="list-group list-group-flush">
+            @if (TestDto.FurtherLinks.Any())
+            {
 
-    }
-</ul>
+                <h4 class="text-center"><b>Website-Links about @(TestDto.Topic)</b></h4>
+                @foreach (var link in TestDto.FurtherLinks)
+                {
+                    <br />
+                    <li class="text-center list-group-item">
+                        <div class="card shadow">
+                            <div class="card-body">
+                                <FurtherLinkComponent FurtherLinkDto="link"></FurtherLinkComponent>
+                            </div>
+                        </div>
+                    </li>
+                }
+            }
+            @if (TestDto.VideosFurtherInformation.Any())
+            {
+                <br />
+                <h4 class="text-center"><b>Videos about @(TestDto.Topic) </b></h4>
+                <br />
+                @foreach (var video in TestDto.VideosFurtherInformation)
+                {
+                    <li class="text-center list-group-item">
+                        <div class="card shadow">
+                            <div class="card-body">
+                                <VideoComponent VideoContentDTO="video"></VideoComponent>
+                            </div>
+                        </div>
+                    </li>
+                }
+            }
+            @if (TestDto.Content.Any())
+            {
+                <br />
+                <h4 class="text-center"><b>Pictures about @(TestDto.Topic) </b></h4>
+                <br />
+                @foreach (var picture in TestDto.Content)
+                {
+                    <li class="text-center list-group-item">
+                        <div class="card shadow">
+                            <div class="card-body">
+                                <PictureComponent PictureContentDTO="picture"></PictureComponent>
+                            </div>
+                        </div>
+                    </li>
+                }
+
+            }
+        </ul>
 
         <div class="text-center py-2">
             <button class="btn btn-light" @onclick="() => ReturnBackToTestOverview()">Return to overview</button>
@@ -72,7 +76,7 @@
     [Parameter]
     public int TestID { get; set; }
 
-    public TestDTO TestDto { get; set; }
+    private TestDTO TestDto { get; set; }
 
     protected override async Task OnParametersSetAsync()
     {
@@ -81,6 +85,7 @@
         this.TestDto = existingQuiz;
         SEIIApp.Client.Components.VideoComponent.OnEditing = false;
         SEIIApp.Client.Components.PictureComponent.OnEditing = false;
+        SEIIApp.Client.Components.FurtherLinkComponent.OnEditing = false;
     }
 
     private void ReturnBackToTestOverview()
