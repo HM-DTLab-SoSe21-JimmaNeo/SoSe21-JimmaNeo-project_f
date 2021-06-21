@@ -86,13 +86,14 @@ namespace SEIIApp.Server.Services
         public Lecture UpdateLecture(Lecture lecture)
         {
             var exsistingLecture = GetLectureWithId(lecture.LectureId);
+            var test = exsistingLecture.Test;
             Mapper.Map(lecture, exsistingLecture);
             if (lecture.Test.TestId != 0) exsistingLecture.Test = testService.GetTestWithId(lecture.Test.TestId);
             else exsistingLecture.Test = null;
+            DatabaseContext.Entry(test).State = EntityState.Unchanged;
             DatabaseContext.Update(exsistingLecture);
             DatabaseContext.SaveChanges();
-
-           NewsService.AddNews(new News()
+            NewsService.AddNews(new News()
             {
                 Topic = $"Updated {lecture.Topic}",
                 Content = $"The Lecture \"{lecture.Topic}\" has been updated. The Lectrue was updated by {lecture.Author.Name}.",

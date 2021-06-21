@@ -27,7 +27,7 @@ namespace SEIIApp.Server.Controllers
 
         [HttpGet("ShowLectures")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult<UserDTO[]> ShowLectures()
+        public ActionResult<LectureBaseDTO[]> ShowLectures()
         {
             var allLectures = LectureService.GetAllLecture();
             var mappedResult = Mapper.Map<LectureBaseDTO[]>(allLectures);

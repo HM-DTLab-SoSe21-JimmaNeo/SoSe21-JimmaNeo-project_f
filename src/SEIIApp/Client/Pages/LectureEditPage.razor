@@ -194,8 +194,9 @@
     {
 
         int testId = TopicToId(TestTopic);
-        var Test = await LectureService.GetTestById(testId);
-        this.LectureDto.Test = new TestBaseDTO() { Topic = Test.Topic, Author = Test.Author, Description = Test.Description, TestID = Test.TestID };
+        //var Test = await LectureService.GetTestById(testId);
+        this.LectureDto.Test = await LectureService.GetTestById(testId);
+        // this.LectureDto.Test = new TestBaseDTO() { Topic = Test.Topic, Author = Test.Author, Description = Test.Description, TestID = Test.TestID };
 
         // GetTestById();
         //this.LectureDto.Test =TestOfLecture;
