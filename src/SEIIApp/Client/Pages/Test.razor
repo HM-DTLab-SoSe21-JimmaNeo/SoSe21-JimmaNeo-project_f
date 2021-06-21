@@ -4,6 +4,10 @@
 @using SEIIApp.Shared;
 @inject UserServicee MyUserService
 @inject NewsBackendAccessService NewsService
+@inject ToDoBackendAccessService ToDoService
+@inject CompletedTestBackendAccessService CompletedTestService
+@using System.Globalization
+@using Radzen
 
 <title>W3.CSS Template</title>
 <meta charset="UTF-8">
@@ -14,6 +18,8 @@
 
 <body class="w3-light-grey">
 
+  
+
     <!-- w3-content defines a container for fixed size centered content,
     and is wrapped around the whole page content, except for the footer in this example -->
     <div class="w3-content" style="max-width:1400px">
@@ -22,7 +28,7 @@
         <header class="w3-container w3-center w3-padding-32">
             <h1><b>Student Area</b></h1>
             <p>Welcome Student <span class="w3-tag">User!</span></p>
-           
+
         </header>
 
         <!-- Grid -->
@@ -31,38 +37,12 @@
             <!-- Blog entries -->
             <div class="w3-col l8 s12">
                 <!-- Blog entry -->
-                <div class="w3-card-4 w3-margin w3-white">                
+                <div class="w3-card-4 w3-margin w3-white">
                     <div class="w3-container">
-                        <h3><b>TITLE HEADING</b></h3>
-                        <h5>Title description, <span class="w3-opacity">April 7, 2014</span></h5>
+                        khjkhjkhkjhkhkh
                     </div>
 
-                    <div class="w3-container">
-                        <p>
-                            <table>
-                                <tr>
-                                    <th valign=top>
-                                        <div class="divtodo">
-                                            <h2>To-Do-Today (@todos.Count(todo => !todo.IsDone))</h2>
 
-                                            <ul>
-                                                @foreach (var todo in todos)
-                                                {
-                                                    <li>
-                                                        <input type="checkbox" @bind="todo.IsDone" />
-                                                        <input @bind="todo.Title" />
-                                                    </li>
-                                                }
-                                            </ul>
-
-                                            <input placeholder="Something todo" @bind="newTodo" />
-                                            <button class="btn btn-success" @onclick="AddTodo">Add todo</button>
-                                        </div>
-                                    </th>
-                                </tr>
-                            </table>
-                        </p>
-                    </div>
                 </div>
                 <hr>
 
@@ -95,11 +75,19 @@
             <!-- Introduction menu -->
             <div class="w3-col l4">
                 <!-- About Card -->
-                <div class="w3-card w3-margin w3-margin-top">
-                    <img src="/w3images/avatar_g.jpg" style="width:100%">
+                <div class="w3-card w3-margin w3-margin-top">                  
                     <div class="w3-container w3-white">
                         <h4><b>My Name</b></h4>
-                        <p>Just me, myself and I, exploring the universe of uknownment. I have a heart of love and a interest of lorem ipsum and mauris neque quam blog. I want to share my world with you.</p>
+                        
+                            <div class="col-md-6 col-sm-12 p-4">
+                                <RadzenChart>
+                                    <RadzenColumnSeries Data="@testList" CategoryProperty="TestName" Title="Reached" LineType="LineType.Dashed" ValueProperty="ReachedPoints" />
+                                    <RadzenColumnSeries Data="@maxPointList" CategoryProperty="TestName" Title="Max" ValueProperty="ReachedPoints" />
+                                    <RadzenColumnOptions Radius="5" />
+
+                                </RadzenChart>
+                            </div>
+                       
                     </div>
                 </div><hr>
 
@@ -149,6 +137,8 @@
                     </div>
                 </div>
 
+                <h1>Radzen Blazor Chart column series</h1>
+
                 <!-- END Introduction Menu -->
             </div>
 
@@ -164,26 +154,71 @@
 
 
 @code {
+
+    public CompletedTestDTO[] AllTestList { get; set; }
+    DataItem[] maxPointList { get; set; }
+    DataItem[] testList { get ; set; }
+
+    class DataItem
+    {
+        public string TestName { get; set; }
+        public double ReachedPoints { get; set; }
+    }
+
+
     [Parameter]
     public List<NewsDTO> News { get; set; }
 
     public int[] Roles { get; set; }
+
     [Parameter]
     public int userID { get; set; }
 
+    private List<ToDoDTO> ToDo { get; set; }
 
-    private List<Services.WelcomeStudentService> todos = new();
+
+    private async void GetToDos()
+    {
+
+        ToDo = await ToDoService.GetToDosByAuthor(MyUserService.User.UserId);
+    }
+
+
     private string newTodo;
 
-    private void AddTodo()
+    private async void AddTodo()
     {
         if (!string.IsNullOrWhiteSpace(newTodo))
         {
-            todos.Add(new Services.WelcomeStudentService { Title = newTodo });
+            ToDoDTO tmp = new ToDoDTO();
+            tmp.Task = newTodo;
+            tmp.Author = MyUserService.User;
+            await ToDoService.AddOrUpdateToDo(tmp);
             newTodo = string.Empty;
         }
     }
 
+    protected override async Task OnParametersSetAsync()
+    {
+        await base.OnParametersSetAsync();
+        AllTestList = await CompletedTestService.GetCompletedTestsWithUserId(7);
+        CreateDataItems();
+
+        StateHasChanged();
+    }
+
+    private void CreateDataItems()
+    {
+        testList = new DataItem[AllTestList.Length];
+        maxPointList = new DataItem[AllTestList.Length];
+        int count = 0;
+        foreach(var test in AllTestList)
+        {
+            testList[count] = new DataItem() { TestName = test.SolvedTest.Topic, ReachedPoints = test.ReachedPoints };
+            maxPointList[count] = new DataItem() { TestName = test.SolvedTest.Topic, ReachedPoints = test.MaxPoints };
+            count++;
+        }
+    }
 
 
 
