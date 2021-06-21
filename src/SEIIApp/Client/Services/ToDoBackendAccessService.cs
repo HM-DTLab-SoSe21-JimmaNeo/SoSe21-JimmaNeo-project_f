@@ -48,10 +48,10 @@ namespace SEIIApp.Client.Services
 
         /// <summary>
         /// Returns all todos created by an author with authorId
-        /// </summary>
-        public async Task<ToDoDTO> GetToDoByAuthor(int authorID)
+        /// </summary> 
+        public async Task<List<ToDoDTO>> GetToDosByAuthor(int authorID)
         {
-            return await HttpClient.GetFromJsonAsync<ToDoDTO>(GetToDoUrlWithAuthor(authorID));
+            return await HttpClient.GetFromJsonAsync<List<ToDoDTO>>(GetToDoUrlWithAuthor(authorID));
         }
 
 

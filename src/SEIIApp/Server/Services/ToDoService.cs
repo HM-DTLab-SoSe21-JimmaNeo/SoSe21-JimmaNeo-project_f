@@ -41,9 +41,9 @@ namespace SEIIApp.Server.Services
             return GetQueryableForToDo().Where(ToDo => ToDo.Task.Equals(task)).FirstOrDefault();
         }
 
-        public ToDo GetToDoWithAuthorID(int userID)
+        public List<ToDo> GetToDoWithAuthorID(int userID)
         {
-            return GetQueryableForToDo().Where(ToDo => ToDo.Author.UserId == userID).FirstOrDefault();
+            return GetQueryableForToDo().Where(ToDo => ToDo.Author.UserId == userID).ToList();
         }
 
         public ToDo AddToDo(ToDo todo)
