@@ -17,6 +17,8 @@ namespace SEIIApp.Shared
         public string Task { get; set; }
 
         public UserDTO Author { get; set; }
+
+        public bool IsDone { get; set; }
     }
 
 }

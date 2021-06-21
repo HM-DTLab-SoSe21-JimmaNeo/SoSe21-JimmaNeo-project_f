@@ -25,6 +25,7 @@ namespace SEIIApp.Client {
 
             builder.Services.AddScoped<Services.NewsBackendAccessService>();
             builder.Services.AddScoped<Services.CompletedTestBackendAccessService>();
+            builder.Services.AddScoped<Services.ToDoBackendAccessService>();
             
             await builder.Build().RunAsync();
         }
