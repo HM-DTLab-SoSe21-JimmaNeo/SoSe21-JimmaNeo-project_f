@@ -30,5 +30,7 @@ namespace SEIIApp.Server.DataAccess
 
         public DbSet<Domain.News> News{ get; set; }
 
+        public DbSet<Domain.ToDo> ToDo { get; set; }
+
     }
 }
