@@ -213,7 +213,7 @@
             copyOfTest = new List<TestDTO>(Tests);
             isFiltered = true;
             Tests.Clear();
-            Tests.AddRange(copyOfTest.Where(t => t.Topic.StartsWith(searchValue)));
+            Tests.AddRange(copyOfTest.Where(t => t.Topic.ToLower().StartsWith(searchValue.ToLower())));
         }
     }
 
