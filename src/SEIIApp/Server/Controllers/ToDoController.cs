@@ -83,5 +83,16 @@ namespace SEIIApp.Server.Controllers
             var mappedResult = Mapper.Map<ToDoDTO>(todo);
             return Ok(mappedResult);
         }
+
+        [HttpGet("author/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<ToDoDTO> GetToDoByAuthorId([FromRoute] int id)
+        {
+            var todo = ToDoService.GetToDoWithAuthorID(id);
+            if (todo == null) return StatusCode(StatusCodes.Status404NotFound);
+            var mappedResult = Mapper.Map<ToDoDTO>(todo);
+            return Ok(mappedResult);
+        }
     }
 }
