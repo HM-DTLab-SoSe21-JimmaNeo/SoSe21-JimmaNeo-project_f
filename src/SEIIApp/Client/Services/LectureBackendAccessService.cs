@@ -72,7 +72,7 @@ namespace SEIIApp.Client.Services
         /// </summary>
         public async Task<bool> DeleteLecture(int LectureID)
         {
-            var response = await HttpClient.DeleteAsync(GetLectureUrlWithId(LectureID));
+            var response = await HttpClient.DeleteAsync(GetLectureUrl()+"/DeleteLecture/"+LectureID);
             return response.StatusCode == System.Net.HttpStatusCode.OK;
         }
 
