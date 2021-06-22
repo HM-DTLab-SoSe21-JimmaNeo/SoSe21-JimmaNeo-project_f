@@ -75,6 +75,10 @@ namespace SEIIApp.Server.Domain
             CreateMap<User, UserDTO>();
             CreateMap<UserDTO, User>();
 
+            //ToDo
+            CreateMap<ToDo, ToDoDTO>();
+            CreateMap<ToDoDTO, ToDo>();
+            CreateMap<ToDo, ToDo>();
         }
 
     }

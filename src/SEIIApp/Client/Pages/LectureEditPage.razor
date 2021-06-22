@@ -7,14 +7,12 @@
 @inject Services.TestsDefinitionBackendAccessService TestService
 
 
-<h3>LectureEditPage</h3>
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-7 text-center">
-            <h4 class="text-center">Content Editor</h4>
-            <p></p>
-            <p></p>
-            <p></p>
+            <h2 class="text-center">Content Editor</h2>
+           <hr class=" divider" />
             
             @if (LectureDto != null)
             {
@@ -24,15 +22,27 @@
                 {
                     VideoComponent.OnEditing = true;
                     PictureComponent.OnEditing = true;
+
+
         <EditForm EditContext="@context" OnSubmit="OnSubmit">
             <ObjectGraphDataAnnotationsValidator />
+            <div class="input-group">
 
+                <input type="text" style='width:100%' required @bind-value="LectureDto.Topic" @bind-value:event="oninput">
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label class="hoverlabel">Topic of the test:</label>
+            </div>
+            <h5>
+                <br /><b>Lecture Text</b>
+            </h5>
+            <div class="form-floating">
+                <textarea class="form-control" id="inputMessage" type="text" placeholder="Enter Text here..." style="height: 15rem" @bind="LectureDto.Text"></textarea>
+            </div>
 
-
-            <label>Lecture Name:</label><br />
-            <InputText @bind-Value="LectureDto.Topic" /><br />
-
-
+            <h5>
+                <br /><b>Upload Youtube Videos</b>
+            </h5>
             @foreach (var video in LectureDto.Videos)
             {
                 <div class="card">
@@ -58,31 +68,21 @@
                 </div><br />
 
             }
-            <button class="btn btn-light" @onclick="AddPictureContent">Add Picture</button><br />
+            <br /><button class="btn btn-light" @onclick="AddPictureContent">Add Picture</button><br />
             <hr />
 
 
 
 
-            <label>Test ID:</label><br />
+            <b>Test ID:</b><br />
             <InputText @bind-Value="TestTopic" />
-
+            <br />
             <button class="btn btn-light btn-sm my-3" @onclick="AddTestToLecture">Add Test</button><br />
             <hr />
-
-            <label>Lecture Text:</label><br />
-
             <br />
+            <button class="btn btn-success " @onclick="() => SaveContentToBackend(this.LectureDto)">Save Lecture</button>
+            <button class="btn btn-outline-secondary" @onclick="() =>  NavigationManager.NavigateTo(LectureOverviewURL)">Back</button><br />
 
-            <div class="form-floating">
-                <textarea class="form-control" id="inputMessage" type="text" placeholder="Enter Text for lecture here..." style="height: 15rem" @bind="LectureDto.Text"></textarea>
-            </div><br />
-            <hr />
-
-
-
-            <button class="btn btn-light" @onclick="() => SaveContentToBackend(this.LectureDto)">Save Lecture</button>
-            <p></p>
             <ValidationSummary />
         </EditForm>
                 }
@@ -111,6 +111,7 @@
     private EditContext context { get; set; }
 
     private TestBaseDTO TestOfLecture { get; set; }
+    private string LectureOverviewURL = "/lectureoverview";
 
     private int TestId { get; set; }
 
@@ -193,8 +194,9 @@
     {
 
         int testId = TopicToId(TestTopic);
-        var Test = await LectureService.GetTestById(testId);
-        this.LectureDto.Test = new TestBaseDTO() { Topic = Test.Topic, Author = Test.Author, Description = Test.Description, TestID = Test.TestID };
+        //var Test = await LectureService.GetTestById(testId);
+        this.LectureDto.Test = await LectureService.GetTestById(testId);
+        // this.LectureDto.Test = new TestBaseDTO() { Topic = Test.Topic, Author = Test.Author, Description = Test.Description, TestID = Test.TestID };
 
         // GetTestById();
         //this.LectureDto.Test =TestOfLecture;

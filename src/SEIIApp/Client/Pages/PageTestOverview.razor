@@ -23,7 +23,9 @@
 
                         </div>
                         <button class="btn btn-outline-primary btn-sm shadow" @onclick="SearchContent">
-                         Search</button>
+                            Search
+                        </button>
+                        <br />
                         <hr />
 
                     }
@@ -32,6 +34,7 @@
                         <div class="text-center pb-2">
                             <button class="btn btn-outline-primary" @onclick="ResetSearchContent">Return</button>
                         </div>
+                        <br />
                         <hr />
                     }
 
@@ -123,7 +126,7 @@
                 @foreach (var content in Tests)
                 {
                     <li class="text-center list-group-item">
-                        <div class="card">
+                        <div class="card shadow">
                             <div class="card-body">
                                 <b>
                                     TestID:
@@ -143,7 +146,6 @@
                                 </b>
 
                                 @(content.Topic)
-                                <br />
                                 <br />
                                 <button class="btn btn-outline-success btn-sm" @onclick="() => StartTest(content.TestID)">Start</button>
                                 <button class="btn btn-outline-primary btn-sm" @onclick="() => GetFurtherTopicInformations(content.TestID)">Topic</button>
@@ -213,7 +215,7 @@
             copyOfTest = new List<TestDTO>(Tests);
             isFiltered = true;
             Tests.Clear();
-            Tests.AddRange(copyOfTest.Where(t => t.Topic.StartsWith(searchValue)));
+            Tests.AddRange(copyOfTest.Where(t => t.Topic.ToLower().StartsWith(searchValue.ToLower())));
         }
     }
 

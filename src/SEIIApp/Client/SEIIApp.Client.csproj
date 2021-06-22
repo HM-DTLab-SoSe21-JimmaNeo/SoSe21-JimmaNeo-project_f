@@ -14,6 +14,16 @@
     <EmbeddedResource Remove="wwwroot\js\**" />
     <None Remove="wwwroot\js\**" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Pages\LectureEditPage.razor.css" />
+    <None Remove="Pages\LectureOverview.razor.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Pages\LectureEditPage.razor.css" />
+    <Content Include="Pages\LectureOverview.razor.css" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.DataAnnotations.Validation" Version="3.2.0-rc1.20223.4" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.3" />
