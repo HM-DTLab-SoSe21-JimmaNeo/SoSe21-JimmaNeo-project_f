@@ -73,9 +73,10 @@ details > summary::-webkit-details-marker {
 
 hr.divider {
     height: 0.2rem;
-    max-width: 3.25rem;
+    max-width: 100.25rem;
     margin: 1.5rem auto;
     background-color: #009a10;
+    color: #009a10;
     opacity: 1;
 }
 
