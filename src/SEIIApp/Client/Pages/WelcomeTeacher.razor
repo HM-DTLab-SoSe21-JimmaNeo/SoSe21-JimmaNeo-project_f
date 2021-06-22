@@ -3,6 +3,7 @@
 @inject NavigationManager NavigationManager
 @inject UserServicee MyUserService
 @inject Services.CompletedTestBackendAccessService CompletedTestService
+@inject Services.TestCompareService CompareService
 
 @using SEIIApp.Shared;
 
@@ -30,7 +31,7 @@
                         <td>@test.TestID</td>
                         <td>@test.Topic</td>
                         <td>@test.DateOfCreation</td>
-                        <td>@(Math.Round(Results[SortedTests.IndexOf(test)], 2))</td>
+                        <td>@(Results[SortedTests.IndexOf(test)])</td>
                     </tr>
                     }                   
                 </tbody>
@@ -88,36 +89,23 @@
                 reachedPoints += solved.ReachedPoints;
                 maxPoints += solved.MaxPoints;
             }
-            Results[index] = (reachedPoints / maxPoints) * 100;
+            Results[index] = Math.Round((reachedPoints / maxPoints) * 100, 2);
             index++;
         }
     }
 
     private List<TestBaseDTO> SortTests()
     {
-        List<TestBaseDTO> Tests = new();
+        List<TestBaseDTO> Result = new();
+        HashSet<TestBaseDTO> Distinct = new HashSet<TestBaseDTO>(CompareService);
 
         foreach (var test in CompletedTests)
         {
-            if (!IsInList(Tests, test.SolvedTest))
+            if (Distinct.Add(test.SolvedTest))
             {
-                Tests.Add(test.SolvedTest);
+                Result.Add(test.SolvedTest);
             }
         }
-        return Tests;
+        return Result;
     }
-
-    private bool IsInList(List<TestBaseDTO> tests, TestBaseDTO test)
-    {
-        foreach (var inList in tests)
-        {
-            if (inList.TestID == test.TestID)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-
 }
