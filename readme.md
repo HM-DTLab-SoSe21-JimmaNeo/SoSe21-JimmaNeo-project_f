@@ -51,29 +51,29 @@ wie das JimmaNeo Projekt an Bekanntheit gewinnen. Bitte berichtet in eurem Umfel
 
 ### Allgemeiner Bereich:
 Beim Starten der Web-Anwendung können Sie auf der linken Seite der Anwednung die Navigation sehen.  
-Sie gelangen auf der Hauptseite zuerst zur LandingPage **JimmaNeo**.  
+Sie gelangen auf der Hauptseite zur LandingPage **JimmaNeo**.  
 Hier können Sie zum Einstieg nochmal das Storyboard in Form eines kleines Videos ansehen.  
 Des Weiteren können Sie Details zu dem Projekt lesen.    
-![Screenshot LandingPage](/Documentation/LMU_TEAM_F_PR.pdf)
+![Screenshot LandingPage](/Documentation/Home.pdf)
 
-Navigationspunkt: **News** 
+**- Navigationspunkt: News** 
 Hier können Sie alle neuen Nachrichten durchlesen.    
-![Screenshot News](/Documentation/LMU_TEAM_F_PR.pdf)
+![Screenshot News](/Documentation/Screenshots/News.png)
 
-Navigationspunkt: **Login**  
+**- Navigationspunkt: Login**  
 Hier können Sie sich einlogen, dabei ist es nicht relevant,   
-welchen Status (Teacher, Student, Admin) Sie haben.    
+welchen Rolle (Teacher, Student, Admin) Sie besitzen.    
 Die Anwendung filter Ihre Rolle beim Login automatisch.  
 ![Screenshot Login](/Documentation/Screenshots/Login.png)
 
-Navigationspunkt: **Register**
-![Screenshot Register](/Documentation/Screenshots/Login.png)
+**- Navigationspunkt: Register**  
+![Screenshot Register](/Documentation/Screenshots/Register.png)
 
-Navigationspunkt: **Contact us**  
-![Screenshot Contact](/Documentation/LMU_TEAM_F_PR.pdf)
+**- Navigationspunkt: Contact us**  
+![Screenshot Contact](/Documentation/Screenshots/Contact.png)
 
-Navigationspunkt: **FAQ**  
-![Screenshot FAQ](/Documentation/LMU_TEAM_F_PR.pdf)
+**- Navigationspunkt: FAQ**  
+![Screenshot FAQ](/Documentation/Screenshots/FAQ.png)
 
 
 
