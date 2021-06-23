@@ -4,25 +4,17 @@
 @using SEIIApp.Shared;
 @inject UserServicee MyUserService
 
-<html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    </head>
-   
-
-    <body>
-        @if (clicked)
-        {
-
-            <div class="alert">
-                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-                <strong> User @currentUser.Name has been deleted successfully!</strong>
-            </div>
 
 
-        }
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+
+@{
+    if (MyUserService.User != null && MyUserService.User.Role == Role.Admin)
+    {
+
         <div class="bs">
             <div class="table-title">
                 <div class="row">
@@ -32,141 +24,160 @@
                 </div>
             </div>
 
-            <div class="table-responsive">
-
-                @{
-                    if (MyUserService.User != null && MyUserService.User.Role == Role.Admin)
-                    {
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Username</th>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Role</th>
-                                    <th></th>
-                                    <th>Edit</th>
-                                    <th>Delete</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var user in Users)
-                                {
-
-                                    <tr>
-                                        <td>@user.Name</td>
-                                        <td>@user.FirstName</td>
-                                        <td>@user.LastName</td>
-                                        <td>@user.Role</td>
-                                        <td>
-                                        </td>
-                                        <td><button class="btn btn-primary" @onclick="() => EditUser(user)"><i class="material-icons">&#xE8B8;</i></button></td>
-                                        <td><button class="btn btn-danger" @onclick="() => ModalShow(user)"><i class="material-icons">&#xE5C9;</i></button></td>
-
-                                    </tr>
-
-                                }
-
-
-
-                            </tbody>
-                        </table>
-
-                        @if (showModal)
-                        {
-                            <div class="modal fade show" id="myModal" style="display:block" aria-modal="true" role="dialog">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-
-                                        <!-- Modal Header -->
-                                        <div class="modal-header">
-                                            <h4 class="modal-title">Confirm delete</h4>
-                                            <button type="button" class="close" @onclick="@ModalCancel">&times;</button>
-                                        </div>
-
-                                        <!-- Modal body -->
-                                        <div class="modal-body">
-                                            <p>Are you sure you want to delete @currentUser.Name?</p>
-                                        </div>
-
-                                        <!-- Modal footer -->
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn" @onclick="@ModalCancel">Cancel</button>
-                                            <button type="button" class="btn btn-danger" @onclick="() => DeleteUser(currentUser)">Delete</button>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-
-                        }
-                        <hr />
-
-                    }
-
-                    else
-                    {
-                        <p>You are not allowed to see this!</p>
-                    }
-                }
-            </div>
-        </div>
-    </body>
-</html>
-
-    @code {
-
-        private string msg { get; set; }
-        private bool showModal = false;
-        private bool clicked = false;
-        public int[] Roles { get; set; }
-        public UserDTO currentUser { get; set; }
-
-
-        public UserDTO[] Users = new UserDTO[0];
-
-        protected override async Task OnParametersSetAsync()
-        {
-            await base.OnParametersSetAsync();
-            Users = await UserService.GetAllUsers();
-            Roles = new int[Users.Length];
-        }
-
-
-        private void EditUser(UserDTO user)
-        {
-            NavigationManager.NavigateTo($"/edituser/{user.UserId}");
-        }
-
-
-
-        private async Task DeleteUser(UserDTO user)
-        {
-            showModal = true;
-            clicked = true;
-
-            bool successfull = await UserService.DeleteUser(user.UserId);
-            if (successfull)
+            @if (triggerAlert)
             {
-                Users = Users.Where(u => u != user).ToArray();
+                <!--Alert-->
+                <div class="alert">
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    <strong> User @currentUser.Name has been deleted successfully!</strong>
+                </div>
+                <!--END Alert-->
             }
 
-            showModal = false;
-            StateHasChanged();
-            await Task.Delay(3000);
+            <br />
+            <div class="table-responsive">
+                <div class="d-grid gap-2">
+                    <a type="button" class="btn btn-secondary btn-xl submit-form submit_Btn" style="width:100%" href="/news">Edit News</a>                    
+                </div>
+                    <!--User Table-->
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Role</th>
+                                <th></th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-            clicked = false;
+                            @foreach (var user in Users)
+                            {
 
-        }
+                                <tr>
+                                    <td>@user.Name</td>
+                                    <td>@user.FirstName</td>
+                                    <td>@user.LastName</td>
+                                    <td>@user.Role</td>
+                                    <td>
+                                    </td>
+                                    <td><button class="btn btn-primary" @onclick="() => EditUser(user)"><i class="material-icons">&#xE8B8;</i></button></td>
+                                    <td><button class="btn btn-danger" @onclick="() => ModalShow(user)"><i class="material-icons">&#xE5C9;</i></button></td>
+                                </tr>
 
-        void ModalShow(UserDTO user)
+                            }
+
+                        </tbody>
+                    </table>
+                    <!--END User Table-->
+
+                    @if (showModal)
+                    {
+                        <!--Delete Confirmation-->
+                        <div class="modal fade show" id="myModal" style="display:block" aria-modal="true" role="dialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+
+                                    <!-- Modal Header -->
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Confirm delete</h4>
+                                        <button type="button" class="close" @onclick="@ModalCancel">&times;</button>
+                                    </div>
+
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                        <p>Are you sure you want to delete @currentUser.Name?</p>
+                                    </div>
+
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn" @onclick="@ModalCancel">Cancel</button>
+                                        <button type="button" class="btn btn-danger" @onclick="() => DeleteUser(currentUser)">Delete</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!--END Delete Confirmation-->
+                    }
+                    <hr />
+                </div>
+            </div>
+    }
+
+    else
+    {
+        <h2>You are not allowed to see this!</h2>
+    }
+}
+
+@code {
+
+    private bool showModal = false;
+
+    private bool triggerAlert = false;
+
+    public int[] Roles { get; set; }
+
+    public UserDTO currentUser { get; set; }
+
+    public UserDTO[] Users = new UserDTO[0];
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await base.OnParametersSetAsync();
+        Users = await UserService.GetAllUsers();
+        Roles = new int[Users.Length];
+    }
+
+    /// <summary>
+    /// Forwarding to the specific edituser page.
+    /// </summary>
+    private void EditUser(UserDTO user)
+    {
+        NavigationManager.NavigateTo($"/edituser/{user.UserId}");
+    }
+
+
+    /// <summary>
+    /// Deletes a specific user.
+    /// </summary>
+    private async Task DeleteUser(UserDTO user)
+    {
+        showModal = true;
+        triggerAlert = true;
+
+        bool successfull = await UserService.DeleteUser(user.UserId);
+        if (successfull)
         {
-
-            showModal = true;
-            currentUser = user;
-
+            Users = Users.Where(u => u != user).ToArray();
         }
 
-        void ModalCancel() => showModal = false;
+        showModal = false;
+        StateHasChanged();
+        await Task.Delay(3000);
+
+        triggerAlert = false;
 
     }
+
+    /// <summary>
+    /// Show confirmation if a user should be delete.
+    /// </summary>
+    void ModalShow(UserDTO user)
+    {
+
+        showModal = true;
+        currentUser = user;
+
+    }
+
+    /// <summary>
+    /// Cancel function of confirmation.
+    /// </summary>
+    void ModalCancel() => showModal = false;
+
+}

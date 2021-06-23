@@ -78,7 +78,9 @@ namespace SEIIApp.Server.Domain
             //ToDo
             CreateMap<ToDo, ToDoDTO>();
             CreateMap<ToDoDTO, ToDo>();
-            CreateMap<ToDo, ToDo>();
+            CreateMap<ToDo, ToDo>()
+                .ForMember(todo => todo.ToDoID, options => options.Ignore())
+                .ForMember(todo => todo.Author, options => options.Ignore());
         }
 
     }

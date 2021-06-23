@@ -4,20 +4,22 @@
 @inject NavigationManager navManager
 @using SEIIApp.Shared;
 
-@if (userDTO != null)
 
+@if (userDTO != null)
 {
-    if (clicked) {
-    <div class="alert-success">
-        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-        <strong>User has been changed successfully!</strong>
-    </div>
+    <!-- Alert-->
+    if (triggerAlert)
+    {
+        <div class="alert-success">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            <strong>User has been changed successfully!</strong>
+        </div>
+        <!--END Alert-->
     }
 
-
+    <!-- Edit User-->
     <div class="wrapper bg-white mt-sm-5">
         <h4 class="pb-4 border-bottom">User Editing: @userDTO.Name</h4>
-        <font color="green">@msg</font>
         <div class="py-2">
             <div class="row py-2">
                 <div class="col-md-6 pt-md-0 pt-3">
@@ -50,30 +52,32 @@
                 </select>
             </div>
         </div>
+        <!--END Edit User-->
+        <!--Actionbuttons-->
         <div class="py-3 pb-4 border-bottom">
             <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2 save" @onclick="() => SaveRoleChangesOnUser(chosenOption)">Save Changes</button>
             <button class="btn btn-lg btn-cancel btn-block btn-cancel_frame text-uppercase font-weight-bold mb-2 cancel " @onclick="() => goBacktoUM()">Back</button>
         </div>
-            </div>
+        <!--END Actionbuttons-->
+    </div>
 }
 else
 {
-    <p>@userID</p>
-    <font color="red">Something went wrong ;(</font>
+    <h2>Something went wrong.</h2>
 }
 
 
 @code {
     [Parameter]
     public int userID { get; set; }
+
     public string inputFirstName { get; set; }
+
     public string inputLastName { get; set; }
 
     public int chosenOption { get; set; }
-    private bool clicked = false;
-    private string msg { get; set; }
 
-
+    private bool triggerAlert = false;
 
     public UserDTO userDTO { get; set; }
 
@@ -84,6 +88,9 @@ else
         userDTO = await UserService.GetUserById(userID);
     }
 
+    /// <summary>
+    /// Saves changed Roll from user.
+    /// </summary>
     private async void SaveRoleChangesOnUser(int chosenOption)
     {
 
@@ -119,26 +126,18 @@ else
 
 
             default:
-                msg = "No changes!";
                 break;
 
 
         }
 
-        var response = UserService.ChangeUser(userDTO);
-
-
-        if (response != null)
+        if (UserService.ChangeUser(userDTO) != null)
         {
-            clicked = true;
+            triggerAlert = true;
             await Task.Delay(2000);
             navManager.NavigateTo("/manageuser");
         }
-        else
-        {
-            msg = "Change User failed";
 
-        }
     }
 
     private void goBacktoUM()

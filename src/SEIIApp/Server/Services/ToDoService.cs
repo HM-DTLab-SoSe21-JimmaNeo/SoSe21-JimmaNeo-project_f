@@ -12,18 +12,20 @@ namespace SEIIApp.Server.Services
     public class ToDoService
     {
         private DatabaseContext DatabaseContext { get; set; }
-
+        private UserService UserService { get; set; }
         private IMapper Mapper { get; set; }
 
-        public ToDoService(DatabaseContext db, IMapper mapper)
+        public ToDoService(DatabaseContext db, IMapper mapper, UserService userService)
         {
             this.DatabaseContext = db;
             this.Mapper = mapper;
+            this.UserService = userService;
         }
 
         private IQueryable<ToDo> GetQueryableForToDo()
         {
-            return DatabaseContext.ToDo;
+            return DatabaseContext.ToDo
+                    .Include(todo => todo.Author);
         }
 
         public ToDo[] GetAllToDo()
@@ -48,6 +50,12 @@ namespace SEIIApp.Server.Services
 
         public ToDo AddToDo(ToDo todo)
         {
+            User user = UserService.GetUserWithId(todo.Author.UserId);
+
+            if (user == null) return null;
+
+            todo.Author = user;
+
             DatabaseContext.ToDo.Add(todo);
             DatabaseContext.SaveChanges();
             return todo;
