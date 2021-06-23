@@ -22,6 +22,7 @@ namespace SEIIApp.Client {
 
             builder.Services.AddSingleton<Services.UserServicee>();
             builder.Services.AddSingleton<Services.UserRefreshService>();
+            builder.Services.AddScoped<Services.DataStudentItemService>();
 
             builder.Services.AddScoped<Services.NewsBackendAccessService>();
             builder.Services.AddScoped<Services.CompletedTestBackendAccessService>();
