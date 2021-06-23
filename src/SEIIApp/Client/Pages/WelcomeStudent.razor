@@ -29,8 +29,8 @@
 
     <!-- Header -->
     <header class="w3-container w3-center w3-padding-32">
-        <h1><b>Student Area</b></h1>
-        <p>Welcome Student <span class="w3-tag">@MyUserService.User.FirstName @MyUserService.User.LastName</span></p>
+        <h1 style="color: #68d5c8"><b>Student Area</b></h1>
+        <h3>Welcome Student @MyUserService.User.FirstName @MyUserService.User.LastName</h3>
 
     </header>
 
@@ -42,7 +42,7 @@
             <!-- Statistic Card -->
             <div class="w3-card-4 w3-margin w3-white">
                 <div class="w3-container">
-                    <h3><b>Test Statistics</b></h3>
+                    <h3><img src="/Images/WelcomeStudent/Icons/StatisticIcon2.svg" alt="Image" class="w3-center w3-margin-right" style="width:50px"><b>Test Statistics</b></h3>
                     @if(maxPointList!= null) { 
                     <RadzenChart>
                         <RadzenColumnSeries Data="@testList" CategoryProperty="TestName" Title="Reached" LineType="LineType.Dashed" ValueProperty="ReachedPoints" />
@@ -51,7 +51,7 @@
                     </RadzenChart>
                     }else
                 {
-                    <h1>No Data available!</h1>
+                    <h4><img src="/Images/WelcomeStudent/Icons/NoTests.svg" alt="Image" class="w3-center w3-margin-left" style="width:40px">You have not absolved any tests yet.</h4>
                 }
                 </div>
             </div>
@@ -61,8 +61,15 @@
             <!-- ToDo Card -->
             <div class="w3-card-4 w3-margin w3-white">
                 <div class="w3-container">
-                    <h3><b>Today's To-Dos </b></h3>
-                    <h5>@count Task open </h5>
+                    <h3><img src="/Images/WelcomeStudent/Icons/ToDoIcon.svg" alt="Image" class="w3-center w3-margin-right" style="width:50px"><b>Today's To-Dos </b></h3>
+                    @if (count != 0)
+                    {
+                    <h5>Let´s go! You have @count Task open!</h5>
+                    } else
+                {
+                        
+                    <h5>Well done! @count Task open! <img src="/Images/WelcomeStudent/Icons/Success.svg" alt="Image" class="w3-center w3-margin-right" style="width:40px"></h5>
+                }
                 </div>
                 <div class="w3-container">
                     <ul>
@@ -106,27 +113,33 @@
             <!-- Statistic Card -->
             <div class="w3-card w3-margin w3-margin-top">
                 <div class="w3-container w3-padding">
-                    <h4><b>Closed Tests Progress</b></h4>
+                    <h3><img src="/Images/WelcomeStudent/Icons/StatisticIcon1.svg" alt="Image" class="w3-center w3-margin-right" style="width:50px"><b>Progress</b></h3>
+
+                    @if (AllTestList != null)
+                    {
+                        @if (DataItem.maxReachedPointsfromTests != 0)
+                        {
+                            <RadzenArcGauge Style="width: 100%; height: 250px;">
+                                <RadzenArcGaugeScale Step="10" Min="0" Max="100" MinorStep="2" Radius="1.0" TickPosition=@tickPosition Y="0.9" Margin="0">
+                                    <RadzenArcGaugeScaleValue Value=@DataItem.maxReachedPointsfromTests>
+                                        <Template Context="pointer">
+                                            <h4>
+                                                @pointer.Value <sup>%</sup>
+                                            </h4>
+                                        </Template>
+                                    </RadzenArcGaugeScaleValue>
+                                </RadzenArcGaugeScale>
+                            </RadzenArcGauge>
+                            <br />
+                        }
+                    }
+                    else
+                    {
+                <h4><img src="/Images/WelcomeStudent/Icons/NoTests.svg" alt="Image" class="w3-center w3-margin-left" style="width:25px">You have not absolved any tests yet.</h4>
+                        <br />
+                    }
                 </div>
-                ´@if(DataItem.maxReachedPointsfromTests!= 0) { 
-                <RadzenArcGauge Style="width: 100%; height: 250px;">
-                    <RadzenArcGaugeScale Step="10" Min="0" Max="100" MinorStep="2" Radius="1.0" TickPosition=@tickPosition Y="0.9" Margin="0">
-                        <RadzenArcGaugeScaleValue Value=@DataItem.maxReachedPointsfromTests>
-                            <Template Context="pointer">
-                                <h4>
-                                    @pointer.Value <sup>%</sup>
-                                </h4>
-                            </Template>
-                        </RadzenArcGaugeScaleValue>
-                    </RadzenArcGaugeScale>
-                </RadzenArcGauge>
-                <br />
-                } else
-                {
-                    <h1>No Data available!</h1>
-                }
             </div>
-            
             <!-- END Statisic Card -->
 
             <hr>
@@ -134,7 +147,7 @@
             <!-- Posts -->
             <div class="w3-card w3-margin">
                 <div class="w3-container w3-padding">
-                    <h4><b>Latest News</b></h4>
+                    <h3><b><img src="/Images/WelcomeStudent/Icons/NewsIcon.svg" alt="Image" class="w3-center w3-margin-right" style="width:50px">Latest News</b></h3>
                 </div>
                 <ul class="w3-ul w3-hoverable w3-white">
 
@@ -158,13 +171,13 @@
                 <div class="flip-card">
                     <div class="flip-card-inner">
                         <div class="flip-card-front">
-                            <img src="/Images/WelcomeStudent/Herz (1).jpg" style="width:100%">
+                            <img src="/Images/WelcomeStudent/heart.jpg" style="width:100%">
                         </div><hr>
                         <div class="flip-card-back">
                             <p><br/>
                                 <b>Feedback / Bug Reporting</b><br /><br />
                                 We want to hear what you have to say about this feature because ultimately we're building it <br/>for you.
-                                <br /> <NavLink href="contact" class="oi oi-bug"></NavLink>                               
+                                <br /> <NavLink href="contact"><img src="/Images/WelcomeStudent/Icons/brief.svg" alt="Image" class="w3-center w3-margin-right" style="width:50px"></NavLink>                               
 
                             </p>
                             <br/>                    
@@ -215,9 +228,7 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        await base.OnParametersSetAsync();
-        // Liste muss erst befüllt werden um herauszufinden ob kein Item vorhanden ist
-      
+        await base.OnParametersSetAsync();      
         AllTestList = await CompletedTestService.GetCompletedTestsWithUserId(MyUserService.User.UserId);    
         
         CreateDataItems();
@@ -314,6 +325,7 @@
         }
     }
 
+
     private void CountReachedPointsFromCompletedTests()
     {
         if (AllTestList != null)
@@ -349,7 +361,6 @@
             GetCounter();        
         StateHasChanged();
     }
-
 
 }
 

@@ -12,5 +12,9 @@ namespace SEIIApp.Client.Services
 
         public double maxPointsfromTests { get; set; }
         public double maxReachedPointsfromTests { get; set; }
+
+
+
+
     }
 }
