@@ -7,7 +7,6 @@
 @inject NewsBackendAccessService NewsService
 @inject DataStudentItemService DataItem
 @using SEIIApp.Shared;
-@using System.Globalization;
 @using Radzen
 
 
@@ -218,7 +217,9 @@
     {
         await base.OnParametersSetAsync();
         // Liste muss erst befüllt werden um herauszufinden ob kein Item vorhanden ist
-        AllTestList = await CompletedTestService.GetCompletedTestsWithUserId(MyUserService.User.UserId);
+      
+        AllTestList = await CompletedTestService.GetCompletedTestsWithUserId(MyUserService.User.UserId);    
+        
         CreateDataItems();
         ToDo = await ToDoService.GetToDosByAuthor(MyUserService.User.UserId);
         TempToDo = new ToDoDTO();
@@ -286,12 +287,7 @@
 
     private async void CreateDataItems()
     {
-
-        //var tmpTestList = await CompletedTestService.GetCompletedTestsWithUserId(MyUserService.User.UserId);
-
-        // if (tmpTestList != null) {
-        //AllTestList = await CompletedTestService.GetCompletedTestsWithUserId(MyUserService.User.UserId);
-
+        if (AllTestList != null) {
         testList = new DataStudentItemService[AllTestList.Length];
         maxPointList = new DataStudentItemService[AllTestList.Length];
         int count = 0;
@@ -302,8 +298,7 @@
             maxPointList[count] = new DataStudentItemService() { TestName = test.SolvedTest.Topic, ReachedPoints = test.MaxPoints };
             count++;
         }
-
-        //}
+        }
     }
 
     private async void CountMaxPointsFromCompletedTests()
@@ -340,7 +335,7 @@
     private async Task DeleteToDo()
     {
         List<ToDoDTO> tempToDo = new List<ToDoDTO>();
-        if(ToDo!= null) {
+        
             tempToDo.AddRange(ToDo.Where(t => t.IsDone));
             foreach (var todo in tempToDo)
             {
@@ -351,8 +346,7 @@
                     ToDo = await ToDoService.GetToDosByAuthor(MyUserService.User.UserId);
                 }
             }
-            GetCounter();
-        }
+            GetCounter();        
         StateHasChanged();
     }
 
