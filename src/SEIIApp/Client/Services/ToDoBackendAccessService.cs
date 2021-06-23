@@ -85,5 +85,7 @@ namespace SEIIApp.Client.Services
             return response.StatusCode == System.Net.HttpStatusCode.OK;
         }
 
+
+
     }
 }
