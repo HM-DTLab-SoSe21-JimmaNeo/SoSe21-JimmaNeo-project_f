@@ -52,8 +52,8 @@
                 case 1: // student
                     {
                         <li class="nav-item px-3">
-                            <NavLink class="nav-link" href='@string.Format("/welcomestudent/{0}", MyUserService.User.UserId)' @onclick="()=>expandSubMenu= !expandSubMenu">
-                                <span class="oi oi-plus" aria-hidden="true"></span> Student
+                            <NavLink class="nav-link" href="welcomestudent" @onclick="()=>expandSubMenu= !expandSubMenu">
+                                <span class="oi oi-plus" aria-hidden="true"></span> Student Area
                             </NavLink>
                             @if (expandSubMenu)
                             {
@@ -80,7 +80,7 @@
 
                         <li class="nav-item px-3">
                             <NavLink class="nav-link" href="/welcometeacher"  @onclick="()=>expandSubMenu= !expandSubMenu">
-                                <span class="oi oi-plus" aria-hidden="true"></span> Teacher
+                                <span class="oi oi-plus" aria-hidden="true"></span> Teacher Area
                                             </NavLink>
 
                             @if (expandSubMenu)
