@@ -1,16 +1,16 @@
 @page "/register"
-@inject Services.UserBackendAccessService UserService;
-@inject NavigationManager NavigationManager;
+@inject Services.UserBackendAccessService UserService
+@inject NavigationManager NavigationManager
 @using SEIIApp.Shared;
 
 
 
 
-<head>
-    <link rel="stylesheet" type="text/css" href="register.razor.css">
-</head>
 
-<body>
+    <link rel="stylesheet" type="text/css" href="register.razor.css">
+
+
+
     <h1 align="center">Join JimmaNeo!</h1>
     <div class="registration-form">
         <form>
@@ -63,11 +63,11 @@
                 <button type="button" class="btn btn-block create-account" @onclick="ToRegister">Create</button>
             </div>
             <div class="form-group">
-                <button type="button" class="btn btn-block cancle-account" href="/">Cancel</button>
+                <a href="login" type="button" class="btn btn-block cancle-account">Cancel</a>
             </div>
         </form>
     </div>
-  </body>
+
 
 @code {
 
@@ -144,5 +144,5 @@
 
     }
 
-            }
+}
 
