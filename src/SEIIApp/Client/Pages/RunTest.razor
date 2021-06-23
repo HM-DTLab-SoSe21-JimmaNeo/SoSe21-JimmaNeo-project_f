@@ -12,19 +12,24 @@
     {
         <h2 class="text-center">@(TestDto.Topic)</h2>
         <hr class="divider">
+        <div class="card shadow">
+            <div class="card-body">
+                <h6 class="text-center">@(TestDto.Description)</h6>
+            </div>
+        </div>
 
         <EditForm Model="@TestDto">
 
             <ul class="list-group list-group-flush">
                 @foreach (var video in TestDto.Videos)
                 {
-                <li class="text-center list-group-item">
-                    <div class="card shadow">
-                        <div class="card-body">
-                            <VideoComponent VideoContentDTO="video"></VideoComponent>
+                    <li class="text-center list-group-item">
+                        <div class="card shadow">
+                            <div class="card-body">
+                                <VideoComponent VideoContentDTO="video"></VideoComponent>
+                            </div>
                         </div>
-                    </div>
-                </li>
+                    </li>
 
                 }
 
@@ -65,22 +70,22 @@
                         }
             </div>
                 </div>
-                    }
+            }
 
-                }
-                <br/>
-                <button class="btn btn-outline-success btn-sm shadow" @onclick="()=> OnSubmitTest()">Submit</button>
-            </ul>
-        </EditForm>
+        }
+                        <br />
+                        <button class="btn btn-outline-success btn-sm shadow" @onclick="()=> OnSubmitTest()">Submit</button>
+                        </ul>
+                        </EditForm>
 
-    }
-    else
-    {
+                        }
+                        else
+                        {
 
-    }
+                        }
 
 
-</div>
+                    </div>
 
 @code {
 

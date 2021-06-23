@@ -1,6 +1,6 @@
 ﻿@if (OnEditing)
 {
-    <h3>Pictures<br />(PNG Format)</h3><br />
+    <h3>Pictures</h3><br />
     <EditForm Model="PictureContentDTO">
         <DataAnnotationsValidator />
         <div class="row">
@@ -23,10 +23,10 @@
 else
 {
     <img src="@PictureContentDTO.Path" class=" img-thumbnail" allowfullscreen> <br />
-    <hr/>
+    
     if (!String.IsNullOrEmpty(PictureContentDTO.Description))
     {
-        <hr/>
+       <br/>
     <h5 class="text-center"> <b>Picture Description</b></h5>
     <p class="text-center">@(PictureContentDTO.Description)</p><br />
     }
