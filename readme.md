@@ -56,7 +56,16 @@ wie das JimmaNeo Projekt an Bekanntheit gewinnen. Bitte berichtet in eurem Umfel
 
 # 4. **Team und Ansprechpartner**
 
-
+| Teammitglieder | Bereich |Ansprechpartner
+| ------ | ------ |------ |
+| Adamczyk, Xaver | Backend |------ |
+| Le, Hoang Long| Frontend |------ |
+| Maghy, Sara  | Frontend |------ |
+| Malczak, Ralf | Frontend |------ |
+| Volland, Aaron  | Frontend |volland@hm.edu |
+| Weber, Anne Sofie | Frontend |------ |  
+| Wolf, Simon  | Backend |------ | 
+ 
 
 ## 5. **Anlagen**
 
