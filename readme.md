@@ -49,6 +49,37 @@ wie das JimmaNeo Projekt an Bekanntheit gewinnen. Bitte berichtet in eurem Umfel
 
 # 2. **Anwendungsbeschreibung**
 
+### Allgemeiner Bereich:
+Beim Starten der Web-Anwendung können Sie auf der linken Seite der Anwednung die Navigation sehen.  
+Sie gelangen auf der Hauptseite zuerst zur LandingPage **JimmaNeo**.  
+Hier können Sie zum Einstieg nochmal das Storyboard in Form eines kleines Videos ansehen.  
+Des Weiteren können Sie Details zu dem Projekt lesen.    
+![Screenshot LandingPage](/Documentation/LMU_TEAM_F_PR.pdf)
+
+Navigationspunkt: **News** 
+Hier können Sie alle neuen Nachrichten durchlesen.    
+![Screenshot News](/Documentation/LMU_TEAM_F_PR.pdf)
+
+Navigationspunkt: **Login**  
+Hier können Sie sich einlogen, dabei ist es nicht relevant,   
+welchen Status (Teacher, Student, Admin) Sie haben.    
+Die Anwendung filter Ihre Rolle beim Login automatisch.  
+![Screenshot Login](/Documentation/Screenshots/Login.png)
+
+Navigationspunkt: **Register**
+![Screenshot Register](/Documentation/Screenshots/Login.png)
+
+Navigationspunkt: **Contact us**  
+![Screenshot Contact](/Documentation/LMU_TEAM_F_PR.pdf)
+
+Navigationspunkt: **FAQ**  
+![Screenshot FAQ](/Documentation/LMU_TEAM_F_PR.pdf)
+
+
+
+### Admin Bereich:
+
+
 
 
 # 3. **Softwarearchitektur**
