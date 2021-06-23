@@ -123,15 +123,16 @@
             }
             <br /><button class="btn btn-light shadow" @onclick="AddPictureContent">Add Picture</button><br />
             <hr />
-            <button class="btn btn-light shadow" @onclick="SaveContentToBackend">
-                <b>
-                    Save Complete
-                    Test
-                </b>
-                <br/>
+            <ValidationSummary />
+            <button class="btn btn-outline-success shadow" @onclick="SaveContentToBackend">
+
+                Save Complete
+                Test
+
+                <br />
             </button>
 
-            <ValidationSummary />
+
         </EditForm>
 
             }
