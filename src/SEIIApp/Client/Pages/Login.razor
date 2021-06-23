@@ -3,7 +3,6 @@
 @inject Services.UserBackendAccessService UserService
 @inject NavigationManager NavigationManager
 @inject Services.UserServicee MyUserService
-@using SEIIApp.Shared;
 
 
 <head>
@@ -19,9 +18,19 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-9 col-lg-8 mx-auto">
-                            <h3 class="login-heading mb-4">Welcome back<br /> to the Login!</h3>
-                            <p><font color="red">@msg</font></p><br />
+                            <h2 class="login-heading mb-4">Welcome back<br /> to the Login!</h2>
+                            <br />
                             <form>
+                                <!--Alert-->
+                                @if (triggerAlert)
+                                {
+                                    <div class="alert">
+                                        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                                        <strong>Something went wrong.<br /> Please check your Username and Password!</strong>
+                                    </div>
+                                    <!--END Alert-->
+                                }
+                                <!--Login input-->
                                 <div class="input-group">
                                     <input type="text" style='width:100%' required @bind-value="inputName" @bind-value:event="oninput">
                                     <span class="highlight"></span>
@@ -43,10 +52,14 @@
                                     <input type="checkbox" class="custom-control-input" id="customCheck1">
                                     <label class="custom-control-label" for="customCheck1">Remember password</label>
                                 </div>
+
                                 <button type="button" class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2 signIN" @onclick="PerformLogin">Sign-IN</button>
+                                <!-- END Login input-->
                                 <div class="text-center">
+                                    <!-- Link Register-->
                                     <a class="small" href="/register">You don't have an account yet?<br> Register here!</a>
                                 </div>
+                                <!-- END Link Register-->
                             </form>
                         </div>
                     </div>
@@ -56,16 +69,18 @@
     </div>
 </div>
 
-
-
 @code {
 
     public string inputName { get; set; }
 
     public string inputPW { get; set; }
 
-    public string msg { get; set; }
+    private bool triggerAlert = false;
 
+
+    /// <summary>
+    /// Login process with specific user role.
+    /// </summary>
     private async Task PerformLogin()
     {
         var data = await UserService.LoginUser(inputName, inputPW);
@@ -77,7 +92,6 @@
             {
 
                 case 0: //none
-                    msg = "U have no role!";
                     break;
 
                 case 1: //Student
@@ -85,11 +99,13 @@
                     NavigationManager.NavigateTo($"/welcomestudent/{MyUserService.User.UserId}");
                     UserRefresh.LoggedIn = true;
                     break;
+
                 case 2: //Teacher
 
                     NavigationManager.NavigateTo($"/welcometeacher");
                     UserRefresh.LoggedIn = true;
                     break;
+
                 case 3: //Admin
                     NavigationManager.NavigateTo("/manageuser");
                     UserRefresh.LoggedIn = true;
@@ -97,14 +113,17 @@
                     break;
 
                 default:
-                    msg = "No accepted role!";
                     break;
             }
 
         }
         else
         {
-            msg = "Oops.. Something went wrong. Please check your Username and Password!";
+            triggerAlert = true;
+            StateHasChanged();
+            await Task.Delay(2000);
+            triggerAlert = false;
+
         }
 
     }

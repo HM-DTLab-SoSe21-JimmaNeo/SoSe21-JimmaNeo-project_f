@@ -1,127 +1,397 @@
 ﻿@page "/welcomestudent"
 @page "/welcomestudent/{UserId:int}"
 @inject NavigationManager NavigationManager
-@using SEIIApp.Shared;
 @inject UserServicee MyUserService
+@inject ToDoBackendAccessService ToDoService
+@inject CompletedTestBackendAccessService CompletedTestService
+@inject NewsBackendAccessService NewsService
+@inject DataStudentItemService DataItem
+@using SEIIApp.Shared;
+@using Radzen
 
 
-<html lang="en">
-        <head>
-            <meta charset="utf-8" />
-            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes" />
-        </head>
-        <body>
-            @{
 
-                if (MyUserService.User != null && MyUserService.User.Role == Role.Student)
-                {
-                    <h1>Welcome Student @MyUserService.User.Name!</h1>
-                    <br>
-                    <br>
-                    <h3>What shall we do today?</h3>
 
-                    <br>
-                    <br>
-                    <br>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 
-                        <div>
-                            <table>
-                                <tr>
-                                    <th valign=top>
-                                        <div class="divtodo">
-                                            <h2>To-Do-Today (@todos.Count(todo => !todo.IsDone))</h2>
+@{
 
-                                            <ul>
-                                                @foreach (var todo in todos)
-                                                {
-                                                    <li>
-                                                        <input type="checkbox" @bind="todo.IsDone" />
-                                                        <input @bind="todo.Title" />
-                                                    </li>
-                                                }
-                                            </ul>
+    if (MyUserService.User != null && MyUserService.User.Role == Role.Student)
+    {
 
-                                            <input placeholder="Something todo" @bind="newTodo" />
-                                            <button class="btn btn-success" @onclick="AddTodo">Add todo</button>
-                                        </div>
-                                    </th>
-                                    <th><img src="\Images\WelcomeStudent\Lecture.png" alt="Lecture" class="img1"></th>
-                                    <th></th>
-                                    <th><img src="\Images\WelcomeStudent\TestDiagramme.png" alt="Tests" class="img1"></th>
-                                </tr>
-                            </table>
-                            <br>
-                            <br>
-                            <br>
-                            <table class="tablenews">
-                                <h1>News</h1>
-                                <tr>
-                                    <th></th>
-                                    <th width="200">Date</th>
-                                    <th>Description</th>
-                                </tr>
-                                <tr>
-                                    <td><img src="\Images\WelcomeStudent\4.jpg" width="200" /></td>
-                                    <td>09-06-2021</td>
-                                    <td>
-                                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,<br>
-                                        sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem<br> ipsum
-                                        dolor sit amet.
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><img src="\Images\WelcomeStudent\krankenhaus1.jpg" width="200" /></td>
-                                    <td>06-06-2021</td>
-                                    <td>
-                                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,<br>
-                                        sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem<br> ipsum
-                                        dolor sit amet.
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><img src="\Images\WelcomeStudent\krankenhaus2.jpg" width="200" /></td>
-                                    <td>04-06-2021</td>
-                                    <td>
-                                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,<br>
-                                        sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem<br> ipsum
-                                        dolor sit amet.
-                                    </td>
-                                </tr>
+        <!-- w3-content defines a container for fixed size centered content,
+        and is wrapped around the whole page content, except for the footer in this example -->
+        <div class="w3-content" style="max-width:1400px">
 
-                            </table>
+            <!-- Header -->
+            <header class="w3-container w3-center w3-padding-32">
+                <h1 style="color: #68d5c8"><b>Student Area</b></h1>
+                <h3>Welcome Student @MyUserService.User.FirstName @MyUserService.User.LastName</h3>
+
+            </header>
+
+            <!-- Grid -->
+            <div class="w3-row">
+
+                <!-- Left Side Cards -->
+                <div class="w3-col l8 s12">
+                    <!-- Statistic Card -->
+                    <div class="w3-card-4 w3-margin w3-white">
+                        <div class="w3-container">
+                            <h3><img src="/Images/WelcomeStudent/Icons/StatisticIcon2.svg" alt="Image" class="w3-center w3-margin-right" style="width:50px"><b>Test Statistics</b></h3>
+                            @if (maxPointList != null)
+                            {
+                                <RadzenChart>
+                                    <RadzenColumnSeries Data="@testList" CategoryProperty="TestName" Title="Reached" LineType="LineType.Dashed" ValueProperty="ReachedPoints" />
+                                    <RadzenColumnSeries Data="@maxPointList" CategoryProperty="TestName" Title="Max" ValueProperty="ReachedPoints" />
+                                    <RadzenColumnOptions Radius="5" />
+                                </RadzenChart>
+                            }
+                            else
+                            {
+                                <h4><img src="/Images/WelcomeStudent/Icons/NoTests.svg" alt="Image" class="w3-center w3-margin-left" style="width:40px">You have not absolved any tests yet.</h4>
+                            }
                         </div>
+                    </div>
+                    <!-- END Statistic Card -->
+                    <hr>
 
-            }
+                    <!-- ToDo Card -->
+                    <div class="w3-card-4 w3-margin w3-white">
+                        <div class="w3-container">
+                            <h3><img src="/Images/WelcomeStudent/Icons/ToDoIcon.svg" alt="Image" class="w3-center w3-margin-right" style="width:50px"><b>Today's To-Dos </b></h3>
+                            @if (count != 0)
+                            {
+                                <h5>Let´s go! You have @count Task open!</h5>
+                            }
+                            else
+                            {
 
-            else
-            {
-    <p>You are not allowed to see this!</p>
-            }
-        }
+                                <h5>Well done! @count Task open! <img src="/Images/WelcomeStudent/Icons/Success.svg" alt="Image" class="w3-center w3-margin-right" style="width:40px"></h5>
+                            }
+                        </div>
+                        <div class="w3-container">
+                            <ul>
+                                @if (ToDo != null)
+                                {
+                                    @foreach (var todo in ToDo)
+                                    {
 
-    </body>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-text">
+                                                <input type="checkbox" @bind="todo.IsDone" @onclick="() => UpdateToDo(todo, !todo.IsDone)" aria-label="Checkbox for following text input">
+                                            </div>
+                                            <input type="text" class="form-control" aria-label="Text input with checkbox" @bind="todo.Task" disabled>
+                                        </div>
 
-    </html>
+                                    }
+                                }
+                            </ul>
+                            <br />
+                            <div class="input-group">
+                                <input class="input-group-mod" type="text" style='width:100%' required @bind="newTodo">
+                                <span class="highlight"></span>
+                                <span class="bar"></span>
+                                <label class="hoverlabel">Something ToDo</label>
+                                <br />
+                            </div>
 
+                            <br />
+                            <button class="btn btn-primary" @onclick="AddTodo">Add todo</button>
+                            <button class="btn btn-danger" @onclick="DeleteToDo">Delete Todo</button>
+                            <br />
+                            <br />
+
+                        </div>
+                    </div>
+                    <!-- END ToDo Card -->
+                </div>
+                <!-- END Left Side Cards -->
+                <!-- Right Side Cards -->
+                <div class="w3-col l4">
+                    <!-- Statistic Card -->
+                    <div class="w3-card w3-margin w3-margin-top">
+                        <div class="w3-container w3-padding">
+                            <h3><img src="/Images/WelcomeStudent/Icons/StatisticIcon1.svg" alt="Image" class="w3-center w3-margin-right" style="width:50px"><b>Progress</b></h3>
+
+                            @if (AllTestList != null)
+                            {
+                                @if (DataItem.maxReachedPointsfromTests != 0)
+                                {
+                                    <RadzenArcGauge Style="width: 100%; height: 250px;">
+                                        <RadzenArcGaugeScale Step="10" Min="0" Max="100" MinorStep="2" Radius="1.0" TickPosition=@tickPosition Y="0.9" Margin="0">
+                                            <RadzenArcGaugeScaleValue Value=@DataItem.maxReachedPointsfromTests>
+                                                <Template Context="pointer">
+                                                    <h4>
+                                                        @pointer.Value <sup>%</sup>
+                                                    </h4>
+                                                </Template>
+                                            </RadzenArcGaugeScaleValue>
+                                        </RadzenArcGaugeScale>
+                                    </RadzenArcGauge>
+                                    <br />
+                                }
+                            }
+                            else
+                            {
+                                <h4><img src="/Images/WelcomeStudent/Icons/NoTests.svg" alt="Image" class="w3-center w3-margin-left" style="width:25px">You have not absolved any tests yet.</h4>
+                                <br />
+                            }
+                        </div>
+                    </div>
+                    <!-- END Statisic Card -->
+                    <hr>
+
+                    <!-- Latest News Card -->
+                    <div class="w3-card w3-margin">
+                        <div class="w3-container w3-padding">
+                            <h3><b><img src="/Images/WelcomeStudent/Icons/NewsIcon.svg" alt="Image" class="w3-center w3-margin-right" style="width:50px">Latest News</b></h3>
+                        </div>
+                        <ul class="w3-ul w3-hoverable w3-white">
+
+                            @if (News != null)
+                            {
+                                @foreach (var news in News)
+                                {
+
+                                    <li class="w3-padding-16">
+                                        <NavLink href="news">
+                                            <span class="w3-large">@news.Topic</span><br>
+                                        </NavLink>
+                                        <span>@news.DateOfCreation</span>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                    <!-- END Latest News Card -->
+                    <hr>
+                    <!-- Feedback Bug Card -->
+                    <div class="w3-card w3-margin">
+                        <div class="flip-card">
+                            <div class="flip-card-inner">
+                                <div class="flip-card-front">
+                                    <img src="/Images/WelcomeStudent/heart.jpg" style="width:100%">
+                                </div><hr>
+                                <div class="flip-card-back">
+                                    <p>
+                                        <br />
+                                        <b>Feedback / Bug Reporting</b><br /><br />
+                                        We want to hear what you have to say about this feature because ultimately we're building it <br />for you.
+                                        <br /> <NavLink href="contact"><img src="/Images/WelcomeStudent/Icons/brief.svg" alt="Image" class="w3-center w3-margin-right" style="width:50px"></NavLink>
+
+                                    </p>
+                                    <br />
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END Feedback Bug Card -->
+                    <hr>
+                </div>
+                <!-- END Right Side Cards -->
+            </div>
+            <!-- END Grid -->
+        </div>
+        <!-- END w3 content -->
+
+
+    }
+    else
+    {
+        <p>You are not allowed to see this!</p>
+    }
+}
 
 
 @code {
+
     public int[] Roles { get; set; }
+
     [Parameter]
     public int userID { get; set; }
-    
 
-    private List<Services.WelcomeStudentService> todos = new();
-    private string newTodo;
+    private List<NewsDTO> News { get; set; }
 
-    private void AddTodo()
+    private List<ToDoDTO> ToDo { get; set; }
+
+    public ToDoDTO TempToDo { get; set; }
+
+    private string newTodo { get; set; }
+    private int count { get; set; }
+
+    public CompletedTestDTO[] AllTestList { get; set; }
+
+    public DataStudentItemService[] testList { get; set; }
+    public DataStudentItemService[] maxPointList { get; set; }
+
+    GaugeTickPosition tickPosition = GaugeTickPosition.Outside;
+
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await base.OnParametersSetAsync();
+        AllTestList = await CompletedTestService.GetCompletedTestsWithUserId(MyUserService.User.UserId);
+        CreateDataItems();
+        ToDo = await ToDoService.GetToDosByAuthor(MyUserService.User.UserId);
+        TempToDo = new ToDoDTO();
+        GetCounter();
+        CountMaxPointsFromCompletedTests();
+        CountReachedPointsFromCompletedTests();
+        News = await GetLastNews();
+
+        StateHasChanged();
+    }
+
+    /// <summary>
+    /// Generates a List with specifics ToDos of the active user.
+    /// </summary>
+    private async void GetToDos()
+    {
+        ToDo = await ToDoService.GetToDosByAuthor(MyUserService.User.UserId);
+    }
+
+    /// <summary>
+    /// Generates a NewsList with the last three news.
+    /// </summary>
+    private async Task<List<NewsDTO>> GetLastNews()
+    {
+        News = await NewsService.GetNews();
+        List<NewsDTO> LatestNews = new List<NewsDTO>();
+        LatestNews.Add(News[News.Count - 1]);
+        LatestNews.Add(News[News.Count - 2]);
+        LatestNews.Add(News[News.Count - 3]);
+        return LatestNews;
+    }
+
+
+    /// <summary>
+    /// Adds new user tods.
+    /// </summary>
+    private async Task AddTodo()
     {
         if (!string.IsNullOrWhiteSpace(newTodo))
         {
-            todos.Add(new Services.WelcomeStudentService { Title = newTodo });
+            TempToDo.Task = newTodo;
+            TempToDo.ToDoID = 0;
+            TempToDo.Author = MyUserService.User;
+            await ToDoService.AddOrUpdateToDo(TempToDo);
+            ToDo.Add(TempToDo);
+            GetToDos();
+            GetCounter();
             newTodo = string.Empty;
+        }
+
+    }
+
+    /// <summary>
+    /// Updates the ToDo List, when a check box is selected.
+    /// </summary>
+    private async Task UpdateToDo(ToDoDTO todo, bool check)
+    {
+        todo.IsDone = check;
+        await ToDoService.AddOrUpdateToDo(todo);
+        GetCounter();
+        StateHasChanged();
+    }
+
+
+    /// <summary>
+    /// Counts how many ToDo tasks are still open.
+    /// </summary>
+    private void GetCounter()
+    {
+        if (ToDo != null)
+        {
+            count = ToDo.Count(todo => !todo.IsDone);
+        }
+        else
+        {
+            count = 0;
+        }
+    }
+
+    /// <summary>
+    /// Generates DataItems for creating specifics charts.
+    /// </summary>
+    private async void CreateDataItems()
+    {
+        if (AllTestList != null)
+        {
+            testList = new DataStudentItemService[AllTestList.Length];
+            maxPointList = new DataStudentItemService[AllTestList.Length];
+            int count = 0;
+
+            foreach (var test in AllTestList)
+            {
+                testList[count] = new DataStudentItemService() { TestName = test.SolvedTest.Topic, ReachedPoints = test.ReachedPoints };
+                maxPointList[count] = new DataStudentItemService() { TestName = test.SolvedTest.Topic, ReachedPoints = test.MaxPoints };
+                count++;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Counts the total Points from all absolved and completed tests of active user.
+    /// </summary>
+    private async void CountMaxPointsFromCompletedTests()
+    {
+        if (AllTestList != null)
+        {
+            if (maxPointList != null)
+            {
+                for (int i = 0; i < maxPointList.Length; i++)
+                {
+                    DataItem.maxPointsfromTests += maxPointList[i].ReachedPoints;
+                }
+            }
+
+        }
+    }
+
+    /// <summary>
+    /// Counts reached points from all absolved and completed tests of active user.
+    /// </summary>
+    private void CountReachedPointsFromCompletedTests()
+    {
+        if (AllTestList != null)
+        {
+            if (testList != null)
+            {
+                for (int i = 0; i < testList.Length; i++)
+                {
+                    DataItem.maxReachedPointsfromTests += testList[i].ReachedPoints;
+                }
+                DataItem.maxReachedPointsfromTests /= DataItem.maxPointsfromTests;
+                DataItem.maxReachedPointsfromTests = System.Math.Round(DataItem.maxReachedPointsfromTests * 100, 0);
+            }
         }
     }
 
 
+    /// <summary>
+    /// Deletes todos from ToDo List.
+    /// </summary>
+    private async Task DeleteToDo()
+    {
+        List<ToDoDTO> tempToDo = new List<ToDoDTO>();
+
+        tempToDo.AddRange(ToDo.Where(t => t.IsDone));
+        foreach (var todo in tempToDo)
+        {
+            bool successfull = await ToDoService.DeleteToDo(todo.ToDoID);
+
+            if (successfull)
+            {
+                ToDo = await ToDoService.GetToDosByAuthor(MyUserService.User.UserId);
+            }
+        }
+        GetCounter();
+        StateHasChanged();
+    }
+
 }
+

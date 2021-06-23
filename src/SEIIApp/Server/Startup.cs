@@ -55,11 +55,12 @@ namespace SEIIApp.Server {
             services.AddScoped<Services.NewsService>();
             services.AddScoped<Services.CompletedTestService>();
             services.AddScoped<Services.SubjectAreaService>();
+            services.AddScoped<Services.ToDoService>();
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, Services.UserService userService, Services.TestService testService, Services.NewsService newsService, Services.CompletedTestService completedTestService, Services.LectureService lectureService) {
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, Services.UserService userService, Services.TestService testService, Services.NewsService newsService, Services.CompletedTestService completedTestService, Services.LectureService lectureService, Services.ToDoService toDoService) {
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
                 app.UseWebAssemblyDebugging();
@@ -91,7 +92,7 @@ namespace SEIIApp.Server {
             });
 
 #if DEBUG
-            TestDataInitialiser.InitalizeTestData(userService, testService, newsService, completedTestService,lectureService);
+            TestDataInitialiser.InitalizeTestData(userService, testService, newsService, completedTestService,lectureService, toDoService);
 #endif
         }
     }

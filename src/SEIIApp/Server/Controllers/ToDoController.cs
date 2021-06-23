@@ -90,7 +90,7 @@ namespace SEIIApp.Server.Controllers
         public ActionResult<List<ToDoDTO>> GetToDoByAuthorId([FromRoute] int id)
         {
             var todo = ToDoService.GetToDoWithAuthorID(id);
-            if (todo == null) return StatusCode(StatusCodes.Status404NotFound);
+            if (todo == null) return Ok(new List<ToDoDTO>());
             var mappedResult = Mapper.Map<List<ToDoDTO>>(todo);
             return Ok(mappedResult);
         }

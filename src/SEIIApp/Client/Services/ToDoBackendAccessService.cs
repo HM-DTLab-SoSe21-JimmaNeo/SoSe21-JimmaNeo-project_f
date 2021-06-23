@@ -66,7 +66,7 @@ namespace SEIIApp.Client.Services
         /// <summary>
         /// Adds or updates a todo on the backend. Returns the tests if successful else null
         /// </summary>
-        public async Task<ToDoDTO> AddOrUpdateTest(ToDoDTO dto)
+        public async Task<ToDoDTO> AddOrUpdateToDo(ToDoDTO dto)
         {
             var response = await HttpClient.PutAsJsonAsync(GetToDoUrl(), dto);
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
@@ -84,6 +84,8 @@ namespace SEIIApp.Client.Services
             var response = await HttpClient.DeleteAsync(GetToDoUrlWithId(ToDoID));
             return response.StatusCode == System.Net.HttpStatusCode.OK;
         }
+
+
 
     }
 }
