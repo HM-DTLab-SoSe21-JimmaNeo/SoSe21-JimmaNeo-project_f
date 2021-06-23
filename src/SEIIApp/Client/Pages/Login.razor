@@ -18,16 +18,19 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-9 col-lg-8 mx-auto">
-                            <h2 class="login-heading mb-4">Welcome back<br /> to the Login!</h2>                           
+                            <h2 class="login-heading mb-4">Welcome back<br /> to the Login!</h2>
                             <br />
                             <form>
-                                @if (loginFailedAlert)
+                                <!--Alert-->
+                                @if (triggerAlert)
                                 {
                                     <div class="alert">
                                         <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
                                         <strong>Something went wrong.<br /> Please check your Username and Password!</strong>
                                     </div>
+                                    <!--END Alert-->
                                 }
+                                <!--Login input-->
                                 <div class="input-group">
                                     <input type="text" style='width:100%' required @bind-value="inputName" @bind-value:event="oninput">
                                     <span class="highlight"></span>
@@ -49,10 +52,14 @@
                                     <input type="checkbox" class="custom-control-input" id="customCheck1">
                                     <label class="custom-control-label" for="customCheck1">Remember password</label>
                                 </div>
+
                                 <button type="button" class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2 signIN" @onclick="PerformLogin">Sign-IN</button>
+                                <!-- END Login input-->
                                 <div class="text-center">
+                                    <!-- Link Register-->
                                     <a class="small" href="/register">You don't have an account yet?<br> Register here!</a>
                                 </div>
+                                <!-- END Link Register-->
                             </form>
                         </div>
                     </div>
@@ -62,17 +69,18 @@
     </div>
 </div>
 
-
-
 @code {
 
     public string inputName { get; set; }
 
     public string inputPW { get; set; }
 
-    public string msg { get; set; }
-    private bool loginFailedAlert = false;
+    private bool triggerAlert = false;
 
+
+    /// <summary>
+    /// Login process with specific user role.
+    /// </summary>
     private async Task PerformLogin()
     {
         var data = await UserService.LoginUser(inputName, inputPW);
@@ -111,11 +119,10 @@
         }
         else
         {
-            loginFailedAlert = true;
+            triggerAlert = true;
             StateHasChanged();
             await Task.Delay(2000);
-            loginFailedAlert = false;
-
+            triggerAlert = false;
 
         }
 
