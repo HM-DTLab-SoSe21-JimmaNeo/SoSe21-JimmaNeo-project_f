@@ -105,6 +105,9 @@ Wenn Sie eine neue Nachricht erstellen wollen, klicken Sie auf der ManageUser Se
 auf den grauen Button EditNews.  
 ![Screenshot EditNews](/Documentation/Screenshots/Admin_EditNews.png)
 
+**Prozessablauf**  
+![Screenshot EditNews](/Documentation/Screenshots/AdminArea.png)
+
  
 
 
