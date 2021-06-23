@@ -77,7 +77,35 @@ Die Anwendung filter Ihre Rolle beim Login automatisch.
 
 
 
-### Admin Bereich:
+### Admin Bereich:  
+Wenn Sie sich erfolgreich eingelogt haben und Admin Rechte besitzen,  
+gelangen Sie auf die ManageUser Seite.  
+Hier wird Ihnen eine Tabelle mit allen registierten Benutzern auf der   
+Plattform angezeigt. 
+In jeder Zelle der Tabelle befindet sich neben dem Usernamen, Vornamen,  
+Nachnamen ein Edit Button(blau) und ein Delete Button(rot)
+![Screenshot ManageUser](/Documentation/Screenshots/Admin_ManageUser.png)
+
+Nun stehen Ihnen drei Optionen zur verfügung, wie Sie weierverfahren möchten.  
+
+**1. Einen Benutzer löschen**  
+Um einen Benutzer zu löschen, klicken Sie auf den roten Button.
+Danach werden Sie nochmal gefragt, ob Sie den ausgewählten Benutzer wirklich löschen wollen.
+Durch erneutes klicken des Delete Buttons löschen Sie den Benutzer endgültig aus dem System.
+![Screenshot DeleteUser](/Documentation/Screenshots/DeleteUser.png)
+
+**2. Einen Benutzer editieren**  
+Um den Vornamen, Nachnamen oder die Rolle eines Benutzers zu ändern, klicken Sie neben den  
+gewünschten Benutzer auf das Zahnrad (blauer Button).   
+Sie gelangen nun auf die EditSeite des spezifischen Benutzers.
+![Screenshot EditUser](/Documentation/Screenshots/Admin_EditUser_Role.png)
+
+**3. Eine neue Nachricht erstellen**
+Wenn Sie eine neue Nachricht erstellen wollen, klicken Sie auf der ManageUser Seite  
+auf den grauen Button EditNews.  
+![Screenshot EditNews](/Documentation/Screenshots/Admin_EditNews.png)
+
+ 
 
 
 
