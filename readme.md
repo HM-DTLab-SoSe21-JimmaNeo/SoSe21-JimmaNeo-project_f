@@ -92,7 +92,7 @@ Nun stehen Ihnen drei Optionen zur verfügung, wie Sie weiter verfahren können.
 Um einen Benutzer zu löschen, klicken Sie auf den roten Button.
 Danach werden Sie nochmal gefragt, ob Sie den ausgewählten Benutzer wirklich löschen wollen.
 Durch erneutes klicken des Delete Buttons löschen Sie den Benutzer endgültig aus dem System.
-![Screenshot DeleteUser](/Documentation/Screenshots/DeleteUser.png)
+![Screenshot DeleteUser](/Documentation/Screenshots/Admin_DeleteUser.PNG)
 
 **2. Einen Benutzer editieren**    
 Um den Vornamen, Nachnamen oder die Rolle eines Benutzers zu ändern, klicken Sie neben den  
