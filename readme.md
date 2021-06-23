@@ -77,7 +77,7 @@ Die Anwendung filter Ihre Rolle beim Login automatisch.
 
 
 
-### Admin Bereich:  
+## Admin Bereich:  
 Wenn Sie sich erfolgreich eingelogt haben und Admin Rechte besitzen,  
 gelangen Sie auf die ManageUser Seite.  
 Hier wird Ihnen eine Tabelle mit allen registierten Benutzern auf der   
@@ -126,7 +126,7 @@ auf den grauen Button EditNews.
 | Wolf, Simon  | Backend |------ | 
  
 
-## 5. **Anlagen**
+### 5. **Anlagen**
 
 **[Storyboard](/Documentation/LMU_Team_F_Storyboard-Vesion_1.2.pdf)**    
 **[PressRelease](/Documentation/LMU_TEAM_F_PR.pdf)**
