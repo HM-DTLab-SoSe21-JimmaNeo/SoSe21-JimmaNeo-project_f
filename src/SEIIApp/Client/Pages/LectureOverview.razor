@@ -5,7 +5,7 @@
 
 <div class="container">
 
-    <h2 class="text-center">Your Lecture</h2>
+    <h2 class="text-center">Your Lectures</h2>
     <hr class="divider">
     <div class="col text-center">
 
@@ -16,13 +16,13 @@
 
                     @if (isFiltered == false)
                     {
-                        <div class="px-auto">
+                        <div class="px-auto shadow">
                             <InputText type="search" class="form-control rounded" placeholder="Search by Lecturename"
                                        aria-label="Name of the Content" aria-describedby="search-addon" @bind-Value="@searchValue" />
 
 
                         </div>
-                        <button class="btn btn-outline-primary btn-sm" @onclick="SearchContent">Search</button>
+                        <button class="btn btn-outline-primary btn-sm shadow" @onclick="SearchContent">Search</button>
                         <hr />
 
                     }
@@ -41,7 +41,7 @@
                 VideoComponent.OnEditing = true;
                 PictureComponent.OnEditing = true;
                 <div class="text-center py-2">
-                    <button class="btn btn-outline-success btn-sm" @onclick="AddLecture">Add Test</button>
+                    <button class="btn btn-success btn-sm shadow" @onclick="AddLecture">+ Add lecture</button>
                 </div>
             }
 
@@ -64,7 +64,7 @@
                 {
                     <li class="text-center list-group-item">
                         
-                        <div class="card">
+                        <div class="card shadow">
                             <div class="card-body">
                                 <b>
                                     LectureID:
@@ -86,7 +86,7 @@
                                 <br />
                                 <button class="btn btn-outline-dark btn-sm" @onclick="() => EditLecture((LectureDTO)content)">Edit</button>
                                 <button class="btn btn-outline-danger btn-sm" @onclick="() => DeleteLecture(content)">Delete</button>
-                                <button class="btn btn-outline-dark btn-sm" @onclick="() => StartLecture(content.LectureId)">Start</button>
+                                <button class="btn btn-outline-success btn-sm" @onclick="() => StartLecture(content.LectureId)">Start</button>
                             </div>
                         </div>
                     </li>

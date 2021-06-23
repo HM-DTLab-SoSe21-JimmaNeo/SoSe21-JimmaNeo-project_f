@@ -57,7 +57,8 @@
 
     .collapse {
         /* Never collapse the sidebar for wide screens */
-        display: block;
+        /* Sidebar Problem durch '!important' behoben (WelcomeTeacher page) #Diskussion*/
+        display: block !important;
     }
 }
 

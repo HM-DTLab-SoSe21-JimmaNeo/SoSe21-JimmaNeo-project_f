@@ -38,3 +38,17 @@ h1 {
     border-style: solid;
     border-color: lightgrey;
 }
+
+.card .card-header .card-body{
+    max-width: 600px;
+    align-content: center;
+}
+
+.btn {
+    margin: 10px;
+}
+
+.container{
+    max-width: 600px;
+}
+
