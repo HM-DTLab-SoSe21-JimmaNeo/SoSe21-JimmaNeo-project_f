@@ -54,23 +54,23 @@ Beim Starten der Web-Anwendung können Sie auf der linken Seite der Anwednung di
 Sie gelangen auf der Hauptseite zur LandingPage **JimmaNeo**.  
 Hier können Sie zum Einstieg nochmal das Storyboard in Form eines kleines Videos ansehen.  
 Des Weiteren können Sie Details zu dem Projekt lesen.    
-![Screenshot LandingPage](/Documentation/Home.pdf)
+![Screenshot LandingPage](/Documentation/Screenshots/Home.PNG)
 
-**- Navigationspunkt: News** 
+**- Navigationspunkt: News**    
 Hier können Sie alle neuen Nachrichten durchlesen.    
-![Screenshot News](/Documentation/Screenshots/News.png)
+![Screenshot News](/Documentation/Screenshots/News.PNG)
 
 **- Navigationspunkt: Login**  
 Hier können Sie sich einlogen, dabei ist es nicht relevant,   
 welchen Rolle (Teacher, Student, Admin) Sie besitzen.    
 Die Anwendung filter Ihre Rolle beim Login automatisch.  
-![Screenshot Login](/Documentation/Screenshots/Login.png)
+![Screenshot Login](/Documentation/Screenshots/Login.PNG)
 
 **- Navigationspunkt: Register**  
-![Screenshot Register](/Documentation/Screenshots/Register.png)
+![Screenshot Register](/Documentation/Screenshots/Register.PNG)
 
 **- Navigationspunkt: Contact us**  
-![Screenshot Contact](/Documentation/Screenshots/Contact.png)
+![Screenshot Contact](/Documentation/Screenshots/Contact.PNG)
 
 **- Navigationspunkt: FAQ**  
 ![Screenshot FAQ](/Documentation/Screenshots/FAQ.png)
