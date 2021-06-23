@@ -20,4 +20,6 @@ Dieses Projekt ist ein Standard-Vorlageprojekt, das eine funktionierende WebAsse
 
 ## 5. **Anlagen**
 
-**[Storyboard](/Documentation/LMU_Team_F_Storyboard-Vesion_1.2.pdf)**
+**[Storyboard](/Documentation/LMU_Team_F_Storyboard-Vesion_1.2.pdf)**    
+**[PressRelease](/Documentation/LMU_TEAM_F_PR.pdf)**
+
