@@ -158,11 +158,11 @@
     {
         if (lectureDto.Topic == null) lectureDto.Topic = "lecture Topic";
 
-        if (lectureDto.Author == null) lectureDto.Author = new UserDTO() { FirstName = "Ezzy", LastName = "Bert", Name = "user4", Role = Role.Teacher, UserId = 4 }; //ToDo
-                                                                                                                                                                     //if(test.TestContent == null) test.TestContent = new List<TestContentDTO>();
+        if (lectureDto.Author == null) lectureDto.Author = UserService.User; 
+                                                                                                                                                                  
         if (lectureDto.Videos == null) lectureDto.Videos = new List<VideoContentDTO>();
         if (lectureDto.Content == null) lectureDto.Content = new List<PictureContentDTO>();
-        if (lectureDto.Test == null) lectureDto.Test = null; // TODO nicht sicher?
+        if (lectureDto.Test == null) lectureDto.Test = null;
 
         this.LectureDto = lectureDto;
     }
@@ -219,7 +219,7 @@
 
     private void AddVideoContent()
     {
-        LectureDto.Videos.Add(new VideoContentDTO() { Path = "https://www.youtube.com/embed/" });
+        LectureDto.Videos.Add(new VideoContentDTO());
     }
 
     private void DeleteVideoContent(VideoContentDTO videoContentDto)
