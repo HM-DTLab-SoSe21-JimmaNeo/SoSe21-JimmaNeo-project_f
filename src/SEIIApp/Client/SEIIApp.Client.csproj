@@ -13,6 +13,7 @@
     <Content Remove="wwwroot\js\**" />
     <EmbeddedResource Remove="wwwroot\js\**" />
     <None Remove="wwwroot\js\**" />
+    <Content Remove="wwwroot\Images\WelcomeTeacher %28Kopie%29\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -36,4 +37,7 @@
     <ProjectReference Include="..\Shared\SEIIApp.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Images\WelcomeTeacher\" />
+  </ItemGroup>
 </Project>
