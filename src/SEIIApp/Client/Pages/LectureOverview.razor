@@ -1,7 +1,7 @@
 ﻿@page "/lectureoverview"
 @inject Services.LectureBackendAccessService LectureService
 @inject NavigationManager NavigationManager
-@inject UserServicee UserService
+@inject UserLoggedInService UserService
 
 <div class="container">
 
@@ -82,7 +82,7 @@
                                 <b>
                                     Author:
                                 </b>
-                                @(content.Author.Name)
+                                @(content.Author.FirstName)
                                 @(content.Author.LastName)
                                 <b>
                                     Topic:
@@ -163,7 +163,7 @@
                                 <b>
                                     Author:
                                 </b>
-                                @(content.Author.Name)
+                                @(content.Author.FirstName)
                                 @(content.Author.LastName)
                                 <b>
                                     Topic:

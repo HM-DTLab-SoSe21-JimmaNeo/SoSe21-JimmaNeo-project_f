@@ -92,7 +92,7 @@ namespace SEIIApp.Server {
             });
 
 #if DEBUG
-            TestDataInitialiser.InitalizeTestData(userService, testService, newsService, completedTestService,lectureService, toDoService);
+            TestDataInitialiser.InitalizeTestData(userService, testService, completedTestService,lectureService, toDoService);
 #endif
         }
     }

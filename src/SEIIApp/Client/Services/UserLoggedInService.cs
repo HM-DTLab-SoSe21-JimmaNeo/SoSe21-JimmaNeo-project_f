@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SEIIApp.Client.Services {
 
-    public class UserServicee {
+    public class UserLoggedInService {
 
         public UserDTO User { get; set; }
 

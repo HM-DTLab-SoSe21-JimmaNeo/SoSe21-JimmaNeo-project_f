@@ -1,7 +1,7 @@
 ﻿@page "/welcometeacher"
 
 @inject NavigationManager NavigationManager
-@inject UserServicee MyUserService
+@inject UserLoggedInService MyUserService
 @inject Services.CompletedTestBackendAccessService CompletedTestService
 @inject Services.TestCompareService CompareService
 
@@ -9,7 +9,6 @@
 
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-
 </head>
 
 @{
@@ -17,10 +16,11 @@
     {
         <body>
             <div class="container">
+                <h1 align="center">Welcome @MyUserService.User.FirstName @MyUserService.User.LastName!</h1>
+                <hr class=" divider" />
                 <div class="card">
-                    <div class="card-header">
-                        <h1 align="center">Welcome Teacher @MyUserService.User.Name !</h1>
-                    </div>
+                    @*<div class="card-header">*@
+                    @*</div>*@
                     <div class="card-body">
                         <h5 class="card-title" align="center"> Below you can see the results of the exams</h5>
                         @if (SortedTests != null && SortedTests.Count > 0)

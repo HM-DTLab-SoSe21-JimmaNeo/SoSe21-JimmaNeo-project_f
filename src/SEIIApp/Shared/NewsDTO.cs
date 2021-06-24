@@ -12,7 +12,7 @@ namespace SEIIApp.Shared
         public int NewsID { get; set; }
 
         [Required]
-        [StringLength(50)]
+        [StringLength(100)]
         public string Topic { get; set; }
 
         public string Content { get; set; }

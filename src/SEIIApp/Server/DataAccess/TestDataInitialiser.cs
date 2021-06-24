@@ -9,11 +9,11 @@ namespace SEIIApp.Server.DataAccess
 {
     public class TestDataInitialiser
     {
-        public static void InitalizeTestData(Services.UserService userService, Services.TestService testService, Services.NewsService newsService, Services.CompletedTestService completedTestService, Services.LectureService lectureService, Services.ToDoService toDoService)
+        public static void InitalizeTestData(Services.UserService userService, Services.TestService testService, Services.CompletedTestService completedTestService, Services.LectureService lectureService, Services.ToDoService toDoService)
         {
             AddUser(userService);
 
-            AddTests(testService, userService, newsService);
+            AddTests(testService, userService);
             AddCompletedTest(testService, userService, completedTestService);
             AddLectures(lectureService, userService, testService);
 
@@ -22,30 +22,28 @@ namespace SEIIApp.Server.DataAccess
 
         private static void AddUser(Services.UserService userService)
         {
-            User system = new User { Name = "system", FirstName = "", LastName = "", Role = Role.None, Pw = "system".GetHashCode().ToString() };
-            userService.AddUser(system);
+            User admin = new() { Name = "admin", FirstName = "Example", LastName = "Admin", Role = Role.Admin, Pw = "admin".GetHashCode().ToString() };
+            userService.AddUser(admin);
 
-            for (int i = 2; i < 8; i++)
-            {
-                Role role;
-                if (i < 4) role = Role.Admin;
-                else if (i % 2 == 0) role = Role.Teacher;
-                else role = Role.Student;
+            User trainer = new() { Name = "trainer", FirstName = "Example", LastName = "Trainer", Role = Role.Teacher, Pw = "trainer".GetHashCode().ToString() };
+            userService.AddUser(trainer);
 
-                User u = GenerateUser(i, role);
-                userService.AddUser(u);
-            }
+            User student = new() { Name = "student", FirstName = "Example", LastName = "Student", Role = Role.Student, Pw = "student".GetHashCode().ToString() };
+            userService.AddUser(student);
+
         }
 
-        private static void AddTests(Services.TestService testService, Services.UserService userService, Services.NewsService newsService)
+        private static void AddTests(Services.TestService testService, Services.UserService userService)
         {
-
             testService.AddTest(GenerateFirstTest(userService));
-            for (int i = 2; i < 6; i++)
+
+
+
+            for (int i = 2; i < 4; i++)
             {
                 var test = GenerateTest(userService);
-                test.Topic = "Test " + i;
-                test.Description = "ExampleTest " + i;
+                test.Topic = "Example Test " + i;
+                test.Description = "This Test is just an example " + i;
                 testService.AddTest(test);
             }
         }
@@ -55,63 +53,64 @@ namespace SEIIApp.Server.DataAccess
         private static void AddCompletedTest(Services.TestService testService, Services.UserService userService, Services.CompletedTestService completedTestService)
         {
             Random random = new Random();
-            User user = userService.GetUserWithId(7);
-            for (int i = 1; i < 6; i++)
-            {
-                Test solved = testService.GetTestWithId(i);
-                CompletedTest completedTest = new() { Student = user, SolvedTest = solved, ReachedPoints = random.Next( 0, 10), MaxPoints = 9};
-
-
-                completedTestService.AddCompletedTest(completedTest);
-            }
-        }
-
-
-        private static User GenerateUser(int id, Role role)
-        {
-            User u = new User() { Name = $"user{id}", FirstName = $"first_{id}", LastName = $"last_{id}"};
-            u.Pw = $"pw{id}".GetHashCode().ToString();
-            u.Role = role;
-            return u;
-        }
-  public static Test GenerateTest(Services.UserService userService)
-        {
-            var test = new Test();
-            test.Questions = new List<Question>();
-
-            test.Author = userService.GetUserWithId(4);
-            test.DateOfCreation = DateTime.UtcNow.Date;
+            User user = userService.GetUserWithId(3);
             
-            for (int i = 0; i < 3; i++)
+            Test solved = testService.GetTestWithId(3);
+            CompletedTest completedTest = new() { Student = user, SolvedTest = solved, ReachedPoints = random.Next(3, 10), MaxPoints = 9};
+            completedTestService.AddCompletedTest(completedTest);
+
+            solved = testService.GetTestWithId(2);
+            completedTest = new() { Student = user, SolvedTest = solved, ReachedPoints = random.Next(3, 10), MaxPoints = 9 };
+            completedTestService.AddCompletedTest(completedTest);
+
+            solved = testService.GetTestWithId(1);
+            completedTest = new() { Student = user, SolvedTest = solved, ReachedPoints = random.Next(1, 5), MaxPoints = 5 };
+            completedTestService.AddCompletedTest(completedTest);
+        }
+
+
+      
+      public static Test GenerateTest(Services.UserService userService)
             {
-                var question = new Question();
-                question.QuestionText= $"Question {i}";
-                question.Answers = new List<Answer>();
-                question.Explanation = $"Die Antwort für Frage {i} ist ...";
+                var test = new Test();
+                test.Questions = new List<Question>();
 
-                for (int c = 0; c < 5; c++)
+                test.Author = userService.GetUserWithId(2);
+                test.DateOfCreation = DateTime.UtcNow.Date;
+            
+                for (int i = 0; i < 3; i++)
                 {
-                    var answer = new Answer();
-                    answer.AnswerText = $"Answer for Question {i} is {c}";
+                    var question = new Question();
+                    question.QuestionText= $"Question {i}";
+                    question.Answers = new List<Answer>();
+                    question.Explanation = $"Die Antwort für Frage {i} ist ...";
 
-                    if (c % 2 == 0) answer.IsCorrect = true;
-                    else answer.IsCorrect = false;
+                    for (int c = 0; c < 5; c++)
+                    {
+                        var answer = new Answer();
+                        answer.AnswerText = $"Answer for Question {i} is {c}";
+
+                        if (c % 2 == 0) answer.IsCorrect = true;
+                        else answer.IsCorrect = false;
                                      
                     
-                    question.Answers.Add(answer);
+                        question.Answers.Add(answer);
+                    }
+                    test.Questions.Add(question);
                 }
-                test.Questions.Add(question);
-            }
 
-            return test;
-        }
+                return test;
+            }
 
         public static Test GenerateFirstTest(Services.UserService userService)
         {
             var test1 = new Test();
             test1.Questions = new List<Question>();
-            test1.Author = userService.GetUserWithId(4);
+            test1.Author = userService.GetUserWithId(2);
             test1.DateOfCreation = DateTime.UtcNow.Date;
+            test1.Videos = new();
+
+            test1.Videos.Add(new VideoContent() { Path = "ZlIknKErzV0", Description = "Infants  (under a year old) can choke and stop breathing if they swallow something larger than their tiny straw size air passage; THERE IS A WAY TO SAVE YOUR BABY from total abstraction! Learn the simple and proven way to make your baby breath until help comes to rescue. First hold the baby over your arm horizontal to the floor, next use your heal of your hand to give them 5 good solid back blows right between the shoulders, and then 5 compressions on the front of the chest with two fingers. You can do this sitting down. Check for the object to come out (the one that the infant swallowed). For a larger baby (1 year old or over) you can do the Heimlich maneuver by holding the baby from behind and doing the abdominal thrusts with less force than adults; get behind the baby at their level and thrust under their stomach" });
 
             var question1 = new Question();
 
@@ -167,13 +166,7 @@ namespace SEIIApp.Server.DataAccess
             return test1;
         }
 
-        private static void AddNews(Services.NewsService newsService)
-        {
-            News news = new() { Topic = "Este News", Content = "Dies ist die erste News auf diesem System", DateOfCreation = DateTime.UtcNow.Date };
-            newsService.AddNews(news);
-        }
-
-       
+             
 
 
         
@@ -181,20 +174,20 @@ namespace SEIIApp.Server.DataAccess
       
         private static void AddLectures(Services.LectureService lectureService, Services.UserService userService, Services.TestService testservice)
         {
-            for (int i = 1; i < 10; i++)
+            for (int i = 1; i < 6; i++)
             {
                 var lecture = GenerateLecture(userService);
                 lecture.Topic = "Lecture " + i;
                 lecture.LectureId = i;
                 lecture.Videos = new List<VideoContent>();
                 lecture.Content = new List<PictureContent>();
-               // lecture.Videos.Add(new VideoContent() {VideoId =i, Description= "IpMan!!!", Path= "https://www.youtube.com/watch?v=Pi02ecWGXeo", VideoLink = "https://www.youtube.com/watch?v=Pi02ecWGXeo" });//;{VideoId = i  }
+                
                 if (lecture == null) Console.WriteLine("lecture ist null");
                 lectureService.AddLecture(lecture);
                
-               // test = new Services.TestService();
+               
                 lecture.Test = testservice.GetTestWithId(i);
-                //lectureService.UpdateLecture(lecture);
+               
             }
         }
 
@@ -204,7 +197,7 @@ namespace SEIIApp.Server.DataAccess
             var lecture = new Lecture();
             lecture.DateOfCreation = DateTime.UtcNow.Date;
             
-            lecture.Author = userService.GetUserWithId(4);
+            lecture.Author = userService.GetUserWithId(2);
             lecture.Text = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, " +
                 "sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam" +
                 " erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea " +
@@ -214,24 +207,12 @@ namespace SEIIApp.Server.DataAccess
                 " diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. " +
                 "Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.";
 
-
-            /* for (int i = 0; i < 3; i++)
-             {
-                 var video = new VideoContent();
-                 lecture.Text = $"Text {i} for lecture ";
-                 video.Description = $"Description {i}";
-                 //video.Path = $"https://www.youtube.com/embed/";
-
-
-                 lecture.Videos.Add(video);
-             }
-             */
             return lecture;
         }
         private static void AddToDos(Services.ToDoService todoService, Services.UserService userService)
         {
             Random random = new Random();
-            User user = userService.GetUserWithId(7);
+            User user = userService.GetUserWithId(3);
             for (int i = 1; i < 6; i++)
             {
                 ToDo todo = new() { ToDoID = i, Author = user, Task = "Important Task"+ i, IsDone = false };

@@ -12,7 +12,7 @@ namespace SEIIApp.Shared
         [Required(ErrorMessage = "Url of Link is required")]
         public string Link { get; set; }
 
-        [StringLength(100)]
+       
         public string Description { get; set; }
     }
 }

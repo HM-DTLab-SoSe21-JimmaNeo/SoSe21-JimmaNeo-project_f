@@ -52,7 +52,7 @@ wie das JimmaNeo Projekt an Bekanntheit gewinnen. Bitte berichtet in eurem Umfel
 ### Allgemeiner Bereich:
 Beim Starten der Web-Anwendung können Sie auf der linken Seite der Anwednung die Navigation sehen.  
 Sie gelangen auf der Hauptseite zur LandingPage **JimmaNeo**.  
-Hier können Sie zum Einstieg nochmal das Storyboard in Form eines kleines Videos ansehen.  
+Hier können Sie zum Einstieg nochmal das Storyboard in Form eines kleinen Videos ansehen.  
 Des Weiteren können Sie Details zu dem Projekt lesen.    
 ![Screenshot LandingPage](/Documentation/Screenshots/Home.PNG)
 
@@ -62,8 +62,8 @@ Hier können Sie alle neuen Nachrichten durchlesen.
 
 **- Navigationspunkt: Login**  
 Hier können Sie sich einlogen, dabei ist es nicht relevant,   
-welchen Rolle (Teacher, Student, Admin) Sie besitzen.    
-Die Anwendung filter Ihre Rolle beim Login automatisch.  
+welche Rolle (Teacher, Student, Admin) Sie besitzen.    
+Die Anwendung filtert Ihre Rolle beim Login automatisch.  
 ![Screenshot Login](/Documentation/Screenshots/Login.PNG)
 
 **- Navigationspunkt: Register**  
@@ -80,7 +80,7 @@ Die Anwendung filter Ihre Rolle beim Login automatisch.
 ## Admin Bereich:  
 Wenn Sie sich erfolgreich eingelogt haben und Admin Rechte besitzen,  
 gelangen Sie auf die ManageUser Seite.  
-Hier wird Ihnen eine Tabelle mit allen registierten Benutzern auf der   
+Hier wird Ihnen eine Tabelle mit allen registrierten Benutzern auf der   
 Plattform angezeigt. 
 In jeder Zelle der Tabelle befindet sich neben dem Usernamen, Vornamen,  
 Nachnamen ein Edit Button(blau) und ein Delete Button(rot)
@@ -127,7 +127,7 @@ auf den grauen Button EditNews.
 | Le, Hoang Long| Frontend |------ |
 | Maghy, Sara  | Frontend |------ |
 | Malczak, Ralf | Frontend |------ |
-| Volland, Aaron  | Frontend |volland@hm.edu |
+| Volland, Aaron  | Frontend |avolland@hm.edu|
 | Weber, Anne Sofie | Frontend |------ |  
 | Wolf, Simon  | Backend |------ | 
  
@@ -135,5 +135,6 @@ auf den grauen Button EditNews.
 ### 5. **Anlagen**
 
 **[Storyboard](/Documentation/LMU_Team_F_Storyboard-Vesion_1.2.pdf)**    
-**[PressRelease](/Documentation/LMU_TEAM_F_PR.pdf)**
+**[PressRelease](/Documentation/LMU_TEAM_F_PR.pdf)**   
+**[FAQs](/Documentation/FAQs.pdf)**
 

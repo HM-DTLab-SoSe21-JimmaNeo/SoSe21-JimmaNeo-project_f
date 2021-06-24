@@ -31,6 +31,10 @@
         {
             VideoContentDTO.Path = VideoContentDTO.Path.Substring("https://www.youtube.com/embed/".Length);
         }
+        if (VideoContentDTO.Path.Contains("&list"))
+        {
+            VideoContentDTO.Path = VideoContentDTO.Path.Substring(0, VideoContentDTO.Path.IndexOf("&list"));
+        }
         <div class="iframecontainer">
             <iframe class="responsive-iframe" src=@("https://www.youtube.com/embed/" + VideoContentDTO.Path) title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             <br />

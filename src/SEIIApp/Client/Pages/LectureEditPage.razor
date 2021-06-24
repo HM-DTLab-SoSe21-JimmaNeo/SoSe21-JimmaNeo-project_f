@@ -1,6 +1,6 @@
 ﻿@page "/lectureedit/{LectureID:int}"
 
-@inject UserServicee UserService
+@inject UserLoggedInService UserService
 
 @inject Services.LectureBackendAccessService LectureService
 @inject NavigationManager NavigationManager
@@ -76,7 +76,7 @@
 
             <b>Add Test to Lecture by Test ID</b><br />
             <div class="input-group">
-                <input type="text" style='width:100%' required @bind-value="@TestTopic" @bind-value:event="oninput">
+                <input type="text" style='width:100%' required @bind-value="@TestId" @bind-value:event="oninput">
                 <span class="highlight"></span>
                 <span class="bar"></span>
                 <label class="hoverlabel">ID of the test:</label>
@@ -130,9 +130,7 @@
     private TestBaseDTO TestOfLecture { get; set; }
     private string LectureOverviewURL = "/lectureoverview";
 
-    private int TestId { get; set; }
-
-    private string TestTopic { get; set; }
+    private string TestId { get; set; }
 
     protected override async Task OnParametersSetAsync()
     {
@@ -160,11 +158,11 @@
     {
         if (lectureDto.Topic == null) lectureDto.Topic = "lecture Topic";
 
-        if (lectureDto.Author == null) lectureDto.Author = new UserDTO() { FirstName = "Ezzy", LastName = "Bert", Name = "user4", Role = Role.Teacher, UserId = 4 }; //ToDo
-                                                                                                                                                                     //if(test.TestContent == null) test.TestContent = new List<TestContentDTO>();
+        if (lectureDto.Author == null) lectureDto.Author = UserService.User; 
+                                                                                                                                                                  
         if (lectureDto.Videos == null) lectureDto.Videos = new List<VideoContentDTO>();
         if (lectureDto.Content == null) lectureDto.Content = new List<PictureContentDTO>();
-        if (lectureDto.Test == null) lectureDto.Test = null; // TODO nicht sicher?
+        if (lectureDto.Test == null) lectureDto.Test = null;
 
         this.LectureDto = lectureDto;
     }
@@ -178,7 +176,7 @@
 
     protected async void GetTestById()
     {
-        TestOfLecture = await LectureService.GetTestById(TopicToId(TestTopic));
+        TestOfLecture = await LectureService.GetTestById(StringToId(TestId));
 
     }
     private async void SaveContentToBackend(LectureDTO LectureDto)
@@ -187,7 +185,7 @@
         var isValid = context.Validate();
         if (isValid)
         {
-            AddTestToLecture();
+            await AddTestToLecture();
             var answer = await LectureService.AddOrUpdateLecture(LectureDto);
             if (answer != null)
             {
@@ -200,29 +198,28 @@
         else Console.WriteLine("isValid = FALSE");
     }
 
-    private int TopicToId(string topic)
+    private int StringToId(string inputId)
     {
-        int id = Int32.Parse(topic);
+        int id = Int32.Parse(inputId);
         return id;
 
 
 
     }
-    private async void AddTestToLecture()
+    private async Task AddTestToLecture()
     {
-        if (TestTopic != null && !TestTopic.Equals(""))
+
+        if (TestId != null && !TestId.Equals(""))
         {
-            int testId = TopicToId(TestTopic);
-            
+            int testId = StringToId(TestId);
             this.LectureDto.Test = await LectureService.GetTestById(testId);
-       
         }
-      
+
     }
 
     private void AddVideoContent()
     {
-        LectureDto.Videos.Add(new VideoContentDTO() { Path = "https://www.youtube.com/embed/" });
+        LectureDto.Videos.Add(new VideoContentDTO());
     }
 
     private void DeleteVideoContent(VideoContentDTO videoContentDto)
