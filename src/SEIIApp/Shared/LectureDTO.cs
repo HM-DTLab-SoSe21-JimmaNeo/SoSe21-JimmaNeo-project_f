@@ -12,7 +12,7 @@ namespace SEIIApp.Shared
         public int LectureId { get; set; }
 
         [Required(ErrorMessage = "Lecture Topic is required")]
-        [StringLength(50)]
+        [StringLength(100)]
         public string Topic { get; set; }
 
         public UserDTO Author { get; set; }

@@ -14,7 +14,6 @@ namespace SEIIApp.Shared
         [StringLength(100, MinimumLength = 1)]
         public string Path { get; set; }
 
-        [StringLength(250)]
         public string Description { get; set; }
     }
 }

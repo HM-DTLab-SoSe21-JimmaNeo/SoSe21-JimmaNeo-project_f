@@ -13,7 +13,6 @@ namespace SEIIApp.Shared
         [Required(ErrorMessage = "PNG Picture is required")]
         public string Path { get; set; }
 
-        [StringLength(250)]
         public string Description { get; set; }
     }
 }
