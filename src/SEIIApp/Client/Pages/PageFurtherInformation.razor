@@ -27,13 +27,12 @@
                     </div>
                     @foreach (var link in TestDto.FurtherLinks)
                     {
-                        <br />
                     <li class="text-center list-group-item">
                         <div class="card shadow">
                             <div class="card-body">
                                 <FurtherLinkComponent FurtherLinkDto="link"></FurtherLinkComponent>
                             </div>
-                        </div>
+                        </div>                      
                         <br />
                     </li>
                 }
@@ -58,14 +57,18 @@
                     </div>
                     @foreach (var video in TestDto.VideosFurtherInformation)
                     {
+                        
                         <li class="text-center list-group-item">
                             <div class="card shadow">
                                 <div class="card-body">
+                                   
                                     <VideoComponent VideoContentDTO="video"></VideoComponent>
+                                   
                                 </div>
                             </div>
                             <br />
                         </li>
+                       
                     }
 
                 </div>
@@ -89,13 +92,17 @@
                     </div>
                     @foreach (var picture in TestDto.Content)
                     {
+                        
                         <li class="text-center list-group-item">
                             <div class="card shadow">
                                 <div class="card-body">
+                                    
                                     <PictureComponent PictureContentDTO="picture"></PictureComponent>
+                                    
                                 </div>
                             </div>
                         </li>
+                       
                     }
                 </div>
 

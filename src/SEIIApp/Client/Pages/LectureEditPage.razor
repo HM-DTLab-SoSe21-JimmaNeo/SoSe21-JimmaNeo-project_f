@@ -46,7 +46,7 @@
             @foreach (var video in LectureDto.Videos)
             {
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body shadow">
 
                         <VideoComponent VideoContentDTO="video"></VideoComponent>
                         <button class="btn btn-light btn-sm my-3" @onclick="() => DeleteVideoContent(video)">Remove Video</button>
@@ -61,7 +61,7 @@
             @foreach (var picture in LectureDto.Content)
             {
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body shadow">
                         <PictureComponent PictureContentDTO="picture"></PictureComponent>
                         <button class="btn btn-light btn-sm my-3" @onclick="() => DeletePictureContent(picture)">Remove Picture</button>
                     </div>
@@ -75,7 +75,12 @@
 
 
             <b>Test ID:</b><br />
-            <InputText @bind-Value="TestTopic" />
+            <div class="input-group">
+                <input type="text" style='width:100%' required @bind-value="TestTopic" @bind-value:event="oninput">
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label class="hoverlabel">Topic of the test:</label>
+            </div>
             <br />
             <button class="btn btn-light btn-sm my-3" @onclick="AddTestToLecture">Add Test</button><br />
             <hr />
