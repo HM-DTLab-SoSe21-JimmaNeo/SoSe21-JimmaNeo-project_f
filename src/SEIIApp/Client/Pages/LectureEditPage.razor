@@ -76,7 +76,7 @@
 
             <b>Add Test to Lecture by Test ID</b><br />
             <div class="input-group">
-                <input type="text" style='width:100%' required @bind-value="@TestTopic" @bind-value:event="oninput">
+                <input type="text" style='width:100%' required @bind-value="@TestId" @bind-value:event="oninput">
                 <span class="highlight"></span>
                 <span class="bar"></span>
                 <label class="hoverlabel">ID of the test:</label>
@@ -130,9 +130,7 @@
     private TestBaseDTO TestOfLecture { get; set; }
     private string LectureOverviewURL = "/lectureoverview";
 
-    private int TestId { get; set; }
-
-    private string TestTopic { get; set; }
+    private string TestId { get; set; }
 
     protected override async Task OnParametersSetAsync()
     {
@@ -178,7 +176,7 @@
 
     protected async void GetTestById()
     {
-        TestOfLecture = await LectureService.GetTestById(TopicToId(TestTopic));
+        TestOfLecture = await LectureService.GetTestById(StringToId(TestId));
 
     }
     private async void SaveContentToBackend(LectureDTO LectureDto)
@@ -200,7 +198,7 @@
         else Console.WriteLine("isValid = FALSE");
     }
 
-    private int TopicToId(string topic)
+    private int StringToId(string topic)
     {
         int id = Int32.Parse(topic);
         return id;
@@ -210,11 +208,13 @@
     }
     private async void AddTestToLecture()
     {
-        if (TestTopic != null && !TestTopic.Equals(""))
+        if (TestId != null && !TestId.Equals(""))
         {
-            int testId = TopicToId(TestTopic);
+            Console.WriteLine();
+            int testId = StringToId(TestId);
             
             this.LectureDto.Test = await LectureService.GetTestById(testId);
+            Console.WriteLine(this.LectureDto.Test);
        
         }
       
