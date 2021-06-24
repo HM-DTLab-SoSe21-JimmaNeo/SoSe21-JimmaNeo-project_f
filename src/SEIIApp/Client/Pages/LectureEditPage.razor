@@ -11,7 +11,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-7 text-center">
-            <h2 class="text-center">Content Editor</h2>
+            <h2 class="text-center">Lecture Editor</h2>
            <hr class=" divider" />
             
             @if (LectureDto != null)
@@ -49,11 +49,11 @@
                     <div class="card-body shadow">
 
                         <VideoComponent VideoContentDTO="video"></VideoComponent>
-                        <button class="btn btn-light btn-sm my-3" @onclick="() => DeleteVideoContent(video)">Remove Video</button>
+                        <button class="btn btn-light btn-sm my-3 shadow" @onclick="() => DeleteVideoContent(video)">Remove Video</button>
                     </div>
                 </div><br />
             }
-            <button class="btn btn-light" @onclick="AddVideoContent">Add Video</button>
+            <button class="btn btn-light shadow" @onclick="AddVideoContent">Add Video</button>
 
             <hr />
 
@@ -63,32 +63,45 @@
                 <div class="card">
                     <div class="card-body shadow">
                         <PictureComponent PictureContentDTO="picture"></PictureComponent>
-                        <button class="btn btn-light btn-sm my-3" @onclick="() => DeletePictureContent(picture)">Remove Picture</button>
+                        <button class="btn btn-light btn-sm my-3 shadow" @onclick="() => DeletePictureContent(picture)">Remove Picture</button>
                     </div>
                 </div><br />
 
             }
-            <br /><button class="btn btn-light" @onclick="AddPictureContent">Add Picture</button><br />
+            <br /><button class="btn btn-light shadow" @onclick="AddPictureContent">Add Picture</button><br />
             <hr />
 
 
 
 
-            <b>Test ID:</b><br />
+            <b>Add Test to Lecture by Test ID</b><br />
             <div class="input-group">
                 <input type="text" style='width:100%' required @bind-value="TestTopic" @bind-value:event="oninput">
                 <span class="highlight"></span>
                 <span class="bar"></span>
-                <label class="hoverlabel">Topic of the test:</label>
+                <label class="hoverlabel">ID of the test:</label>
             </div>
             <br />
-            <button class="btn btn-light btn-sm my-3" @onclick="AddTestToLecture">Add Test</button><br />
+            <button class="btn btn-light btn-sm my-3 shadow" @onclick="AddTestToLecture">Add Test</button><br />
             <hr />
-            <br />
-            <button class="btn btn-success " @onclick="() => SaveContentToBackend(this.LectureDto)">Save Lecture</button>
-            <button class="btn btn-outline-secondary" @onclick="() =>  NavigationManager.NavigateTo(LectureOverviewURL)">Back</button><br />
-
             <ValidationSummary />
+            <br />
+            <button class="btn btn-outline-success shadow" @onclick="() => SaveContentToBackend(this.LectureDto)">
+                Save
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+                    <path d="M13.485 1.431a1.473 1.473 0 0 1 2.104 2.062l-7.84 9.801a1.473 1.473 0 0 1-2.12.04L.431 8.138a1.473 1.473 0 0 1 2.084-2.083l4.111 4.112 6.82-8.69a.486.486 0 0 1 .04-.045z" />
+                </svg>
+            </button>
+
+            <button class="btn btn-outline-danger shadow" @onclick="() =>  NavigationManager.NavigateTo(LectureOverviewURL)">
+                Cancel
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                    <path d="M1.293 1.293a1 1 0 0 1 1.414 0L8 6.586l5.293-5.293a1 1 0 1 1 1.414 1.414L9.414 8l5.293 5.293a1 1 0 0 1-1.414
+                                              1.414L8 9.414l-5.293 5.293a1 1 0 0 1-1.414-1.414L6.586 8 1.293 2.707a1 1 0 0 1 0-1.414z" />
+                </svg>
+            </button><br />
+
+
         </EditForm>
                 }
                 else
