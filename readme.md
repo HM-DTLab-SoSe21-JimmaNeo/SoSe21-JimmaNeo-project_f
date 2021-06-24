@@ -127,7 +127,7 @@ auf den grauen Button EditNews.
 | Le, Hoang Long| Frontend |------ |
 | Maghy, Sara  | Frontend |------ |
 | Malczak, Ralf | Frontend |------ |
-| Volland, Aaron  | Frontend |volland@hm.edu |
+| Volland, Aaron  | Frontend |avolland@hm.edu|
 | Weber, Anne Sofie | Frontend |------ |  
 | Wolf, Simon  | Backend |------ | 
  
