@@ -234,7 +234,7 @@ namespace SEIIApp.Server.DataAccess
             User user = userService.GetUserWithId(7);
             for (int i = 1; i < 6; i++)
             {
-                ToDo todo = new() { ToDoID = i, Author = user, Task = "blabliblub", IsDone = false };
+                ToDo todo = new() { ToDoID = i, Author = user, Task = "Important Task"+ i, IsDone = false };
 
 
                 todoService.AddToDo(todo);
