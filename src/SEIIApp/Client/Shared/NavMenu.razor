@@ -52,25 +52,37 @@
                 case 1: // student
                     {
                         <li class="nav-item px-3">
-                            <NavLink class="nav-link" href="welcomestudent" @onclick="()=>expandSubMenu= !expandSubMenu">
-                                <span class="oi oi-plus" aria-hidden="true"></span> Student Area
-                            </NavLink>
-                            @if (expandSubMenu)
-                            {
-                                <ul class="flex-column">
-                                    <li class="nav-item">
-                                        <NavLink class="expand-menu" href="/lectureoverview">
-                                            <span class="oi oi-minus" aria-hidden="true"></span> Lectures
-                                        </NavLink>
-                                        <NavLink class="expand-menu" href="/testoverview">
-                                            <span class="oi oi-minus" aria-hidden="true"></span> Tests
-                                        </NavLink>
-                                    </li>
-                                </ul>
+                            
+                                @if (expandSubMenu)
+                                {
+                                    <NavLink class="nav-link" href="welcomestudent" @onclick="()=>expandSubMenu= !expandSubMenu">
+                                        <span class="oi oi-minus" aria-hidden="true"></span> Student Area
+                                    </NavLink>
 
-                            }
+                                }
+                                else
+                                {
+                                    <NavLink class="nav-link" href="welcomestudent" @onclick="()=>expandSubMenu= !expandSubMenu">
+                                        <span class="oi oi-plus" aria-hidden="true"></span>Student Area
+                                        </NavLink>
+                                        }
 
-                        </li>
+                                        @if (expandSubMenu)
+                                        {
+                                            <ul class="flex-column">
+                                                <li class="nav-item">
+                                                    <NavLink class="expand-menu" href="/lectureoverview">
+                                                        <span class="oi oi-book" aria-hidden="true"></span> Lectures
+                                                    </NavLink>
+                                                    <NavLink class="expand-menu" href="/testoverview">
+                                                        <span class="oi oi-pencil" aria-hidden="true"></span> Tests
+                                                    </NavLink>
+                                                </li>
+                                            </ul>
+
+                                        }
+
+</li>
 
                         break;
 
@@ -78,28 +90,38 @@
                 case 2: // Teacher
                     {
 
-                        <li class="nav-item px-3">
-                            <NavLink class="nav-link" href="/welcometeacher" @onclick="()=>expandSubMenu= !expandSubMenu">
-                                <span class="oi oi-plus" aria-hidden="true"></span> Trainer Area
-                            </NavLink>
+    <li class="nav-item px-3">
+        @if (expandSubMenu)
+        {
+            <NavLink class="nav-link" href="welcomestudent" @onclick="()=>expandSubMenu= !expandSubMenu">
+                <span class="oi oi-minus" aria-hidden="true"></span> Student Area
+            </NavLink>
 
-                            @if (expandSubMenu)
-                            {
+        }
+        else
+        {
+            <NavLink class="nav-link" href="welcomestudent" @onclick="()=>expandSubMenu= !expandSubMenu">
+                <span class="oi oi-plus" aria-hidden="true"></span>Student Area
+            </NavLink>
+        }
 
-                                <ul class="flex-column">
-                                    <li class="nav-item">
-                                        <NavLink class="expand-menu" href="/lectureoverview">
-                                            <span class="oi oi-minus" aria-hidden="true"></span> Lectures
-                                        </NavLink>
-                                        <NavLink class="expand-menu" href="/testoverview">
-                                            <span class="oi oi-minus" aria-hidden="true"></span> Tests
-                                        </NavLink>
-                                    </li>
-                                </ul>
+        @if (expandSubMenu)
+        {
+
+            <ul class="flex-column">
+                <li class="nav-item">
+                    <NavLink class="expand-menu" href="/lectureoverview">
+                        <span class="oi oi-book" aria-hidden="true"></span> Lectures
+                    </NavLink>
+                    <NavLink class="expand-menu" href="/testoverview">
+                        <span class="oi oi-pencil" aria-hidden="true"></span> Tests
+                    </NavLink>
+                </li>
+            </ul>
 
 
-                            }
-                        </li>
+        }
+    </li>
 
                         break;
                     }
