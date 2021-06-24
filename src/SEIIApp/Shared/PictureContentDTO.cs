@@ -10,7 +10,7 @@ namespace SEIIApp.Shared
     public class PictureContentDTO
     {
 
-        [Required(ErrorMessage = "PNG Picture is required")]
+        [Required(ErrorMessage = "Picture is required")]
         public string Path { get; set; }
 
         [StringLength(250)]
