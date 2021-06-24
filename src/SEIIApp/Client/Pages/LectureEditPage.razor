@@ -76,13 +76,12 @@
 
             <b>Add Test to Lecture by Test ID</b><br />
             <div class="input-group">
-                <input type="text" style='width:100%' required @bind-value="TestTopic" @bind-value:event="oninput">
+                <input type="text" style='width:100%' required @bind-value="@TestTopic" @bind-value:event="oninput">
                 <span class="highlight"></span>
                 <span class="bar"></span>
                 <label class="hoverlabel">ID of the test:</label>
             </div>
-            <br />
-            <button class="btn btn-light btn-sm my-3 shadow" @onclick="AddTestToLecture">Add Test</button><br />
+            
             <hr />
             <ValidationSummary />
             <br />
@@ -121,8 +120,8 @@
 
 @code {
 
-        [Parameter]
-        public int LectureID { get; set; }
+    [Parameter]
+    public int LectureID { get; set; }
 
     public LectureDTO LectureDto { get; set; }
 
@@ -188,6 +187,7 @@
         var isValid = context.Validate();
         if (isValid)
         {
+            AddTestToLecture();
             var answer = await LectureService.AddOrUpdateLecture(LectureDto);
             if (answer != null)
             {
@@ -213,14 +213,11 @@
         if (TestTopic != null && !TestTopic.Equals(""))
         {
             int testId = TopicToId(TestTopic);
-            //var Test = await LectureService.GetTestById(testId);
+            
             this.LectureDto.Test = await LectureService.GetTestById(testId);
-            // this.LectureDto.Test = new TestBaseDTO() { Topic = Test.Topic, Author = Test.Author, Description = Test.Description, TestID = Test.TestID };
+       
         }
-        // GetTestById();
-        //this.LectureDto.Test =TestOfLecture;
-
-        //this.LectureDto.Test =  LectureService.GetTestById(TopicToId(TestTopic)) ; //this.LectureDto.Test.Topic.TopicToId()
+      
     }
 
     private void AddVideoContent()
