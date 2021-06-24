@@ -121,8 +121,8 @@
 
 @code {
 
-    [Parameter]
-    public int LectureID { get; set; }
+        [Parameter]
+        public int LectureID { get; set; }
 
     public LectureDTO LectureDto { get; set; }
 
@@ -165,7 +165,7 @@
                                                                                                                                                                      //if(test.TestContent == null) test.TestContent = new List<TestContentDTO>();
         if (lectureDto.Videos == null) lectureDto.Videos = new List<VideoContentDTO>();
         if (lectureDto.Content == null) lectureDto.Content = new List<PictureContentDTO>();
-        if (lectureDto.Test == null) lectureDto.Test = new TestDTO(); // TODO nicht sicher?
+        if (lectureDto.Test == null) lectureDto.Test = null; // TODO nicht sicher?
 
         this.LectureDto = lectureDto;
     }
@@ -210,12 +210,13 @@
     }
     private async void AddTestToLecture()
     {
-
-        int testId = TopicToId(TestTopic);
-        //var Test = await LectureService.GetTestById(testId);
-        this.LectureDto.Test = await LectureService.GetTestById(testId);
-        // this.LectureDto.Test = new TestBaseDTO() { Topic = Test.Topic, Author = Test.Author, Description = Test.Description, TestID = Test.TestID };
-
+        if (TestTopic != null && !TestTopic.Equals(""))
+        {
+            int testId = TopicToId(TestTopic);
+            //var Test = await LectureService.GetTestById(testId);
+            this.LectureDto.Test = await LectureService.GetTestById(testId);
+            // this.LectureDto.Test = new TestBaseDTO() { Topic = Test.Topic, Author = Test.Author, Description = Test.Description, TestID = Test.TestID };
+        }
         // GetTestById();
         //this.LectureDto.Test =TestOfLecture;
 
