@@ -185,7 +185,7 @@
         var isValid = context.Validate();
         if (isValid)
         {
-            AddTestToLecture();
+            await AddTestToLecture();
             var answer = await LectureService.AddOrUpdateLecture(LectureDto);
             if (answer != null)
             {
@@ -198,26 +198,23 @@
         else Console.WriteLine("isValid = FALSE");
     }
 
-    private int StringToId(string topic)
+    private int StringToId(string inputId)
     {
-        int id = Int32.Parse(topic);
+        int id = Int32.Parse(inputId);
         return id;
 
 
 
     }
-    private async void AddTestToLecture()
+    private async Task AddTestToLecture()
     {
+
         if (TestId != null && !TestId.Equals(""))
         {
-            Console.WriteLine();
             int testId = StringToId(TestId);
-            
             this.LectureDto.Test = await LectureService.GetTestById(testId);
-            Console.WriteLine(this.LectureDto.Test);
-       
         }
-      
+
     }
 
     private void AddVideoContent()
