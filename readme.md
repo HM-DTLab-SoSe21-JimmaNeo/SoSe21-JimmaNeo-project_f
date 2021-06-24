@@ -109,7 +109,7 @@ auf den grauen Button EditNews.
 ![Screenshot EditNews](/Documentation/Screenshots/AdminArea.png)
 
 ## Trainer Bereich:   
-
+![Screenshot EditUser](/Documentation/Screenshots/TrainerTest.png)
 
 ## Student Bereich:   
 
