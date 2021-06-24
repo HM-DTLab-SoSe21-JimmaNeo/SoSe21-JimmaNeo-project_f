@@ -181,13 +181,13 @@ namespace SEIIApp.Server.DataAccess
                 lecture.LectureId = i;
                 lecture.Videos = new List<VideoContent>();
                 lecture.Content = new List<PictureContent>();
-                lecture.Videos.Add(new VideoContent() {Description= "IpMan!!!", Path= "Pi02ecWGXeo" });
+                
                 if (lecture == null) Console.WriteLine("lecture ist null");
                 lectureService.AddLecture(lecture);
                
-               // test = new Services.TestService();
+               
                 lecture.Test = testservice.GetTestWithId(i);
-                //lectureService.UpdateLecture(lecture);
+               
             }
         }
 
@@ -207,18 +207,6 @@ namespace SEIIApp.Server.DataAccess
                 " diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. " +
                 "Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.";
 
-
-            /* for (int i = 0; i < 3; i++)
-             {
-                 var video = new VideoContent();
-                 lecture.Text = $"Text {i} for lecture ";
-                 video.Description = $"Description {i}";
-                 //video.Path = $"https://www.youtube.com/embed/";
-
-
-                 lecture.Videos.Add(video);
-             }
-             */
             return lecture;
         }
         private static void AddToDos(Services.ToDoService todoService, Services.UserService userService)
