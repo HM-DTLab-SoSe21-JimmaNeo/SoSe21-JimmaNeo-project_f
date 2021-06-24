@@ -157,7 +157,6 @@
                             {
                                 @foreach (var news in News)
                                 {
-
                                     <li class="w3-padding-16">
                                         <NavLink href="news">
                                             <span class="w3-large">@news.Topic</span><br>
@@ -364,7 +363,7 @@
     /// <summary>
     /// Generates DataItems for creating specifics charts.
     /// </summary>
-    private async void CreateDataItems()
+    private void CreateDataItems()
     {
         if (NonDuplicateTestList != null)
         {
@@ -384,7 +383,7 @@
     /// <summary>
     /// Counts the total Points from all absolved and completed tests of active user.
     /// </summary>
-    private async void CountMaxPointsFromCompletedTests()
+    private void CountMaxPointsFromCompletedTests()
     {
         DataItem.maxPointsfromTests = 0;
 
