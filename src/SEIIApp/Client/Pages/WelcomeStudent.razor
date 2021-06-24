@@ -240,8 +240,7 @@
         CreateDataItems();
         ToDo = await ToDoService.GetToDosByAuthor(MyUserService.User.UserId);
         TempToDo = new ToDoDTO();
-        GetCounter();
-        CountMaxPointsFromCompletedTests();
+        GetCounter();       
         CountReachedPointsFromCompletedTests();
         News = await GetLastNews();
 
@@ -341,6 +340,8 @@
     /// </summary>
     private async void CountMaxPointsFromCompletedTests()
     {
+        DataItem.maxPointsfromTests = 0;
+
         if (AllTestList != null)
         {
             if (maxPointList != null)
@@ -359,6 +360,7 @@
     /// </summary>
     private void CountReachedPointsFromCompletedTests()
     {
+        DataItem.maxReachedPointsfromTests = 0;
         if (AllTestList != null)
         {
             if (testList != null)
@@ -367,6 +369,7 @@
                 {
                     DataItem.maxReachedPointsfromTests += testList[i].ReachedPoints;
                 }
+                CountMaxPointsFromCompletedTests();
                 DataItem.maxReachedPointsfromTests /= DataItem.maxPointsfromTests;
                 DataItem.maxReachedPointsfromTests = System.Math.Round(DataItem.maxReachedPointsfromTests * 100, 0);
             }
