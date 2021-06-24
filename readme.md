@@ -136,4 +136,5 @@ auf den grauen Button EditNews.
 
 **[Storyboard](/Documentation/LMU_Team_F_Storyboard-Vesion_1.2.pdf)**    
 **[PressRelease](/Documentation/LMU_TEAM_F_PR.pdf)**
+**[FAQs](/Documentation/FAQs.pdf)**
 
