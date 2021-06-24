@@ -8,7 +8,8 @@
 
 <div class="container">
 
-    @if (TestDto != null && TestDto.Questions.Any() && TestDto.Questions.Count != 0)
+
+    @if (UserService.User != null && TestDto != null && TestDto.Questions.Any() && TestDto.Questions.Count != 0)
     {
         <h2 class="text-center">@(TestDto.Topic)</h2>
         <hr class="divider">
@@ -102,7 +103,7 @@
             }
             else
             {
-
+                <h5 class="text-center">Something went wrong...</h5>
             }
 
 

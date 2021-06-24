@@ -6,154 +6,162 @@
 @inject NavigationManager NavigationManager
 
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-7 text-center">
-            <h2 class="text-center">Test Editor</h2>
-            <hr class="divider">
+    @if (UserService.User != null)
+    {
+        <div class="row justify-content-center">
+            <div class="col-7 text-center">
+                <h2 class="text-center">Test Editor</h2>
+                <hr class="divider">
 
-            @if (TestDto != null)
-            {
+                @if (TestDto != null)
+                {
 
-        <EditForm EditContext="@context" OnSubmit="OnSubmit">
-            <ObjectGraphDataAnnotationsValidator />
+                    <EditForm EditContext="@context" OnSubmit="OnSubmit">
+                        <ObjectGraphDataAnnotationsValidator />
 
-            <div class="input-group">
+                        <div class="input-group">
 
-                <input type="text" style='width:100%' required @bind-value="TestDto.Topic" @bind-value:event="oninput">
-                <span class="highlight"></span>
-                <span class="bar"></span>
-                <label class="hoverlabel">Topic of the test:</label>
-            </div>
-
-            <div class="form-floating">
-                <textarea class="form-control" id="inputMessage" type="text" placeholder="Enter description here..." style="height: 10rem" @bind="TestDto.Description"></textarea>
-            </div>
-
-            <h5>
-                <br /><b>Add Youtube-Videos to your Test!</b>
-
-            </h5>
-            @foreach (var video in TestDto.Videos)
-            {<div class="card shadow">
-                    <div class="card-body">
-                        <VideoComponent VideoContentDTO="video"></VideoComponent>
-                        <button class="btn btn-light btn-sm shadow" @onclick="() => DeleteVideoContent(video)">
-                            Remove
-                            Video
-                        </button>
-                    </div>
-                </div>
-                <br />
-            }
-            <br /><button class="btn btn-light shadow" @onclick="AddVideoContent">Add Video</button><br />
-
-            <hr />
-            <h5>
-                <br /><b>Add questions and answers!</b>
-
-            </h5>
-            @foreach (var question in TestDto.Questions)
-            {
-                <div class="card shadow">
-                    <div class="card-body">
-                        <QuestionDefComponent QuestionDto="question"></QuestionDefComponent>
-                        <button class="btn btn-light shadow" @onclick="() => RemoveQuestion(question)">Remove Question</button>
-                    </div>
-                </div>
-                <br />
-
-            }
-            <button class="btn btn-light shadow" @onclick="AddQuestion">Add Question</button>
-
-            <br />
-            <hr />
-            <h5>
-                <b>
-                    Add further information about this topic via Website-Link, Youtube-Video, Pictures to give you students the possibility to expand
-                    their knowledge!
-                </b>
-            </h5><br />
-
-            @foreach (var link in TestDto.FurtherLinks)
-            {
-                <div class="card shadow">
-                    <div class="card-body">
-                        <FurtherLinkComponent FurtherLinkDto="link"></FurtherLinkComponent>
-                        <button class="btn btn-light btn-sm shadow" @onclick="() => DeleteFurtherLink(link)">
-                            Remove
-                            Link
-                        </button>
-                    </div>
-                </div>
-                <br />
-            }
-
-
-            <br /><button class="btn btn-light shadow" @onclick="AddFurtherLink">Add Link</button><br />
-            <hr />
-            @if (TestDto.VideosFurtherInformation != null)
-            {
-                @foreach (var video in TestDto.VideosFurtherInformation)
-                {<div class="card shadow">
-                        <div class="card-body">
-                            <VideoComponent VideoContentDTO="video"></VideoComponent>
-                            <button class="btn btn-light btn-sm shadow" @onclick="() => DeleteVideosFurtherInformation(video)">
-                                Remove
-                                Video
-                            </button>
+                            <input type="text" style='width:100%' required @bind-value="TestDto.Topic" @bind-value:event="oninput">
+                            <span class="highlight"></span>
+                            <span class="bar"></span>
+                            <label class="hoverlabel">Topic of the test:</label>
                         </div>
-                    </div>
-                    <br />
+
+                        <div class="form-floating">
+                            <textarea class="form-control" id="inputMessage" type="text" placeholder="Enter description here..." style="height: 10rem" @bind="TestDto.Description"></textarea>
+                        </div>
+
+                        <h5>
+                            <br /><b>Add Youtube-Videos to your Test!</b>
+
+                        </h5>
+                        @foreach (var video in TestDto.Videos)
+                        {<div class="card shadow">
+                                <div class="card-body">
+                                    <VideoComponent VideoContentDTO="video"></VideoComponent>
+                                    <button class="btn btn-light btn-sm shadow" @onclick="() => DeleteVideoContent(video)">
+                                        Remove
+                                        Video
+                                    </button>
+                                </div>
+                            </div>
+                            <br />
+                        }
+                        <br /><button class="btn btn-light shadow" @onclick="AddVideoContent">Add Video</button><br />
+
+                        <hr />
+                        <h5>
+                            <br /><b>Add questions and answers!</b>
+
+                        </h5>
+                        @foreach (var question in TestDto.Questions)
+                        {
+                            <div class="card shadow">
+                                <div class="card-body">
+                                    <QuestionDefComponent QuestionDto="question"></QuestionDefComponent>
+                                    <button class="btn btn-light shadow" @onclick="() => RemoveQuestion(question)">Remove Question</button>
+                                </div>
+                            </div>
+                            <br />
+
+                        }
+                        <button class="btn btn-light shadow" @onclick="AddQuestion">Add Question</button>
+
+                        <br />
+                        <hr />
+                        <h5>
+                            <b>
+                                Add further information about this topic via Website-Link, Youtube-Video, Pictures to give you students the possibility to expand
+                                their knowledge!
+                            </b>
+                        </h5><br />
+
+                        @foreach (var link in TestDto.FurtherLinks)
+                        {
+                            <div class="card shadow">
+                                <div class="card-body">
+                                    <FurtherLinkComponent FurtherLinkDto="link"></FurtherLinkComponent>
+                                    <button class="btn btn-light btn-sm shadow" @onclick="() => DeleteFurtherLink(link)">
+                                        Remove
+                                        Link
+                                    </button>
+                                </div>
+                            </div>
+                            <br />
+                        }
+
+
+                        <br /><button class="btn btn-light shadow" @onclick="AddFurtherLink">Add Link</button><br />
+                        <hr />
+                        @if (TestDto.VideosFurtherInformation != null)
+                        {
+                            @foreach (var video in TestDto.VideosFurtherInformation)
+                            {<div class="card shadow">
+                                    <div class="card-body">
+                                        <VideoComponent VideoContentDTO="video"></VideoComponent>
+                                        <button class="btn btn-light btn-sm shadow" @onclick="() => DeleteVideosFurtherInformation(video)">
+                                            Remove
+                                            Video
+                                        </button>
+                                    </div>
+                                </div>
+                                <br />
+                            }
+
+                        }
+                        <br /><button class="btn btn-light shadow" @onclick="AddVideosFurtherInformation">Add Video</button><br />
+                        <hr />
+                        @foreach (var content in TestDto.Content)
+                        {<div class="card shadow">
+                                <div class="card-body">
+                                    <PictureComponent PictureContentDTO="content"></PictureComponent>
+                                    <button class="btn btn-light btn-sm shadow" @onclick="() => DeletePictureContent(content)">
+                                        Remove
+                                        Picture
+                                    </button>
+                                </div>
+                            </div>
+                            <br />
+                        }
+                        <br /><button class="btn btn-light shadow" @onclick="AddPictureContent">Add Picture</button><br />
+                        <hr />
+                        <ValidationSummary />
+
+                        <button class="btn btn-outline-success shadow" @onclick="SaveContentToBackend">
+                            Save
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+                                <path d="M13.485 1.431a1.473 1.473 0 0 1 2.104 2.062l-7.84 9.801a1.473 1.473 0 0 1-2.12.04L.431 8.138a1.473 1.473 0 0 1 2.084-2.083l4.111 4.112 6.82-8.69a.486.486 0 0 1 .04-.045z" />
+                            </svg>
+                            <br />
+                        </button>
+
+                        <button class="btn btn-outline-danger" @onclick="() =>  NavigationManager.NavigateTo(TestOverviewURL)">
+                            Cancel
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                                <path d="M1.293 1.293a1 1 0 0 1 1.414 0L8 6.586l5.293-5.293a1 1 0 1 1 1.414 1.414L9.414 8l5.293 5.293a1 1 0 0 1-1.414
+                                              1.414L8 9.414l-5.293 5.293a1 1 0 0 1-1.414-1.414L6.586 8 1.293 2.707a1 1 0 0 1 0-1.414z" />
+                            </svg>
+                        </button>
+                        <br />
+                        <br />
+
+
+                    </EditForm>
+
+                }
+                else
+                {
+                    <h5>Quiz definition in loading (or not found) ...</h5>
                 }
 
-            }
-            <br /><button class="btn btn-light shadow" @onclick="AddVideosFurtherInformation">Add Video</button><br />
-            <hr />
-            @foreach (var content in TestDto.Content)
-            {<div class="card shadow">
-                    <div class="card-body">
-                        <PictureComponent PictureContentDTO="content"></PictureComponent>
-                        <button class="btn btn-light btn-sm shadow" @onclick="() => DeletePictureContent(content)">
-                            Remove
-                            Picture
-                        </button>
-                    </div>
-                </div>
-                <br />
-            }
-            <br /><button class="btn btn-light shadow" @onclick="AddPictureContent">Add Picture</button><br />
-            <hr />
-            <ValidationSummary />
-
-            <button class="btn btn-outline-success shadow" @onclick="SaveContentToBackend">
-                Save
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
-                    <path d="M13.485 1.431a1.473 1.473 0 0 1 2.104 2.062l-7.84 9.801a1.473 1.473 0 0 1-2.12.04L.431 8.138a1.473 1.473 0 0 1 2.084-2.083l4.111 4.112 6.82-8.69a.486.486 0 0 1 .04-.045z" />
-                </svg>
-                <br />
-            </button>
-
-            <button class="btn btn-outline-danger" @onclick="() =>  NavigationManager.NavigateTo(TestOverviewURL)">
-                Cancel
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-                    <path d="M1.293 1.293a1 1 0 0 1 1.414 0L8 6.586l5.293-5.293a1 1 0 1 1 1.414 1.414L9.414 8l5.293 5.293a1 1 0 0 1-1.414
-                                              1.414L8 9.414l-5.293 5.293a1 1 0 0 1-1.414-1.414L6.586 8 1.293 2.707a1 1 0 0 1 0-1.414z" />
-                </svg>
-            </button>
-            <br />
-            <br />
-            
-
-        </EditForm>
-
-            }
-            else
-            {
-                <h5>Quiz definition in loading (or not found) ...</h5>
-            }
-
+            </div>
         </div>
-    </div>
+    }
+    else
+    {
+        <h5 class="text-center">Something went wrong...</h5>
+    }
+
 </div>
 
 @code {
