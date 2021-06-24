@@ -10,7 +10,7 @@
 @{
     @if (MyUserService.User != null && MyUserService.User.Role == Role.Teacher)
     {
-        <h1>Welcome Teacher @MyUserService.User.Name!</h1>
+        <h1>Welcome @MyUserService.User.FirstName @MyUserService.User.LastName!</h1>
         <br />
 
         @if (SortedTests != null && SortedTests.Count > 0)
