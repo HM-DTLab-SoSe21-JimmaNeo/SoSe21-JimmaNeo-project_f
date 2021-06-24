@@ -253,34 +253,43 @@
     /// </summary>
     private CompletedTestDTO[] GetCompletedTestFromUser()
     {
-        var originTestList = new List<CompletedTestDTO>(AllTestList);
-        var nonDuplicateList = new List<CompletedTestDTO>();
-        bool alreadyExist = false;
-
-        for (int i = 0; i < originTestList.Count; i++)
+        if (AllTestList != null)
         {
-            if (nonDuplicateList.Count != 0) {
-                for (int j = 0; j < nonDuplicateList.Count; j++)
-                {
-                    if (originTestList[i].SolvedTest.TestID == nonDuplicateList[j].SolvedTest.TestID)
-                    {
-                        if (nonDuplicateList[j].ReachedPoints < originTestList[i].ReachedPoints)
-                        {
-                            nonDuplicateList[j] = originTestList[i];
-                        }
+            var originTestList = new List<CompletedTestDTO>(AllTestList);
+            var nonDuplicateList = new List<CompletedTestDTO>();
+            bool alreadyExist = false;
 
-                        alreadyExist = true;
-                        break;
+            for (int i = 0; i < originTestList.Count; i++)
+            {
+                if (nonDuplicateList.Count != 0)
+                {
+                    for (int j = 0; j < nonDuplicateList.Count; j++)
+                    {
+                        if (originTestList[i].SolvedTest.TestID == nonDuplicateList[j].SolvedTest.TestID)
+                        {
+                            if (nonDuplicateList[j].ReachedPoints < originTestList[i].ReachedPoints)
+                            {
+                                nonDuplicateList[j] = originTestList[i];
+                            }
+
+                            alreadyExist = true;
+                            break;
+                        }
+                        alreadyExist = false;
                     }
-                    alreadyExist = false;
+                }
+                if (!alreadyExist)
+                {
+                    nonDuplicateList.Add(originTestList[i]);
                 }
             }
-            if (!alreadyExist)
-            {
-                nonDuplicateList.Add(originTestList[i]);
-            }
+            return nonDuplicateList.ToArray();
         }
-        return nonDuplicateList.ToArray();
+        else
+        {
+            return null;
+        }
+
     }
 
 
