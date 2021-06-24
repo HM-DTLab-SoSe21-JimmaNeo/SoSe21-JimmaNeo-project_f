@@ -9,13 +9,15 @@ namespace SEIIApp.Server.DataAccess
 {
     public class TestDataInitialiser
     {
-        public static void InitalizeTestData(Services.UserService userService, Services.TestService testService, Services.NewsService newsService, Services.CompletedTestService completedTestService,Services.LectureService lectureService)
+        public static void InitalizeTestData(Services.UserService userService, Services.TestService testService, Services.NewsService newsService, Services.CompletedTestService completedTestService, Services.LectureService lectureService, Services.ToDoService toDoService)
         {
             AddUser(userService);
-            
+
             AddTests(testService, userService, newsService);
-            AddCompletedTest(testService, userService, completedTestService); 
+            AddCompletedTest(testService, userService, completedTestService);
             AddLectures(lectureService, userService, testService);
+
+            AddToDos(toDoService, userService);
         }
 
         private static void AddUser(Services.UserService userService)
@@ -226,6 +228,19 @@ namespace SEIIApp.Server.DataAccess
              */
             return lecture;
         }
+        private static void AddToDos(Services.ToDoService todoService, Services.UserService userService)
+        {
+            Random random = new Random();
+            User user = userService.GetUserWithId(7);
+            for (int i = 1; i < 6; i++)
+            {
+                ToDo todo = new() { ToDoID = i, Author = user, Task = "Important Task"+ i, IsDone = false };
+
+
+                todoService.AddToDo(todo);
+            }
+        }
+
 
     }
 }

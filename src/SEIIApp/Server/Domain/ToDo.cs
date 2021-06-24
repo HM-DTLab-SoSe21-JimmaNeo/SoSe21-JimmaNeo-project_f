@@ -15,5 +15,7 @@ namespace SEIIApp.Server.Domain
 
         public User Author { get; set; }
 
+        public bool IsDone { get; set; }
+
     }
 }

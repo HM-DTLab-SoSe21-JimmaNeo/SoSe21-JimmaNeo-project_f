@@ -23,9 +23,11 @@ namespace SEIIApp.Client {
             builder.Services.AddSingleton<Services.UserServicee>();
             builder.Services.AddSingleton<Services.UserRefreshService>();
             builder.Services.AddSingleton<Services.TestCompareService>();
+            builder.Services.AddScoped<Services.DataStudentItemService>();
 
             builder.Services.AddScoped<Services.NewsBackendAccessService>();
             builder.Services.AddScoped<Services.CompletedTestBackendAccessService>();
+            builder.Services.AddScoped<Services.ToDoBackendAccessService>();
             
             await builder.Build().RunAsync();
         }
