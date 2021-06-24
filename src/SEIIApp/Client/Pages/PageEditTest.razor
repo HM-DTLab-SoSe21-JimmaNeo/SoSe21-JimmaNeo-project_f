@@ -21,14 +21,16 @@
 
                         <div class="input-group">
 
-                            <input type="text" style='width:100%' required @bind-value="TestDto.Topic" @bind-value:event="oninput">
+                            <input type="text" style='width:100%' required @bind-value="TestDto.Topic"
+                        @bind-value:event="oninput">
                             <span class="highlight"></span>
                             <span class="bar"></span>
                             <label class="hoverlabel">Topic of the test:</label>
                         </div>
 
                         <div class="form-floating">
-                            <textarea class="form-control" id="inputMessage" type="text" placeholder="Enter description here..." style="height: 10rem" @bind="TestDto.Description"></textarea>
+                            <textarea class="form-control" id="inputMessage" type="text" placeholder="Enter description here..."
+                        style="height: 10rem" @bind="TestDto.Description"></textarea>
                         </div>
 
                         <h5>
@@ -36,7 +38,8 @@
 
                         </h5>
                         @foreach (var video in TestDto.Videos)
-                        {<div class="card shadow">
+                        {
+                            <div class="card shadow">
                                 <div class="card-body">
                                     <VideoComponent VideoContentDTO="video"></VideoComponent>
                                     <button class="btn btn-light btn-sm shadow" @onclick="() => DeleteVideoContent(video)">
@@ -59,7 +62,8 @@
                             <div class="card shadow">
                                 <div class="card-body">
                                     <QuestionDefComponent QuestionDto="question"></QuestionDefComponent>
-                                    <button class="btn btn-light shadow" @onclick="() => RemoveQuestion(question)">Remove Question</button>
+                                    <button class="btn btn-light shadow" @onclick="() => RemoveQuestion(question)">Remove
+                                        Question</button>
                                 </div>
                             </div>
                             <br />
@@ -71,7 +75,8 @@
                         <hr />
                         <h5>
                             <b>
-                                Add further information about this topic via Website-Link, Youtube-Video, Pictures to give you students the possibility to expand
+                                Add further information about this topic via Website-Link, Youtube-Video, Pictures to give you
+                                students the possibility to expand
                                 their knowledge!
                             </b>
                         </h5><br />
@@ -96,10 +101,12 @@
                         @if (TestDto.VideosFurtherInformation != null)
                         {
                             @foreach (var video in TestDto.VideosFurtherInformation)
-                            {<div class="card shadow">
+                            {
+                                <div class="card shadow">
                                     <div class="card-body">
                                         <VideoComponent VideoContentDTO="video"></VideoComponent>
-                                        <button class="btn btn-light btn-sm shadow" @onclick="() => DeleteVideosFurtherInformation(video)">
+                                        <button class="btn btn-light btn-sm shadow"
+                            @onclick="() => DeleteVideosFurtherInformation(video)">
                                             Remove
                                             Video
                                         </button>
@@ -109,10 +116,12 @@
                             }
 
                         }
-                        <br /><button class="btn btn-light shadow" @onclick="AddVideosFurtherInformation">Add Video</button><br />
+                        <br /><button class="btn btn-light shadow" @onclick="AddVideosFurtherInformation">Add
+                            Video</button><br />
                         <hr />
                         @foreach (var content in TestDto.Content)
-                        {<div class="card shadow">
+                        {
+                            <div class="card shadow">
                                 <div class="card-body">
                                     <PictureComponent PictureContentDTO="content"></PictureComponent>
                                     <button class="btn btn-light btn-sm shadow" @onclick="() => DeletePictureContent(content)">
@@ -129,16 +138,21 @@
 
                         <button class="btn btn-outline-success shadow" @onclick="SaveContentToBackend">
                             Save
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
-                                <path d="M13.485 1.431a1.473 1.473 0 0 1 2.104 2.062l-7.84 9.801a1.473 1.473 0 0 1-2.12.04L.431 8.138a1.473 1.473 0 0 1 2.084-2.083l4.111 4.112 6.82-8.69a.486.486 0 0 1 .04-.045z" />
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-check-lg" viewBox="0 0 16 16">
+                                <path
+                            d="M13.485 1.431a1.473 1.473 0 0 1 2.104 2.062l-7.84 9.801a1.473 1.473 0 0 1-2.12.04L.431 8.138a1.473 1.473 0 0 1 2.084-2.083l4.111 4.112 6.82-8.69a.486.486 0 0 1 .04-.045z" />
                             </svg>
                             <br />
                         </button>
 
-                        <button class="btn btn-outline-danger" @onclick="() =>  NavigationManager.NavigateTo(TestOverviewURL)">
+                        <button class="btn btn-outline-danger shadow"
+                    @onclick="() =>  NavigationManager.NavigateTo(TestOverviewURL)">
                             Cancel
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
-                                <path d="M1.293 1.293a1 1 0 0 1 1.414 0L8 6.586l5.293-5.293a1 1 0 1 1 1.414 1.414L9.414 8l5.293 5.293a1 1 0 0 1-1.414
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-x-lg" viewBox="0 0 16 16">
+                                <path
+                            d="M1.293 1.293a1 1 0 0 1 1.414 0L8 6.586l5.293-5.293a1 1 0 1 1 1.414 1.414L9.414 8l5.293 5.293a1 1 0 0 1-1.414
                                               1.414L8 9.414l-5.293 5.293a1 1 0 0 1-1.414-1.414L6.586 8 1.293 2.707a1 1 0 0 1 0-1.414z" />
                             </svg>
                         </button>
