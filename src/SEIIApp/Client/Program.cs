@@ -20,7 +20,7 @@ namespace SEIIApp.Client {
 
             builder.Services.AddScoped<Services.LectureBackendAccessService>();
 
-            builder.Services.AddSingleton<Services.UserServicee>();
+            builder.Services.AddSingleton<Services.UserLoggedInService>();
             builder.Services.AddSingleton<Services.UserRefreshService>();
             builder.Services.AddSingleton<Services.TestCompareService>();
             builder.Services.AddScoped<Services.DataStudentItemService>();
