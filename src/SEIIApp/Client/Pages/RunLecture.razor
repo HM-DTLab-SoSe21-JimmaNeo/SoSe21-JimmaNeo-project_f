@@ -17,52 +17,82 @@
             
 
             <EditForm Model="@LectureDto">
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button class="btn btn-primary me-md-2" type="button" @onclick="()=> GetToTest()">Test</button>
-                </div>
-                <br />
-                <h3 class="text-center"><b>Videos</b></h3>
-                @foreach (var video in LectureDto.Videos)
+                @if (LectureDto.Test != null)
                 {
-                    <div class="card shadow">
-                        <div class="card-body">
-                            <VideoComponent VideoContentDTO="video"></VideoComponent>
-                        </div>
+                    <div class="text-center">
+                        <button class="btn btn-outline-primary btn-lg shadow" type="button" @onclick="()=> GetToTest()">Start Test</button>
                     </div>
-                    <br/>
+                }
+                else
+                {
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end text-center">
+                        <button class="btn btn-primary me-md-2 shadow" type="button" disabled>Start Test</button>
+                    </div>
                 }
 
-                <br />
-                <h3 class="text-center"><b>Pictures</b></h3>
-                @foreach (var picture in LectureDto.Content)
+                @if (LectureDto.Videos.Any())
                 {
-                    <div class="card shadow">
-                        <div class="card-body">
-                    <li class="text-center list-group-item">
-                        <PictureComponent PictureContentDTO="picture"></PictureComponent>
-                    </li>
-                 <br/>
-                 </div>
+                    <br />
+                    <h3 class="text-center"><b>Videos</b></h3>
+                    @foreach (var video in LectureDto.Videos)
+                    {
+                        <div class="card shadow">
+                            <div class="card-body">
+                                <VideoComponent VideoContentDTO="video"></VideoComponent>
+                            </div>
+                        </div>
+                        <br />
+                    }
+                }
+
+
+                @if (LectureDto.Content.Any())
+                {
+                    <br />
+                    <h3 class="text-center"><b>Pictures</b></h3>
+                    @foreach (var picture in LectureDto.Content)
+                    {
+                        <div class="card shadow">
+                            <div class="card-body">
+                        <li class="text-center list-group-item">
+                            <PictureComponent PictureContentDTO="picture"></PictureComponent>
+                        </li>
+                        <br />
+                    </div>
+               </div>
+                        }
+        } 
+<li class="list-group list-group-flush">
+    <br />
+    @if (!String.IsNullOrEmpty(LectureDto.Text))
+    {
+        <h3 class="text-center"> <b>Lecture Text</b></h3>
+        <div class="card shadow">
+            <div class="card-body">
+
+                <br />
+                <p class="text-center">@LectureDto.Text</p>
             </div>
-        } <li class="list-group list-group-flush">
-    <br />
-    <h3 class="text-center"> <b>Lecture Text</b></h3>
-    <div class="card shadow">
-        <div class="card-body">
-
-            <br />
-            <p class="text-center">@LectureDto.Text</p>
         </div>
-    </div>
-    <br />
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <div class="w-100">
-            <button class="btn btn-secondary" type="button" @onclick="()=> GetLastLecture()">Back</button>
+        <br />
+    }
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <div class="w-100">
+                <button class="btn btn-outline-primary shadow" type="button" @onclick="()=> GetLastLecture()">Back</button>
 
-            <button class="btn btn-primary float-right" type="button" @onclick="()=> GetNextLecture()">Next</button>
+
+                @if (hasNext)
+                {                  
+                    <button class="btn float-right btn-outline-primary shadow" type="button" @onclick="()=> GetNextLecture()">Next</button>
+                }
+                else
+                {
+                    <button class="btn float-right btn-outline-primary shadow" type="button" disabled>Next</button>
+
+                }
+            </div>
         </div>
-    </div>
-</li>
+    </li>
 
         </EditForm>
 </ul>
@@ -80,7 +110,11 @@
 
     public static LectureDTO LectureDto { get; set; }
 
+    public List<LectureDTO> Lectures { get; set; }
+
     private bool isClicked { get; set; }
+
+    private bool hasNext { get; set; } = true;
 
 
     protected override async Task OnParametersSetAsync()
@@ -89,6 +123,7 @@
         var returnedLecture = await LectureService.GetLectureById(LectureID);
         await base.OnParametersSetAsync();
         LectureDto = returnedLecture;
+        Lectures = await LectureService.GetLectureOverview();
         SEIIApp.Client.Components.VideoComponent.OnEditing = false;
     }
 
@@ -105,21 +140,24 @@
 
     private void GetNextLecture()
     {
-       
-            NavigationManager.NavigateTo($"/runlecture/{LectureID + 1}");
-       
+        int nextID = LectureID + 1;
+        if(nextID <= Lectures.Count) {
+            NavigationManager.NavigateTo($"/runlecture/{nextID}");
+            if((nextID + 1) > Lectures.Count)
+                {
+                hasNext = false;
+                }
+        }
+        else
+        {
+            hasNext = false;
+        }
     }
 
-    private bool HasNextLecture()
-    {
-        bool hasNext= false;
-
-
-        return hasNext;
-    }
-
+  
     private void GetLastLecture()
     {
+        hasNext = true;
         if(LectureID>=2)
             NavigationManager.NavigateTo($"/runlecture/{LectureID -1}");
     }
