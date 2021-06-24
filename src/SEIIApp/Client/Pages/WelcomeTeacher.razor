@@ -7,49 +7,95 @@
 
 @using SEIIApp.Shared;
 
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+</head>
+
 @{
     @if (MyUserService.User != null && MyUserService.User.Role == Role.Teacher)
     {
-        <h1>Welcome Teacher @MyUserService.User.Name!</h1>
-        <br />
-
-        @if (SortedTests != null && SortedTests.Count > 0)
-        {          
-            <table class="tableaverage">
-                <thead>
-                    <tr>
-                        <th valign=top width="200">TestId</th>
-                        <th valign=top width="200">Topic</th>
-                        <th valign=top width="200">Date</th>
-                        <th valign=top width="200">Average points(%)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                @foreach (var test in SortedTests)
-                    {
-                    <tr>
-                        <td>@test.TestID</td>
-                        <td>@test.Topic</td>
-                        <td>@test.DateOfCreation</td>
-                        <td>@(Results[SortedTests.IndexOf(test)])</td>
-                    </tr>
-                    }                   
-                </tbody>
-            </table>
-        } else
-        {
-            <p>Either you have not yet created a test or no test you created was solved</p>
-        }
+        <body>
+            <div class="container">
+                <div class="card">
+                    <div class="card-header">
+                        <h1 align="center">Welcome Teacher @MyUserService.User.Name !</h1>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title" align="center"> Below you can see the results of the exams</h5>
+                        @if (SortedTests != null && SortedTests.Count > 0)
+                        {
+                            <table class="table table-success table-hover table-bordered table-sm table-responsive-sm">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">TestId</th>
+                                        <th scope="col">Topic</th>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Average points(%)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var test in SortedTests)
+                                    {
+                                        <tr>
+                                            <td>@test.TestID</td>
+                                            <td>@test.Topic</td>
+                                            <td>@test.DateOfCreation</td>
+                                            <td>@(Results[SortedTests.IndexOf(test)])</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            <p>Either you have not yet created a test or no test you created was solved</p>
+                        }
+                        <div class="card-group">
+                            <div class="card border-success">
+                                <img src="/Images/WelcomeTeacher/lectures.jpeg" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <h5 class="card-title">How to lectures</h5>
+                                    <p class="card-text">This video explains how to create and start lectures</p>
+                                </div>
+                                <div class="card-footer">
+                                    <a href="https://youtube.com" class="btn btn-outline-success">Check it out</a>
+                                </div>
+                            </div>
+                            <div class="card border-success">
+                                <img src="/Images/WelcomeTeacher/tests.webp" class="card-img-top">
+                                <div class="card-body">
+                                    <h5 class="card-title">How to tests</h5>
+                                    <p class="card-text">This video explains how to create and start tests</p>
+                                </div>
+                                <div class="card-footer">
+                                    <a href="https://youtube.com" class="btn btn-outline-success">Check it out</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </body>
     }
-
     else
     {
-        <p>You are not allowed to see this!</p>
+        <div class="card">
+            <div class="card-header">
+                <h1 align="center">You are not allowed to see this!</h1>
+            </div>
+            <div class="text-center">
+                <a href="/" class="btn btn-outline-primary" role="button">Back to homepage</a>
+            </div>
+        </div>
     }
-
-   
-
 }
+
+
+
+
+
+
 
 @code {
     private CompletedTestDTO[] CompletedTests { get; set; }
@@ -80,7 +126,7 @@
         Results = new double[SortedTests.Count];
         int index = 0;
 
-        foreach(var test in SortedTests)
+        foreach (var test in SortedTests)
         {
             var solvedTests = CompletedTests.Where(solved => solved.SolvedTest.TestID == test.TestID);
             double reachedPoints = 0, maxPoints = 0;
