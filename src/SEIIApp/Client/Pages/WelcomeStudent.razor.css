@@ -2091,3 +2091,11 @@ input {
     .addBtn:hover {
         background-color: #bbb;
     }
+
+hr.divider {
+    height: 0.2rem;
+    max-width: 3.25rem;
+    margin: 1.5rem auto;
+    background-color: #009a10;
+    opacity: 1;
+}
