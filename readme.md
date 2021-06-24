@@ -108,8 +108,9 @@ auf den grauen Button EditNews.
 **Prozessablauf**  
 ![Screenshot EditNews](/Documentation/Screenshots/AdminArea.png)
 
-## Trainer Bereich:   
-
+## Trainer Bereich:
+**Prozessablauf Tests**     
+![Screenshot EditUser](/Documentation/Screenshots/TrainerTest.png)
 
 ## Student Bereich:   
 
