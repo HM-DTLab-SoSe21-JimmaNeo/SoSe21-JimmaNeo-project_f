@@ -109,6 +109,24 @@ auf den grauen Button EditNews.
 ![Screenshot EditNews](/Documentation/Screenshots/AdminArea.png)
 
 ## Trainer Bereich:
+**1. Test Overview**
+Es wird eine Übersicht über alle Tests aufgezeigt.     
+![Screenshot EditUser](/Documentation/Screenshots/TestOverview.png)
+
+**2. Test Editor**
+Die Tests können über den Test editor bearbeitet sowie hinzugefügt werden.
+Hier wird das Topic des tests festgehalten sowie die Fragestellungen und die Weiterführenden Informationen über das Thema(Further informations).  
+Es können zudem Youtube Videos zum Testdurchlauf hinzugefügt werden.
+![Screenshot EditUser](/Documentation/Screenshots/TestEdit.png)
+
+**2.1 Add Questions**
+Fragen und Antworten können hier eingefügt werden, es ist zudem möglich Bilder zu den fragen hinzuzufügen.
+![Screenshot EditUser](/Documentation/Screenshots/AddQuestionsandAnswers.png)
+
+**2.1 Add Further Informations**
+Zusätzliche Informationen über das Testthema können hier eingebunden werden über Website-Links, Youtube-Videos und Bilder.
+![Screenshot EditUser](/Documentation/Screenshots/AddFurtherInformation.png)
+
 **Prozessablauf Tests**     
 ![Screenshot EditUser](/Documentation/Screenshots/TrainerTest.png)
 
