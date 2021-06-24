@@ -1,0 +1,135 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    background: #0B2647;
+    color: white;
+    line-height: 1.5;
+    letter-spacing: 0.5px;
+    text-align: center;
+    height: 100vh;
+}
+
+h1 {
+    line-height: 1.2;
+    margin-bottom: 40px;
+}
+
+main {
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+summary {
+    font-size: 1.25rem;
+    font-weight: 600;
+    background-color: #009a10;
+    color: white;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    outline: none;
+    border-radius: 0.25rem;
+    text-align: left;
+    cursor: pointer;
+    position: relative;
+    max-width: 100%;
+}
+
+details[open] summary ~ * {
+    animation: sweep .5s ease-in-out;
+}
+
+@keyframes sweep {
+    0% {
+        opacity: 0;
+        margin-top: -10px
+    }
+
+    100% {
+        opacity: 1;
+        margin-top: 0px
+    }
+}
+
+details > summary::after {
+    position: absolute;
+    content: "+";
+    right: 20px;
+}
+
+details[open] > summary::after {
+    position: absolute;
+    content: "-";
+    right: 20px;
+}
+
+details > summary::-webkit-details-marker {
+    display: none;
+}
+
+.text-center {
+    text-align: center !important;
+}
+
+hr.divider {
+    height: 0.2rem;
+    max-width: 100.25rem;
+    margin: 1.5rem auto;
+    background-color: #009a10;
+    color: #009a10;
+    opacity: 1;
+}
+
+hr.divider-light {
+    background-color: #fff;
+}
+
+
+.mt-0 {
+    margin-top: 0 !important;
+}
+.page-section {
+    padding: 8rem 0;
+}
+.container,
+.container-fluid,
+.container-xxl,
+.container-xl,
+.container-lg,
+.container-md,
+.container-sm {
+    width: 100%;
+    padding-right: var(--bs-gutter-x, 0.75rem);
+    padding-left: var(--bs-gutter-x, 0.75rem);
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.justify-content-center {
+    justify-content: center !important;
+}
+
+.row > * {
+    flex-shrink: 0;
+    width: 100%;
+    max-width: 100%;
+    padding-right: calc(var(--bs-gutter-x) / 2);
+    padding-left: calc(var(--bs-gutter-x) / 2);
+    margin-top: var(--bs-gutter-y);
+}
+hr {
+    margin: 1rem 0;
+    color: inherit;
+    background-color: currentColor;
+    border: 0;
+    opacity: 0.25;
+}
+
+.px-4 {
+    padding-right: 1.5rem !important;
+    padding-left: 1.5rem !important;
+}
+
+.g-4,
+.gx-4 {
+    --bs-gutter-x: 1.5rem;
