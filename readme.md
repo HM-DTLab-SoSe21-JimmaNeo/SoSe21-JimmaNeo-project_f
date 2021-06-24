@@ -73,7 +73,7 @@ Die Anwendung filter Ihre Rolle beim Login automatisch.
 ![Screenshot Contact](/Documentation/Screenshots/Contact.PNG)
 
 **- Navigationspunkt: FAQ**  
-![Screenshot FAQ](/Documentation/Screenshots/FAQ.png)
+![Screenshot FAQ](/Documentation/Screenshots/FAQ.PNG)
 
 
 

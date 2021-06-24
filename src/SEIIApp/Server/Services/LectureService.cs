@@ -88,9 +88,9 @@ namespace SEIIApp.Server.Services
             var exsistingLecture = GetLectureWithId(lecture.LectureId);
             var test = exsistingLecture.Test;
             Mapper.Map(lecture, exsistingLecture);
-            if (lecture.Test.TestId != 0) exsistingLecture.Test = testService.GetTestWithId(lecture.Test.TestId);
+            if (lecture.Test != null && lecture.Test.TestId != 0) exsistingLecture.Test = testService.GetTestWithId(lecture.Test.TestId);
             else exsistingLecture.Test = null;
-            DatabaseContext.Entry(test).State = EntityState.Unchanged;
+            if (test != null) DatabaseContext.Entry(test).State = EntityState.Unchanged;
             DatabaseContext.Update(exsistingLecture);
             DatabaseContext.SaveChanges();
             NewsService.AddNews(new News()

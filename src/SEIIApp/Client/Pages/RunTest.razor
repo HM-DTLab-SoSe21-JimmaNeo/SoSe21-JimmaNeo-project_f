@@ -69,108 +69,131 @@
                             }
                         }
             </div>
-                </div>
-            }
-
+            </div>
         }
+
+    }
+                </ul>
+                <br />
+                <br />
+                <div class="text-center">
+                    <button class="btn btn-outline-success shadow" @onclick="()=> OnSubmitTest()">
+                        Save
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+                            <path d="M13.485 1.431a1.473 1.473 0 0 1 2.104 2.062l-7.84 9.801a1.473 1.473 0 0 1-2.12.04L.431 8.138a1.473 1.473 0 0 1 2.084-2.083l4.111 4.112 6.82-8.69a.486.486 0 0 1 .04-.045z" />
+                        </svg>
                         <br />
-                        <button class="btn btn-outline-success btn-sm shadow" @onclick="()=> OnSubmitTest()">Submit</button>
-                        </ul>
-                        </EditForm>
+                    </button>
 
-                        }
-                        else
-                        {
+                    <button class="btn btn-outline-danger" @onclick="() =>  NavigationManager.NavigateTo(TestOverviewURL)">
+                        Cancel
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                            <path d="M1.293 1.293a1 1 0 0 1 1.414 0L8 6.586l5.293-5.293a1 1 0 1 1 1.414 1.414L9.414 8l5.293 5.293a1 1 0 0 1-1.414
+                                              1.414L8 9.414l-5.293 5.293a1 1 0 0 1-1.414-1.414L6.586 8 1.293 2.707a1 1 0 0 1 0-1.414z" />
+                        </svg>
+                    </button>
+                    <br />
+                </div>
+                <br />
+                <br />
 
-                        }
+                </EditForm>
 
-
-                    </div>
-
-@code {
-
-    [Parameter]
-    public int TestID { get; set; }
-
-    public static TestDTO TestDto { get; set; }
-
-    public static CompletedTestDTO CompletedTestDTO { get; set; }
-
-    protected override async Task OnParametersSetAsync()
-    {
-
-        var returnedTest = await TestService.GetTestById(TestID);
-        await base.OnParametersSetAsync();
-        TestDto = returnedTest;
-        SEIIApp.Client.Components.VideoComponent.OnEditing = false;
-        SEIIApp.Client.Components.PictureComponent.OnEditing = false;
-    }
-
-    private async void OnSubmitTest()
-    {
-        CompletedTestDTO completedTest = CreateCompletedTest(TestDto);
-        CompletedTestDTO = completedTest;
-        CompletedTestService.AddCompletedTest(completedTest);
-
-        var answer = await TestService.AddOrUpdateTest(TestDto);
-        if (answer != null)
-        {
-            NavigationManager.NavigateTo("/resultstest/");
-        }
-
-    }
-
-    private int CountMaxPoints(List<QuestionDTO> questions)
-    {
-        int maxPoints = 0;
-        foreach (var question in questions)
-        {
-            foreach (var answer in question.Answers)
-            {
-                if (answer.IsCorrect)
-                {
-                    maxPoints++;
-                }
             }
-        }
-        return maxPoints;
-    }
-
-    private int CountReachedPoints(List<QuestionDTO> questions)
-    {
-        int reachedPoints = 0;
-        foreach (var question in questions)
-        {
-            foreach (var answer in question.Answers)
+            else
             {
-                if (answer.IsClicked)
+
+            }
+
+
+    </div>
+
+    @code {
+
+        [Parameter]
+        public int TestID { get; set; }
+
+        public static TestDTO TestDto { get; set; }
+
+        public static CompletedTestDTO CompletedTestDTO { get; set; }
+
+        private string TestOverviewURL = "/testoverview";
+
+        protected override async Task OnParametersSetAsync()
+        {
+
+            var returnedTest = await TestService.GetTestById(TestID);
+            await base.OnParametersSetAsync();
+            TestDto = returnedTest;
+            SEIIApp.Client.Components.VideoComponent.OnEditing = false;
+            SEIIApp.Client.Components.PictureComponent.OnEditing = false;
+        }
+
+        private async void OnSubmitTest()
+        {
+            CompletedTestDTO completedTest = CreateCompletedTest(TestDto);
+            CompletedTestDTO = completedTest;
+            CompletedTestService.AddCompletedTest(completedTest);
+
+            var answer = await TestService.AddOrUpdateTest(TestDto);
+            if (answer != null)
+            {
+                NavigationManager.NavigateTo("/resultstest/");
+            }
+
+        }
+
+        private int CountMaxPoints(List<QuestionDTO> questions)
+        {
+            int maxPoints = 0;
+            foreach (var question in questions)
+            {
+                foreach (var answer in question.Answers)
                 {
                     if (answer.IsCorrect)
                     {
-                        reachedPoints++;
+                        maxPoints++;
                     }
-                    else if (!answer.IsCorrect && reachedPoints > 0)
+                }
+            }
+            return maxPoints;
+        }
+
+        private int CountReachedPoints(List<QuestionDTO> questions)
+        {
+            int reachedPoints = 0;
+            foreach (var question in questions)
+            {
+                foreach (var answer in question.Answers)
+                {
+                    if (answer.IsClicked)
+                    {
+                        if (answer.IsCorrect)
+                        {
+                            reachedPoints++;
+                        }
+                        else if (!answer.IsCorrect && reachedPoints > 0)
+                        {
+                            reachedPoints--;
+                        }
+                    }
+                    else if (answer.IsCorrect && !answer.IsClicked && reachedPoints > 0)
                     {
                         reachedPoints--;
                     }
                 }
-                else if (answer.IsCorrect && !answer.IsClicked && reachedPoints > 0)
-                {
-                    reachedPoints--;
-                }
             }
+            return reachedPoints;
         }
-        return reachedPoints;
-    }
 
-    private CompletedTestDTO CreateCompletedTest(TestDTO test)
-    {
-        CompletedTestDTO completedTest = new CompletedTestDTO();
-        completedTest.SolvedTest = test;
-        completedTest.MaxPoints = CountMaxPoints(TestDto.Questions);
-        completedTest.ReachedPoints = CountReachedPoints(TestDto.Questions);
-        completedTest.Student = UserService.User;
+        private CompletedTestDTO CreateCompletedTest(TestDTO test)
+        {
+            CompletedTestDTO completedTest = new CompletedTestDTO();
+            completedTest.SolvedTest = test;
+            completedTest.MaxPoints = CountMaxPoints(TestDto.Questions);
+            completedTest.ReachedPoints = CountReachedPoints(TestDto.Questions);
+            completedTest.Student = UserService.User;
 
-        return completedTest;
+            return completedTest;
+        }
     }
-}
