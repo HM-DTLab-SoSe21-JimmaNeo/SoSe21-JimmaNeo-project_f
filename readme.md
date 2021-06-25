@@ -167,6 +167,8 @@ Hier werden deine Ergebnisse des abgeschlossenen Test angezeigt.
 Falls du noch mehr lernen möchstest hast du die Möglichkeit auf weitere Informationen zuzugreifen.
 ![Screenshot EditUser](/Documentation/Screenshots/TestFurtherInfo.jpg)
 
+**Prozessablauf**<br>
+![Screenshot EditUser](/Documentation/Screenshots/StudentDiagram.jpg)<br>
 
 # 3. **Softwarearchitektur**
 
