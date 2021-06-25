@@ -135,8 +135,8 @@ Zusätzliche Informationen über das Testthema können hier eingebunden werden �
 ![Screenshot EditUser](/Documentation/Screenshots/TrainerTest.png)
 
 ## Student Bereich:   
-
-
+**1. LectureOverview**
+![Screenshot EditUser](/Documentation/Screenshots/LectureOverviewStudent.jpg)
 
 
 # 3. **Softwarearchitektur**
