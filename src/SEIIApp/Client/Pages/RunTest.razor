@@ -4,7 +4,7 @@
 @inject Services.CompletedTestBackendAccessService CompletedTestService
 @inject NavigationManager NavigationManager
 @inject UserLoggedInService UserService
-
+@inject EditService EditService
 
 <div class="container">
 
@@ -126,7 +126,8 @@
             var returnedTest = await TestService.GetTestById(TestID);
             await base.OnParametersSetAsync();
             TestDto = returnedTest;
-            SEIIApp.Client.Components.VideoComponent.OnEditing = false;
+
+            EditService.OnEditing = false;
             SEIIApp.Client.Components.PictureComponent.OnEditing = false;
         }
 

@@ -5,7 +5,7 @@
 @inject Services.LectureBackendAccessService LectureService
 @inject NavigationManager NavigationManager
 @inject Services.TestsDefinitionBackendAccessService TestService
-
+@inject EditService EditService
 
 
 <div class="container">
@@ -20,7 +20,7 @@
                // if (UserService.User == null) Console.WriteLine("User ist null"); // wenn student angemeldet ist wird er null
                 if (UserService.User != null && UserService.User.Role == Role.Teacher)
                 {
-                    VideoComponent.OnEditing = true;
+                    EditService.OnEditing = true;
                     PictureComponent.OnEditing = true;
 
 
@@ -149,7 +149,8 @@
         await base.OnParametersSetAsync();
 
         context = new EditContext(LectureDto);
-        VideoComponent.OnEditing = true;
+        EditService.OnEditing = true;
+        
     }
 
 

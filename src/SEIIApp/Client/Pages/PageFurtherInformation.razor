@@ -2,7 +2,7 @@
 
 @inject Services.TestsDefinitionBackendAccessService TestDefinitionService
 @inject NavigationManager NavigationManager
-
+@inject Services.EditService EditService
 
 
 
@@ -130,7 +130,8 @@
             var existingQuiz = await TestDefinitionService.GetTestById(TestID);
             await base.OnParametersSetAsync();
             this.TestDto = existingQuiz;
-            SEIIApp.Client.Components.VideoComponent.OnEditing = false;
+
+            EditService.OnEditing = false;
             SEIIApp.Client.Components.PictureComponent.OnEditing = false;
             SEIIApp.Client.Components.FurtherLinkComponent.OnEditing = false;
         }

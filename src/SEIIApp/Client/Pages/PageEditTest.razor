@@ -2,6 +2,7 @@
 
 @inject Services.TestsDefinitionBackendAccessService TestDefinitionService
 @inject UserLoggedInService UserService
+@inject EditService EditService
 
 @inject NavigationManager NavigationManager
 
@@ -202,7 +203,7 @@
         }
         await base.OnParametersSetAsync();
         context = new EditContext(TestDto);
-        SEIIApp.Client.Components.VideoComponent.OnEditing = true;
+        EditService.OnEditing = true;
         SEIIApp.Client.Components.PictureComponent.OnEditing = true;
         SEIIApp.Client.Components.FurtherLinkComponent.OnEditing = true;
     }
