@@ -84,34 +84,34 @@ Wichtige Fragen und Antworten zu der Anwendung.
 
 
 ## Admin Bereich:  
-Wenn Sie sich erfolgreich eingelogt haben und Admin Rechte besitzen,  
-gelangen Sie auf die ManageUser Seite.  
-Hier wird Ihnen eine Tabelle mit allen registrierten Benutzern auf der   
-Plattform angezeigt. 
+Wenn man sich erfolgreich eingelogt hat und Admin Rechte besitzt,  
+gelangt man auf die ManageUser Seite.  
+Hier sieht man eine Tabelle mit allen registrierten Benutzern auf der   
+Plattform.   
 In jeder Zelle der Tabelle befindet sich neben dem Usernamen, Vornamen,  
-Nachnamen ein Edit Button(blau) und ein Delete Button(rot)
+Nachnamen ein Edit Button(blau) und ein Delete Button(rot).  
 ![Screenshot ManageUser](/Documentation/Screenshots/Admin_ManageUser.png)
 
-Nun stehen Ihnen drei Optionen zur verfügung, wie Sie weiter verfahren können.  
+Nun hat man drei Optionen zur verfügung, wie man als Admin weiter verfahren kann.   
 
 **1. Einen Benutzer löschen**    
-Um einen Benutzer zu löschen, klicken Sie auf den roten Button.
-Danach werden Sie nochmal gefragt, ob Sie den ausgewählten Benutzer wirklich löschen wollen.
-Durch erneutes klicken des Delete Buttons löschen Sie den Benutzer endgültig aus dem System.
+Um einen Benutzer zu löschen, klicken man auf den roten Button.
+Danach wird man nochmal gefragt, ob man den ausgewählten Benutzer wirklich löschen möchte.
+Durch erneutes klicken des Delete Buttons löscht man den Benutzer endgültig aus dem System.
 ![Screenshot DeleteUser](/Documentation/Screenshots/Admin_DeleteUser.PNG)
 
 **2. Einen Benutzer editieren**    
-Um den Vornamen, Nachnamen oder die Rolle eines Benutzers zu ändern, klicken Sie neben den  
+Um den Vornamen, Nachnamen oder die Rolle eines Benutzers zu ändern, klickt man neben den  
 gewünschten Benutzer auf das Zahnrad (blauer Button).   
-Sie gelangen nun auf die EditSeite des spezifischen Benutzers.
+Man gelangt nun auf die EditSeite des ausgewählten Benutzers.
 ![Screenshot EditUser](/Documentation/Screenshots/Admin_EditUser_Role.png)
 
 **3. Eine neue Nachricht erstellen**   
-Wenn Sie eine neue Nachricht erstellen wollen, klicken Sie auf der ManageUser Seite  
-auf den grauen Button EditNews.  
+Wenn man eine neue Nachricht erstellen möchte, klickt man auf der ManageUser Seite  
+auf den grauen Button EditNews. Nun wird man weitergeleiet auf die editierbare News Seite.      
 ![Screenshot EditNews](/Documentation/Screenshots/Admin_EditNews.png)
 
-**Prozessablauf**  
+**Prozessablauf**    
 ![Screenshot EditNews](/Documentation/Screenshots/AdminArea.png)
 
 ## Trainer Bereich:
