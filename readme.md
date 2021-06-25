@@ -52,7 +52,8 @@ wie das JimmaNeo Projekt an Bekanntheit gewinnen. Bitte berichtet in eurem Umfel
 
 ### Allgemeiner Bereich:
 <br>
-#### **- LandingPage** <br>
+### LandingPage 
+<br>
 Beim Starten der Web-Anwendung kann man auf der linken Seite der Anwednung die Navigation sehen und  
 auf der rechten Seite die LandingPage der Applikation **JimmaNeo** sehen.  
 Hier kann man als Einstieg nochmal das Storyboard in Form eines kleinen Videos ansehen.  
@@ -60,7 +61,7 @@ Des Weiteren kann man beim runterscrollen Details zu unserem Projekt lesen.
 <br>  
 ![Screenshot LandingPage](/Documentation/Screenshots/Home.PNG)
 <br>
-#### **- Navigationspunkt: News**<br>
+### **- Navigationspunkt: News**<br>
 Hier werden alle neuen News angezeigt.    
 <br>    
 ![Screenshot News](/Documentation/Screenshots/News.PNG)
