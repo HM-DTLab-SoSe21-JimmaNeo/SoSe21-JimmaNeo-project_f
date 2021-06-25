@@ -97,16 +97,12 @@
                 </div>
                 <br />
                 <br />
-
                 </EditForm>
-
             }
             else
             {
                 <h5 class="text-center">Something went wrong...</h5>
             }
-
-
     </div>
 
     @code {
@@ -122,13 +118,10 @@
 
         protected override async Task OnParametersSetAsync()
         {
-
             var returnedTest = await TestService.GetTestById(TestID);
             await base.OnParametersSetAsync();
             TestDto = returnedTest;
-
             EditService.OnEditing = false;
-            SEIIApp.Client.Components.PictureComponent.OnEditing = false;
         }
 
         private async void OnSubmitTest()

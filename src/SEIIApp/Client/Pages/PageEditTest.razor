@@ -26,7 +26,7 @@
                         @bind-value:event="oninput">
                             <span class="highlight"></span>
                             <span class="bar"></span>
-                            <label class="hoverlabel">Topic of the test:</label>
+                            <label class="hoverlabel">Topic of the test</label>
                         </div>
 
                         <div class="form-floating">
@@ -52,11 +52,9 @@
                             <br />
                         }
                         <br /><button class="btn btn-light shadow" @onclick="AddVideoContent">Add Video</button><br />
-
                         <hr />
                         <h5>
                             <br /><b>Add questions and answers!</b>
-
                         </h5>
                         @foreach (var question in TestDto.Questions)
                         {
@@ -95,8 +93,6 @@
                             </div>
                             <br />
                         }
-
-
                         <br /><button class="btn btn-light shadow" @onclick="AddFurtherLink">Add Link</button><br />
                         <hr />
                         @if (TestDto.VideosFurtherInformation != null)
@@ -204,8 +200,6 @@
         await base.OnParametersSetAsync();
         context = new EditContext(TestDto);
         EditService.OnEditing = true;
-        SEIIApp.Client.Components.PictureComponent.OnEditing = true;
-        SEIIApp.Client.Components.FurtherLinkComponent.OnEditing = true;
     }
 
     private void PrepareEditOrAddOfTestDefinition(TestDTO test)

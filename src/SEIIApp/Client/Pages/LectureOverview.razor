@@ -45,8 +45,6 @@
             </EditForm>
             @if (UserService.User != null && UserService.User.Role == Role.Teacher)
             {
-                
-                PictureComponent.OnEditing = true;
                 <div class="text-center py-2">
                     <button class="btn btn-outline-dark btn-sm shadow" @onclick="AddLecture">+ Add Lecture</button>
                 </div>
