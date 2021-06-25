@@ -51,31 +51,34 @@ wie das JimmaNeo Projekt an Bekanntheit gewinnen. Bitte berichtet in eurem Umfel
 # 2. **Anwendungsbeschreibung**
 
 ### Allgemeiner Bereich:
-Beim Starten der Web-Anwendung können Sie auf der linken Seite der Anwednung die Navigation sehen.  
-Sie gelangen auf der Hauptseite zur LandingPage **JimmaNeo**.  
-Hier können Sie zum Einstieg nochmal das Storyboard in Form eines kleinen Videos ansehen.  
-Des Weiteren können Sie Details zu dem Projekt lesen.    
+Beim Starten der Web-Anwendung kann man auf der linken Seite der Anwednung die Navigation sehen und  
+auf der rechten Seite die LandingPage der Applikation**JimmaNeo** sehen.  
+Hier kann man als Einstieg nochmal das Storyboard in Form eines kleinen Videos ansehen.  
+Des Weiteren kann man beim runterscrollen Details zu unserem Projekt lesen.    
 ![Screenshot LandingPage](/Documentation/Screenshots/Home.PNG)
 
 **- Navigationspunkt: News**    
-Hier können Sie alle neuen Nachrichten durchlesen.    
+Hier werden alle neuen News angezeigt.       
 ![Screenshot News](/Documentation/Screenshots/News.PNG)
 
 **- Navigationspunkt: Login**  
-Hier können Sie sich einlogen, dabei ist es nicht relevant,   
-welche Rolle (Teacher, Student, Admin) Sie besitzen.    
-Die Anwendung filtert Ihre Rolle beim Login automatisch.  
+Wenn man sich einlogt, ist es nicht relevant,   
+welche Rolle (Teacher, Student, Admin) man besitzt.    
+Die Anwendung filtert die Rolle beim Login automatisch.  
 ![Screenshot Login](/Documentation/Screenshots/Login.PNG)
 
 **- Navigationspunkt: Register**   
-Hier können Sie sich registrieren, wenn Sie noch keinen Account besitzen.  
+Hier kann man sich registrieren, wenn man noch keinen Account besitzt.  
 Alle neu registrierten Benutzer besitzen automatisch die Studenten Berechtigung.  
 ![Screenshot Register](/Documentation/Screenshots/Register.PNG)
 
-**- Navigationspunkt: Contact us**  
+**- Navigationspunkt: Contact us**   
+Wenn man Anregungen, Wünsche oder auch Anmerkungen zu der Applikation hat, kann man jederzeit
+diese im Kontaktformular verfassen und abschicken.  
 ![Screenshot Contact](/Documentation/Screenshots/Contact.PNG)
 
-**- Navigationspunkt: FAQ**  
+**- Navigationspunkt: FAQ**   
+Wichtige Fragen und Antworten zu der Anwendung.  
 ![Screenshot FAQ](/Documentation/Screenshots/FAQ.PNG)
 
 
