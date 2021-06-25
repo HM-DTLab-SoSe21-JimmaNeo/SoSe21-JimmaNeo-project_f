@@ -47,6 +47,10 @@ Damit auch zukünftig viele Neugeborene wie Aba gerettet werden können müssen 
 wie das JimmaNeo Projekt an Bekanntheit gewinnen. Bitte berichtet in eurem Umfeld über  
 über dieses Projekt. Weitere Informationen findet ihr unter URL: [LMU](https://www.lmuklinikum.de).
 
+
+# 1.1. **Storyboard**   
+![Screenshot LandingPage](/Documentation/Screenshots/LMU_Team_F_Storyboard-Vesion_1.2-001.jpg)   
+
 # 2. **Anwendungsbeschreibung**
 
 ### Allgemeiner Bereich:
