@@ -49,7 +49,7 @@ wie das JimmaNeo Projekt an Bekanntheit gewinnen. Bitte berichtet in eurem Umfel
 
 
 # 1.1. **Storyboard**   
-![Screenshot LandingPage](/Documentation/Screenshots/LMU_Team_F_Storyboard-Vesion_1.2-001.jpg)   
+![Screenshot Storyboard](/Documentation/Screenshots/LMU_Team_F_Storyboard-Vesion_1.2-001.jpg)   
 
 # 2. **Anwendungsbeschreibung**
 
@@ -193,6 +193,9 @@ Folgend sind die Services und Controller einschließlich ihrer Methoden und ihre
 | Volland, Aaron  | Frontend |avolland@hm.edu|
 | Weber, Anne Sofie | Frontend |------ |  
 | Wolf, Simon  | Backend |------ | 
+
+![Screenshot Gruppenfoto](/Documentation/Screenshots/Gruppenfoto.JPG)
+
  
 
 ### 5. **Anlagen**
