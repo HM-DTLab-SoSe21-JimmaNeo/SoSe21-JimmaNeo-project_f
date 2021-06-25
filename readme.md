@@ -136,7 +136,36 @@ Zusätzliche Informationen über das Testthema können hier eingebunden werden �
 
 ## Student Bereich:   
 
+**1. Studentarea**<br>
+Die Studentarea ziegt dir interessate Statisiken über deinen Testergebnisse und Fortschritt in Lectures. 
+Außerdem gibt es die Möglichkeit dir selbst To-do's zu erstellen um immer den Überblick zu behalten.
+Die neusten Nachrichten über neue Lectures und Test wird dir hier auch angezeigt. 
+Zu guter letzt kannst du auf dem grünen Herzen Feedback und Bugs an den Support schicken.
+![Screenshot EditUser](/Documentation/Screenshots/StudentArea.jpg)
 
+**2. Overviews**<br>
+Diese Seites zeigen dir einen Überblick über alle Lectures bzw. Tests.
+
+![Screenshot EditUser](/Documentation/Screenshots/LectureOverviewStudent.jpg)
+![Screenshot EditUser](/Documentation/Screenshots/TestOverviewStudent.jpg)
+
+**3. Run Lectures**<br>
+Die Lectures vermitteln dir neues Wissen.
+![Screenshot EditUser](/Documentation/Screenshots/RunLectureVideo.jpg)
+![Screenshot EditUser](/Documentation/Screenshots/RunLectureBildUndText.jpg)
+
+**4. Run Test**<br>
+Die Test geben dir die Möglichkeit dein Wissen auf die Probe zu stellen.
+![Screenshot EditUser](/Documentation/Screenshots/RunTestVideo.jpg)
+![Screenshot EditUser](/Documentation/Screenshots/RunTestFragen.jpg)
+
+**5. Test Results**<br>
+Hier werden deine Ergebnisse des abgeschlossenen Test angezeigt.
+![Screenshot EditUser](/Documentation/Screenshots/TestResult.jpg)
+
+**6. Further Informationen** <br>
+Falls du noch mehr lernen möchstest hast du die Möglichkeit auf weitere Informationen zuzugreifen.
+![Screenshot EditUser](/Documentation/Screenshots/TestFurtherInfo.jpg)
 
 
 # 3. **Softwarearchitektur**
