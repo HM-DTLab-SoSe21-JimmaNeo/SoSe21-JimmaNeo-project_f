@@ -1,7 +1,8 @@
-# Vorlagenprojekt für ein Blazor WebAssembly Projekt das auf ASP.NET Core gehostet ist
+**#JimmaNeo**
 
-Dieses Projekt ist ein Standard-Vorlageprojekt, das eine funktionierende WebAssembly-Anwendung, die auf .NET Core gehostet ist, zeigt. Die Beispiel-Anwendung enthält einen Zugriff auf APIs.
-
+<details open>
+<summary># 1. **PressRelease**</summary>
+<br>
 
 # 1. **PressRelease**
 
@@ -46,7 +47,7 @@ George Micheals, frisch gebackener Vater und Industrieangestellter:
 Damit auch zukünftig viele Neugeborene wie Aba gerettet werden können müssen Projekte  
 wie das JimmaNeo Projekt an Bekanntheit gewinnen. Bitte berichtet in eurem Umfeld über  
 über dieses Projekt. Weitere Informationen findet ihr unter URL: [LMU](https://www.lmuklinikum.de).
-
+</details>
 
 # 1.1. **Storyboard**   
 ![Screenshot Storyboard](/Documentation/Screenshots/LMU_Team_F_Storyboard-Vesion_1.2-001.jpg)   
