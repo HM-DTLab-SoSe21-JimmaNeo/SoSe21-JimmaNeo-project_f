@@ -51,67 +51,87 @@ wie das JimmaNeo Projekt an Bekanntheit gewinnen. Bitte berichtet in eurem Umfel
 # 2. **Anwendungsbeschreibung**
 
 ### Allgemeiner Bereich:
+<br> 
 Beim Starten der Web-Anwendung kann man auf der linken Seite der Anwednung die Navigation sehen und  
 auf der rechten Seite die LandingPage der Applikation**JimmaNeo** sehen.  
 Hier kann man als Einstieg nochmal das Storyboard in Form eines kleinen Videos ansehen.  
-Des Weiteren kann man beim runterscrollen Details zu unserem Projekt lesen.    
+Des Weiteren kann man beim runterscrollen Details zu unserem Projekt lesen.  
+<br>  
 ![Screenshot LandingPage](/Documentation/Screenshots/Home.PNG)
 
-**- Navigationspunkt: News**    
-Hier werden alle neuen News angezeigt.       
+**- Navigationspunkt: News**
+<br>     
+Hier werden alle neuen News angezeigt.    
+<br>    
 ![Screenshot News](/Documentation/Screenshots/News.PNG)
 
-**- Navigationspunkt: Login**  
+**- Navigationspunkt: Login** 
+<br>  
 Wenn man sich einlogt, ist es nicht relevant,   
 welche Rolle (Teacher, Student, Admin) man besitzt.    
-Die Anwendung filtert die Rolle beim Login automatisch.  
+Die Anwendung filtert die Rolle beim Login automatisch.
+<br>   
 ![Screenshot Login](/Documentation/Screenshots/Login.PNG)
 
-**- Navigationspunkt: Register**   
+**- Navigationspunkt: Register**
+<br>    
 Hier kann man sich registrieren, wenn man noch keinen Account besitzt.  
-Alle neu registrierten Benutzer besitzen automatisch die Studenten Berechtigung.  
+Alle neu registrierten Benutzer besitzen automatisch die Studenten Berechtigung. 
+<br>  
 ![Screenshot Register](/Documentation/Screenshots/Register.PNG)
 
 **- Navigationspunkt: Contact us**   
+<br> 
 Wenn man Anregungen, Wünsche oder auch Anmerkungen zu der Applikation hat, kann man jederzeit
 diese im Kontaktformular verfassen und abschicken.  
+<br> 
 ![Screenshot Contact](/Documentation/Screenshots/Contact.PNG)
 
 **- Navigationspunkt: FAQ**   
-Wichtige Fragen und Antworten zu der Anwendung.  
+<br> 
+Wichtige Fragen und Antworten zu der Anwendung. 
+<br>  
 ![Screenshot FAQ](/Documentation/Screenshots/FAQ.PNG)
 
 
 
 ## Admin Bereich:  
+<br> 
 Wenn man sich erfolgreich eingelogt hat und Admin Rechte besitzt,  
 gelangt man auf die ManageUser Seite.  
-Hier sieht man eine Tabelle mit allen registrierten Benutzern auf der   
-Plattform.   
+Hier sieht man eine Tabelle mit allen registrierten Benutzern auf der Plattform.   
 In jeder Zelle der Tabelle befindet sich neben dem Usernamen, Vornamen,  
 Nachnamen ein Edit Button(blau) und ein Delete Button(rot).  
+<br> 
 ![Screenshot ManageUser](/Documentation/Screenshots/Admin_ManageUser.png)
 
 Nun hat man drei Optionen zur verfügung, wie man als Admin weiter verfahren kann.   
 
-**1. Einen Benutzer löschen**    
+**1. Einen Benutzer löschen** 
+<br>    
 Um einen Benutzer zu löschen, klicken man auf den roten Button.
 Danach wird man nochmal gefragt, ob man den ausgewählten Benutzer wirklich löschen möchte.
 Durch erneutes klicken des Delete Buttons löscht man den Benutzer endgültig aus dem System.
+<br> 
 ![Screenshot DeleteUser](/Documentation/Screenshots/Admin_DeleteUser.PNG)
 
-**2. Einen Benutzer editieren**    
+**2. Einen Benutzer editieren**  
+<br>   
 Um den Vornamen, Nachnamen oder die Rolle eines Benutzers zu ändern, klickt man neben den  
 gewünschten Benutzer auf das Zahnrad (blauer Button).   
 Man gelangt nun auf die EditSeite des ausgewählten Benutzers.
+<br> 
 ![Screenshot EditUser](/Documentation/Screenshots/Admin_EditUser_Role.png)
 
-**3. Eine neue Nachricht erstellen**   
+**3. Eine neue Nachricht erstellen** 
+<br>   
 Wenn man eine neue Nachricht erstellen möchte, klickt man auf der ManageUser Seite  
-auf den grauen Button EditNews. Nun wird man weitergeleiet auf die editierbare News Seite.      
+auf den grauen Button EditNews. Nun wird man weitergeleiet auf die editierbare News Seite. 
+<br>      
 ![Screenshot EditNews](/Documentation/Screenshots/Admin_EditNews.png)
 
-**Prozessablauf**    
+**Prozessablauf** 
+<br>    
 ![Screenshot EditNews](/Documentation/Screenshots/AdminArea.png)
 
 ## Trainer Bereich:
