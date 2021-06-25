@@ -1,8 +1,4 @@
-**#JimmaNeo**
-
-<details open>
-<summary> # 1.PressRelease</summary>
-<br>
+# **JimmaNeo**
 
 # 1. **PressRelease**
 
