@@ -67,7 +67,7 @@ welche Rolle (Teacher, Student, Admin) Sie besitzen.
 Die Anwendung filtert Ihre Rolle beim Login automatisch.  
 ![Screenshot Login](/Documentation/Screenshots/Login.PNG)
 
-**- Navigationspunkt: Register**
+**- Navigationspunkt: Register**   
 Hier können Sie sich registrieren, wenn Sie noch keinen Account besitzen.  
 Alle neu registrierten Benutzer besitzen automatisch die Studenten Berechtigung.  
 ![Screenshot Register](/Documentation/Screenshots/Register.PNG)
