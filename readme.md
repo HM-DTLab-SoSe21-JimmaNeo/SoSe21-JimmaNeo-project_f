@@ -122,11 +122,13 @@ Es können zudem Youtube Videos zum Testdurchlauf hinzugefügt werden.
 ![Screenshot EditUser](/Documentation/Screenshots/TestEdit.png)
 
 **Add Questions:**
-Fragen und Antworten können hier eingefügt werden, es ist zudem möglich Bilder zu den fragen hinzuzufügen.
+Fragen und Antworten können hier eingefügt werden, es ist zudem möglich Bilder zu den fragen hinzuzufügen und man kann pro Frage eine Erklärung der Lösung angeben die in der Auswertung des Tests angezeigt wird.
+
 ![Screenshot EditUser](/Documentation/Screenshots/AddQuestionsandAnswers.png)
 
 **Add Further Informations:**
 Zusätzliche Informationen über das Testthema können hier eingebunden werden über Website-Links, Youtube-Videos und Bilder.
+
 ![Screenshot EditUser](/Documentation/Screenshots/AddFurtherInformation.png)
 
 **Prozessablauf Tests**     
