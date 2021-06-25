@@ -170,8 +170,13 @@ Falls du noch mehr lernen möchstest hast du die Möglichkeit auf weitere Inform
 **Prozessablauf**<br>
 ![Screenshot EditUser](/Documentation/Screenshots/StudentDiagram.jpg)<br>
 
-# 3. **Softwarearchitektur**
+# 3. **Softwarearchitektur**   
 
+Die Anwendung ist in 3 Teile aufgegliedert.   Das Frontend, also die Client-Seite, befindet sich in dem „SEIIApp.Client“-Projekt, einer WebApp-Anwendung.   Das Backend, die Server-Seite, wird in dem „SEIIApp.Server“-Projekt implementiert.   Das „SEIIApp.Shared“-Projekt dient dem Datenaustausch mithilfe von DataTransferObjects (DTOs).   
+Um auf die im Backend gespeicherten Daten zuzugreifen, nutzen die Razor-WebPages die im Frontend vorhandenen BackendAccessServices.    Diese schicken DataTransfer-Objekte an die jeweiligen Controller im Backend, welche die weitere Verarbeitung in Hinblick auf die Daten und der Datenbank übernehmen.    Die Controller bieten die HTTP-Schnittstelle an und geben die erhaltenen Requests an die jeweiligen Services weiter, welche für die verschiedenen Aktionen auf der Datenbank zuständig sind. <br><br>
+Folgend sind die Services und Controller einschließlich ihrer Methoden und ihrer Zuordnung zu dem Front- und Backend angegeben:   
+
+![Screenshot Services_&_Controller](/Documentation/Screenshots/services_controller.png)<br>
 
 # 4. **Team und Ansprechpartner**
 
