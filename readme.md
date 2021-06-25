@@ -136,11 +136,47 @@ Zusätzliche Informationen über das Testthema können hier eingebunden werden �
 
 ## Student Bereich:   
 
+**1. Studentarea**<br>
+Die Studentarea ziegt dir interessate Statisiken über deinen Testergebnisse und Fortschritt in Lectures. 
+Außerdem gibt es die Möglichkeit dir selbst To-do's zu erstellen um immer den Überblick zu behalten.
+Die neusten Nachrichten über neue Lectures und Test wird dir hier auch angezeigt. 
+Zu guter letzt kannst du auf dem grünen Herzen Feedback und Bugs an den Support schicken.
+![Screenshot EditUser](/Documentation/Screenshots/StudentArea.jpg)
 
+**2. Overviews**<br>
+Diese Seites zeigen dir einen Überblick über alle Lectures bzw. Tests.
 
+![Screenshot EditUser](/Documentation/Screenshots/LectureOverviewStudent.jpg)
+![Screenshot EditUser](/Documentation/Screenshots/TestOverviewStudent.jpg)
 
-# 3. **Softwarearchitektur**
+**3. Run Lectures**<br>
+Die Lectures vermitteln dir neues Wissen.
+![Screenshot EditUser](/Documentation/Screenshots/RunLectureVideo.jpg)
+![Screenshot EditUser](/Documentation/Screenshots/RunLectureBildUndText.jpg)
 
+**4. Run Test**<br>
+Die Test geben dir die Möglichkeit dein Wissen auf die Probe zu stellen.
+![Screenshot EditUser](/Documentation/Screenshots/RunTestVideo.jpg)
+![Screenshot EditUser](/Documentation/Screenshots/RunTestFragen.jpg)
+
+**5. Test Results**<br>
+Hier werden deine Ergebnisse des abgeschlossenen Test angezeigt.
+![Screenshot EditUser](/Documentation/Screenshots/TestResult.jpg)
+
+**6. Further Informationen** <br>
+Falls du noch mehr lernen möchstest hast du die Möglichkeit auf weitere Informationen zuzugreifen.
+![Screenshot EditUser](/Documentation/Screenshots/TestFurtherInfo.jpg)
+
+**Prozessablauf**<br>
+![Screenshot EditUser](/Documentation/Screenshots/StudentDiagram.jpg)<br>
+
+# 3. **Softwarearchitektur**   
+
+Die Anwendung ist in 3 Teile aufgegliedert.   Das Frontend, also die Client-Seite, befindet sich in dem „SEIIApp.Client“-Projekt, einer WebApp-Anwendung.   Das Backend, die Server-Seite, wird in dem „SEIIApp.Server“-Projekt implementiert.   Das „SEIIApp.Shared“-Projekt dient dem Datenaustausch mithilfe von DataTransferObjects (DTOs).   
+Um auf die im Backend gespeicherten Daten zuzugreifen, nutzen die Razor-WebPages die im Frontend vorhandenen BackendAccessServices.    Diese schicken DataTransfer-Objekte an die jeweiligen Controller im Backend, welche die weitere Verarbeitung in Hinblick auf die Daten und der Datenbank übernehmen.    Die Controller bieten die HTTP-Schnittstelle an und geben die erhaltenen Requests an die jeweiligen Services weiter, welche für die verschiedenen Aktionen auf der Datenbank zuständig sind. <br><br>
+Folgend sind die Services und Controller einschließlich ihrer Methoden und ihrer Zuordnung zu dem Front- und Backend angegeben:   
+
+![Screenshot Services_&_Controller](/Documentation/Screenshots/services_controller.png)<br>
 
 # 4. **Team und Ansprechpartner**
 

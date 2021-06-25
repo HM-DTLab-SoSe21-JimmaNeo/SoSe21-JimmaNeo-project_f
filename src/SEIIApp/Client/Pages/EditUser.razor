@@ -5,7 +5,7 @@
 @using SEIIApp.Shared;
 
 
-@if (userDTO != null)
+@if (UserDTO != null)
 {
     <!-- Alert-->
     if (triggerAlert)
@@ -19,11 +19,11 @@
 
     <!-- Edit User-->
     <div class="wrapper bg-white mt-sm-5">
-        <h4 class="pb-4 border-bottom">User Editing: @userDTO.Name</h4>
+        <h4 class="pb-4 border-bottom">User Editing: @UserDTO.Name</h4>
         <div class="py-2">
             <div class="row py-2">
                 <div class="col-md-6 pt-md-0 pt-3">
-                    <label>current firstname: @userDTO.FirstName</label>
+                    <label>current firstname: @UserDTO.FirstName</label>
                     <div class="input-group">
 
                         <input class="rightMargin" type="text" style='width:100%' required @bind-value="inputFirstName" @bind-value:event="oninput">
@@ -33,7 +33,7 @@
                     </div>
                 </div>
                 <div class="col-md-6 pt-md-0 pt-3">
-                    <label>current lastname: @userDTO.LastName</label>
+                    <label>current lastname: @UserDTO.LastName</label>
                     <div class="input-group">
                         <input class="rightMargin" type="text" style='width:100%' required @bind-value="inputLastName" @bind-value:event="oninput">
                         <span class="highlight"></span>
@@ -44,7 +44,7 @@
             </div>
             <div class="row py-2">
                 <select name="role" id="role" @bind-value="chosenOption" @bind-value:event="onchange">
-                    <option value=0 selected>@userDTO.Role</option>
+                    <option value=0 selected>@UserDTO.Role</option>
                     <option value=1>Undefined</option>
                     <option value=2>Student</option>
                     <option value=3>Teacher</option>
@@ -69,23 +69,23 @@ else
 
 @code {
     [Parameter]
-    public int userID { get; set; }
+    public int UserID { get; set; }
 
     public string inputFirstName { get; set; }
 
     public string inputLastName { get; set; }
 
-    public int chosenOption { get; set; }
+    private int chosenOption { get; set; }
 
     private bool triggerAlert = false;
 
-    public UserDTO userDTO { get; set; }
+    public UserDTO UserDTO { get; set; }
 
 
 
     protected override async Task OnInitializedAsync()
     {
-        userDTO = await UserService.GetUserById(userID);
+        UserDTO = await UserService.GetUserById(UserID);
     }
 
     /// <summary>
@@ -97,31 +97,31 @@ else
         if (inputFirstName == null || inputLastName == null)
         {
 
-            inputFirstName = userDTO.FirstName;
-            inputLastName = userDTO.LastName;
+            inputFirstName = UserDTO.FirstName;
+            inputLastName = UserDTO.LastName;
         }
-        userDTO.FirstName = inputFirstName;
-        userDTO.LastName = inputLastName;
+        UserDTO.FirstName = inputFirstName;
+        UserDTO.LastName = inputLastName;
 
 
         switch (chosenOption)
         {
 
             case 0:
-                userDTO.Role = this.userDTO.Role;
+                UserDTO.Role = this.UserDTO.Role;
                 break;
             case 1:
-                userDTO.Role = Role.None;
+                UserDTO.Role = Role.None;
                 break;
             case 2:
-                userDTO.Role = Role.Student;
+                UserDTO.Role = Role.Student;
                 break;
             case 3:
-                userDTO.Role = Role.Teacher;
+                UserDTO.Role = Role.Teacher;
                 break;
 
             case 4:
-                userDTO.Role = Role.Admin;
+                UserDTO.Role = Role.Admin;
                 break;
 
 
@@ -131,7 +131,7 @@ else
 
         }
 
-        if (UserService.ChangeUser(userDTO) != null)
+        if (UserService.ChangeUser(UserDTO) != null)
         {
             triggerAlert = true;
             await Task.Delay(2000);

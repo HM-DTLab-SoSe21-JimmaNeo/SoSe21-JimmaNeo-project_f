@@ -36,7 +36,6 @@
 
             <!-- Grid -->
             <div class="w3-row">
-
                 <!-- Left Side Cards -->
                 <div class="w3-col l8 s12">
                     <!-- Statistic Card -->
@@ -46,7 +45,7 @@
                             @if (maxPointList != null)
                             {
                                 <RadzenChart>
-                                    <RadzenColumnSeries Data="@testList" CategoryProperty="TestName" Title="Reached" LineType="LineType.Dashed" ValueProperty="ReachedPoints" />
+                                    <RadzenColumnSeries Data="@dataItemTestList" CategoryProperty="TestName" Title="Reached" LineType="LineType.Dashed" ValueProperty="ReachedPoints" />
                                     <RadzenColumnSeries Data="@maxPointList" CategoryProperty="TestName" Title="Max" ValueProperty="ReachedPoints" />
                                     <RadzenColumnOptions Radius="5" />
                                 </RadzenChart>
@@ -76,9 +75,9 @@
                         </div>
                         <div class="w3-container">
                             <ul>
-                                @if (ToDo != null)
+                                @if (toDo != null)
                                 {
-                                    @foreach (var todo in ToDo)
+                                    @foreach (var todo in toDo)
                                     {
 
                                         <div class="input-group mb-3">
@@ -87,7 +86,6 @@
                                             </div>
                                             <input type="text" class="form-control" aria-label="Text input with checkbox" @bind="todo.Task" disabled>
                                         </div>
-
                                     }
                                 }
                             </ul>
@@ -118,7 +116,7 @@
                         <div class="w3-container w3-padding">
                             <h3><img src="/Images/WelcomeStudent/Icons/StatisticIcon1.svg" alt="Image" class="w3-center w3-margin-right" style="width:50px"><b>Progress</b></h3>
 
-                            @if (NonDuplicateTestList != null)
+                            @if (nonDuplicateTestList != null)
                             {
                                 @if (DataItem.maxReachedPointsfromTests != 0)
                                 {
@@ -153,9 +151,9 @@
                         </div>
                         <ul class="w3-ul w3-hoverable w3-white">
 
-                            @if (News != null)
+                            @if (news != null)
                             {
-                                @foreach (var news in News)
+                                @foreach (var news in news)
                                 {
                                     <li class="w3-padding-16">
                                         <NavLink href="news">
@@ -204,6 +202,7 @@
     else
     {
         <p>You are not allowed to see this!</p>
+        <a href="login" class="btn btn-outline-primary" role="button">Let´s login!</a>
     }
 }
 
@@ -213,22 +212,21 @@
     public int[] Roles { get; set; }
 
     [Parameter]
-    public int userID { get; set; }
+    public int UserID { get; set; }
 
-    private List<NewsDTO> News { get; set; }
+    private List<NewsDTO> news { get; set; }
 
-    private List<ToDoDTO> ToDo { get; set; }
-
-    public ToDoDTO TempToDo { get; set; }
+    private List<ToDoDTO> toDo { get; set; }
+    private ToDoDTO tempToDo { get; set; }
 
     private string newTodo { get; set; }
     private int count { get; set; }
 
-    public CompletedTestDTO[] AllTestList { get; set; }
-    public CompletedTestDTO[] NonDuplicateTestList { get; set; }
+    private CompletedTestDTO[] completedTestList { get; set; }
+    private CompletedTestDTO[] nonDuplicateTestList { get; set; }
 
-    public DataStudentItemService[] testList { get; set; }
-    public DataStudentItemService[] maxPointList { get; set; }
+    private DataStudentItemService[] dataItemTestList { get; set; }
+    private DataStudentItemService[] maxPointList { get; set; }
 
     GaugeTickPosition tickPosition = GaugeTickPosition.Outside;
 
@@ -236,14 +234,19 @@
     protected override async Task OnParametersSetAsync()
     {
         await base.OnParametersSetAsync();
-        AllTestList = await CompletedTestService.GetCompletedTestsWithUserId(MyUserService.User.UserId);
-        NonDuplicateTestList = GetCompletedTestFromUser();
-        CreateDataItems();
-        ToDo = await ToDoService.GetToDosByAuthor(MyUserService.User.UserId);
-        TempToDo = new ToDoDTO();
-        GetCounter();
-        CountReachedPointsFromCompletedTests();
-        News = await GetLastNews();
+
+        if (MyUserService.User != null)
+        {
+            completedTestList = await CompletedTestService.GetCompletedTestsWithUserId(MyUserService.User.UserId);
+
+            nonDuplicateTestList = GetCompletedTestFromUser();
+            CreateDataItems();
+            toDo = await ToDoService.GetToDosByAuthor(MyUserService.User.UserId);
+            tempToDo = new ToDoDTO();
+            GetCounter();
+            CountReachedPointsFromCompletedTests();
+            news = await GetLastNews();
+        }
         StateHasChanged();
     }
 
@@ -252,19 +255,19 @@
     /// </summary>
     private CompletedTestDTO[] GetCompletedTestFromUser()
     {
-        if (AllTestList != null)
+        if (completedTestList != null)
         {
-            var originTestList = new List<CompletedTestDTO>(AllTestList);
+            var originTestList = new List<CompletedTestDTO>(completedTestList);
             var nonDuplicateList = new List<CompletedTestDTO>();
             bool alreadyExist = false;
 
             for (int i = 0; i < originTestList.Count; i++)
             {
-                if (nonDuplicateList.Count != 0)
+                if (nonDuplicateList.Count != 0 && originTestList[i] != null && originTestList[i].SolvedTest != null)
                 {
                     for (int j = 0; j < nonDuplicateList.Count; j++)
                     {
-                        if (originTestList[i].SolvedTest.TestID == nonDuplicateList[j].SolvedTest.TestID)
+                        if (nonDuplicateList[j] != null && nonDuplicateList[j].SolvedTest != null && originTestList[i].SolvedTest.TestID == nonDuplicateList[j].SolvedTest.TestID )
                         {
                             if (nonDuplicateList[j].ReachedPoints < originTestList[i].ReachedPoints)
                             {
@@ -276,8 +279,9 @@
                         }
                         alreadyExist = false;
                     }
+
                 }
-                if (!alreadyExist)
+                if (!alreadyExist && originTestList[i] != null && originTestList[i].SolvedTest != null)
                 {
                     nonDuplicateList.Add(originTestList[i]);
                 }
@@ -293,87 +297,19 @@
 
 
     /// <summary>
-    /// Generates a List with specifics ToDos of the active user.
-    /// </summary>
-    private async void GetToDos()
-    {
-        ToDo = await ToDoService.GetToDosByAuthor(MyUserService.User.UserId);
-    }
-
-    /// <summary>
-    /// Generates a NewsList with the last three news.
-    /// </summary>
-    private async Task<List<NewsDTO>> GetLastNews()
-    {
-        News = await NewsService.GetNews();
-        List<NewsDTO> LatestNews = new List<NewsDTO>();
-        LatestNews.Add(News[News.Count - 1]);
-        LatestNews.Add(News[News.Count - 2]);
-        LatestNews.Add(News[News.Count - 3]);
-        return LatestNews;
-    }
-
-
-    /// <summary>
-    /// Adds new user tods.
-    /// </summary>
-    private async Task AddTodo()
-    {
-        if (!string.IsNullOrWhiteSpace(newTodo))
-        {
-            TempToDo.Task = newTodo;
-            TempToDo.ToDoID = 0;
-            TempToDo.Author = MyUserService.User;
-            await ToDoService.AddOrUpdateToDo(TempToDo);
-            ToDo.Add(TempToDo);
-            GetToDos();
-            GetCounter();
-            newTodo = string.Empty;
-        }
-
-    }
-
-    /// <summary>
-    /// Updates the ToDo List, when a check box is selected.
-    /// </summary>
-    private async Task UpdateToDo(ToDoDTO todo, bool check)
-    {
-        todo.IsDone = check;
-        await ToDoService.AddOrUpdateToDo(todo);
-        GetCounter();
-        StateHasChanged();
-    }
-
-
-    /// <summary>
-    /// Counts how many ToDo tasks are still open.
-    /// </summary>
-    private void GetCounter()
-    {
-        if (ToDo != null)
-        {
-            count = ToDo.Count(todo => !todo.IsDone);
-        }
-        else
-        {
-            count = 0;
-        }
-    }
-
-    /// <summary>
     /// Generates DataItems for creating specifics charts.
     /// </summary>
     private void CreateDataItems()
     {
-        if (NonDuplicateTestList != null)
+        if (nonDuplicateTestList != null )
         {
-            testList = new DataStudentItemService[NonDuplicateTestList.Length];
-            maxPointList = new DataStudentItemService[NonDuplicateTestList.Length];
+            dataItemTestList = new DataStudentItemService[nonDuplicateTestList.Length];
+            maxPointList = new DataStudentItemService[nonDuplicateTestList.Length];
             int count = 0;
 
-            foreach (var test in NonDuplicateTestList)
+            foreach (var test in nonDuplicateTestList)
             {
-                testList[count] = new DataStudentItemService() { TestName = test.SolvedTest.Topic, ReachedPoints = test.ReachedPoints };
+                dataItemTestList[count] = new DataStudentItemService() { TestName = test.SolvedTest.Topic, ReachedPoints = test.ReachedPoints };
                 maxPointList[count] = new DataStudentItemService() { TestName = test.SolvedTest.Topic, ReachedPoints = test.MaxPoints };
                 count++;
             }
@@ -387,7 +323,7 @@
     {
         DataItem.maxPointsfromTests = 0;
 
-        if (NonDuplicateTestList != null && maxPointList != null)
+        if (nonDuplicateTestList != null && maxPointList != null)
         {
             for (int i = 0; i < maxPointList.Length; i++)
             {
@@ -396,7 +332,6 @@
                     DataItem.maxPointsfromTests += maxPointList[i].ReachedPoints;
                 }
             }
-
 
         }
     }
@@ -408,14 +343,14 @@
     {
         DataItem.maxReachedPointsfromTests = 0;
 
-        if (NonDuplicateTestList != null && testList != null)
+        if (nonDuplicateTestList != null && dataItemTestList != null)
         {
 
-            for (int i = 0; i < testList.Length; i++)
+            for (int i = 0; i < dataItemTestList.Length; i++)
             {
-                if (testList[i] != null)
+                if (dataItemTestList[i] != null)
                 {
-                    DataItem.maxReachedPointsfromTests += testList[i].ReachedPoints;
+                    DataItem.maxReachedPointsfromTests += dataItemTestList[i].ReachedPoints;
                 }
             }
 
@@ -425,15 +360,80 @@
         }
     }
 
+    /// <summary>
+    /// Generates a NewsList with the last three news.
+    /// </summary>
+    private async Task<List<NewsDTO>> GetLastNews()
+    {
+        news = await NewsService.GetNews();
+        List<NewsDTO> latestNews = new List<NewsDTO>();
+        latestNews.Add(news[news.Count - 1]);
+        latestNews.Add(news[news.Count - 2]);
+        latestNews.Add(news[news.Count - 3]);
+        return latestNews;
+    }
+
 
     /// <summary>
-    /// Deletes todos from ToDo List.
+    /// Generates a List with specifics ToDos of the active user.
+    /// </summary>
+    private async void GetToDos()
+    {
+        toDo = await ToDoService.GetToDosByAuthor(MyUserService.User.UserId);
+    }
+
+    /// <summary>
+    /// Adds new user tods.
+    /// </summary>
+    private async Task AddTodo()
+    {
+        if (!string.IsNullOrWhiteSpace(newTodo))
+        {
+            tempToDo.Task = newTodo;
+            tempToDo.ToDoID = 0;
+            tempToDo.Author = MyUserService.User;
+            await ToDoService.AddOrUpdateToDo(tempToDo);
+            toDo.Add(tempToDo);
+            GetToDos();
+            GetCounter();
+            newTodo = string.Empty;
+        }
+    }
+
+    /// <summary>
+    /// Updates the toDo List, when a check box is selected.
+    /// </summary>
+    private async Task UpdateToDo(ToDoDTO todo, bool check)
+    {
+        todo.IsDone = check;
+        await ToDoService.AddOrUpdateToDo(todo);
+        GetCounter();
+        StateHasChanged();
+    }
+
+    /// <summary>
+    /// Counts how many toDo tasks are still open.
+    /// </summary>
+    private void GetCounter()
+    {
+        if (toDo != null)
+        {
+            count = toDo.Count(todo => !todo.IsDone);
+        }
+        else
+        {
+            count = 0;
+        }
+    }
+
+
+    /// <summary>
+    /// Deletes todos from toDo List.
     /// </summary>
     private async Task DeleteToDo()
     {
         List<ToDoDTO> tempToDo = new List<ToDoDTO>();
-
-        tempToDo.AddRange(ToDo.Where(t => t.IsDone));
+        tempToDo.AddRange(toDo.Where(t => t.IsDone));
 
         foreach (var todo in tempToDo)
         {
@@ -441,7 +441,7 @@
 
             if (successfull)
             {
-                ToDo = await ToDoService.GetToDosByAuthor(MyUserService.User.UserId);
+                toDo = await ToDoService.GetToDosByAuthor(MyUserService.User.UserId);
             }
         }
         GetCounter();
