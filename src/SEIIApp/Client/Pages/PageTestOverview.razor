@@ -16,7 +16,7 @@
                     <div class="searchcostum input-group pt-2">
 
 
-                        @if (isFiltered == false)
+                        @if (IsFiltered == false)
                         {
                             <div class="px-auto shadow">
                                 <InputText type="search" class="form-control rounded" placeholder="Search by Topic"
@@ -145,14 +145,14 @@
 
                                 <!-- Modal body -->
                 <div class="modal-body">
-                                    <p>Are you sure you want to delete @currentTest.Topic?</p>
+                                    <p>Are you sure you want to delete @CurrentTest.Topic?</p>
                                 </div>
 
                                 <!-- Modal footer -->
                 <div class="modal-footer">
                                     <button type="button" class="btn" @onclick="@ModalCancel">Cancel</button>
                                     <button type="button" class="btn btn-danger"
-                        @onclick="() => DeleteTest(currentTest)">Delete</button>
+                        @onclick="() => DeleteTest(CurrentTest)">Delete</button>
                                 </div>
 
                             </div>
@@ -230,13 +230,13 @@
 @code {
     public string searchValue = "";
 
-    public bool isFiltered { get; set; }
+    private bool IsFiltered { get; set; }
 
     public List<TestDTO> Tests { get; set; }
 
-    private List<TestDTO> copyOfTest { get; set; }
+    private List<TestDTO> CopyOfTest { get; set; }
 
-    private TestDTO currentTest { get; set; }
+    private TestDTO CurrentTest { get; set; }
 
     private bool showModal = false;
 
@@ -260,9 +260,9 @@
     {
 
         Tests.Remove(test);
-        if (copyOfTest != null)
+        if (CopyOfTest != null)
         {
-            copyOfTest.Remove(test);
+            CopyOfTest.Remove(test);
         }
         await TestDefinitionService.DeleteTest(test.TestID);
 
@@ -276,18 +276,18 @@
     {
         if (Tests != null && searchValue != null)
         {
-            copyOfTest = new List<TestDTO>(Tests);
-            isFiltered = true;
+            CopyOfTest = new List<TestDTO>(Tests);
+            IsFiltered = true;
             Tests.Clear();
-            Tests.AddRange(copyOfTest.Where(t => t.Topic.ToLower().StartsWith(searchValue.ToLower())));
+            Tests.AddRange(CopyOfTest.Where(t => t.Topic.ToLower().StartsWith(searchValue.ToLower())));
         }
     }
 
     private void ResetSearchContent()
     {
-        isFiltered = false;
+        IsFiltered = false;
         Tests.Clear();
-        Tests.AddRange(copyOfTest);
+        Tests.AddRange(CopyOfTest);
     }
 
     private void StartTest(int contentId)
@@ -302,10 +302,8 @@
 
     void ModalShow(TestDTO test)
     {
-
         showModal = true;
-        currentTest = test;
-
+        CurrentTest = test;
     }
 
     void ModalCancel() => showModal = false;

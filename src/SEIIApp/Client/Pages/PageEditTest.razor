@@ -147,7 +147,7 @@
                         </button>
 
                         <button class="btn btn-outline-danger shadow"
-                    @onclick="() =>  NavigationManager.NavigateTo(TestOverviewURL)">
+                    @onclick="() =>  NavigationManager.NavigateTo(testOverviewURL)">
                             Cancel
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-x-lg" viewBox="0 0 16 16">
@@ -183,13 +183,11 @@
     [Parameter]
     public int TestID { get; set; }
 
-    public TestDTO TestDto { get; set; }
+    private TestDTO TestDto { get; set; }
 
     private EditContext context { get; set; }
 
-    private string TestOverviewURL = "/testoverview";
-
-    private bool isNotValid { get; set; }
+    private string testOverviewURL = "/testoverview";
 
     protected override async Task OnParametersSetAsync()
     {
@@ -217,7 +215,6 @@
         if (test.VideosFurtherInformation == null) test.VideosFurtherInformation = new List<VideoContentDTO>();
         if (test.Content == null) test.Content = new List<PictureContentDTO>();
         if (test.FurtherLinks == null) test.FurtherLinks = new List<FurtherLinkDTO>();
-
         this.TestDto = test;
     }
 
@@ -246,10 +243,6 @@
             {
                 this.TestDto.TestID = answer.TestID; //refresh id (if created)
                 NavigationManager.NavigateTo("/testoverview");
-            }
-            else
-            {
-                isNotValid = true;
             }
         }
     }
