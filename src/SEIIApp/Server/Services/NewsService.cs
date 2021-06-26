@@ -1,11 +1,7 @@
 ﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
 using SEIIApp.Server.DataAccess;
 using SEIIApp.Server.Domain;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace SEIIApp.Server.Services
 {
@@ -26,16 +22,30 @@ namespace SEIIApp.Server.Services
             return DatabaseContext.News;
         }
 
+        /// <summary>
+        /// Returns all news.
+        /// </summary>
+        /// <returns></returns>
         public News[] GetAllNews()
         {
             return GetQueryableForNews().ToArray();
         }
 
+        /// <summary>
+        /// Returns a news with given id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public News GetNewsWithId(int id)
         {
             return GetQueryableForNews().Where(news => news.NewsId == id).FirstOrDefault();
         }
 
+        /// <summary>
+        /// Adds a news.
+        /// </summary>
+        /// <param name="news"></param>
+        /// <returns></returns>
         public News AddNews(News news)
         {
             DatabaseContext.News.Add(news);
@@ -43,6 +53,11 @@ namespace SEIIApp.Server.Services
             return news;
         }
 
+        /// <summary>
+        /// Updates a news.
+        /// </summary>
+        /// <param name="news"></param>
+        /// <returns></returns>
         public News UpdateNews(News news)
         {
             var exsistingNews = GetNewsWithId(news.NewsId);
@@ -53,7 +68,10 @@ namespace SEIIApp.Server.Services
             return exsistingNews;
         }
 
-
+        /// <summary>
+        /// Removes a news.
+        /// </summary>
+        /// <param name="news"></param>
         public void RemoveNews(News news)
         {
             DatabaseContext.News.Remove(news);
