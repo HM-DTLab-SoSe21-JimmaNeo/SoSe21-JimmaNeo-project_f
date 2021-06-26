@@ -4,10 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using SEIIApp.Server.Domain;
 using SEIIApp.Server.Services;
 using SEIIApp.Shared;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SEIIApp.Server.Controllers
 {
@@ -28,15 +24,24 @@ namespace SEIIApp.Server.Controllers
       this.Mapper = mapper;
     }
 
+    /// <summary>
+    /// Returns all tests. 
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public ActionResult<Shared.TestBaseDTO> GetAllTests()
+    public ActionResult<TestBaseDTO> GetAllTests()
     {
       var tests = TestService.GetAllTests();
       var mappedResult = Mapper.Map<TestBaseDTO[]>(tests);
       return Ok(mappedResult);
     }
-
+    
+    /// <summary>
+    /// Returns the test with the given id.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -48,7 +53,12 @@ namespace SEIIApp.Server.Controllers
       var mappedTest = Mapper.Map<TestDTO>(test);
       return Ok(mappedTest);
     }
-
+    
+    /// <summary>
+    /// Returns the test with the given topic. 
+    /// </summary>
+    /// <param name="topic"></param>
+    /// <returns></returns>
     [HttpGet("topic/{topic}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -61,6 +71,11 @@ namespace SEIIApp.Server.Controllers
       return Ok(mappedTest);
     }
 
+    /// <summary>
+    /// Adds or updates a test.
+    /// </summary>
+    /// <param name="testDTO"></param>
+    /// <returns></returns>
     [HttpPut]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -87,6 +102,11 @@ namespace SEIIApp.Server.Controllers
       return BadRequest(ModelState);
     }
 
+    /// <summary>
+    /// Removes a test.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

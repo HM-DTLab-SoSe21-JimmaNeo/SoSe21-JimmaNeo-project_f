@@ -3,9 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using SEIIApp.Server.DataAccess;
 using SEIIApp.Server.Domain;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace SEIIApp.Server.Services
 {
@@ -39,23 +37,43 @@ namespace SEIIApp.Server.Services
                 .Include(test => test.Author);
         }
 
+        /// <summary>
+        /// Returns all tests. Includes also questions and their answers and pictures, 
+        /// as well as content, videos, further informations + further links and the author.
+        /// </summary>
+        /// <returns></returns>
         public Test[] GetAllTests()
         {
             return GetQueryableForTest().ToArray();
         }
 
+        /// <summary>
+        /// Returns a test with given id. Includes also questions and their answers and pictures, 
+        /// as well as content, videos, further informations + further links and the author.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Test GetTestWithId(int id)
         {
             return GetQueryableForTest().Where(test => test.TestId == id).FirstOrDefault();
         }
 
+        /// <summary>
+        /// Returns a test with given topic. Includes also questions and their answers and pictures, 
+        /// as well as content, videos, further informations + further links and the author. 
+        /// </summary>
+        /// <param name="topic"></param>
+        /// <returns></returns>
         public Test GetTestWithTopic(string topic)
         {
             return GetQueryableForTest().Where(test => test.Topic == topic).FirstOrDefault();
         }
 
-
-
+        /// <summary>
+        /// Adds a test.
+        /// </summary>
+        /// <param name="test"></param>
+        /// <returns></returns>
         public Test AddTest(Test test)
         {
             User user = UserService.GetUserWithId(test.Author.UserId);
@@ -79,6 +97,11 @@ namespace SEIIApp.Server.Services
             return test;
         }
 
+        /// <summary>
+        /// Updates a test. 
+        /// </summary>
+        /// <param name="test"></param>
+        /// <returns></returns>
         public Test UpdateTest(Test test)
         {
             var exsistingTest = GetTestWithId(test.TestId);
@@ -99,6 +122,10 @@ namespace SEIIApp.Server.Services
             return exsistingTest;
         }
 
+        /// <summary>
+        /// Removes a test and all dependencies. 
+        /// </summary>
+        /// <param name="test"></param>
         public void RemoveTest(Test test)
         {
             DatabaseContext.Tests.Remove(test);

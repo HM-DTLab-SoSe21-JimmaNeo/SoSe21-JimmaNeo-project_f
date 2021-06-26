@@ -4,10 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using SEIIApp.Server.Domain;
 using SEIIApp.Server.Services;
 using SEIIApp.Shared;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SEIIApp.Server.Controllers
 {
@@ -25,6 +21,10 @@ namespace SEIIApp.Server.Controllers
             this.Mapper = mapper;
         }
 
+        /// <summary>
+        /// Returns all news.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<NewsDTO[]> GetAllNews()
@@ -35,6 +35,11 @@ namespace SEIIApp.Server.Controllers
             return Ok(mappedResult);
         }
 
+        /// <summary>
+        /// Adds or updates a news.
+        /// </summary>
+        /// <param name="news"></param>
+        /// <returns></returns>
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -59,6 +64,11 @@ namespace SEIIApp.Server.Controllers
             return BadRequest(ModelState);
         }
 
+        /// <summary>
+        /// Removes a news. 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
