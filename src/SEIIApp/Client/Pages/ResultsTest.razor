@@ -1,24 +1,21 @@
-﻿@page "/resultstest/"
+﻿@page "/resultstest/{CompletedTestID:int}" 
 
 @inject Services.TestsDefinitionBackendAccessService TestDefinitionService
 @inject NavigationManager NavigationManager
 @inject Services.CompletedTestBackendAccessService CompletedTestService
-
-@using static RunTest
-
+@inject UserLoggedInService UserService
 
 <div class="container">
 
-    @if (RunTest.TestDto != null && RunTest.CompletedTestDTO != null)
+    @if (UserService.User != null && CompletedTestDTO.SolvedTest != null && CompletedTestDTO != null)
     {
-        <h2 class="text-center">Results of @(RunTest.CompletedTestDTO.SolvedTest.Topic)</h2>
+        <h2 class="text-center">Results of @(CompletedTestDTO.SolvedTest.Topic)+@(CompletedTestDTO.CtId)</h2>
         <hr class="divider">
-        <h3 class="text-center"><b>Your score: @(RunTest.CompletedTestDTO.ReachedPoints)/@(RunTest.CompletedTestDTO.MaxPoints) Points</b></h3>
+        <h3 class="text-center"><b>Your score: @(CompletedTestDTO.ReachedPoints)/@(CompletedTestDTO.MaxPoints) Points</b></h3>
         <ul class="list-group list-group-flush">
 
-            @foreach (var question in RunTest.TestDto.Questions)
+            @foreach (var question in CompletedTestDTO.SolvedTest.Questions)
             {
-
                 <div class="card shadow">
                     <div class="card-body">
                 <li class="text-center list-group-item">
@@ -91,6 +88,17 @@
 
     @code{
 
+       [Parameter]
+        public int CompletedTestID { get; set; }
+
+        private CompletedTestDTO CompletedTestDTO { get; set; }
+        protected override async Task OnParametersSetAsync()
+        {
+            await base.OnParametersSetAsync();
+            var returnedTest = await CompletedTestService.GetCompletedTestWithId(CompletedTestID);
+            CompletedTestDTO = returnedTest;
+        } 
+
         private void ReturnBackToTestOverview()
         {
             NavigationManager.NavigateTo("/testoverview/");
@@ -98,7 +106,6 @@
 
         private void GoToFurtherInformationPage()
         {
-            NavigationManager.NavigateTo("/furtherinformation/" + RunTest.TestDto.TestID);
+            NavigationManager.NavigateTo("/furtherinformation/" + CompletedTestDTO.SolvedTest.TestID);
         }
     }
-

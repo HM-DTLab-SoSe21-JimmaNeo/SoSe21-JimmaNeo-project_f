@@ -110,9 +110,9 @@
         [Parameter]
         public int TestID { get; set; }
 
-        public static TestDTO TestDto { get; set; }
+        private TestDTO TestDto { get; set; }
 
-        public static CompletedTestDTO CompletedTestDTO { get; set; }
+        private CompletedTestDTO CompletedTestDTO { get; set; }
 
         private string testOverviewURL = "/testoverview";
 
@@ -122,18 +122,18 @@
             await base.OnParametersSetAsync();
             TestDto = returnedTest;
             EditService.OnEditing = false;
+            SetIsClickedAnswerToFalse();
         }
 
         private async void OnSubmitTest()
         {
             CompletedTestDTO completedTest = CreateCompletedTest(TestDto);
-            CompletedTestDTO = completedTest;
-            await CompletedTestService.AddCompletedTest(completedTest);
-
+            CompletedTestDTO = await CompletedTestService.AddCompletedTest(completedTest);
+ 
             var answer = await TestService.AddOrUpdateTest(TestDto);
             if (answer != null)
             {
-                NavigationManager.NavigateTo("/resultstest/");
+                NavigationManager.NavigateTo("/resultstest/" + CompletedTestDTO.CtId);
             }
 
         }
@@ -188,7 +188,14 @@
             completedTest.MaxPoints = CountMaxPoints(TestDto.Questions);
             completedTest.ReachedPoints = CountReachedPoints(TestDto.Questions);
             completedTest.Student = UserService.User;
-
             return completedTest;
+        }
+
+        private void SetIsClickedAnswerToFalse(){
+         foreach(var question in TestDto.Questions){
+           foreach(var answers in question.Answers){
+               answers.IsClicked = false;
+           }
+          }
         }
     }
