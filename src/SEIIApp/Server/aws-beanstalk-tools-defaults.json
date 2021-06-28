@@ -1,0 +1,20 @@
+
+{
+    "region" : "eu-central-1",
+    "configuration" : "Debug",
+    "framework"     : "net5.0",
+    "self-contained" : true,
+    "application"    : "GruppeF-JimmaNeo",
+    "environment"    : "GruppeF-JimmaNeo-dev",
+    "enable-xray"    : false,
+    "enhanced-health-type" : "basic",
+    "additional-options"   : "\"aws:autoscaling:launchconfiguration,SecurityGroups\"=\"sg-4377f530\";\"aws:ec2:vpc,Subnets\"=\"subnet-210b734b\"",
+    "solution-stack"       : "64bit Amazon Linux 2 v2.2.1 running .NET Core",
+    "environment-type"     : "SingleInstance",
+    "cname"                : "gruppef-jimmaneo-dev",
+    "instance-type"        : "t3a.medium",
+    "key-pair"             : "Testschluessel",
+    "instance-profile"     : "aws-elasticbeanstalk-ec2-role",
+    "service-role"         : "aws-elasticbeanstalk-service-role",
+    "proxy-server"         : "nginx"
+}
