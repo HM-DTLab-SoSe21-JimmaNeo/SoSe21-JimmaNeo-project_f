@@ -25,6 +25,10 @@ namespace SEIIApp.Server.Controllers
             this.Mapper = mapper;
         }
 
+        /// <summary>
+        /// Returns all subjectAreas.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("ShowSubjectArea")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<SubjectAreaDTO[]> ShowSubjectAreas()
@@ -34,6 +38,11 @@ namespace SEIIApp.Server.Controllers
             return Ok(mappedResult);
         }
 
+        /// <summary>
+        /// Returns subjectArea with specific id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("SearchSubjectAreaID/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -45,6 +54,11 @@ namespace SEIIApp.Server.Controllers
             return Ok(mappedResult);
         }
 
+        /// <summary>
+        /// Returns subjectArea with specific topic.
+        /// </summary>
+        /// <param name="topic"></param>
+        /// <returns></returns>
         [HttpGet("SearchSubjectAreaTopic/{topic}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -56,6 +70,10 @@ namespace SEIIApp.Server.Controllers
             return Ok(mappedResult);
         }
 
+        /// <summary>
+        /// Adds or updates subjectArea.
+        /// </summary>
+        /// <returns></returns>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPut("ChangeSubjectArea")]
@@ -85,6 +103,11 @@ namespace SEIIApp.Server.Controllers
             return BadRequest(ModelState);
         }
 
+        /// <summary>
+        /// Deletes subjectArea with specific id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("DeleteSubjectArea/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

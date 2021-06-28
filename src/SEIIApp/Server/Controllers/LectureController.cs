@@ -25,6 +25,10 @@ namespace SEIIApp.Server.Controllers
             this.Mapper = mapper;
         }
 
+        /// <summary>
+        /// Returns all lectures.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("ShowLectures")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<LectureBaseDTO[]> ShowLectures()
@@ -34,6 +38,11 @@ namespace SEIIApp.Server.Controllers
             return Ok(mappedResult);
         }
 
+        /// <summary>
+        /// Returns lecture with specific id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("SearchLectureID/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -45,6 +54,11 @@ namespace SEIIApp.Server.Controllers
             return Ok(mappedResult);
         }
 
+        /// <summary>
+        /// Returns lecture with specific topic.
+        /// </summary>
+        /// <param name="topic"></param>
+        /// <returns></returns>
         [HttpGet("SearchLectureTopic/{topic}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -55,7 +69,11 @@ namespace SEIIApp.Server.Controllers
             var mappedResult = Mapper.Map<LectureDTO>(lectureInList);
             return Ok(mappedResult);
         }
-        
+
+        /// <summary>
+        /// Adds or updates lecture.
+        /// </summary>
+        /// <returns></returns>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPut("ChangeLecture")]
@@ -86,6 +104,11 @@ namespace SEIIApp.Server.Controllers
             return BadRequest(ModelState);
         }
 
+        /// <summary>
+        /// Deletes lecture with specific id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("DeleteLecture/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

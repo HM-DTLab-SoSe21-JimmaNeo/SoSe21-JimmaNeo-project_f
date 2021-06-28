@@ -37,21 +37,40 @@ namespace SEIIApp.Server.Services
                 .Include(lecture => lecture.Videos);
         }
 
+        /// <summary>
+        /// Returns an array with all lectures. Includes author, test, content and videos.
+        /// </summary>
+        /// <returns></returns>
         public Lecture[] GetAllLecture()
         {
             return GetQueryableForLecture().ToArray();
         }
 
+        /// <summary>
+        /// Returns a lecture with specific id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Lecture GetLectureWithId(int id)
         {
             return GetQueryableForLecture().Where(lecture => lecture.LectureId == id).FirstOrDefault();
         }
 
+        /// <summary>
+        /// Returns a lecture with specific topic.
+        /// </summary>
+        /// <param name="topic"></param>
+        /// <returns></returns>
         public Lecture GetLectureWithTopic(string topic)
         {
             return GetQueryableForLecture().Where(lecture => lecture.Topic.Equals(topic)).FirstOrDefault();
         }
 
+        /// <summary>
+        /// Adds given lecture to database.
+        /// </summary>
+        /// <param name="lecture"></param>
+        /// <returns></returns>
         public Lecture AddLecture(Lecture lecture)
         {
             
@@ -83,6 +102,11 @@ namespace SEIIApp.Server.Services
             return lecture;
         }
 
+        /// <summary>
+        /// Updates given lecture in database.
+        /// </summary>
+        /// <param name="lecture"></param>
+        /// <returns></returns>
         public Lecture UpdateLecture(Lecture lecture)
         {
             var exsistingLecture = GetLectureWithId(lecture.LectureId);
@@ -105,6 +129,11 @@ namespace SEIIApp.Server.Services
             return exsistingLecture;
         }
 
+        /// <summary>
+        /// Deletes given lecture from database.
+        /// </summary>
+        /// <param name="lecture"
+        /// <returns></returns>
         public void RemoveLecture(Lecture lecture)
         {
             DatabaseContext.Lectures.Remove(lecture);

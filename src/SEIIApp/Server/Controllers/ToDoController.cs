@@ -25,6 +25,10 @@ namespace SEIIApp.Server.Controllers
             this.Mapper = mapper;
         }
 
+        /// <summary>
+        /// Returns all todos.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<ToDoDTO[]> ShowToDos()
@@ -34,6 +38,10 @@ namespace SEIIApp.Server.Controllers
             return Ok(mappedResult);
         }
 
+        /// <summary>
+        /// Adds or updates todo.
+        /// </summary>
+        /// <returns></returns>
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -60,7 +68,11 @@ namespace SEIIApp.Server.Controllers
             return BadRequest(ModelState);
         }
 
- 
+        /// <summary>
+        /// Deletes todo with specific id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -72,7 +84,11 @@ namespace SEIIApp.Server.Controllers
             return Ok();
         }
 
-
+        /// <summary>
+        /// Returns todo with specific id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -84,6 +100,11 @@ namespace SEIIApp.Server.Controllers
             return Ok(mappedResult);
         }
 
+        /// <summary>
+        /// Returns todo with specific author id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("author/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
