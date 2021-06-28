@@ -31,8 +31,8 @@ namespace SEIIApp.Server.Domain
 
             // Lecture
             CreateMap<Lecture, Lecture>()
-                .ForMember(test => test.LectureId, options => options.Ignore())
-                .ForMember(test => test.Author, options => options.Ignore()); ;
+                .ForMember(lecture => lecture.LectureId, options => options.Ignore())
+                .ForMember(lecture => lecture.Author, options => options.Ignore()); ;
 
             CreateMap<Lecture, LectureDTO>();
             CreateMap<LectureDTO, Lecture>(); 
@@ -50,10 +50,9 @@ namespace SEIIApp.Server.Domain
             CreateMap<QuestionDTO, Question>();
 
             // SubjectArea
-            CreateMap<SubjectArea, SubjectAreaDTO>()
-                .ForMember(subjectAreaDto => subjectAreaDto.Lectures, opts => opts.MapFrom(obj => obj.Lectures.ToList()));
-            CreateMap<SubjectAreaDTO, SubjectArea>()
-                .ForMember(subjectAreaObj => subjectAreaObj.Lectures, opts => opts.MapFrom(obj => obj.Lectures.ToList()));
+            CreateMap<SubjectArea, SubjectAreaDTO>();
+            CreateMap<SubjectAreaDTO, SubjectArea>();
+            CreateMap<SubjectArea, SubjectArea>();
 
             // Test
             CreateMap<Test, Test>()

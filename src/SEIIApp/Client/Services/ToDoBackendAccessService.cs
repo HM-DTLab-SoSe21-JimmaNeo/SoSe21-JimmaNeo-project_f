@@ -41,6 +41,8 @@ namespace SEIIApp.Client.Services
         /// <summary>
         /// Returns a certain todo by id
         /// </summary>
+        /// <param name="todoID"></param>
+        /// <returns></returns>
         public async Task<ToDoDTO> GetToDoById(int todoID)
         {
             return await HttpClient.GetFromJsonAsync<ToDoDTO>(GetToDoUrlWithId(todoID));
@@ -49,6 +51,8 @@ namespace SEIIApp.Client.Services
         /// <summary>
         /// Returns all todos created by an author with authorId
         /// </summary> 
+        /// <param name="authorID"></param>
+        /// <returns></returns>
         public async Task<List<ToDoDTO>> GetToDosByAuthor(int authorID)
         {
             return await HttpClient.GetFromJsonAsync<List<ToDoDTO>>(GetToDoUrlWithAuthor(authorID));
@@ -66,6 +70,8 @@ namespace SEIIApp.Client.Services
         /// <summary>
         /// Adds or updates a todo on the backend. Returns the tests if successful else null
         /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
         public async Task<ToDoDTO> AddOrUpdateToDo(ToDoDTO dto)
         {
             var response = await HttpClient.PutAsJsonAsync(GetToDoUrl(), dto);
@@ -79,6 +85,8 @@ namespace SEIIApp.Client.Services
         /// <summary>
         /// Deletes a todo and returns true if successful
         /// </summary>
+        /// <param name="ToDoID"></param>
+        /// <returns></returns>
         public async Task<bool> DeleteToDo(int ToDoID)
         {
             var response = await HttpClient.DeleteAsync(GetToDoUrlWithId(ToDoID));
