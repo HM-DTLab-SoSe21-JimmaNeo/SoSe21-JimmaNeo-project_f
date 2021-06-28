@@ -131,6 +131,11 @@
                         }
                         <br /><button class="btn btn-light shadow" @onclick="AddPictureContent">Add Picture</button><br />
                         <hr />
+
+                        @if (isNotValid)
+                        {
+                            <h6 class="text-center">Please add the missing values or remove the objects before saving again.</h6>
+                        }
                         <ValidationSummary />
 
                         <button class="btn btn-outline-success shadow" @onclick="SaveContentToBackend">
@@ -186,6 +191,8 @@
 
     private string testOverviewURL = "/testoverview";
 
+    private bool isNotValid { get; set; } = false;
+
     protected override async Task OnParametersSetAsync()
     {
         if (TestID != 0)
@@ -239,6 +246,10 @@
                 this.TestDto.TestID = answer.TestID; //refresh id (if created)
                 NavigationManager.NavigateTo("/testoverview");
             }
+        }
+        else
+        {
+            isNotValid = true;
         }
     }
 
