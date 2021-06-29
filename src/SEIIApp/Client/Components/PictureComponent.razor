@@ -1,4 +1,6 @@
-﻿@if (OnEditing)
+﻿@inject EditService EditService
+
+@if (EditService.OnEditing)
 {
     <h3>Pictures</h3><br />
     <EditForm Model="PictureContentDTO">
@@ -12,7 +14,8 @@
 
         </div>
         <div class="form-floating">
-            <textarea class="form-control" id="inputMessage" type="text" placeholder="Enter description here..." style="height: 10rem" @bind="PictureContentDTO.Description"></textarea>
+            <textarea class="form-control" id="inputMessage" type="text" placeholder="Enter description here..."
+            style="height: 10rem" @bind="PictureContentDTO.Description"></textarea>
         </div>
 
 
@@ -23,20 +26,17 @@
 else
 {
     <img src="@PictureContentDTO.Path" class=" img-thumbnail" allowfullscreen> <br />
-    
+
     if (!String.IsNullOrEmpty(PictureContentDTO.Description))
     {
-       <br/>
-    <h5 class="text-center"> <b>Picture Description</b></h5>
-    <p class="text-center">@(PictureContentDTO.Description)</p><br />
+        <br />
+        <h5 class="text-center"> <b>Picture Description</b></h5>
+        <p class="text-center">@(PictureContentDTO.Description)</p><br />
     }
 }
 @code {
     [Parameter]
     public PictureContentDTO PictureContentDTO { get; set; }
-
-    public static bool OnEditing = false;
-
     protected override void OnInitialized()
     {
         base.OnInitialized();

@@ -3,20 +3,18 @@
 @inject NavigationManager NavigationManager
 @inject UserLoggedInService UserService
 
-<div class="container">
+@if (UserService.User != null)
+{
+    <div class="container">
+    <h2 class="text-center">Your Tests</h2>
+    <hr class="divider">
+    <div class="col text-center">
 
-    @if (UserService.User != null)
-    {
-        <h2 class="text-center">Your Tests</h2>
-        <hr class="divider">
-        <div class="col text-center">
+        <div class="px-5">
+            <EditForm Model="@searchValue">
+                <div class="searchcostum input-group pt-2">
 
-            <div class="px-5">
-                <EditForm Model="@searchValue">
-                    <div class="searchcostum input-group pt-2">
-
-
-                        @if (IsFiltered == false)
+                    @if (IsFiltered == false)
                         {
                             <div class="px-auto shadow">
                                 <InputText type="search" class="form-control rounded" placeholder="Search by Topic"
@@ -24,8 +22,8 @@
                             @bind-Value="@searchValue" />
 
 
-                            </div>
-                            <button class="btn btn-outline-primary btn-sm shadow" @onclick="SearchContent">
+                            </div>@*Search Icon*@
+                            <button class="btn btn-outline-primary btn-sm shadow" @onclick="SearchTest">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-search" viewBox="0 0 16 16">
                                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007
@@ -38,8 +36,8 @@
                         }
                         else
                         {
-                            <div class="text-center pb-2 shadow">
-                                <button class="btn btn-outline-primary" @onclick="ResetSearchContent">Return</button>
+                            <div class="text-center pb-2">
+                                <button class="btn btn-outline-primary shadow" @onclick="ResetSearchTest">Return</button>
                             </div>
                             <br />
 
@@ -59,35 +57,37 @@
         @if (Tests != null)
 
         {
-            @if (UserService.User.Role == Role.Teacher)
-            {
-                <ul class="list-group list-group-flush">
 
-                    @foreach (var content in Tests)
-                    {
-                        <li class="text-center list-group-item">
-                            <div class="card shadow">
+            <ul class="list-group list-group-flush">
 
-                                <div class="card-body">
-                                    <b>
-                                        TestID:
-                                    </b>
-                                    @(content.TestID)
-                                    <b>
-                                        Date:
-                                    </b>
-                                    @(content.DateOfCreation.ToShortDateString())
-                                    <b>
-                                        Author:
-                                    </b>
-                                    @(content.Author.FirstName)
-                                    @(content.Author.LastName)
-                                    <b>
-                                        Topic:
-                                    </b>
+                @foreach (var content in Tests)
+                {
+                    <li class="text-center list-group-item">
+                        <div class="card shadow">
 
-                                    @(content.Topic)
-                                    <br />
+                            <div class="card-body">
+                                <b>
+                                    TestID:
+                                </b>
+                                @(content.TestID)
+                                <b>
+                                    Date:
+                                </b>
+                                @(content.DateOfCreation.ToShortDateString())
+                                <b>
+                                    Author:
+                                </b>
+                                @(content.Author.FirstName)
+                                @(content.Author.LastName)
+                                <b>
+                                    Topic:
+                                </b>
+
+                                @(content.Topic)
+                                <br />
+                                @if (UserService.User.Role == Role.Teacher)
+                                {
+
                                     <button class="btn btn-outline-dark btn-sm" @onclick="() => EditQuiz((TestDTO)content)">
                                         Edit
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -117,79 +117,18 @@
                                     </button>
                                     <button class="btn btn-outline-primary btn-sm"
                         @onclick="() => GetFurtherTopicInformations(content.TestID)">
-                                        @content.Topic
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        @content.Topic
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-lightbulb" viewBox="0 0 16 16">
-                                            <path
+                            <path
                                 d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13a.5.5 0 0 1 0 1 .5.5 0 0 1 0 1l-.224.447a1
                                               1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1 0-1 .5.5 0 0 1 0-1 .5.5 0 0 1-.46-.302l-.761-1.77a1.964 1.964 0 0 0-.453-.618A5.984
                                               5.984 0 0 1 2 6zm6-5a5 5 0 0 0-3.479 8.592c.263.254.514.564.676.941L5.83 12h4.342l.632-1.467c.162-.377.413-.687.676-.941A5 5 0 0 0 8 1z" />
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-                        </li>
-                    }
-                </ul>
-                @if (showModal)
-                {
-                    <div class="modal fade show" id="myModal" style="display:block" aria-modal="true" role="dialog">
-                        <div class="modal-dialog shadow">
-                            <div class="modal-content">
-
-                                <!-- Modal Header -->
-                <div class="modal-header">
-                                    <h4 class="modal-title">Confirm delete</h4>
-                                    <button type="button" class="close" @onclick="@ModalCancel">&times;</button>
-                                </div>
-
-                                <!-- Modal body -->
-                <div class="modal-body">
-                                    <p>Are you sure you want to delete @CurrentTest.Topic?</p>
-                                </div>
-
-                                <!-- Modal footer -->
-                <div class="modal-footer">
-                                    <button type="button" class="btn" @onclick="@ModalCancel">Cancel</button>
-                                    <button type="button" class="btn btn-danger"
-                        @onclick="() => DeleteTest(CurrentTest)">Delete</button>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                }
-
-            }
-            else if (UserService.User.Role == Role.Student)
-            {
-                <ul class="list-group list-group-flush">
-
-                    @foreach (var content in Tests)
-                    {
-                        <li class="text-center list-group-item">
-                            <div class="card shadow">
-                                <div class="card-body">
-                                    <b>
-                                        TestID:
-                                    </b>
-                                    @(content.TestID)
-                                    <b>
-                                        Date:
-                                    </b>
-                                    @(content.DateOfCreation.ToShortDateString())
-                                    <b>
-                                        Author:
-                                    </b>
-                                    @(content.Author.FirstName)
-                                    @(content.Author.LastName)
-                                    <b>
-                                        Topic:
-                                    </b>
-
-                                    @(content.Topic)
-                                    <br />
+                        </svg>
+                    </button>
+                                }
+                                else if (UserService.User.Role == Role.Student)
+                                {
                                     <button class="btn btn-outline-success btn-sm" @onclick="() => StartTest(content.TestID)">
                                         Start
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -200,35 +139,64 @@
                                     </button>
                                     <button class="btn btn-outline-primary btn-sm"
                         @onclick="() => GetFurtherTopicInformations(content.TestID)">@content.Topic
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-lightbulb" viewBox="0 0 16 16">
-                                            <path d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13a.5.5 0 0 1 0 1 .5.5 0 0 1 0 1l-.224.447a1
+                            <path d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13a.5.5 0 0 1 0 1 .5.5 0 0 1 0 1l-.224.447a1
                                               1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1 0-1 .5.5 0 0 1 0-1 .5.5 0 0 1-.46-.302l-.761-1.77a1.964 1.964 0
                                               0 0-.453-.618A5.984 5.984 0 0 1 2 6zm6-5a5 5 0 0 0-3.479 8.592c.263.254.514.564.676.941L5.83 12h4.342l.632-1.467c.162-.377.413-.687.676-.941A5
                                               5 0 0 0 8 1z" />
-                                        </svg>
-                                    </button>
-                                </div>
+                        </svg>
+                    </button>
+                                }
                             </div>
-                        </li>
-                    }
-                </ul>
+                        </div>
+                    </li>
+                }
+            </ul>
+            @if (showModal)
+            {
+                <div class="modal fade show" id="myModal" style="display:block" aria-modal="true" role="dialog">
+                    <div class="modal-dialog shadow">
+                        <div class="modal-content">
+
+                            <!-- Modal Header -->
+                <div class="modal-header">
+                                <h4 class="modal-title">Confirm delete</h4>
+                                <button type="button" class="close" @onclick="@ModalCancel">&times;</button>
+                            </div>
+
+                            <!-- Modal body -->
+                <div class="modal-body">
+                                <p>Are you sure you want to delete @CurrentTest.Topic?</p>
+                            </div>
+
+                            <!-- Modal footer -->
+                <div class="modal-footer">
+                                <button type="button" class="btn" @onclick="@ModalCancel">Cancel</button>
+                                <button type="button" class="btn btn-danger"
+                        @onclick="() => DeleteTest(CurrentTest)">Delete</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
             }
+
         }
         else
         {
             <h5 class="text-center">Loading ... or no content found.</h5>
         }
-    }
-    else
-    {
-        <h5 class="text-center">Something went wrong...</h5>
-    }
-
-</div>
+    </div>
+}
+else
+{
+    <h5 class="text-center">Please login to use this page.</h5>
+}
 
 @code {
-    public string searchValue = "";
+    private string searchValue = "";
 
     private bool IsFiltered { get; set; }
 
@@ -272,7 +240,7 @@
     }
 
 
-    private void SearchContent()
+    private void SearchTest()
     {
         if (Tests != null && searchValue != null)
         {
@@ -283,7 +251,7 @@
         }
     }
 
-    private void ResetSearchContent()
+    private void ResetSearchTest()
     {
         IsFiltered = false;
         Tests.Clear();

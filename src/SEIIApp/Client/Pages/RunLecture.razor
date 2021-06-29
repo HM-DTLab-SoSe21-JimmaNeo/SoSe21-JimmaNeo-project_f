@@ -2,14 +2,15 @@
 
 @inject Services.LectureBackendAccessService LectureService
 @inject NavigationManager NavigationManager
-
+@inject EditService EditService
 
 <div class="container">
 
     @if (LectureDto != null)
     {
-        VideoComponent.OnEditing = false;
-        PictureComponent.OnEditing = false;
+
+        EditService.OnEditing = false;
+
         <h2 class="text-center">@(LectureDto.Topic)</h2>
         <hr class="divider" />
         <ul class="list-group list-group-flush">
@@ -124,7 +125,6 @@
         await base.OnParametersSetAsync();
         LectureDto = returnedLecture;
         Lectures = await LectureService.GetLectureOverview();
-        SEIIApp.Client.Components.VideoComponent.OnEditing = false;
     }
 
     private async void OnSubmitLecture()
@@ -144,9 +144,9 @@
         if(nextID <= Lectures.Count) {
             NavigationManager.NavigateTo($"/runlecture/{nextID}");
             if((nextID + 1) > Lectures.Count)
-                {
+            {
                 hasNext = false;
-                }
+            }
         }
         else
         {
@@ -154,7 +154,7 @@
         }
     }
 
-  
+
     private void GetLastLecture()
     {
         hasNext = true;

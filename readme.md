@@ -1,7 +1,4 @@
-# Vorlagenprojekt für ein Blazor WebAssembly Projekt das auf ASP.NET Core gehostet ist
-
-Dieses Projekt ist ein Standard-Vorlageprojekt, das eine funktionierende WebAssembly-Anwendung, die auf .NET Core gehostet ist, zeigt. Die Beispiel-Anwendung enthält einen Zugriff auf APIs.
-
+# **JimmaNeo**
 
 # 1. **PressRelease**
 
@@ -46,66 +43,99 @@ George Micheals, frisch gebackener Vater und Industrieangestellter:
 Damit auch zukünftig viele Neugeborene wie Aba gerettet werden können müssen Projekte  
 wie das JimmaNeo Projekt an Bekanntheit gewinnen. Bitte berichtet in eurem Umfeld über  
 über dieses Projekt. Weitere Informationen findet ihr unter URL: [LMU](https://www.lmuklinikum.de).
+</details>
+
+# 1.1. **Storyboard**   
+![Screenshot Storyboard](/Documentation/Screenshots/LMU_Team_F_Storyboard-Vesion_1.2-001.jpg)   
 
 # 2. **Anwendungsbeschreibung**
 
-### Allgemeiner Bereich:
-Beim Starten der Web-Anwendung können Sie auf der linken Seite der Anwednung die Navigation sehen.  
-Sie gelangen auf der Hauptseite zur LandingPage **JimmaNeo**.  
-Hier können Sie zum Einstieg nochmal das Storyboard in Form eines kleinen Videos ansehen.  
-Des Weiteren können Sie Details zu dem Projekt lesen.    
+## Allgemeiner Bereich:
+<br>
+
+### LandingPage 
+Beim Starten der Web-Anwendung kann man auf der linken Seite der Anwednung die Navigation sehen und  
+auf der rechten Seite die LandingPage der Applikation **JimmaNeo** sehen.  
+Hier kann man als Einstieg nochmal das Storyboard in Form eines kleinen Videos ansehen.  
+Des Weiteren kann man beim runterscrollen Details zu unserem Projekt lesen.
+<br>  
 ![Screenshot LandingPage](/Documentation/Screenshots/Home.PNG)
+<br>
 
-**- Navigationspunkt: News**    
-Hier können Sie alle neuen Nachrichten durchlesen.    
+### Navigationspunkt: News
+Hier werden alle neuen News angezeigt.
+<br>    
 ![Screenshot News](/Documentation/Screenshots/News.PNG)
+<br>
 
-**- Navigationspunkt: Login**  
-Hier können Sie sich einlogen, dabei ist es nicht relevant,   
-welche Rolle (Teacher, Student, Admin) Sie besitzen.    
-Die Anwendung filtert Ihre Rolle beim Login automatisch.  
+### Navigationspunkt: Login  
+Wenn man sich einlogt, ist es nicht relevant,   
+welche Rolle (Teacher, Student, Admin) man besitzt.    
+Die Anwendung filtert die Rolle beim Login automatisch.
+<br>   
 ![Screenshot Login](/Documentation/Screenshots/Login.PNG)
+<br>
 
-**- Navigationspunkt: Register**  
+### Navigationspunkt: Register   
+Hier kann man sich registrieren, wenn man noch keinen Account besitzt.  
+Alle neu registrierten Benutzer besitzen automatisch die Studenten Berechtigung. 
+<br>  
 ![Screenshot Register](/Documentation/Screenshots/Register.PNG)
+<br>
 
-**- Navigationspunkt: Contact us**  
+### Navigationspunkt: Contact us   
+Wenn man Anregungen, Wünsche oder auch Anmerkungen zu der Applikation hat, kann man jederzeit
+diese im Kontaktformular verfassen und abschicken.  
+<br> 
 ![Screenshot Contact](/Documentation/Screenshots/Contact.PNG)
+<br>
 
-**- Navigationspunkt: FAQ**  
+### Navigationspunkt: FAQ  
+Wichtige Fragen und Antworten zu der Anwendung. 
+<br>  
 ![Screenshot FAQ](/Documentation/Screenshots/FAQ.PNG)
+<br>
 
 
+## Admin Bereich:
 
-## Admin Bereich:  
-Wenn Sie sich erfolgreich eingelogt haben und Admin Rechte besitzen,  
-gelangen Sie auf die ManageUser Seite.  
-Hier wird Ihnen eine Tabelle mit allen registrierten Benutzern auf der   
-Plattform angezeigt. 
+Wenn man sich erfolgreich eingelogt hat und Admin Rechte besitzt,  
+gelangt man auf die ManageUser Seite.  
+Hier sieht man eine Tabelle mit allen registrierten Benutzern auf der Plattform.   
 In jeder Zelle der Tabelle befindet sich neben dem Usernamen, Vornamen,  
-Nachnamen ein Edit Button(blau) und ein Delete Button(rot)
+Nachnamen ein Edit Button(blau) und ein Delete Button(rot).  
+<br> 
 ![Screenshot ManageUser](/Documentation/Screenshots/Admin_ManageUser.png)
+<br>
 
-Nun stehen Ihnen drei Optionen zur verfügung, wie Sie weiter verfahren können.  
+Nun hat man drei Optionen zur verfügung, wie man als Admin weiter verfahren kann.   
+<br>
 
-**1. Einen Benutzer löschen**    
-Um einen Benutzer zu löschen, klicken Sie auf den roten Button.
-Danach werden Sie nochmal gefragt, ob Sie den ausgewählten Benutzer wirklich löschen wollen.
-Durch erneutes klicken des Delete Buttons löschen Sie den Benutzer endgültig aus dem System.
+### 1. Einen Benutzer löschen    
+Um einen Benutzer zu löschen, klicken man auf den roten Button.
+Danach wird man nochmal gefragt, ob man den ausgewählten Benutzer wirklich löschen möchte.
+Durch erneutes klicken des Delete Buttons löscht man den Benutzer endgültig aus dem System.
+<br> 
 ![Screenshot DeleteUser](/Documentation/Screenshots/Admin_DeleteUser.PNG)
+<br> 
 
-**2. Einen Benutzer editieren**    
-Um den Vornamen, Nachnamen oder die Rolle eines Benutzers zu ändern, klicken Sie neben den  
+### 2. Einen Benutzer editieren   
+Um den Vornamen, Nachnamen oder die Rolle eines Benutzers zu ändern, klickt man neben den  
 gewünschten Benutzer auf das Zahnrad (blauer Button).   
-Sie gelangen nun auf die EditSeite des spezifischen Benutzers.
+Man gelangt nun auf die EditSeite des ausgewählten Benutzers.
+<br> 
 ![Screenshot EditUser](/Documentation/Screenshots/Admin_EditUser_Role.png)
+<br>
 
-**3. Eine neue Nachricht erstellen**   
-Wenn Sie eine neue Nachricht erstellen wollen, klicken Sie auf der ManageUser Seite  
-auf den grauen Button EditNews.  
+### 3. Eine neue Nachricht erstellen   
+Wenn man eine neue Nachricht erstellen möchte, klickt man auf der ManageUser Seite  
+auf den grauen Button EditNews. Nun wird man weitergeleiet auf die editierbare News Seite. 
+<br>      
 ![Screenshot EditNews](/Documentation/Screenshots/Admin_EditNews.png)
 
-**Prozessablauf**  
+### Prozessablauf
+
+<br>    
 ![Screenshot EditNews](/Documentation/Screenshots/AdminArea.png)
 
 ## Trainer Bereich:
@@ -172,8 +202,11 @@ Falls du noch mehr lernen möchstest hast du die Möglichkeit auf weitere Inform
 
 # 3. **Softwarearchitektur**   
 
-Die Anwendung ist in 3 Teile aufgegliedert.   Das Frontend, also die Client-Seite, befindet sich in dem „SEIIApp.Client“-Projekt, einer WebApp-Anwendung.   Das Backend, die Server-Seite, wird in dem „SEIIApp.Server“-Projekt implementiert.   Das „SEIIApp.Shared“-Projekt dient dem Datenaustausch mithilfe von DataTransferObjects (DTOs).   
-Um auf die im Backend gespeicherten Daten zuzugreifen, nutzen die Razor-WebPages die im Frontend vorhandenen BackendAccessServices.    Diese schicken DataTransfer-Objekte an die jeweiligen Controller im Backend, welche die weitere Verarbeitung in Hinblick auf die Daten und der Datenbank übernehmen.    Die Controller bieten die HTTP-Schnittstelle an und geben die erhaltenen Requests an die jeweiligen Services weiter, welche für die verschiedenen Aktionen auf der Datenbank zuständig sind. <br><br>
+**Struktur** <br>
+Die Anwendung ist in drei Teile aufgegliedert.   Das Frontend, die Client-Seite, befindet sich in dem „SEIIApp.Client“-Projekt, einer WebApp-Anwendung.   Das Backend, die Server-Seite, wird in dem „SEIIApp.Server“-Projekt implementiert.   Das „SEIIApp.Shared“-Projekt dient dem Datenaustausch mithilfe von DataTransferObjects (DTOs).<br><br>
+**Datenzugriff** <br>
+Um auf die im Backend gespeicherten Daten zuzugreifen, nutzen die Razor-WebPages die im Frontend vorhandenen BackendAccessServices.    Diese schicken DataTransfer-Objekte an die jeweiligen Controller im Backend, welche die weitere Verarbeitung in Hinblick auf die Daten und der Datenbank übernehmen.    Die Controller bieten die HTTP-Schnittstelle nach dem REST-API-Schema an und geben die erhaltenen Requests an die jeweiligen Services weiter, welche für die verschiedenen Aktionen auf der Datenbank zuständig sind. <br><br>
+**Services und Controller** <br>
 Folgend sind die Services und Controller einschließlich ihrer Methoden und ihrer Zuordnung zu dem Front- und Backend angegeben:   
 
 ![Screenshot Services_&_Controller](/Documentation/Screenshots/services_controller.png)<br>
@@ -189,6 +222,9 @@ Folgend sind die Services und Controller einschließlich ihrer Methoden und ihre
 | Volland, Aaron  | Frontend |avolland@hm.edu|
 | Weber, Anne Sofie | Frontend |------ |  
 | Wolf, Simon  | Backend |------ | 
+
+![Screenshot Gruppenfoto](/Documentation/Screenshots/Gruppenfoto.JPG)
+
  
 
 ### 5. **Anlagen**

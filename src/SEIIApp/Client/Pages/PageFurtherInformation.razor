@@ -2,7 +2,7 @@
 
 @inject Services.TestsDefinitionBackendAccessService TestDefinitionService
 @inject NavigationManager NavigationManager
-
+@inject Services.EditService EditService
 
 
 
@@ -10,34 +10,37 @@
 
     @if (TestDto != null)
     {
-        <h2 class="text-center">Further information about @(TestDto.Topic)</h2><hr class="divider" />
+        <h2 class="text-center">Further information about @(TestDto.Topic)</h2>
+        <hr class="divider" />
         <br />
         <ul class="list-group list-group-flush">
-            @if (TestDto.FurtherLinks.Any())
+        @if (TestDto.FurtherLinks.Any())
             {
                 <div class="card shadow">
                     <div class="card-header">
                         <h3 class="text-center">
                             <b>Website-Links about @(TestDto.Topic)</b>
                             <br />
-                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-laptop" viewBox="0 0 16 16">
-                                <path d="M13.5 3a.5.5 0 0 1 .5.5V11H2V3.5a.5.5 0 0 1 .5-.5h11zm-11-1A1.5 1.5 0 0 0 1 3.5V12h14V3.5A1.5 1.5 0 0 0 13.5 2h-11zM0 12.5h16a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 12.5z" />
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+                        class="bi bi-laptop" viewBox="0 0 16 16">
+                                <path
+                            d="M13.5 3a.5.5 0 0 1 .5.5V11H2V3.5a.5.5 0 0 1 .5-.5h11zm-11-1A1.5 1.5 0 0 0 1 3.5V12h14V3.5A1.5 1.5 0 0 0 13.5 2h-11zM0 12.5h16a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 12.5z" />
                             </svg>
                         </h3>
                     </div>
                     @foreach (var link in TestDto.FurtherLinks)
                     {
-                    <li class="text-center list-group-item">
-                        <div class="card shadow">
-                            <div class="card-body">
-                                <FurtherLinkComponent FurtherLinkDto="link"></FurtherLinkComponent>
+                        <li class="text-center list-group-item">
+                            <div class="card shadow">
+                                <div class="card-body">
+                                    <FurtherLinkComponent FurtherLinkDto="link"></FurtherLinkComponent>
+                                </div>
                             </div>
-                        </div>
-                        <br />
-                    </li>
-                }
-            </div>
-        }
+                            <br />
+                        </li>
+                    }
+                </div>
+            }
             <br />
             @if (TestDto.VideosFurtherInformation.Any())
             {
@@ -47,9 +50,11 @@
                         <h3 class="text-center">
                             <b>Videos about @(TestDto.Topic) </b>
                             <br />
-                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-camera-reels" viewBox="0 0 16 16">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+                        class="bi bi-camera-reels" viewBox="0 0 16 16">
                                 <path d="M6 3a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM1 3a2 2 0 1 0 4 0 2 2 0 0 0-4 0z" />
-                                <path d="M9 6h.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 7.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5
+                                <path
+                            d="M9 6h.5a2 2 0 0 1 1.983 1.738l3.11-1.382A1 1 0 0 1 16 7.269v7.462a1 1 0 0 1-1.406.913l-3.111-1.382A2 2 0 0 1 9.5
                                   16H2a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h7zm6 8.73V7.27l-3.5 1.555v4.35l3.5 1.556zM1 8v6a1 1 0 0 0 1 1h7.5a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1z" />
                                 <path d="M9 6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM7 3a2 2 0 1 1 4 0 2 2 0 0 1-4 0z" />
                             </svg>
@@ -82,9 +87,11 @@
                         <h3 class="text-center">
                             <b>Pictures about @(TestDto.Topic) </b>
                             <br />
-                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-images" viewBox="0 0 16 16">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+                        class="bi bi-images" viewBox="0 0 16 16">
                                 <path d="M4.502 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
-                                <path d="M14.002 13a2 2 0 0 1-2 2h-10a2 2 0 0 1-2-2V5A2 2 0 0 1 2 3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-1.998
+                                <path
+                            d="M14.002 13a2 2 0 0 1-2 2h-10a2 2 0 0 1-2-2V5A2 2 0 0 1 2 3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v8a2 2 0 0 1-1.998
                                   2zM14 2H4a1 1 0 0 0-1 1h9.002a2 2 0 0 1 2 2v7A1 1 0 0 0 15 11V3a1 1 0 0 0-1-1zM2.002 4a1 1 0 0 0-1 1v8l2.646-2.354a.5.5 0 0 1
                                   .63-.062l2.66 1.773 3.71-3.71a.5.5 0 0 1 .577-.094l1.777 1.947V5a1 1 0 0 0-1-1h-10z" />
                             </svg>
@@ -107,37 +114,35 @@
                 </div>
 
             }
-            </ul>
-            <br />
-            <div class="text-center py-2">
-                <button class="btn btn-light shadow" @onclick="() => ReturnBackToTestOverview()">Return to overview</button>
-            </div>
-            <br />
-            <br />
-        }
-
-    </div>
-
-    @code{
-
-        [Parameter]
-        public int TestID { get; set; }
-
-        private TestDTO TestDto { get; set; }
-
-        protected override async Task OnParametersSetAsync()
-        {
-            var existingQuiz = await TestDefinitionService.GetTestById(TestID);
-            await base.OnParametersSetAsync();
-            this.TestDto = existingQuiz;
-            SEIIApp.Client.Components.VideoComponent.OnEditing = false;
-            SEIIApp.Client.Components.PictureComponent.OnEditing = false;
-            SEIIApp.Client.Components.FurtherLinkComponent.OnEditing = false;
-        }
-
-        private void ReturnBackToTestOverview()
-        {
-            NavigationManager.NavigateTo("/testoverview/");
-        }
+        </ul>
+        <br />
+        <div class="text-center py-2">
+            <button class="btn btn-light shadow" @onclick="() => ReturnBackToTestOverview()">Return to overview</button>
+        </div>
+        <br />
+        <br />
     }
 
+</div>
+
+@code {
+
+    [Parameter]
+    public int TestID { get; set; }
+
+    private TestDTO TestDto { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var existingQuiz = await TestDefinitionService.GetTestById(TestID);
+        await base.OnParametersSetAsync();
+        this.TestDto = existingQuiz;
+
+        EditService.OnEditing = false;
+    }
+
+    private void ReturnBackToTestOverview()
+    {
+        NavigationManager.NavigateTo("/testoverview/");
+    }
+}

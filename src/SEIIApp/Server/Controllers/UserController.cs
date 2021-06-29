@@ -1,8 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using SEIIApp.Server.Services;
 using SEIIApp.Shared;
@@ -25,22 +21,10 @@ namespace SEIIApp.Server.Controllers
             this.Mapper = mapper;
         }
 
-        [HttpGet("login")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<UserDTO> LoginUser([FromQuery] string name, [FromQuery] string pw)
-        {
-            var user = UserService.GetUserWithName(name);
-
-            if (user == null) return NotFound();
-            if (pw == null) return BadRequest(); 
-            if (!user.Pw.Equals(pw.GetHashCode().ToString())) return BadRequest();
-
-            var mappedResult = Mapper.Map<UserDTO>(user);
-            return Ok(mappedResult);
-        }
-
+        /// <summary>
+        /// Returns all users. 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<UserDTO[]> ShowUsers()
@@ -50,6 +34,50 @@ namespace SEIIApp.Server.Controllers
             return Ok(mappedResult);
         }
 
+        /// <summary>
+        /// Returns the user with the given id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<UserDTO> GetUserById([FromRoute] int id)
+        {
+            var user = UserService.GetUserWithId(id);
+            if (user == null) return StatusCode(StatusCodes.Status404NotFound);
+            var mappedResult = Mapper.Map<UserDTO>(user);
+            return Ok(mappedResult);
+        }
+
+        /// <summary>
+        /// Returns the user with the given id, 
+        /// if the name exists and the password is correct.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="pw"></param>
+        /// <returns></returns>
+        [HttpGet("login")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public ActionResult<UserDTO> LoginUser([FromQuery] string name, [FromQuery] string pw)
+        {
+            var user = UserService.GetUserWithName(name);
+
+            if (user == null) return NotFound();
+            if (pw == null) return BadRequest();
+            if (!user.Pw.Equals(pw.GetHashCode().ToString())) return BadRequest();
+
+            var mappedResult = Mapper.Map<UserDTO>(user);
+            return Ok(mappedResult);
+        }
+
+        /// <summary>
+        /// Adds a user, if the name is available. 
+        /// </summary>
+        /// <param name="ri"></param>
+        /// <returns></returns>
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPut("register")]
@@ -65,11 +93,16 @@ namespace SEIIApp.Server.Controllers
             return Ok(Mapper.Map<UserDTO>(mappedUser));
         }
 
+        /// <summary>
+        /// Updates a user. 
+        /// </summary>
+        /// <param name="userDTO"></param>
+        /// <returns></returns>
         [HttpPut("change")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<UserDTO> ChangeStudent([FromBody] UserDTO userDTO)
+        public ActionResult<UserDTO> ChangeUser([FromBody] UserDTO userDTO)
         {
             if (ModelState.IsValid)
             {
@@ -84,6 +117,11 @@ namespace SEIIApp.Server.Controllers
             return BadRequest(ModelState);
         }
 
+        /// <summary>
+        /// Removes a user.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -94,18 +132,6 @@ namespace SEIIApp.Server.Controllers
 
             UserService.RemoveUser(user);
             return Ok();
-        }
-
-        
-        [HttpGet("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<UserDTO> GetUserById([FromRoute]int id)
-        {
-            var user = UserService.GetUserWithId(id);
-            if (user == null) return StatusCode(StatusCodes.Status404NotFound);
-            var mappedResult = Mapper.Map<UserDTO>(user);
-            return Ok(mappedResult);
         }
     }
 }
