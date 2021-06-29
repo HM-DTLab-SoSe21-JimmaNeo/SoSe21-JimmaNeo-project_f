@@ -35,7 +35,7 @@
                     }
                     else
                     {
-                        <div class="text-center pb-2 shadow">
+                        <div class="text-center pb-2">
                             <button class="btn btn-outline-primary shadow" @onclick="ResetSearchContent">Return</button>
                         </div>
                         <hr />
@@ -45,8 +45,6 @@
             </EditForm>
             @if (UserService.User != null && UserService.User.Role == Role.Teacher)
             {
-                VideoComponent.OnEditing = true;
-                PictureComponent.OnEditing = true;
                 <div class="text-center py-2">
                     <button class="btn btn-outline-dark btn-sm shadow" @onclick="AddLecture">+ Add Lecture</button>
                 </div>
@@ -193,7 +191,6 @@
                             </div>
                         </div>
                     </li>
-                }
                 }
             </ul>
 

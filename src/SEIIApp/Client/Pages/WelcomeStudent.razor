@@ -264,11 +264,11 @@
 
             for (int i = 0; i < originTestList.Count; i++)
             {
-                if (nonDuplicateList.Count != 0)
+                if (nonDuplicateList.Count != 0 && originTestList[i] != null && originTestList[i].SolvedTest != null)
                 {
                     for (int j = 0; j < nonDuplicateList.Count; j++)
                     {
-                        if (originTestList[i].SolvedTest.TestID == nonDuplicateList[j].SolvedTest.TestID)
+                        if (nonDuplicateList[j] != null && nonDuplicateList[j].SolvedTest != null && originTestList[i].SolvedTest.TestID == nonDuplicateList[j].SolvedTest.TestID )
                         {
                             if (nonDuplicateList[j].ReachedPoints < originTestList[i].ReachedPoints)
                             {
@@ -280,8 +280,9 @@
                         }
                         alreadyExist = false;
                     }
+
                 }
-                if (!alreadyExist)
+                if (!alreadyExist && originTestList[i] != null && originTestList[i].SolvedTest != null)
                 {
                     nonDuplicateList.Add(originTestList[i]);
                 }
@@ -301,7 +302,7 @@
     /// </summary>
     private void CreateDataItems()
     {
-        if (nonDuplicateTestList != null)
+        if (nonDuplicateTestList != null )
         {
             dataItemTestList = new DataStudentItemService[nonDuplicateTestList.Length];
             maxPointList = new DataStudentItemService[nonDuplicateTestList.Length];
@@ -332,7 +333,6 @@
                     DataItem.maxPointsfromTests += maxPointList[i].ReachedPoints;
                 }
             }
-
 
         }
     }
@@ -402,7 +402,6 @@
             
 
         }
-
     }
 
     /// <summary>

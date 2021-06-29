@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using AutoMapper;
 using SEIIApp.Server.Domain;
-using System.Threading.Tasks;
 using SEIIApp.Server.DataAccess;
-using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace SEIIApp.Server.Services
 {
@@ -26,21 +22,40 @@ namespace SEIIApp.Server.Services
             return DatabaseContext.User;
         }
 
+        /// <summary>
+        /// Returns all users. 
+        /// </summary>
+        /// <returns></returns>
         public User[] GetAllUser()
         {
             return GetQueryableForUser().ToArray();
         }
 
+        /// <summary>
+        /// Returns a user with given id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public User GetUserWithId(int id)
         {
             return GetQueryableForUser().Where(user => user.UserId == id).FirstOrDefault();
         }
 
+        /// <summary>
+        /// Returns a user with given name.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public User GetUserWithName(string name)
         {
             return GetQueryableForUser().Where(user => user.Name.Equals(name)).FirstOrDefault();
         }
 
+        /// <summary>
+        /// Adds a user.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public User AddUser(User user)
         {
             DatabaseContext.User.Add(user);
@@ -48,6 +63,11 @@ namespace SEIIApp.Server.Services
             return user;
         }
 
+        /// <summary>
+        /// Updates a user.
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public User UpdateUser(User user)
         {
             var existingUser = GetUserWithId(user.UserId);
@@ -63,6 +83,10 @@ namespace SEIIApp.Server.Services
             return existingUser;
         }
 
+        /// <summary>
+        /// Removes a user and all dependencies. 
+        /// </summary>
+        /// <param name="user"></param>
         public void RemoveUser(User user)
         {
             DatabaseContext.User.Remove(user);

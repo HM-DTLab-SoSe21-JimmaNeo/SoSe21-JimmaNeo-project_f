@@ -1,9 +1,10 @@
-﻿
+﻿@inject EditService EditService
+
 <EditForm Model="VideoContentDTO">
 
     <DataAnnotationsValidator />
 
-    @if (OnEditing)
+    @if (EditService.OnEditing)
     {
         <h4>Videos</h4>
 
@@ -36,18 +37,22 @@
             VideoContentDTO.Path = VideoContentDTO.Path.Substring(0, VideoContentDTO.Path.IndexOf("&list"));
         }
         <div class="iframecontainer">
-            <iframe class="responsive-iframe" src=@("https://www.youtube.com/embed/" + VideoContentDTO.Path) title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe class="responsive-iframe" src=@("https://www.youtube.com/embed/" + VideoContentDTO.Path)
+            title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen></iframe>
             <br />
         </div>
-        <ValidationSummary />
+
 
     }
 
-    @if (OnEditing)
+    @if (EditService.OnEditing)
     {
 
         <div class="form-floating">
-            <textarea class="form-control" id="inputMessage" type="text" placeholder="Enter description here..." style="height: 10rem" @bind="VideoContentDTO.Description"></textarea>
+            <textarea class="form-control" id="inputMessage" type="text" placeholder="Enter description here..."
+            style="height: 10rem" @bind="VideoContentDTO.Description"></textarea>
         </div>
 
     }
@@ -55,11 +60,12 @@
     {
         if (!String.IsNullOrEmpty(VideoContentDTO.Description))
         {
-<br />
-        <h5 class="text-center"> <b>Video Description</b></h5>
-        <p class="text-center">@VideoContentDTO.Description</p>
+            <br />
+            <h5 class="text-center"> <b>Video Description</b></h5>
+            <p class="text-center">@VideoContentDTO.Description</p>
         }
     }
+    <ValidationSummary />
 
 </EditForm>
 
@@ -67,8 +73,6 @@
 @code {
     [Parameter]
     public VideoContentDTO VideoContentDTO { get; set; }
-
-    public static bool OnEditing = false; 
 
     protected override void OnInitialized()
     {

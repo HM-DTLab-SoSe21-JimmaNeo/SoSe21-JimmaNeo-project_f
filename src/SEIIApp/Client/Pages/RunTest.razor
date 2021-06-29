@@ -4,7 +4,8 @@
 @inject Services.CompletedTestBackendAccessService CompletedTestService
 @inject NavigationManager NavigationManager
 @inject UserLoggedInService UserService
-
+@inject EditService EditService
+@inject SaveTestAnswersService SaveTestAnswersService
 
 <div class="container">
 
@@ -73,21 +74,21 @@
             </div>
         }
 
-    }
+        }
                 </ul>
                 <br />
                 <br />
                 <div class="text-center">
                     <button class="btn btn-outline-success shadow" @onclick="()=> OnSubmitTest()">
-                        Submit
+                        Submit @*Submit Icon*@
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
                             <path d="M13.485 1.431a1.473 1.473 0 0 1 2.104 2.062l-7.84 9.801a1.473 1.473 0 0 1-2.12.04L.431 8.138a1.473 1.473 0 0 1 2.084-2.083l4.111 4.112 6.82-8.69a.486.486 0 0 1 .04-.045z" />
                         </svg>
                         <br />
                     </button>
-
+                     
                     <button class="btn btn-outline-danger shadow" @onclick="() =>  NavigationManager.NavigateTo(testOverviewURL)">
-                        Cancel
+                        Cancel @*Cancel Icon*@
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
                             <path d="M1.293 1.293a1 1 0 0 1 1.414 0L8 6.586l5.293-5.293a1 1 0 1 1 1.414 1.414L9.414 8l5.293 5.293a1 1 0 0 1-1.414
                                               1.414L8 9.414l-5.293 5.293a1 1 0 0 1-1.414-1.414L6.586 8 1.293 2.707a1 1 0 0 1 0-1.414z" />
@@ -97,16 +98,12 @@
                 </div>
                 <br />
                 <br />
-
                 </EditForm>
-
             }
             else
             {
-                <h5 class="text-center">Something went wrong...</h5>
+                <h5 class="text-center">Please login to use this page.</h5>
             }
-
-
     </div>
 
     @code {
@@ -114,34 +111,29 @@
         [Parameter]
         public int TestID { get; set; }
 
-        public static TestDTO TestDto { get; set; }
+        private TestDTO TestDto { get; set; }
 
-        public static CompletedTestDTO CompletedTestDTO { get; set; }
+        private CompletedTestDTO CompletedTestDTO { get; set; }
 
         private string testOverviewURL = "/testoverview";
 
         protected override async Task OnParametersSetAsync()
         {
-
             var returnedTest = await TestService.GetTestById(TestID);
             await base.OnParametersSetAsync();
             TestDto = returnedTest;
-            SEIIApp.Client.Components.VideoComponent.OnEditing = false;
-            SEIIApp.Client.Components.PictureComponent.OnEditing = false;
+            EditService.OnEditing = false;
         }
 
         private async void OnSubmitTest()
         {
             CompletedTestDTO completedTest = CreateCompletedTest(TestDto);
-            CompletedTestDTO = completedTest;
-            await CompletedTestService.AddCompletedTest(completedTest);
-
+            CompletedTestDTO = await CompletedTestService.AddCompletedTest(completedTest);
             var answer = await TestService.AddOrUpdateTest(TestDto);
             if (answer != null)
             {
-                NavigationManager.NavigateTo("/resultstest/");
+                NavigationManager.NavigateTo("/resultstest/" + CompletedTestDTO.CtId);
             }
-
         }
 
         private int CountMaxPoints(List<QuestionDTO> questions)
@@ -151,10 +143,7 @@
             {
                 foreach (var answer in question.Answers)
                 {
-                    if (answer.IsCorrect)
-                    {
-                        maxPoints++;
-                    }
+                    maxPoints = answer.IsCorrect ? maxPoints + 1 : maxPoints;
                 }
             }
             return maxPoints;
@@ -167,34 +156,30 @@
             {
                 foreach (var answer in question.Answers)
                 {
-                    if (answer.IsClicked)
-                    {
-                        if (answer.IsCorrect)
-                        {
-                            reachedPoints++;
-                        }
-                        else if (!answer.IsCorrect && reachedPoints > 0)
-                        {
-                            reachedPoints--;
-                        }
-                    }
-                    else if (answer.IsCorrect && !answer.IsClicked && reachedPoints > 0)
-                    {
-                        reachedPoints--;
-                    }
+                   reachedPoints = CalculateReachedPoints(answer, reachedPoints);
                 }
             }
+            return reachedPoints > 0 ? reachedPoints : 0;
+        }
+
+        private int CalculateReachedPoints(AnswerDTO answer, int reachedPoints){
+            if (answer.IsClicked) 
+               {
+                    reachedPoints = answer.IsCorrect? reachedPoints + 1 : reachedPoints - 1;
+                }else if (answer.IsCorrect && !answer.IsClicked)
+                {
+                    reachedPoints--;
+                }
             return reachedPoints;
         }
 
         private CompletedTestDTO CreateCompletedTest(TestDTO test)
-        {
+        {   SaveTestAnswersService.AnsweredQuestions = TestDto.Questions;
             CompletedTestDTO completedTest = new CompletedTestDTO();
             completedTest.SolvedTest = test;
             completedTest.MaxPoints = CountMaxPoints(TestDto.Questions);
             completedTest.ReachedPoints = CountReachedPoints(TestDto.Questions);
             completedTest.Student = UserService.User;
-
             return completedTest;
         }
     }

@@ -1,6 +1,6 @@
-﻿
+﻿@inject EditService EditService
 
-@if (OnEditing)
+@if (EditService.OnEditing)
 {
     <h4>Website links about the topic</h4>
     <EditForm Model="FurtherLinkDto">
@@ -14,7 +14,8 @@
         </div>
 
         <div class="form-floating">
-            <textarea class="form-control" id="inputMessage" type="text" placeholder="Enter description here..." style="height: 10rem" @bind="FurtherLinkDto.Description"></textarea>
+            <textarea class="form-control" id="inputMessage" type="text" placeholder="Enter description here..."
+            style="height: 10rem" @bind="FurtherLinkDto.Description"></textarea>
         </div>
         <ValidationSummary />
     </EditForm>
@@ -35,9 +36,6 @@ else
 
 
 @code {
-
-    public static bool OnEditing = false;
-
     [Parameter]
     public FurtherLinkDTO FurtherLinkDto { get; set; }
 
