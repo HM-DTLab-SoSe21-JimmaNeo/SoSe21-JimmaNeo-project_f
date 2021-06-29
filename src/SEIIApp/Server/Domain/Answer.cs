@@ -15,7 +15,5 @@ namespace SEIIApp.Server.Domain
 
     public bool IsCorrect { get; set; }
 
-    public bool IsClicked { get; set; }
-
   }
 }
