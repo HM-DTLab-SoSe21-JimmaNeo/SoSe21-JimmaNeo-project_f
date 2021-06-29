@@ -164,6 +164,9 @@ Zusätzliche Informationen über das Testthema können hier eingebunden werden �
 **Prozessablauf Tests**     
 ![Screenshot EditUser](/Documentation/Screenshots/TrainerTest.png)
 
+**Prozessablauf Lectures**
+![Screenshot EditUser](/Documentation/Screenshots/Trainer_lecture.png)
+
 ## Student Bereich:   
 
 **1. Studentarea**<br>
