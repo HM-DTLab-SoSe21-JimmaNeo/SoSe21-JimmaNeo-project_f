@@ -27,7 +27,7 @@ namespace SEIIApp.Server.Services
     private IQueryable<CompletedTest> GetQueryableForTest()
     {
       return DatabaseContext.CompletedTests
-          .Include(completedTest => completedTest.SolvedTest).ThenInclude(solvedTest => solvedTest.Questions).ThenInclude(questions => questions.Answers)
+          .Include(completedTest => completedTest.SolvedTest)
           .Include(completeTest => completeTest.Student);
     }
 

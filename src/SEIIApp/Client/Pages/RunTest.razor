@@ -5,6 +5,7 @@
 @inject NavigationManager NavigationManager
 @inject UserLoggedInService UserService
 @inject EditService EditService
+@inject SaveTestAnswersService SaveTestAnswersService
 
 <div class="container">
 
@@ -122,7 +123,6 @@
             await base.OnParametersSetAsync();
             TestDto = returnedTest;
             EditService.OnEditing = false;
-            SetIsClickedAnswerToFalse();
         }
 
         private async void OnSubmitTest()
@@ -174,20 +174,12 @@
         }
 
         private CompletedTestDTO CreateCompletedTest(TestDTO test)
-        {
+        {   SaveTestAnswersService.AnsweredQuestions = TestDto.Questions;
             CompletedTestDTO completedTest = new CompletedTestDTO();
             completedTest.SolvedTest = test;
             completedTest.MaxPoints = CountMaxPoints(TestDto.Questions);
             completedTest.ReachedPoints = CountReachedPoints(TestDto.Questions);
             completedTest.Student = UserService.User;
             return completedTest;
-        }
-
-        private void SetIsClickedAnswerToFalse(){
-         foreach(var question in TestDto.Questions){
-           foreach(var answers in question.Answers){
-               answers.IsClicked = false;
-           } 
-          }
         }
     }

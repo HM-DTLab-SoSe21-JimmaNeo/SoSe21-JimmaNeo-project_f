@@ -4,17 +4,18 @@
 @inject NavigationManager NavigationManager
 @inject Services.CompletedTestBackendAccessService CompletedTestService
 @inject UserLoggedInService UserService
+@inject SaveTestAnswersService SaveTestAnswersService
 
 <div class="container">
 
     @if (UserService.User != null && CompletedTestDTO != null)
     {
-        <h2 class="text-center">Results of @(CompletedTestDTO.SolvedTest.Topic)+@(CompletedTestDTO.CtId)</h2>
+        <h2 class="text-center">Results of @(CompletedTestDTO.SolvedTest.Topic)</h2>
         <hr class="divider">
         <h3 class="text-center"><b>Your score: @(CompletedTestDTO.ReachedPoints)/@(CompletedTestDTO.MaxPoints) Points</b></h3>
         <ul class="list-group list-group-flush">
 
-            @foreach (var question in CompletedTestDTO.SolvedTest.Questions)
+            @foreach (var question in AnsweredQuestions)
             {
                 <div class="card shadow">
                     <div class="card-body">
@@ -92,11 +93,14 @@
         public int CompletedTestID { get; set; }
 
         private CompletedTestDTO CompletedTestDTO { get; set; }
+
+        private List<QuestionDTO> AnsweredQuestions { get; set; }
         protected override async Task OnParametersSetAsync()
         {
             await base.OnParametersSetAsync();
             var returnedTest = await CompletedTestService.GetCompletedTestWithId(CompletedTestID);
             CompletedTestDTO = returnedTest;
+            AnsweredQuestions = SaveTestAnswersService.AnsweredQuestions;
         } 
 
         private void ReturnBackToTestOverview()
