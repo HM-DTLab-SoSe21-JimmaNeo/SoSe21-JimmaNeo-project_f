@@ -94,5 +94,26 @@ namespace SEIIApp.Server.Controllers
             var mappedResult = Mapper.Map<List<ToDoDTO>>(todo);
             return Ok(mappedResult);
         }
+
+
+        /// <summary>
+        /// Adds or updates todo.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPut("onlyupdate")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult<ToDoDTO> UpdateToDo([FromBody] ToDoDTO ToDoDTO)
+        {
+            if (ModelState.IsValid)
+            {
+                var mappedToDo = Mapper.Map<ToDo>(ToDoDTO);
+                mappedToDo = ToDoService.UpdateToDo(mappedToDo);
+                var mappedTestDTO = Mapper.Map<ToDoDTO>(mappedToDo);
+                return Ok(mappedTestDTO);
+            }
+            return BadRequest(ModelState);
+        }
     }
 }

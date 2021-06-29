@@ -407,7 +407,7 @@
     private async Task UpdateToDo(ToDoDTO todo, bool check)
     {
         todo.IsDone = check;
-        await ToDoService.AddOrUpdateToDo(todo);
+        await ToDoService.UpdateToDo(todo);
         GetCounter();
         StateHasChanged();
     }

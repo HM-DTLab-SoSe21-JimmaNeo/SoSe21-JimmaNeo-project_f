@@ -85,6 +85,15 @@ namespace SEIIApp.Client.Services
             return response.StatusCode == System.Net.HttpStatusCode.OK;
         }
 
+        public async Task<ToDoDTO> UpdateToDo(ToDoDTO dto)
+        {
+            var response = await HttpClient.PutAsJsonAsync(GetToDoUrl()+"/onlyupdate", dto);
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return await response.DeserializeResponseContent<ToDoDTO>();
+            }
+            return null;
+        }
 
 
     }
