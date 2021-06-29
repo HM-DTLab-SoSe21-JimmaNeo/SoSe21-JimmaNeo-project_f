@@ -178,6 +178,9 @@
 
     }
 
+    /// <summary>
+    /// Overwrites TestOfLecture with a TestBasoDto with given ID
+    /// </summary>
 
     protected async void GetTestById()
     {
@@ -211,6 +214,10 @@
 
 
     }
+    
+   /// <summary>
+   /// Adds a Test with TestId to current Lecture
+   /// </summary>
     private async Task AddTestToLecture()
     {
 
@@ -242,8 +249,5 @@
         LectureDto.Content.Remove(pictureContentDto);
     }
 
-    private void AddTest()
-    {
-        LectureDto.Test = new TestDTO(); //TODO nicht sicher ?
-    }
+   
 }

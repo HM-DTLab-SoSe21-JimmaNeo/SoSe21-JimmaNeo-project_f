@@ -9,7 +9,7 @@
     @if (LectureDto != null)
     {
 
-        EditService.OnEditing = false;
+        EditService.OnEditing = false; // disable editing
 
         <h2 class="text-center">@(LectureDto.Topic)</h2>
         <hr class="divider" />
@@ -79,7 +79,7 @@
     }
         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
             <div class="w-100">
-                <button class="btn btn-outline-primary shadow" type="button" @onclick="()=> GetLastLecture()">Back</button>
+                <button class="btn btn-outline-primary shadow" type="button" @onclick="()=> GetPreviousLecture()">Back</button>
 
 
                 @if (hasNext)
@@ -106,8 +106,8 @@
 
 @code {
 
-    [Parameter]
-    public int LectureID { get; set; }
+        [Parameter]
+        public int LectureID { get; set; }
 
     public static LectureDTO LectureDto { get; set; }
 
@@ -127,7 +127,7 @@
         Lectures = await LectureService.GetLectureOverview();
     }
 
-    private async void OnSubmitLecture()
+    private async void OnSubmitLecture() // kann eig weg
     {
 
         var answer = await LectureService.AddOrUpdateLecture(LectureDto);
@@ -138,24 +138,34 @@
 
     }
 
+    /// <summary>
+    /// Navigates to Lecture with next LectureID
+    /// </summary>
+
     private void GetNextLecture()
     {
-        int nextID = LectureID + 1;
-        if(nextID <= Lectures.Count) {
-            NavigationManager.NavigateTo($"/runlecture/{nextID}");
-            if((nextID + 1) > Lectures.Count)
+        if (LectureID > 0)
+        {
+            int nextID = LectureID + 1;
+            if (nextID <= Lectures.Count)
+            {
+                NavigationManager.NavigateTo($"/runlecture/{nextID}");
+                if ((nextID + 1) > Lectures.Count)
+                {
+                    hasNext = false;
+                }
+            }
+            else
             {
                 hasNext = false;
             }
         }
-        else
-        {
-            hasNext = false;
-        }
     }
 
-
-    private void GetLastLecture()
+    /// <summary>
+    /// Navigates to previous Lecture
+    /// </summary>
+    private void GetPreviousLecture()
     {
         hasNext = true;
         if(LectureID>=2)

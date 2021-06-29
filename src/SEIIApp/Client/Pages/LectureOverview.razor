@@ -229,7 +229,9 @@
 
     private void EditLecture(LectureDTO lecture)
     {
-        NavigationManager.NavigateTo("/lectureedit/" + lecture.LectureId);
+        if (lecture.LectureId > 0)
+            NavigationManager.NavigateTo("/lectureedit/" + lecture.LectureId);
+        else AddLecture();
     }
 
     private void AddLecture()
@@ -239,19 +241,21 @@
 
     private async Task DeleteLecture(LectureDTO lecture)
     {
-        Lectures.Remove(lecture);
-
-        if (copyOfLectures != null)
+        if (Lectures != null)
         {
-            copyOfLectures.Remove(lecture);
+            Lectures.Remove(lecture);
+
+            if (copyOfLectures != null)
+            {
+                copyOfLectures.Remove(lecture);
+            }
+
+            await LectureService.DeleteLecture(lecture.LectureId);
+
+            showModal = false;
+            StateHasChanged();
+            await Task.Delay(3000);
         }
-
-        await LectureService.DeleteLecture(lecture.LectureId);
-
-        showModal = false;
-        StateHasChanged();
-        await Task.Delay(3000);
-
     }
 
     private void SearchContent()
@@ -275,6 +279,7 @@
 
     private void StartLecture(int contentId)
     {
+        if(contentId > 0)
         NavigationManager.NavigateTo("/runlecture/" + contentId);
     }
 
