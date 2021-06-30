@@ -17,7 +17,7 @@
                 @if (TestDto != null)
                 {
 
-                    <EditForm EditContext="@context" OnSubmit="OnSubmit">
+                    <EditForm EditContext="@context">
                         <ObjectGraphDataAnnotationsValidator />
 
                         <div class="input-group">
@@ -135,8 +135,8 @@
                         @if (isNotValid)
                         {
                             <h6 class="text-center">Please add the missing values or remove the objects before saving again.</h6>
+                            <ValidationSummary />
                         }
-                        <ValidationSummary />
 
                         <button class="btn btn-outline-success shadow" @onclick="SaveContentToBackend">
                             Save
@@ -223,11 +223,6 @@
     private void AddQuestion()
     {
         TestDto.Questions.Add(new QuestionDTO());
-    }
-
-    private void OnSubmit()
-    {
-
     }
 
     private void RemoveQuestion(QuestionDTO question)
