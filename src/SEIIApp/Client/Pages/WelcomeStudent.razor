@@ -393,8 +393,8 @@
             tempToDo.Task = newTodo;
             tempToDo.ToDoID = 0;
             tempToDo.Author = MyUserService.User;
-            tempToDo.IsDone = false;
-            await ToDoService.AddOrUpdateToDo(tempToDo);
+            tempToDo.IsDone = false;            
+            tempToDo = await ToDoService.AddOrUpdateToDo(tempToDo);
             toDo.Add(tempToDo);
             GetToDos();
             GetCounter();
