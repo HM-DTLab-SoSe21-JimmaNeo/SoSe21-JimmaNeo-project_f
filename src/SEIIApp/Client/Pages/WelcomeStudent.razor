@@ -6,7 +6,7 @@
 @inject CompletedTestBackendAccessService CompletedTestService
 @inject NewsBackendAccessService NewsService
 @inject DataStudentItemService DataItem
-@using SEIIApp.Shared;
+@using SEIIApp.Shared
 @using Radzen
 
 
@@ -46,6 +46,7 @@
                             {
                                 <RadzenChart>
                                     <RadzenColumnSeries Data="@dataItemTestList" CategoryProperty="TestName" Title="Reached" LineType="LineType.Dashed" ValueProperty="ReachedPoints" />
+                                    <RadzenValueAxis Min="0" />
                                     <RadzenColumnSeries Data="@maxPointList" CategoryProperty="TestName" Title="Max" ValueProperty="ReachedPoints" />
                                     <RadzenColumnOptions Radius="5" />
                                 </RadzenChart>
@@ -392,11 +393,14 @@
             tempToDo.Task = newTodo;
             tempToDo.ToDoID = 0;
             tempToDo.Author = MyUserService.User;
-            await ToDoService.AddOrUpdateToDo(tempToDo);
+            tempToDo.IsDone = false;            
+            tempToDo = await ToDoService.AddOrUpdateToDo(tempToDo);
             toDo.Add(tempToDo);
             GetToDos();
             GetCounter();
             newTodo = string.Empty;
+            
+
         }
     }
 
@@ -406,7 +410,7 @@
     private async Task UpdateToDo(ToDoDTO todo, bool check)
     {
         todo.IsDone = check;
-        await ToDoService.AddOrUpdateToDo(todo);
+        await ToDoService.UpdateToDo(todo);
         GetCounter();
         StateHasChanged();
     }
