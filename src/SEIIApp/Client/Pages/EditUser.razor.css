@@ -132,16 +132,8 @@ select {
     color: #ffffff;
 }
 
-.btn-cancel_frame {
-    font-size: 0.9rem;
-    letter-spacing: 0.05rem;
-    padding: 0.75rem 1rem;
-    border-radius: 2rem;
-    border-radius: 30px;
-    background-color: #ff6500;
-    border: 2px solid;
-    color: #ffffff;
-}
+
+
 .input-group {
     position: relative;
     margin: 40px 0 20px;
