@@ -71,9 +71,9 @@
 
 @code {
 
-    public string inputName { get; set; }
+    private string inputName { get; set; }
 
-    public string inputPW { get; set; }
+    private string inputPW { get; set; }
 
     private bool triggerAlert = false;
 
@@ -100,9 +100,9 @@
                     UserRefresh.LoggedIn = true;
                     break;
 
-                case 2: //Teacher
+                case 2: //Trainer
 
-                    NavigationManager.NavigateTo($"/welcometeacher");
+                    NavigationManager.NavigateTo($"/welcometrainer");
                     UserRefresh.LoggedIn = true;
                     break;
 

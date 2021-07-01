@@ -25,7 +25,7 @@ namespace SEIIApp.Server.DataAccess
             User admin = new() { Name = "admin", FirstName = "Example", LastName = "Admin", Role = Role.Admin, Pw = "admin".GetHashCode().ToString() };
             userService.AddUser(admin);
 
-            User trainer = new() { Name = "trainer", FirstName = "Example", LastName = "Trainer", Role = Role.Teacher, Pw = "trainer".GetHashCode().ToString() };
+            User trainer = new() { Name = "trainer", FirstName = "Example", LastName = "Trainer", Role = Role.Trainer, Pw = "trainer".GetHashCode().ToString() };
             userService.AddUser(trainer);
 
             User student = new() { Name = "student", FirstName = "Example", LastName = "Student", Role = Role.Student, Pw = "student".GetHashCode().ToString() };

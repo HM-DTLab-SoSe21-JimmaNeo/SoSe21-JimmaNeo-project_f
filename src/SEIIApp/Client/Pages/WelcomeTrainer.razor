@@ -1,4 +1,4 @@
-﻿@page "/welcometeacher"
+﻿@page "/welcometrainer"
 
 @inject NavigationManager NavigationManager
 @inject UserLoggedInService MyUserService
@@ -12,7 +12,7 @@
 </head>
 
 @{
-    @if (MyUserService.User != null && MyUserService.User.Role == Role.Teacher)
+    @if (MyUserService.User != null && MyUserService.User.Role == Role.Trainer)
     {
         <body>
             <div class="container">
@@ -53,7 +53,7 @@
                         }
                         <div class="card-group">
                             <div class="card border-success">
-                                <img src="/Images/WelcomeTeacher/lectures.jpeg" class="card-img-top" alt="...">
+                                <img src="/Images/WelcomeTrainer/lectures.jpeg" class="card-img-top" alt="...">
                                 <div class="card-body">
                                     <h5 class="card-title">How to lectures</h5>
                                     <p class="card-text">This video explains how to create and start lectures</p>
@@ -63,7 +63,7 @@
                                 </div>
                             </div>
                             <div class="card border-success">
-                                <img src="/Images/WelcomeTeacher/tests.webp" class="card-img-top">
+                                <img src="/Images/WelcomeTrainer/tests.webp" class="card-img-top">
                                 <div class="card-body">
                                     <h5 class="card-title">How to tests</h5>
                                     <p class="card-text">This video explains how to create and start tests</p>
@@ -106,7 +106,7 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        if (MyUserService.User != null && MyUserService.User.Role == Role.Teacher)
+        if (MyUserService.User != null && MyUserService.User.Role == Role.Trainer)
         {
             await base.OnParametersSetAsync();
 
