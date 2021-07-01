@@ -15,14 +15,11 @@ namespace SEIIApp.Client.Services
 
     public class LectureBackendAccessService
     {
-
         private HttpClient HttpClient { get; set; }
-
         public LectureBackendAccessService(HttpClient client)
         {
             this.HttpClient = client;
         }
-
         private string GetLectureUrl()
         {
             return "api/lectures";
@@ -31,28 +28,28 @@ namespace SEIIApp.Client.Services
         /// <summary>
         /// Returns url of certian lecture by id
         /// </summary>
-        /// <param name="LectureID"></param>
-        private string GetLectureUrlWithId(int LectureID)
+        /// <param name="lectureID"></param>
+        private string GetLectureUrlWithId(int lectureID)
         {
-            return $"{GetLectureUrl()+"/SearchLectureID"}/{LectureID}";
+            return $"{GetLectureUrl()+"/SearchLectureID"}/{lectureID}";
         }
 
         /// <summary>
         /// Returns a certain lecture by id
         /// </summary>
-        /// <param name="LectureID"></param>
-        public async Task<LectureDTO> GetLectureById(int LectureID)
+        /// <param name="lectureID"></param>
+        public async Task<LectureDTO> GetLectureById(int lectureID)
         {
-            return await HttpClient.GetFromJsonAsync<LectureDTO>(GetLectureUrlWithId(LectureID));
+            return await HttpClient.GetFromJsonAsync<LectureDTO>(GetLectureUrlWithId(lectureID));
         }
 
         /// <summary>
         /// Returns certain Test by id
         /// </summary>
-        /// <param name="TestID"></param>
-        public async Task<TestBaseDTO> GetTestById(int TestID)
+        /// <param name="testID"></param>
+        public async Task<TestBaseDTO> GetTestById(int testID)
         {
-            return await HttpClient.GetFromJsonAsync<TestBaseDTO>($"api/tests/{TestID}");
+            return await HttpClient.GetFromJsonAsync<TestBaseDTO>($"api/tests/{testID}");
         }
         /// <summary>
         /// Returns all lectures stored on the backend
@@ -80,10 +77,10 @@ namespace SEIIApp.Client.Services
         /// <summary>
         /// Deletes a lectures and returns true if successful
         /// </summary>
-        /// <param name="LectureID"></param>
-        public async Task<bool> DeleteLecture(int LectureID)
+        /// <param name="lectureID"></param>
+        public async Task<bool> DeleteLecture(int lectureID)
         {
-            var response = await HttpClient.DeleteAsync(GetLectureUrl()+"/DeleteLecture/"+LectureID);
+            var response = await HttpClient.DeleteAsync(GetLectureUrl()+"/DeleteLecture/"+lectureID);
             return response.StatusCode == System.Net.HttpStatusCode.OK;
         }
 

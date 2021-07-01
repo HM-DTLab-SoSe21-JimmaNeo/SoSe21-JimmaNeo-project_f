@@ -13,15 +13,12 @@
             <EditForm Model="@searchValue">
                 <div class="searchcostum input-group pt-2">
 
-
                     @if (isFiltered == false)
                     {
                         <div class="px-auto shadow">
                             <InputText type="search" class="form-control rounded" placeholder="Search by Topic"
                             aria-label="Name of the Content" aria-describedby="search-addon"
                             @bind-Value="@searchValue" />
-
-
                         </div>
                         <button class="btn btn-outline-primary btn-sm shadow" @onclick="SearchContent">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -31,7 +28,6 @@
                             </svg>
                         </button>
                         <hr />
-
                     }
                     else
                     {
@@ -40,7 +36,6 @@
                         </div>
                         <hr />
                     }
-
                 </div>
             </EditForm>
             @if (UserService.User != null && UserService.User.Role == Role.Teacher)
@@ -49,7 +44,6 @@
                     <button class="btn btn-outline-dark btn-sm shadow" @onclick="AddLecture">+ Add Lecture</button>
                 </div>
             }
-
         </div>
     </div>
 
@@ -59,16 +53,13 @@
 
     @if (Lectures != null)
     {
-
         if (UserService.User != null && UserService.User.Role == Role.Teacher)
         {
             <ul class="list-group list-group-flush">
 
-
                 @foreach (var content in Lectures)
                 {
                     <li class="text-center list-group-item">
-
                         <div class="card shadow">
                             <div class="card-body">
                                 <b>
@@ -144,11 +135,9 @@
                                 <button type="button" class="btn btn-danger"
                         @onclick="() => DeleteLecture(currentLecture)">Delete</button>
                             </div>
-
                         </div>
                     </div>
                 </div>
-
             }
         }
         else if (UserService.User != null && UserService.User.Role == Role.Student)
@@ -179,7 +168,6 @@
 
                                 @(content.Topic)
                                 <br />
-
                                 <button class="btn btn-outline-success btn-sm" @onclick="() => StartLecture(content.LectureId)">
                                     Start
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -192,15 +180,12 @@
                         </div>
                     </li>
                 }
-                
             </ul>
-
         }
         else
         {
             <label>Please login to use this page.</label>
         }
-
     }
     else
     {
@@ -251,7 +236,6 @@
             }
 
             await LectureService.DeleteLecture(lecture.LectureId);
-
             showModal = false;
             StateHasChanged();
             await Task.Delay(3000);
@@ -276,7 +260,6 @@
         Lectures.AddRange(copyOfLectures);
     }
 
-
     private void StartLecture(int contentId)
     {
         if(contentId > 0)
@@ -292,5 +275,4 @@
     }
 
     void ModalCancel() => showModal = false;
-
 }

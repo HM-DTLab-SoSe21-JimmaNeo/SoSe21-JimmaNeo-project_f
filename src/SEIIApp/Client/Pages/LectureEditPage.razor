@@ -1,7 +1,6 @@
 ﻿@page "/lectureedit/{LectureID:int}"
 
 @inject UserLoggedInService UserService
-
 @inject Services.LectureBackendAccessService LectureService
 @inject NavigationManager NavigationManager
 @inject Services.TestsDefinitionBackendAccessService TestService
@@ -12,17 +11,16 @@
     <div class="row justify-content-center">
         <div class="col-7 text-center">
             <h2 class="text-center">Lecture Editor</h2>
-            <hr class=" divider" />
+            <hr class=" divider"/>
 
             @if (LectureDto != null)
             {
                 if (UserService.User != null && UserService.User.Role == Role.Teacher)
                 {
                     EditService.OnEditing = true;
-                    <EditForm EditContext="@context" OnSubmit="OnSubmit">
+                    <EditForm EditContext="@Context">
                         <ObjectGraphDataAnnotationsValidator />
                         <div class="input-group">
-
                             <input type="text" style='width:100%' required @bind-value="LectureDto.Topic"
                         @bind-value:event="oninput">
                             <span class="highlight"></span>
@@ -52,9 +50,7 @@
                             </div><br />
                         }
                         <button class="btn btn-light shadow" @onclick="AddVideoContent">Add Video</button>
-
                         <hr />
-
 
                         @foreach (var picture in LectureDto.Content)
                         {
@@ -65,14 +61,9 @@
                             @onclick="() => DeletePictureContent(picture)">Remove Picture</button>
                                 </div>
                             </div><br />
-
                         }
                         <br /><button class="btn btn-light shadow" @onclick="AddPictureContent">Add Picture</button><br />
                         <hr />
-
-
-
-
                         <b>Add Test to Lecture by Test ID</b><br />
                         <div class="input-group">
                             <input type="text" style='width:100%' required @bind-value="@TestId" @bind-value:event="oninput">
@@ -80,7 +71,6 @@
                             <span class="bar"></span>
                             <label class="hoverlabel">ID of the test:</label>
                         </div>
-
                         <hr />
                         <ValidationSummary />
                         <br />
@@ -103,21 +93,17 @@
                                               1.414L8 9.414l-5.293 5.293a1 1 0 0 1-1.414-1.414L6.586 8 1.293 2.707a1 1 0 0 1 0-1.414z" />
                             </svg>
                         </button><br />
-
-
                     </EditForm>
                 }
                 else
                 {
                     <label>No access to this page!</label>
                 }
-
             }
             else
             {
                 <h5>Lectures in loading (or not found) ...</h5>
             }
-
         </div>
     </div>
 </div>
@@ -129,12 +115,14 @@
 
     public LectureDTO LectureDto { get; set; }
 
-    private EditContext context { get; set; }
+    private EditContext Context { get; set; }
 
     private TestBaseDTO TestOfLecture { get; set; }
+
     private string LectureOverviewURL = "/lectureoverview";
 
     private string TestId { get; set; }
+
 
     protected override async Task OnParametersSetAsync()
     {
@@ -142,8 +130,6 @@
         if (LectureID != 0)
         {
             var existingLecture = await LectureService.GetLectureById(LectureID);
-
-
             PrepareEditOrAddOfLecture(existingLecture);
         }
         else
@@ -152,13 +138,14 @@
         }
         await base.OnParametersSetAsync();
 
-        context = new EditContext(LectureDto);
+        Context = new EditContext(LectureDto);
         EditService.OnEditing = true;
-
     }
 
-
-
+    /// <summary>
+    /// Checks if properties of given lectureDto are not existing and gives defaultsvalues
+    /// </summary>
+    /// <param name="lectureDto"></param>
     private void PrepareEditOrAddOfLecture(LectureDTO lectureDto)
     {
         if (lectureDto.Topic == null) lectureDto.Topic = "lecture Topic";
@@ -167,34 +154,32 @@
 
         if (lectureDto.Videos == null) lectureDto.Videos = new List<VideoContentDTO>();
         if (lectureDto.Content == null) lectureDto.Content = new List<PictureContentDTO>();
-        if (lectureDto.Test == null) lectureDto.Test = null;
+       // if (lectureDto.Test == null) lectureDto.Test = null;
 
         this.LectureDto = lectureDto;
     }
 
 
-    private void OnSubmit(EditContext context)
-    {
-
-    }
-
     /// <summary>
     /// Overwrites TestOfLecture with a TestBasoDto with given ID
     /// </summary>
-
     protected async void GetTestById()
     {
         TestOfLecture = await LectureService.GetTestById(StringToId(TestId));
 
     }
-    private async void SaveContentToBackend(LectureDTO LectureDto)
+    /// <summary>
+    /// Sends given LectureDto to the backend, where it get saved
+    /// </summary>
+    /// <param name="lectureDto"></param>
+    private async void SaveContentToBackend(LectureDTO lectureDto)
     {
 
-        var isValid = context.Validate();
+        var isValid = Context.Validate();
         if (isValid)
         {
             await AddTestToLecture();
-            var answer = await LectureService.AddOrUpdateLecture(LectureDto);
+            var answer = await LectureService.AddOrUpdateLecture(lectureDto);
             if (answer != null)
             {
                 this.LectureDto.LectureId = answer.LectureId;
@@ -210,9 +195,6 @@
     {
         int id = Int32.Parse(inputId);
         return id;
-
-
-
     }
     
    /// <summary>
@@ -220,13 +202,11 @@
    /// </summary>
     private async Task AddTestToLecture()
     {
-
         if (TestId != null && !TestId.Equals(""))
         {
             int testId = StringToId(TestId);
             this.LectureDto.Test = await LectureService.GetTestById(testId);
         }
-
     }
 
     private void AddVideoContent()
@@ -248,6 +228,4 @@
     {
         LectureDto.Content.Remove(pictureContentDto);
     }
-
-   
 }

@@ -8,14 +8,11 @@
 
     @if (LectureDto != null)
     {
-
         EditService.OnEditing = false; // disable editing
 
         <h2 class="text-center">@(LectureDto.Topic)</h2>
         <hr class="divider" />
         <ul class="list-group list-group-flush">
-
-            
 
             <EditForm Model="@LectureDto">
                 @if (LectureDto.Test != null)
@@ -46,7 +43,6 @@
                     }
                 }
 
-
                 @if (LectureDto.Content.Any())
                 {
                     <br />
@@ -55,12 +51,12 @@
                     {
                         <div class="card shadow">
                             <div class="card-body">
-                        <li class="text-center list-group-item">
-                            <PictureComponent PictureContentDTO="picture"></PictureComponent>
-                        </li>
-                        <br />
-                    </div>
-               </div>
+                                <li class="text-center list-group-item">
+                                    <PictureComponent PictureContentDTO="picture"></PictureComponent>
+                                </li>
+                                <br />
+                            </div>
+                        </div>
                         }
         } 
 <li class="list-group list-group-flush">
@@ -81,46 +77,37 @@
             <div class="w-100">
                 <button class="btn btn-outline-primary shadow" type="button" @onclick="()=> GetPreviousLecture()">Back</button>
 
-
-                @if (hasNext)
+                @if (HasNext)
                 {                  
                     <button class="btn float-right btn-outline-primary shadow" type="button" @onclick="()=> GetNextLecture()">Next</button>
                 }
                 else
                 {
                     <button class="btn float-right btn-outline-primary shadow" type="button" disabled>Next</button>
-
                 }
             </div><br /><br />
         </div>
     </li>
-
         </EditForm>
 </ul>
     }
-
-
-
 </div>
 
 
 @code {
 
-        [Parameter]
-        public int LectureID { get; set; }
+    [Parameter]
+    public int LectureID { get; set; }
 
     public static LectureDTO LectureDto { get; set; }
 
     public List<LectureDTO> Lectures { get; set; }
 
-    private bool isClicked { get; set; }
-
-    private bool hasNext { get; set; } = true;
+    private bool HasNext { get; set; } = true;
 
 
     protected override async Task OnParametersSetAsync()
     {
-
         var returnedLecture = await LectureService.GetLectureById(LectureID);
         await base.OnParametersSetAsync();
         LectureDto = returnedLecture;
@@ -129,13 +116,11 @@
 
     private async void OnSubmitLecture() // kann eig weg
     {
-
         var answer = await LectureService.AddOrUpdateLecture(LectureDto);
         if (answer != null)
         {
             NavigationManager.NavigateTo("/resultslecture/");
         }
-
     }
 
     /// <summary>
@@ -152,12 +137,12 @@
                 NavigationManager.NavigateTo($"/runlecture/{nextID}");
                 if ((nextID + 1) > Lectures.Count)
                 {
-                    hasNext = false;
+                   HasNext = false;
                 }
             }
             else
             {
-                hasNext = false;
+                HasNext = false;
             }
         }
     }
@@ -167,7 +152,7 @@
     /// </summary>
     private void GetPreviousLecture()
     {
-        hasNext = true;
+        HasNext = true;
         if(LectureID>=2)
             NavigationManager.NavigateTo($"/runlecture/{LectureID -1}");
     }
