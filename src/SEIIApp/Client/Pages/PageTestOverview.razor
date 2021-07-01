@@ -45,7 +45,7 @@
 
                     </div>
                 </EditForm>
-                @if (UserService.User.Role == Role.Teacher)
+                @if (UserService.User.Role == Role.Trainer)
                 {
                     <div class="text-center py-2">
                         <button class="btn btn-outline-dark btn-sm shadow" @onclick="AddTest">+ Add Test</button>
@@ -85,7 +85,7 @@
 
                                 @(content.Topic)
                                 <br />
-                                @if (UserService.User.Role == Role.Teacher)
+                                @if (UserService.User.Role == Role.Trainer)
                                 {
 
                                     <button class="btn btn-outline-dark btn-sm" @onclick="() => EditQuiz((TestDTO)content)">

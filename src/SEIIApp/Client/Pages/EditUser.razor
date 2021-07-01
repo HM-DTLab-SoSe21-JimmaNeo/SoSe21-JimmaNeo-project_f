@@ -47,7 +47,7 @@
                     <option value=0 selected>@UserDTO.Role</option>
                     <option value=1>Undefined</option>
                     <option value=2>Student</option>
-                    <option value=3>Teacher</option>
+                    <option value=3>Trainer</option>
                     <option value=4>Admin</option>
                 </select>
             </div>
@@ -71,9 +71,9 @@ else
     [Parameter]
     public int UserID { get; set; }
 
-    public string inputFirstName { get; set; }
+    private string inputFirstName { get; set; }
 
-    public string inputLastName { get; set; }
+    private string inputLastName { get; set; }
 
     private int chosenOption { get; set; }
 
@@ -117,7 +117,7 @@ else
                 UserDTO.Role = Role.Student;
                 break;
             case 3:
-                UserDTO.Role = Role.Teacher;
+                UserDTO.Role = Role.Trainer;
                 break;
 
             case 4:
