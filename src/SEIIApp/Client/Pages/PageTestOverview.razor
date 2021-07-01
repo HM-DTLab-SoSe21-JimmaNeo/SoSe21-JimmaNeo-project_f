@@ -157,6 +157,7 @@
             </ul>
             @if (showModal)
             {
+                <!-- warning alert if delete button is clicked -->
                 <div class="modal fade show" id="myModal" style="display:block" aria-modal="true" role="dialog">
                     <div class="modal-dialog shadow">
                         <div class="modal-content">
@@ -206,9 +207,9 @@ else
 
     /*copy of all available tests to reset the view after the search function is used*/
     private List<TestDTO> CopyOfTest { get; set; }
-
+    /*selected test that should be deleted*/
     private TestDTO CurrentTest { get; set; }
-    /*shows an alert if Delete Button is clicked if true*/
+
     private bool showModal = false;
 
     protected override async Task OnParametersSetAsync()
