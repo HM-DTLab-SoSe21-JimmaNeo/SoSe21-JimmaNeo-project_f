@@ -94,7 +94,7 @@ select {
     background-color: #0779e4;
 }
 .btn-cancel {
-    background-color: #6c757d;
+    background-color: #ff6500;
 }
 .danger {
     background-color: #fff;
@@ -138,7 +138,7 @@ select {
     padding: 0.75rem 1rem;
     border-radius: 2rem;
     border-radius: 30px;
-    background-color: #6c757d;
+    background-color: #ff6500;
     border: 2px solid;
     color: #ffffff;
 }
@@ -269,7 +269,7 @@ input:focus ~ .highlight {
 
 .cancel:hover {
     background: white;
-    color: #6c757d;
+    color: #ff6500;
 }
 
 .delete:hover {
