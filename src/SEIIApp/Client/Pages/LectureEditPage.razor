@@ -11,7 +11,7 @@
     <div class="row justify-content-center">
         <div class="col-7 text-center">
             <h2 class="text-center">Lecture Editor</h2>
-            <hr class=" divider"/>
+            <hr class=" divider" />
 
             @if (LectureDto != null)
             {
@@ -22,7 +22,7 @@
                         <ObjectGraphDataAnnotationsValidator />
                         <div class="input-group">
                             <input type="text" style='width:100%' required @bind-value="LectureDto.Topic"
-                        @bind-value:event="oninput">
+                                   @bind-value:event="oninput">
                             <span class="highlight"></span>
                             <span class="bar"></span>
                             <label class="hoverlabel">Topic of the test:</label>
@@ -32,7 +32,7 @@
                         </h5>
                         <div class="form-floating">
                             <textarea class="form-control" id="inputMessage" type="text" placeholder="Enter Text here..."
-                        style="height: 15rem" @bind="LectureDto.Text"></textarea>
+                                      style="height: 15rem" @bind="LectureDto.Text"></textarea>
                         </div>
 
                         <h5>
@@ -45,7 +45,9 @@
 
                                     <VideoComponent VideoContentDTO="video"></VideoComponent>
                                     <button class="btn btn-light btn-sm my-3 shadow"
-                            @onclick="() => DeleteVideoContent(video)">Remove Video</button>
+                                            @onclick="() => DeleteVideoContent(video)">
+                                        Remove Video
+                                    </button>
                                 </div>
                             </div><br />
                         }
@@ -58,7 +60,9 @@
                                 <div class="card-body shadow">
                                     <PictureComponent PictureContentDTO="picture"></PictureComponent>
                                     <button class="btn btn-light btn-sm my-3 shadow"
-                            @onclick="() => DeletePictureContent(picture)">Remove Picture</button>
+                                            @onclick="() => DeletePictureContent(picture)">
+                                        Remove Picture
+                                    </button>
                                 </div>
                             </div><br />
                         }
@@ -66,30 +70,36 @@
                         <hr />
                         <b>Add Test to Lecture by Test ID</b><br />
                         <div class="input-group">
-                            <input type="text" style='width:100%' required @bind-value="@TestId" @bind-value:event="oninput">
+                            @if (!isInt)
+                            {
+                            <h6 class="text-center" style="color:tomato">Input value is not a number. Please use a number.</h6>
+                            }
+                            <input type="text" style='width:100%' placeholder=@LectureDto.Test.TestID @bind-value="@TestId" @bind-value:event="oninput">
                             <span class="highlight"></span>
                             <span class="bar"></span>
                             <label class="hoverlabel">ID of the test:</label>
                         </div>
                         <hr />
-                        <ValidationSummary />
+                        @if (isNotValid)
+                        {
+                            <h6 class="text-center">Please add the missing values or remove the objects before saving again.</h6>
+                            <ValidationSummary />
+                        }
                         <br />
                         <button class="btn btn-outline-success shadow" @onclick="() => SaveContentToBackend(this.LectureDto)">
                             Save
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-check-lg" viewBox="0 0 16 16">
-                                <path
-                            d="M13.485 1.431a1.473 1.473 0 0 1 2.104 2.062l-7.84 9.801a1.473 1.473 0 0 1-2.12.04L.431 8.138a1.473 1.473 0 0 1 2.084-2.083l4.111 4.112 6.82-8.69a.486.486 0 0 1 .04-.045z" />
+                                 class="bi bi-check-lg" viewBox="0 0 16 16">
+                                <path d="M13.485 1.431a1.473 1.473 0 0 1 2.104 2.062l-7.84 9.801a1.473 1.473 0 0 1-2.12.04L.431 8.138a1.473 1.473 0 0 1 2.084-2.083l4.111 4.112 6.82-8.69a.486.486 0 0 1 .04-.045z" />
                             </svg>
                         </button>
 
-                        <button class="btn btn-outline-danger shadow"
-                    @onclick="() =>  NavigationManager.NavigateTo(LectureOverviewURL)">
+
+                        <button class="btn btn-outline-danger shadow" @onclick="() =>  NavigationManager.NavigateTo(LectureOverviewURL)">
                             Cancel
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                        class="bi bi-x-lg" viewBox="0 0 16 16">
-                                <path
-                            d="M1.293 1.293a1 1 0 0 1 1.414 0L8 6.586l5.293-5.293a1 1 0 1 1 1.414 1.414L9.414 8l5.293 5.293a1 1 0 0 1-1.414
+                                 class="bi bi-x-lg" viewBox="0 0 16 16">
+                                <path d="M1.293 1.293a1 1 0 0 1 1.414 0L8 6.586l5.293-5.293a1 1 0 1 1 1.414 1.414L9.414 8l5.293 5.293a1 1 0 0 1-1.414
                                               1.414L8 9.414l-5.293 5.293a1 1 0 0 1-1.414-1.414L6.586 8 1.293 2.707a1 1 0 0 1 0-1.414z" />
                             </svg>
                         </button><br />
@@ -110,8 +120,8 @@
 
 @code {
 
-    [Parameter]
-    public int LectureID { get; set; }
+        [Parameter]
+        public int LectureID { get; set; }
 
     public LectureDTO LectureDto { get; set; }
 
@@ -119,14 +129,16 @@
 
     private TestBaseDTO TestOfLecture { get; set; }
 
+    private bool isNotValid { get; set; } = false;
+
+    private bool isInt { get; set; } = true;
+
     private string LectureOverviewURL = "/lectureoverview";
 
     private string TestId { get; set; }
 
-
     protected override async Task OnParametersSetAsync()
     {
-
         if (LectureID != 0)
         {
             var existingLecture = await LectureService.GetLectureById(LectureID);
@@ -154,7 +166,8 @@
 
         if (lectureDto.Videos == null) lectureDto.Videos = new List<VideoContentDTO>();
         if (lectureDto.Content == null) lectureDto.Content = new List<PictureContentDTO>();
-       // if (lectureDto.Test == null) lectureDto.Test = null;
+        // if (lectureDto.Test == null) lectureDto.Test = null;
+        if (lectureDto.Test.TestID == 0) lectureDto.Test.TestID = 1;
 
         this.LectureDto = lectureDto;
     }
@@ -174,39 +187,60 @@
     /// <param name="lectureDto"></param>
     private async void SaveContentToBackend(LectureDTO lectureDto)
     {
-
         var isValid = Context.Validate();
         if (isValid)
         {
-            await AddTestToLecture();
-            var answer = await LectureService.AddOrUpdateLecture(lectureDto);
-            if (answer != null)
-            {
-                this.LectureDto.LectureId = answer.LectureId;
-                NavigationManager.NavigateTo("/lectureoverview");
+            Console.WriteLine("isValid");
+            await AddTestToLecture(lectureDto);
+            Console.WriteLine("still Valid");
+            if(isInt){
+                var answer = await LectureService.AddOrUpdateLecture(lectureDto);
+                Console.WriteLine("and still valid");
+                if (answer != null)
+                {
+                    Console.WriteLine("answer not null");
+                    this.LectureDto.LectureId = answer.LectureId;
+                    NavigationManager.NavigateTo("/lectureoverview");
+                }
             }
-            else
-                Console.WriteLine("answer = FALSE");
         }
-        else Console.WriteLine("isValid = FALSE");
+        else isNotValid = true;
+
     }
 
     private int StringToId(string inputId)
     {
+
         int id = Int32.Parse(inputId);
         return id;
+
+
+
     }
-    
-   /// <summary>
-   /// Adds a Test with TestId to current Lecture
-   /// </summary>
-    private async Task AddTestToLecture()
+
+    /// <summary>
+    /// Adds a Test with TestId to current Lecture
+    /// </summary>
+    private async Task AddTestToLecture(LectureDTO lectureDto)
     {
+        Console.WriteLine("1");
         if (TestId != null && !TestId.Equals(""))
         {
-            int testId = StringToId(TestId);
-            this.LectureDto.Test = await LectureService.GetTestById(testId);
+            try
+            {
+                Console.WriteLine("2");
+                int testId = StringToId(TestId);
+                Console.WriteLine("3");
+                lectureDto.Test = await LectureService.GetTestById(testId);
+                isInt = true;
+            }
+            catch
+            {
+                isInt = false;
+                isNotValid = true;
+            }
         }
+        //else this.LectureDto.Test = new TestBaseDTO();
     }
 
     private void AddVideoContent()
