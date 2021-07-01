@@ -55,10 +55,10 @@
     protected override void OnParametersSet()
     {
         base.OnParametersSet();
-        InitiQuestionDefintionDto();
+        InitQuestionDto();
     }
 
-    private void InitiQuestionDefintionDto()
+    private void InitQuestionDto()
     {
         if (QuestionDto.Answers == null)
             QuestionDto.Answers = new List<AnswerDTO>();

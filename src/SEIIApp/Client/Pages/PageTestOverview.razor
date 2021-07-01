@@ -20,9 +20,8 @@
                                 <InputText type="search" class="form-control rounded" placeholder="Search by Topic"
                             aria-label="Name of the Content" aria-describedby="search-addon"
                             @bind-Value="@searchValue" />
-
-
-                            </div>@*Search Icon*@
+                            </div>
+                            <!-- Search Icon -->
                             <button class="btn btn-outline-primary btn-sm shadow" @onclick="SearchTest">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-search" viewBox="0 0 16 16">
@@ -31,8 +30,6 @@
                                 </svg>
                             </button>
                             <br />
-
-
                         }
                         else
                         {
@@ -40,7 +37,6 @@
                                 <button class="btn btn-outline-primary shadow" @onclick="ResetSearchTest">Return</button>
                             </div>
                             <br />
-
                         }
 
                     </div>
@@ -57,7 +53,6 @@
         @if (Tests != null)
 
         {
-
             <ul class="list-group list-group-flush">
 
                 @foreach (var content in Tests)
@@ -87,17 +82,20 @@
                                 <br />
                                 @if (UserService.User.Role == Role.Teacher)
                                 {
-
+                                    <!-- Edit Icon -->
                                     <button class="btn btn-outline-dark btn-sm" @onclick="() => EditQuiz((TestDTO)content)">
                                         Edit
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-pencil-square" viewBox="0 0 16 16">
                                             <path
-                                d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 
+                                              2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
                                             <path fill-rule="evenodd"
-                                d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 
+                                            0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
                                         </svg>
                                     </button>
+                                    <!-- Delete Icon -->
                                     <button class="btn btn-outline-danger btn-sm" @onclick="() => ModalShow(content)">
                                         Delete
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -107,6 +105,7 @@
                                               1.414L8 9.414l-5.293 5.293a1 1 0 0 1-1.414-1.414L6.586 8 1.293 2.707a1 1 0 0 1 0-1.414z" />
                                         </svg>
                                     </button>
+                                    <!-- Start Icon -->
                                     <button class="btn btn-outline-success btn-sm" @onclick="() => StartTest(content.TestID)">
                                         Start
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -115,6 +114,7 @@
                                 d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z" />
                                         </svg>
                                     </button>
+                                    <!-- Lightbulb Icon -->
                                     <button class="btn btn-outline-primary btn-sm"
                         @onclick="() => GetFurtherTopicInformations(content.TestID)">
                         @content.Topic
@@ -129,6 +129,7 @@
                                 }
                                 else if (UserService.User.Role == Role.Student)
                                 {
+                                    <!-- Start Icon -->
                                     <button class="btn btn-outline-success btn-sm" @onclick="() => StartTest(content.TestID)">
                                         Start
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -137,6 +138,7 @@
                                 d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z" />
                                         </svg>
                                     </button>
+                                    <!-- Lightbulb Icon -->
                                     <button class="btn btn-outline-primary btn-sm"
                         @onclick="() => GetFurtherTopicInformations(content.TestID)">@content.Topic
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -197,7 +199,7 @@ else
 
 @code {
     private string searchValue = "";
-
+    /*The tests are filtered by the searchValue if true*/
     private bool IsFiltered { get; set; }
 
     public List<TestDTO> Tests { get; set; }
@@ -227,17 +229,13 @@ else
 
     private async Task DeleteTest(TestDTO test)
     {
-
         Tests.Remove(test);
         if (CopyOfTest != null)
         {
             CopyOfTest.Remove(test);
         }
         await TestDefinitionService.DeleteTest(test.TestID);
-
         showModal = false;
-        StateHasChanged();
-        await Task.Delay(3000);
     }
 
 
@@ -269,11 +267,11 @@ else
         NavigationManager.NavigateTo("/furtherinformation/" + contentId);
     }
 
-    void ModalShow(TestDTO test)
+    private void ModalShow(TestDTO test)
     {
         showModal = true;
         CurrentTest = test;
     }
 
-    void ModalCancel() => showModal = false;
+    private void ModalCancel() => showModal = false;
 }

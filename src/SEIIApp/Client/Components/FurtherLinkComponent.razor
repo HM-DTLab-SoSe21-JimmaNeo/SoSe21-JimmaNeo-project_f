@@ -22,7 +22,7 @@
 }
 else
 {
-    <a href="@(FurtherLinkDto.Link)">@(FurtherLinkDto.Link)</a>
+    <a href="@(FurtherLinkDto.Link)" target="_blank">@(FurtherLinkDto.Link)</a>
     @if (!String.IsNullOrEmpty(FurtherLinkDto.Description))
     {
         <br />
@@ -31,7 +31,6 @@ else
         <p class="text-center">@(FurtherLinkDto.Description)</p>
         <br />
     }
-
 }
 
 
