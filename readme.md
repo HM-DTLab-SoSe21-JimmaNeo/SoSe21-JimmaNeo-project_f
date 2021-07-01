@@ -170,7 +170,7 @@ Zusätzliche Informationen über das Testthema können hier eingebunden werden �
 ## Student Bereich:   
 
 **1. Studentarea**<br>
-Die Studentarea ziegt dir interessate Statisiken über deinen Testergebnisse und Fortschritt in Lectures. 
+Die Studentarea zeigt dir interessate Statisiken über deinen Testergebnisse und Fortschritt in Lectures. 
 Außerdem gibt es die Möglichkeit dir selbst To-do's zu erstellen um immer den Überblick zu behalten.
 Die neusten Nachrichten über neue Lectures und Test wird dir hier auch angezeigt. 
 Zu guter letzt kannst du auf dem grünen Herzen Feedback und Bugs an den Support schicken.
