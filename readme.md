@@ -139,12 +139,18 @@ auf den grauen Button EditNews. Nun wird man weitergeleiet auf die editierbare N
 ![Screenshot EditNews](/Documentation/Screenshots/AdminArea.png)
 
 ## Trainer Bereich:
-**1. Test Overview**
+
+**1. WelcomeTrainer**
+Nachdem Login eines Trainers landet dieser auf der Welcometrainer Seite. Zum einen werden die Resultate der vorhandenen Tests in einer Tabelle veranschaulicht, zum anderen erhält jeder Trainer die Möglichkeit einen Einblick in die Videos: "How to lectures" und "How to tests". Diese erläutern wie Lectures und Tests erstellt und gestartet werden.
+
+![Screenshot EditUser](/Documentation/Screenshots/WelcomeTeacherPage.png)
+
+**2. Test Overview**
 
 Es wird eine Übersicht über alle Tests aufgezeigt.     
 ![Screenshot EditUser](/Documentation/Screenshots/TestOverview.png)
 
-**2. Test Editor**
+**3. Test Editor**
 
 Die Tests können über den Test editor bearbeitet sowie hinzugefügt werden.
 Hier wird das Topic des tests festgehalten sowie die Fragestellungen und die Weiterführenden Informationen über das Thema(Further informations).  
@@ -164,8 +170,18 @@ Zusätzliche Informationen über das Testthema können hier eingebunden werden �
 **Prozessablauf Tests**     
 ![Screenshot EditUser](/Documentation/Screenshots/TrainerTest.png)
 
+**4. LectureOverview**
+Die LectureOverview ermöglicht einen Trainer Lectures zu erstellen, bearbeiten, löschen oder starten. Die Suchleiste ermöglicht eine zügige Lecturesuche.
+
+![Screenshot EditUser](/Documentation/Screenshots/LectureOverviewPage.png)
+
+**5. LectureEdit**
+Auf der LectureEdit-Seite ist es möglich Informationen in Text-, Video- oder Bildform für die Lecture bereitzustellen. Ebenso können Tests mit der Lecture in Verbindung gesetzt werden, dies geschieht über die Test-ID.
+
+![Screenshot EditUser](/Documentation/Screenshots/LectureEditPage.png)
+
 **Prozessablauf Lectures**
-![Screenshot EditUser](/Documentation/Screenshots/Trainer_lecture.png)
+![Screenshot EditUser](/Documentation/Screenshots/TeacherLecture.png)
 
 ## Student Bereich:   
 
