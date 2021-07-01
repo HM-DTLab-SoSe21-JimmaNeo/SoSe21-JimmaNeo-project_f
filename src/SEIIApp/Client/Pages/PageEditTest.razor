@@ -21,7 +21,6 @@
                         <ObjectGraphDataAnnotationsValidator />
 
                         <div class="input-group">
-
                             <input type="text" style='width:100%' required @bind-value="TestDto.Topic"
                         @bind-value:event="oninput">
                             <span class="highlight"></span>
@@ -36,7 +35,6 @@
 
                         <h5>
                             <br /><b>Add Youtube-Videos to your Test!</b>
-
                         </h5>
                         @foreach (var video in TestDto.Videos)
                         {
@@ -66,7 +64,6 @@
                                 </div>
                             </div>
                             <br />
-
                         }
                         <button class="btn btn-light shadow" @onclick="AddQuestion">Add Question</button>
 
@@ -132,24 +129,26 @@
                         <br /><button class="btn btn-light shadow" @onclick="AddPictureContent">Add Picture</button><br />
                         <hr />
 
-                        @if (isNotValid)
+                        @if (IsNotValid)
                         {
                             <h6 class="text-center">Please add the missing values or remove the objects before saving again.</h6>
                             <ValidationSummary />
                         }
-
-                        <button class="btn btn-outline-success shadow" @onclick="SaveContentToBackend">
+                        
+                        <button class="btn btn-outline-success shadow" @onclick="SaveTestToBackend">
                             Save
+                            <!-- Delete Icon -->
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-check-lg" viewBox="0 0 16 16">
                                 <path
-                            d="M13.485 1.431a1.473 1.473 0 0 1 2.104 2.062l-7.84 9.801a1.473 1.473 0 0 1-2.12.04L.431 8.138a1.473 1.473 0 0 1 2.084-2.083l4.111 4.112 6.82-8.69a.486.486 0 0 1 .04-.045z" />
+                            d="M13.485 1.431a1.473 1.473 0 0 1 2.104 2.062l-7.84 9.801a1.473 1.473 0 0 1-2.12.04L.431 8.138a1.473 1.473 0 0 
+                            1 2.084-2.083l4.111 4.112 6.82-8.69a.486.486 0 0 1 .04-.045z" />
                             </svg>
                             <br />
                         </button>
-
+                        <!-- Cancel Icon -->
                         <button class="btn btn-outline-danger shadow"
-                    @onclick="() =>  NavigationManager.NavigateTo(testOverviewURL)">
+                    @onclick="() =>  ReturnBackToTestOverview()">
                             Cancel
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-x-lg" viewBox="0 0 16 16">
@@ -160,14 +159,12 @@
                         </button>
                         <br />
                         <br />
-
-
                     </EditForm>
 
                 }
                 else
                 {
-                    <h5>Quiz definition in loading (or not found) ...</h5>
+                    <h5>Tests in loading (or not found) ...</h5>
                 }
 
             </div>
@@ -189,9 +186,8 @@
 
     private EditContext context { get; set; }
 
-    private string testOverviewURL = "/testoverview";
-
-    private bool isNotValid { get; set; } = false;
+    /* Test Object is not valid if true */
+    private bool IsNotValid { get; set; } = false;
 
     protected override async Task OnParametersSetAsync()
     {
@@ -230,7 +226,7 @@
         TestDto.Questions.Remove(question);
     }
 
-    private async void SaveContentToBackend()
+    private async void SaveTestToBackend()
     {
         var isValid = context.Validate();
         if (isValid)
@@ -238,13 +234,13 @@
             var answer = await TestDefinitionService.AddOrUpdateTest(TestDto);
             if (answer != null)
             {
-                this.TestDto.TestID = answer.TestID; //refresh id (if created)
+                this.TestDto.TestID = answer.TestID; //refresh id (if Test Object is created)
                 NavigationManager.NavigateTo("/testoverview");
             }
         }
         else
         {
-            isNotValid = true;
+            IsNotValid = true;
         }
     }
 
@@ -287,6 +283,11 @@
     private void DeleteFurtherLink(FurtherLinkDTO link)
     {
         TestDto.FurtherLinks.Remove(link);
+    }
+
+    private void ReturnBackToTestOverview()
+    {
+        NavigationManager.NavigateTo("/testoverview/");
     }
 
 }

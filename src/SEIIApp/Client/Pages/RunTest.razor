@@ -87,7 +87,7 @@
                         <br />
                     </button>
                      
-                    <button class="btn btn-outline-danger shadow" @onclick="() =>  NavigationManager.NavigateTo(testOverviewURL)">
+                    <button class="btn btn-outline-danger shadow" @onclick="() => ReturnBackToTestOverview()">
                         Cancel @*Cancel Icon*@
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
                             <path d="M1.293 1.293a1 1 0 0 1 1.414 0L8 6.586l5.293-5.293a1 1 0 1 1 1.414 1.414L9.414 8l5.293 5.293a1 1 0 0 1-1.414
@@ -114,8 +114,6 @@
         private TestDTO TestDto { get; set; }
 
         private CompletedTestDTO CompletedTestDTO { get; set; }
-
-        private string testOverviewURL = "/testoverview";
 
         protected override async Task OnParametersSetAsync()
         {
@@ -181,5 +179,9 @@
             completedTest.ReachedPoints = CountReachedPoints(TestDto.Questions);
             completedTest.Student = UserService.User;
             return completedTest;
+        }
+        private void ReturnBackToTestOverview()
+        {
+            NavigationManager.NavigateTo("/testoverview/");
         }
     }

@@ -38,7 +38,7 @@
                     }
                 </div>
             </EditForm>
-            @if (UserService.User != null && UserService.User.Role == Role.Teacher)
+            @if (UserService.User != null && UserService.User.Role == Role.Trainer)
             {
                 <div class="text-center py-2">
                     <button class="btn btn-outline-dark btn-sm shadow" @onclick="AddLecture">+ Add Lecture</button>
@@ -53,7 +53,8 @@
 
     @if (Lectures != null)
     {
-        if (UserService.User != null && UserService.User.Role == Role.Teacher)
+
+        if (UserService.User != null && UserService.User.Role == Role.Trainer)
         {
             <ul class="list-group list-group-flush">
                 @foreach (var content in Lectures)

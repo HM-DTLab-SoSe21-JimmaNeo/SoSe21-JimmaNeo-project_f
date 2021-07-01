@@ -15,7 +15,7 @@
 
             @if (LectureDto != null)
             {
-                if (UserService.User != null && UserService.User.Role == Role.Teacher)
+                if (UserService.User != null && UserService.User.Role == Role.Trainer)
                 {
                     EditService.OnEditing = true;
                     <EditForm EditContext="@Context">

@@ -32,7 +32,7 @@ namespace SEIIApp.Shared
     {
         None,
         Student,
-        Teacher,
+        Trainer,
         Admin
     }
 

@@ -17,9 +17,6 @@
             <textarea class="form-control" id="inputMessage" type="text" placeholder="Enter description here..."
             style="height: 10rem" @bind="PictureContentDTO.Description"></textarea>
         </div>
-
-
-        <ValidationSummary />
     </EditForm>
 
 }
@@ -44,11 +41,12 @@ else
 
     private async Task OnInputFileChanged(InputFileChangeEventArgs inputFileChangeEvent)
     {
+        /* get the file/image */
         var file = inputFileChangeEvent.File;
+        /* read the file into a byte array */
         var buffer = new byte[file.Size];
         await file.OpenReadStream(1512000).ReadAsync(buffer);
-        PictureContentDTO.Path = $"data:image/png;base64,{Convert.ToBase64String(buffer)}";
+        /* convert the file into a base64 string */
+        PictureContentDTO.Path = $"data:image;base64,{Convert.ToBase64String(buffer)}";
     }
-
-
 }
