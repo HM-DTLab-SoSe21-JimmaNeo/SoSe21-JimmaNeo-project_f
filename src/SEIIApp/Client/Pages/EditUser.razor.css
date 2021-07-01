@@ -94,7 +94,7 @@ select {
     background-color: #0779e4;
 }
 .btn-cancel {
-    background-color: #6c757d;
+    background-color: #ff6500;
 }
 .danger {
     background-color: #fff;
@@ -132,16 +132,8 @@ select {
     color: #ffffff;
 }
 
-.btn-cancel_frame {
-    font-size: 0.9rem;
-    letter-spacing: 0.05rem;
-    padding: 0.75rem 1rem;
-    border-radius: 2rem;
-    border-radius: 30px;
-    background-color: #6c757d;
-    border: 2px solid;
-    color: #ffffff;
-}
+
+
 .input-group {
     position: relative;
     margin: 40px 0 20px;
@@ -269,7 +261,7 @@ input:focus ~ .highlight {
 
 .cancel:hover {
     background: white;
-    color: #6c757d;
+    color: #ff6500;
 }
 
 .delete:hover {
