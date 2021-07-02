@@ -134,9 +134,9 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        var existingQuiz = await TestDefinitionService.GetTestById(TestID);
+        var test = await TestDefinitionService.GetTestById(TestID);
         await base.OnParametersSetAsync();
-        this.TestDto = existingQuiz;
+        this.TestDto = test;
 
         EditService.OnEditing = false;
     }
