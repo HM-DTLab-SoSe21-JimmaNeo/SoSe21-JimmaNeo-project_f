@@ -213,6 +213,7 @@ Die Test geben dir die Möglichkeit dein Wissen auf die Probe zu stellen.
 
 **5. Test Results**<br>
 Hier werden deine Ergebnisse des abgeschlossenen Test angezeigt.
+
 ![Screenshot EditUser](/Documentation/Screenshots/TestResultPoints.png)
 ![Screenshot EditUser](/Documentation/Screenshots/TestResult.jpg)
 
