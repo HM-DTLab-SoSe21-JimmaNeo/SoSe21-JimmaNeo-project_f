@@ -50,6 +50,8 @@ wie das JimmaNeo Projekt an Bekanntheit gewinnen. Bitte berichtet in eurem Umfel
 
 # 2. **Anwendungsbeschreibung**
 
+**Die Applikation wird sowohl im Browser wie auch auf dem Smartphone benutzerfreundlich dargestellt.**
+
 ## Allgemeiner Bereich:
 <br>
 
