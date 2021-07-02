@@ -15,20 +15,20 @@
             <br /><b>Add pictures to the question!</b>
 
         </p>
-        @foreach (var p in QuestionDto.Pictures)
+        @foreach (var picture in QuestionDto.Pictures)
         {<hr />
-            <PictureComponent PictureContentDTO="p"></PictureComponent><br />
-            <button class="btn btn-light btn-sm shadow" @onclick="() => RemovePicture(p)">Remove Picture</button>
+            <PictureComponent PictureContentDTO="picture"></PictureComponent><br />
+            <button class="btn btn-light btn-sm shadow" @onclick="() => RemovePicture(picture)">Remove Picture</button>
             <br />
         }
         <br />
         <button class="btn btn-light btn-sm my-3 shadow" @onclick="AddPicture">Add Picture</button>
         <br />
 
-        @foreach (var a in QuestionDto.Answers)
+        @foreach (var answer in QuestionDto.Answers)
         {<hr />
-            <AnswerDefComponent AnswerDto="a"></AnswerDefComponent>
-            <button class="btn btn-light btn-sm shadow" @onclick="() => RemoveAnswer(a)">Remove Answer</button>
+            <AnswerDefComponent AnswerDto="answer"></AnswerDefComponent>
+            <button class="btn btn-light btn-sm shadow" @onclick="() => RemoveAnswer(answer)">Remove Answer</button>
             <br />
         }
         <br />

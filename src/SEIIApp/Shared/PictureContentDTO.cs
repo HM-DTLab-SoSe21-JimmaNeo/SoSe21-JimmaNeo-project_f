@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace SEIIApp.Shared
 {
-    public class PictureContentDTO
-    {
+  public class PictureContentDTO
+  {
 
-        [Required(ErrorMessage = "Picture is required")]
-        public string Path { get; set; }
+    [Required(ErrorMessage = "Picture is required (max size 1512 KB)")]
+    public string Path { get; set; }
 
-        public string Description { get; set; }
-    }
+    public string Description { get; set; }
+  }
 }

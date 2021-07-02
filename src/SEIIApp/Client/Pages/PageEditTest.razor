@@ -113,12 +113,12 @@
                         <br /><button class="btn btn-light shadow" @onclick="AddVideosFurtherInformation">Add
                             Video</button><br />
                         <hr />
-                        @foreach (var content in TestDto.Content)
+                        @foreach (var pictureContent in TestDto.Content)
                         {
                             <div class="card shadow">
                                 <div class="card-body">
-                                    <PictureComponent PictureContentDTO="content"></PictureComponent>
-                                    <button class="btn btn-light btn-sm shadow" @onclick="() => DeletePictureContent(content)">
+                                    <PictureComponent PictureContentDTO="pictureContent"></PictureComponent>
+                                    <button class="btn btn-light btn-sm shadow" @onclick="() => DeletePictureContent(pictureContent)">
                                         Remove
                                         Picture
                                     </button>
