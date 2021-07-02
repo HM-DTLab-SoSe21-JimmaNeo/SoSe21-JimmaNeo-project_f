@@ -232,8 +232,8 @@
 
             await LectureService.DeleteLecture(lecture.LectureId);
             showModal = false;
-            StateHasChanged(); // kann weg
-            await Task.Delay(3000); //kann weg
+            StateHasChanged();
+            await Task.Delay(3000);
         }
     }
 

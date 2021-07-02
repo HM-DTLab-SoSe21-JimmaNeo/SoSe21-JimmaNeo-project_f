@@ -72,7 +72,7 @@
                         <div class="input-group">
                             @if (!isInt)
                             {
-                            <h6 class="text-center" style="color:tomato">Input value is not a number. Please use a number.</h6>
+                                <h6 class="text-center" style="color:tomato">Input value is not a number. Please use a number.</h6>
                             }
                             <input type="text" style='width:100%' placeholder=@LectureDto.Test.TestID @bind-value="@TestId" @bind-value:event="oninput">
                             <span class="highlight"></span>
@@ -120,8 +120,8 @@
 
 @code {
 
-        [Parameter]
-        public int LectureID { get; set; }
+    [Parameter]
+    public int LectureID { get; set; }
 
     public LectureDTO LectureDto { get; set; }
 
@@ -161,9 +161,7 @@
     private void PrepareEditOrAddOfLecture(LectureDTO lectureDto)
     {
         if (lectureDto.Topic == null) lectureDto.Topic = "lecture Topic";
-
         if (lectureDto.Author == null) lectureDto.Author = UserService.User;
-
         if (lectureDto.Videos == null) lectureDto.Videos = new List<VideoContentDTO>();
         if (lectureDto.Content == null) lectureDto.Content = new List<PictureContentDTO>();
         // if (lectureDto.Test == null) lectureDto.Test = null;
@@ -179,7 +177,6 @@
     protected async void GetTestById()
     {
         TestOfLecture = await LectureService.GetTestById(StringToId(TestId));
-
     }
     /// <summary>
     /// Sends given LectureDto to the backend, where it get saved
@@ -190,22 +187,18 @@
         var isValid = Context.Validate();
         if (isValid)
         {
-            Console.WriteLine("isValid");
             await AddTestToLecture(lectureDto);
-            Console.WriteLine("still Valid");
-            if(isInt){
+            if (isInt)
+            {
                 var answer = await LectureService.AddOrUpdateLecture(lectureDto);
-                Console.WriteLine("and still valid");
                 if (answer != null)
                 {
-                    Console.WriteLine("answer not null");
                     this.LectureDto.LectureId = answer.LectureId;
                     NavigationManager.NavigateTo("/lectureoverview");
                 }
             }
         }
         else isNotValid = true;
-
     }
 
     private int StringToId(string inputId)
@@ -213,9 +206,6 @@
 
         int id = Int32.Parse(inputId);
         return id;
-
-
-
     }
 
     /// <summary>
@@ -223,14 +213,11 @@
     /// </summary>
     private async Task AddTestToLecture(LectureDTO lectureDto)
     {
-        Console.WriteLine("1");
         if (TestId != null && !TestId.Equals(""))
         {
             try
             {
-                Console.WriteLine("2");
                 int testId = StringToId(TestId);
-                Console.WriteLine("3");
                 lectureDto.Test = await LectureService.GetTestById(testId);
                 isInt = true;
             }
@@ -240,7 +227,7 @@
                 isNotValid = true;
             }
         }
-        //else this.LectureDto.Test = new TestBaseDTO();
+
     }
 
     private void AddVideoContent()

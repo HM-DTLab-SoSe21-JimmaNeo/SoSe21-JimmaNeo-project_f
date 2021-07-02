@@ -114,7 +114,7 @@
         Lectures = await LectureService.GetLectureOverview();
     }
 
-    private async void OnSubmitLecture() // kann eig weg
+    private async void OnSubmitLecture() 
     {
         var answer = await LectureService.AddOrUpdateLecture(LectureDto);
         if (answer != null)
