@@ -134,6 +134,16 @@
             }
         }
 
+        private CompletedTestDTO CreateCompletedTest(TestDTO test)
+        {   SaveTestAnswersService.AnsweredQuestions = TestDto.Questions;
+            CompletedTestDTO completedTest = new CompletedTestDTO();
+            completedTest.SolvedTest = test;
+            completedTest.MaxPoints = CountMaxPoints(TestDto.Questions);
+            completedTest.ReachedPoints = CountReachedPoints(TestDto.Questions);
+            completedTest.Student = UserService.User;
+            return completedTest;
+        }
+
         private int CountMaxPoints(List<QuestionDTO> questions)
         {
             int maxPoints = 0;
@@ -171,15 +181,6 @@
             return reachedPoints;
         }
 
-        private CompletedTestDTO CreateCompletedTest(TestDTO test)
-        {   SaveTestAnswersService.AnsweredQuestions = TestDto.Questions;
-            CompletedTestDTO completedTest = new CompletedTestDTO();
-            completedTest.SolvedTest = test;
-            completedTest.MaxPoints = CountMaxPoints(TestDto.Questions);
-            completedTest.ReachedPoints = CountReachedPoints(TestDto.Questions);
-            completedTest.Student = UserService.User;
-            return completedTest;
-        }
         private void ReturnBackToTestOverview()
         {
             NavigationManager.NavigateTo("/testoverview/");
