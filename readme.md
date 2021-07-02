@@ -169,7 +169,7 @@ Zusätzliche Informationen über das Testthema können hier eingebunden werden �
 ![Screenshot EditUser](/Documentation/Screenshots/AddFurtherInformation.png)
 
 **Prozessablauf Tests**     
-![Screenshot EditUser](/Documentation/Screenshots/TrainerTest.png)
+![Screenshot EditUser](/Documentation/Screenshots/Prozessdiagramm_TestTrainer.png)
 
 **4. LectureOverview**
 
