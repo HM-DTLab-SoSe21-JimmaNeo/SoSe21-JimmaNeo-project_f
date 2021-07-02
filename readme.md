@@ -50,6 +50,8 @@ wie das JimmaNeo Projekt an Bekanntheit gewinnen. Bitte berichtet in eurem Umfel
 
 # 2. **Anwendungsbeschreibung**
 
+**Die Applikation wird sowohl im Browser wie auch auf dem Smartphone benutzerfreundlich dargestellt.**
+
 ## Allgemeiner Bereich:
 <br>
 
@@ -139,20 +141,27 @@ auf den grauen Button EditNews. Nun wird man weitergeleiet auf die editierbare N
 ![Screenshot EditNews](/Documentation/Screenshots/AdminArea.png)
 
 ## Trainer Bereich:
-**1. Test Overview**
+
+**1. WelcomeTrainer**
+
+Nachdem Login eines Trainers landet dieser auf der Welcometrainer Seite. Zum einen werden die Resultate der vorhandenen Tests in einer Tabelle veranschaulicht, zum anderen erhält jeder Trainer die Möglichkeit einen Einblick in die Videos: "How to lectures" und "How to tests". Diese erläutern wie Lectures und Tests erstellt und gestartet werden.
+
+![Screenshot EditUser](/Documentation/Screenshots/WelcomeTeacherPage.png)
+
+**2. Test Overview**
 
 Es wird eine Übersicht über alle Tests aufgezeigt.     
 ![Screenshot EditUser](/Documentation/Screenshots/TestOverview.png)
 
-**2. Test Editor**
+**3. Test Editor**
 
-Die Tests können über den Test editor bearbeitet sowie hinzugefügt werden.
-Hier wird das Topic des tests festgehalten sowie die Fragestellungen und die Weiterführenden Informationen über das Thema(Further informations).  
+Die Tests können über den Test-Editor bearbeitet sowie hinzugefügt werden.
+Hier wird das Topic des Tests festgehalten sowie die Fragestellungen und die weiterführenden Informationen über das Thema(Further informations).  
 Es können zudem Youtube Videos zum Testdurchlauf hinzugefügt werden.
 ![Screenshot EditUser](/Documentation/Screenshots/TestEdit.png)
 
 **Add Questions:**
-Fragen und Antworten können hier eingefügt werden, es ist zudem möglich Bilder zu den fragen hinzuzufügen und man kann pro Frage eine Erklärung der Lösung angeben die in der Auswertung des Tests angezeigt wird.
+Fragen und Antworten können hier eingefügt werden, es ist zudem möglich Bilder zu den Fragen hinzuzufügen und man kann pro Frage eine Erklärung der Lösung angeben die in der Auswertung des Tests angezeigt wird.
 
 ![Screenshot EditUser](/Documentation/Screenshots/AddQuestionsandAnswers.png)
 
@@ -162,10 +171,22 @@ Zusätzliche Informationen über das Testthema können hier eingebunden werden �
 ![Screenshot EditUser](/Documentation/Screenshots/AddFurtherInformation.png)
 
 **Prozessablauf Tests**     
-![Screenshot EditUser](/Documentation/Screenshots/TrainerTest.png)
+![Screenshot EditUser](/Documentation/Screenshots/Prozessdiagramm_TestTrainer.png)
+
+**4. LectureOverview**
+
+Die LectureOverview ermöglicht einen Trainer Lectures zu erstellen, bearbeiten, löschen oder starten. Die Suchleiste ermöglicht eine zügige Lecturesuche.
+
+![Screenshot EditUser](/Documentation/Screenshots/LectureOverviewPage.png)
+
+**5. LectureEdit**
+
+Auf der LectureEdit-Seite ist es möglich Informationen in Text-, Video- oder Bildform für die Lecture bereitzustellen. Ebenso können Tests mit der Lecture in Verbindung gesetzt werden, dies geschieht über die Test-ID.
+
+![Screenshot EditUser](/Documentation/Screenshots/LectureEditPage.png)
 
 **Prozessablauf Lectures**
-![Screenshot EditUser](/Documentation/Screenshots/Trainer_lecture.png)
+![Screenshot EditUser](/Documentation/Screenshots/TeacherLecture.png)
 
 ## Student Bereich:   
 
@@ -194,6 +215,13 @@ Die Test geben dir die Möglichkeit dein Wissen auf die Probe zu stellen.
 
 **5. Test Results**<br>
 Hier werden deine Ergebnisse des abgeschlossenen Test angezeigt.
+
+Der Score berechnet sich so:
+- Falsche Antwort angeklickt ergibt einen Minuspunkt
+- Richtige Antwort nicht angeklickt ergibt einen Minuspunkt
+- Richtige Antwort angeklickt ergibt einen Pluspunkt
+
+![Screenshot EditUser](/Documentation/Screenshots/TestResultPoints.png)
 ![Screenshot EditUser](/Documentation/Screenshots/TestResult.jpg)
 
 **6. Further Informationen** <br>

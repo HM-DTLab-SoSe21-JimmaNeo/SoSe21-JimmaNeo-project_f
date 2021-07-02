@@ -125,6 +125,7 @@
 
         private async void OnSubmitTest()
         {
+            SaveTestAnswersService.AnsweredQuestions = TestDto.Questions;
             CompletedTestDTO completedTest = CreateCompletedTest(TestDto);
             CompletedTestDTO = await CompletedTestService.AddCompletedTest(completedTest);
             var answer = await TestService.AddOrUpdateTest(TestDto);
@@ -132,6 +133,16 @@
             {
                 NavigationManager.NavigateTo("/resultstest/" + CompletedTestDTO.CtId);
             }
+        }
+
+        private CompletedTestDTO CreateCompletedTest(TestDTO test)
+        {   
+            CompletedTestDTO completedTest = new CompletedTestDTO();
+            completedTest.SolvedTest = test;
+            completedTest.MaxPoints = CountMaxPoints(TestDto.Questions);
+            completedTest.ReachedPoints = CountReachedPoints(TestDto.Questions);
+            completedTest.Student = UserService.User;
+            return completedTest;
         }
 
         private int CountMaxPoints(List<QuestionDTO> questions)
@@ -171,15 +182,6 @@
             return reachedPoints;
         }
 
-        private CompletedTestDTO CreateCompletedTest(TestDTO test)
-        {   SaveTestAnswersService.AnsweredQuestions = TestDto.Questions;
-            CompletedTestDTO completedTest = new CompletedTestDTO();
-            completedTest.SolvedTest = test;
-            completedTest.MaxPoints = CountMaxPoints(TestDto.Questions);
-            completedTest.ReachedPoints = CountReachedPoints(TestDto.Questions);
-            completedTest.Student = UserService.User;
-            return completedTest;
-        }
         private void ReturnBackToTestOverview()
         {
             NavigationManager.NavigateTo("/testoverview/");
