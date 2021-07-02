@@ -153,13 +153,13 @@ Es wird eine Übersicht über alle Tests aufgezeigt.
 
 **3. Test Editor**
 
-Die Tests können über den Test editor bearbeitet sowie hinzugefügt werden.
-Hier wird das Topic des tests festgehalten sowie die Fragestellungen und die Weiterführenden Informationen über das Thema(Further informations).  
+Die Tests können über den Test-Editor bearbeitet sowie hinzugefügt werden.
+Hier wird das Topic des Tests festgehalten sowie die Fragestellungen und die weiterführenden Informationen über das Thema(Further informations).  
 Es können zudem Youtube Videos zum Testdurchlauf hinzugefügt werden.
 ![Screenshot EditUser](/Documentation/Screenshots/TestEdit.png)
 
 **Add Questions:**
-Fragen und Antworten können hier eingefügt werden, es ist zudem möglich Bilder zu den fragen hinzuzufügen und man kann pro Frage eine Erklärung der Lösung angeben die in der Auswertung des Tests angezeigt wird.
+Fragen und Antworten können hier eingefügt werden, es ist zudem möglich Bilder zu den Fragen hinzuzufügen und man kann pro Frage eine Erklärung der Lösung angeben die in der Auswertung des Tests angezeigt wird.
 
 ![Screenshot EditUser](/Documentation/Screenshots/AddQuestionsandAnswers.png)
 
